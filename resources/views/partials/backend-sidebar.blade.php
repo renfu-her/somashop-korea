@@ -17,6 +17,27 @@
             </div>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.categories.index') }}">
+                <i class="icon-menu menu-icon"></i>
+                <span class="menu-title">分類管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.products.index') }}">
+                <i class="icon-basket menu-icon"></i>
+                <span class="menu-title">商品管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.carts.index') }}">
+                <i class="icon-basket menu-icon"></i>
+                <span class="menu-title">購物車管理</span>
+            </a>
+        </li>
+
 
         <!-- 更多導航項目 -->
         <li class="nav-item">

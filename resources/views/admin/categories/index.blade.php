@@ -27,8 +27,6 @@
                             <th>ID</th>
                             <th>名稱</th>
                             <th>Slug</th>
-                            <th>筆記數量</th>
-                            <th>創建時間</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -38,8 +36,6 @@
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->slug }}</td>
-                                <td>{{ $category->notes_count }}</td>
-                                <td>{{ $category->created_at->format('Y-m-d H:i') }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.categories.edit', $category) }}"

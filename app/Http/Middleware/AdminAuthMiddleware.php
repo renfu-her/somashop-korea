@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class AuthMiddleware
+class AdminAuthMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,13 +17,7 @@ class AuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => '未登入'
-                ], 401);
-            }
-            return redirect()->route('admin.login');
+            return redirect('admin/login');
         }
 
         return $next($request);

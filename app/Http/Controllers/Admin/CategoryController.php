@@ -15,10 +15,12 @@ class CategoryController extends Controller
             ->latest()
             ->paginate(15);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $categories
-        ]);
+        return view('admin.categories.index', compact('categories'));
+    }
+
+    public function create()
+    {
+        return view('admin.categories.create');
     }
 
     public function store(Request $request)
@@ -30,66 +32,33 @@ class CategoryController extends Controller
 
         $validated['slug'] = Str::slug($validated['name']);
 
-        $category = Category::create($validated);
+        Category::create($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '分類已創建',
-            'data' => $category
-        ], 201);
+        return redirect()->route('admin.categories.index')->with('success', '分類已創建');
     }
 
-    public function show($id)
+    public function edit($id)
     {
-        $category = Category::with('products')
-            ->withCount('products')
-            ->findOrFail($id);
+        $category = Category::findOrFail($id);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $category
-        ]);
+        return view('admin.categories.edit', compact('category'));
     }
 
     public function update(Request $request, $id)
     {
         $category = Category::findOrFail($id);
 
-        $validated = $request->validate([
-            'name' => 'string|max:255|unique:categories,name,' . $id,
-            'description' => 'nullable|string'
-        ]);
+        $category->update($request->all());
 
-        if (isset($validated['name'])) {
-            $validated['slug'] = Str::slug($validated['name']);
-        }
-
-        $category->update($validated);
-
-        return response()->json([
-            'status' => 'success',
-            'message' => '分類已更新',
-            'data' => $category
-        ]);
+        return redirect()->route('admin.categories.index')->with('success', '分類已更新');
     }
 
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
 
-        // 檢查是否有關聯的商品
-        if ($category->products()->count() > 0) {
-            return response()->json([
-                'status' => 'error',
-                'message' => '無法刪除含有商品的分類'
-            ], 422);
-        }
-
         $category->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '分類已刪除'
-        ]);
+        return redirect()->route('admin.categories.index')->with('success', '分類已刪除');
     }
 }
