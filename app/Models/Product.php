@@ -29,4 +29,15 @@ class Product extends Model
     {
         return $this->hasMany(Cart::class);
     }
+
+    // 添加以下關聯
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class)->orderBy('sort_order');
+    }
+
+    public function primaryImage()
+    {
+        return $this->hasOne(ProductImage::class)->where('is_primary', true);
+    }
 }
