@@ -23,7 +23,7 @@ class AuthMiddleware
                     'message' => '未登入'
                 ], 401);
             }
-            return redirect()->route('login');
+            return redirect()->route('admin.login');
         }
 
         return $next($request);
