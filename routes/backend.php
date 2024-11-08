@@ -15,13 +15,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         return redirect()->route('admin.login');
     });
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AdminAuthController::class, 'login']);
+    Route::post('/login', [AdminAuthController::class, 'login'])->name('post.login');
     Route::match(['get', 'post'], '/logout', [AdminAuthController::class, 'logout'])->name('logout');
 });
 
 
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['admin.auth'],
     'prefix' => 'admin',
     'as' => 'admin.'
 ], function () {

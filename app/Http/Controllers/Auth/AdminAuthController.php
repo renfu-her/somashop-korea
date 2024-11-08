@@ -30,7 +30,7 @@ class AdminAuthController extends Controller
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/admin/notes');
+            return redirect()->intended('/admin/products');
         }
 
         return back()->withErrors([

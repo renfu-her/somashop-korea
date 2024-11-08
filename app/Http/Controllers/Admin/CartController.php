@@ -3,98 +3,77 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    // 獲取所有用戶的購物車列表
     public function index()
     {
         $carts = Cart::with(['user', 'product'])
             ->latest()
             ->paginate(15);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $carts
-        ]);
+        return view('admin.carts.index', compact('carts'));
     }
 
-    // 獲取特定用戶的購物車
-    public function getUserCart($userId)
+    public function create()
     {
-        $user = User::findOrFail($userId);
-        $carts = Cart::where('user_id', $userId)
-            ->with('product')
-            ->get();
-
-        return response()->json([
-            'status' => 'success',
-            'user' => $user->name,
-            'data' => $carts
-        ]);
+        $users = User::all();
+        $products = Product::all();
+        return view('admin.carts.create', compact('users', 'products'));
     }
 
-    // 管理員更新購物車項目
-    public function update(Request $request, $cartId)
+    public function edit($id)
+    {
+        $cart = Cart::findOrFail($id);
+        $users = User::all();
+        $products = Product::all();
+        return view('admin.carts.edit', compact('cart', 'users', 'products'));
+    }
+
+    public function store(Request $request)
     {
         $validated = $request->validate([
-            'quantity' => 'required|integer|min:0'
+            'user_id' => 'required|exists:users,id',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1'
         ]);
 
-        $cart = Cart::findOrFail($cartId);
+        Cart::create($validated);
 
-        if ($validated['quantity'] === 0) {
-            $cart->delete();
-            return response()->json([
-                'status' => 'success',
-                'message' => '購物車項目已刪除'
-            ]);
-        }
-
-        $cart->update([
-            'quantity' => $validated['quantity']
-        ]);
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $cart->load('product', 'user')
-        ]);
+        return redirect()->route('admin.carts.index')->with('success', '購物車項目已創建');
     }
 
-    // 管理員刪除購物車項目
-    public function destroy($cartId)
+    public function show($id)
     {
-        $cart = Cart::findOrFail($cartId);
+        $cart = Cart::with(['user', 'product'])->findOrFail($id);
+
+        return view('admin.carts.show', compact('cart'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $cart = Cart::findOrFail($id);
+
+        $validated = $request->validate([
+            'user_id' => 'exists:users,id',
+            'product_id' => 'exists:products,id',
+            'quantity' => 'integer|min:1'
+        ]);
+
+        $cart->update($validated);
+
+        return redirect()->route('admin.carts.index')->with('success', '購物車項目已更新');
+    }
+
+    public function destroy($id)
+    {
+        $cart = Cart::findOrFail($id);
         $cart->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '購物車項目已刪除'
-        ]);
-    }
-
-    // 獲取購物車統計資訊
-    public function statistics()
-    {
-        $statistics = [
-            'total_carts' => Cart::count(),
-            'total_users_with_carts' => Cart::distinct('user_id')->count(),
-            'most_carted_products' => Cart::select('product_id')
-                ->with('product:id,name')
-                ->selectRaw('COUNT(*) as count')
-                ->groupBy('product_id')
-                ->orderByDesc('count')
-                ->limit(5)
-                ->get()
-        ];
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $statistics
-        ]);
+        return redirect()->route('admin.carts.index')->with('success', '購物車項目已刪除');
     }
 }

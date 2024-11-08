@@ -26,14 +26,14 @@
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.products.index') }}">
-                <i class="icon-basket menu-icon"></i>
+                <i class="fas fa-box menu-icon"></i>
                 <span class="menu-title">商品管理</span>
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.carts.index') }}">
-                <i class="icon-basket menu-icon"></i>
+                <i class="fas fa-shopping-cart menu-icon"></i>
                 <span class="menu-title">購物車管理</span>
             </a>
         </li>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -16,10 +17,20 @@ class ProductController extends Controller
             ->latest()
             ->paginate(15);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $products
-        ]);
+        return view('admin.products.index', compact('products'));
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+        return view('admin.products.create', compact('categories'));
+    }
+
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     public function store(Request $request)
@@ -34,7 +45,6 @@ class ProductController extends Controller
             'is_active' => 'boolean'
         ]);
 
-        // 處理圖片上傳
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
             $validated['image'] = $path;
@@ -42,13 +52,9 @@ class ProductController extends Controller
 
         $validated['slug'] = Str::slug($validated['name']);
         
-        $product = Product::create($validated);
+        Product::create($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '商品已創建',
-            'data' => $product
-        ], 201);
+        return redirect()->route('admin.products.index')->with('success', '商品已創建');
     }
 
     public function show($id)
@@ -76,7 +82,6 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // 刪除舊圖片
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
@@ -90,27 +95,19 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '商品已更新',
-            'data' => $product
-        ]);
+        return redirect()->route('admin.products.index')->with('success', '商品已更新');
     }
 
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
 
-        // 刪除商品圖片
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
 
         $product->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '商品已刪除'
-        ]);
+        return redirect()->route('admin.products.index')->with('success', '商品已刪除');
     }
 }
