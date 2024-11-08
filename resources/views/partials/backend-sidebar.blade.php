@@ -38,6 +38,13 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.adverts.index') }}">
+                <i class="fas fa-ad menu-icon"></i>
+                <span class="menu-title">廣告管理</span>
+            </a>
+        </li>
+
         <!-- 更多導航項目 -->
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.logout') }}"

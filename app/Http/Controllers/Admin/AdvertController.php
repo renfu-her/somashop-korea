@@ -12,11 +12,18 @@ class AdvertController extends Controller
     public function index()
     {
         $adverts = Advert::latest()->paginate(15);
+        return view('admin.adverts.index', compact('adverts'));
+    }
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $adverts
-        ]);
+    public function create()
+    {
+        return view('admin.adverts.create');
+    }
+
+    public function edit($id)
+    {
+        $advert = Advert::findOrFail($id);
+        return view('admin.adverts.edit', compact('advert'));
     }
 
     public function store(Request $request)
@@ -36,23 +43,10 @@ class AdvertController extends Controller
             $validated['image'] = $path;
         }
 
-        $advert = Advert::create($validated);
+        Advert::create($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '廣告已創建',
-            'data' => $advert
-        ], 201);
-    }
-
-    public function show($id)
-    {
-        $advert = Advert::findOrFail($id);
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $advert
-        ]);
+        return redirect()->route('admin.adverts.index')
+            ->with('success', '廣告已創建');
     }
 
     public function update(Request $request, $id)
@@ -80,11 +74,8 @@ class AdvertController extends Controller
 
         $advert->update($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '廣告已更新',
-            'data' => $advert
-        ]);
+        return redirect()->route('admin.adverts.index')
+            ->with('success', '廣告已更新');
     }
 
     public function destroy($id)
@@ -98,13 +89,11 @@ class AdvertController extends Controller
 
         $advert->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => '廣告已刪除'
-        ]);
+        return redirect()->route('admin.adverts.index')
+            ->with('success', '廣告已刪除');
     }
 
-    // 獲取當前活動的廣告
+    // 獲取當前活動的廣告 (API 方法保留)
     public function getActiveAdverts()
     {
         $activeAdverts = Advert::where('is_active', true)

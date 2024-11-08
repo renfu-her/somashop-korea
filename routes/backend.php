@@ -32,6 +32,7 @@ Route::group([
     Route::resource('categories', CategoryController::class);
     Route::resource('carts', CartController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('adverts', AdvertController::class);
 
     // 產品圖片相關路由
     Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
