@@ -157,8 +157,7 @@
 
         .product-image-card .card-img-wrapper {
             position: relative;
-            padding-top: 100%;
-            /* 1:1 寬高比 */
+            height: 200px;
             overflow: hidden;
             background-color: #f8f9fa;
         }
@@ -169,9 +168,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            /* 改為 contain 以確保圖片完整顯示 */
-            padding: 4px;
+            object-fit: cover;
         }
 
         .product-image-card .card-footer {

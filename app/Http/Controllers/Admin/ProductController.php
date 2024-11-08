@@ -57,16 +57,19 @@ class ProductController extends Controller
             foreach ($request->file('images') as $index => $image) {
                 // 只存檔名
                 $filename = Str::uuid() . '.webp';
-                
+
                 // 創建 ImageManager 實例
                 $manager = new ImageManager(new Driver());
                 $img = $manager->read($image);
-                $img->resize(width: 800);
+                $img->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                
                 $img->toWebp(90);
 
                 // 儲存圖片
                 Storage::disk('public')->put(
-                    "products/{$product->id}/{$filename}", 
+                    "products/{$product->id}/{$filename}",
                     $img->encode()
                 );
 
@@ -110,16 +113,18 @@ class ProductController extends Controller
             foreach ($request->file('images') as $image) {
                 // 只存檔名
                 $filename = Str::uuid() . '.webp';
-                
+
                 // 創建 ImageManager 實例
                 $manager = new ImageManager(new Driver());
                 $img = $manager->read($image);
-                $img->resize(width: 800);
+                $img->resize(800, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
                 $img->toWebp(90);
 
                 // 儲存圖片
                 Storage::disk('public')->put(
-                    "products/{$product->id}/{$filename}", 
+                    "products/{$product->id}/{$filename}",
                     $img->encode()
                 );
 
