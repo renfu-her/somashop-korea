@@ -8,8 +8,8 @@
                     <div class="card-header">編輯廣告</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.adverts.update', $advert) }}" 
-                              enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.adverts.update', $advert) }}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -24,8 +24,8 @@
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">描述</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror"
-                                    id="description" name="description" rows="3" required>{{ old('description', $advert->description) }}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                                    rows="3" required>{{ old('description', $advert->description) }}</textarea>
                                 @error('description')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -34,8 +34,8 @@
                             <div class="mb-3">
                                 <label class="form-label">當前圖片</label>
                                 <div>
-                                    <img src="{{ Storage::url($advert->image) }}" alt="{{ $advert->title }}" 
-                                         class="img-thumbnail" style="max-width: 200px">
+                                    <img src="{{ Storage::url($advert->image) }}" alt="{{ $advert->title }}"
+                                        class="img-thumbnail" style="max-width: 200px">
                                 </div>
                             </div>
 
@@ -50,8 +50,8 @@
 
                             <div class="mb-3">
                                 <label for="url" class="form-label">連結網址</label>
-                                <input type="url" class="form-control @error('url') is-invalid @enderror"
-                                    id="url" name="url" value="{{ old('url', $advert->url) }}">
+                                <input type="url" class="form-control @error('url') is-invalid @enderror" id="url"
+                                    name="url" value="{{ old('url', $advert->url) }}">
                                 @error('url')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -59,9 +59,10 @@
 
                             <div class="mb-3">
                                 <label for="start_date" class="form-label">開始日期</label>
-                                <input type="date" class="form-control @error('start_date') is-invalid @enderror"
-                                    id="start_date" name="start_date" 
-                                    value="{{ old('start_date', $advert->start_date->format('Y-m-d')) }}" required>
+                                <input type="text"
+                                    class="form-control flatpickr @error('start_date') is-invalid @enderror" id="start_date"
+                                    name="start_date" value="{{ old('start_date', $advert->start_date->format('Y-m-d')) }}"
+                                    required>
                                 @error('start_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -69,19 +70,18 @@
 
                             <div class="mb-3">
                                 <label for="end_date" class="form-label">結束日期</label>
-                                <input type="date" class="form-control @error('end_date') is-invalid @enderror"
-                                    id="end_date" name="end_date" 
+                                <input type="text" class="form-control flatpickr @error('end_date') is-invalid @enderror"
+                                    id="end_date" name="end_date"
                                     value="{{ old('end_date', $advert->end_date?->format('Y-m-d')) }}">
                                 @error('end_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="is_active" 
-                                       name="is_active" value="1" 
-                                       {{ old('is_active', $advert->is_active) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_active">啟用廣告</label>
+                            <div class="mb-3 d-flex align-items-center">
+                                <input type="checkbox" class="form-check-input p-1" id="is_active" name="is_active"
+                                    value="1" {{ old('is_active', $advert->is_active) ? 'checked' : '' }}>
+                                <label class="form-check-label p-1" for="is_active">啟用廣告</label>
                             </div>
 
                             <div class="d-grid gap-2">
@@ -99,3 +99,13 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.flatpickr').flatpickr({
+                locale: 'zh-tw'
+            });
+        });
+    </script>
+@endpush

@@ -27,6 +27,7 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('assets/images/web-settings.png') }}" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     @stack('styles')
 </head>
@@ -80,6 +81,11 @@
     <script src="{{ asset('assets/js/template.js') }}"></script>
     <script src="{{ asset('assets/js/settings.js') }}"></script>
     <script src="{{ asset('assets/js/todolist.js') }}"></script>
+    <!-- 引入 flatpickr 的 JavaScript 檔案 -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- 引入繁體中文語言包 -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh-tw.js"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
     {{-- <script src="{{ asset('assets/js/dashboard.js') }}"></script> --}}
