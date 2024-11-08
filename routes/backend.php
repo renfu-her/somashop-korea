@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdvertController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductImageController;
 
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -31,4 +32,14 @@ Route::group([
     Route::resource('categories', CategoryController::class);
     Route::resource('carts', CartController::class);
     Route::resource('products', ProductController::class);
+
+    // 產品圖片相關路由
+    Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
+        // 更新圖片排序
+        Route::post('{product}/images/order', [ProductImageController::class, 'updateOrder'])->name('images.order');
+        // 設置主圖
+        Route::post('{product}/images/{image}/primary', [ProductImageController::class, 'setPrimary'])->name('images.primary');
+        // 刪除圖片
+        Route::delete('{product}/images/{image}', [ProductImageController::class, 'destroy'])->name('images.destroy');
+    });
 });

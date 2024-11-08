@@ -75,18 +75,50 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image" class="form-label">圖片</label>
-                                <input type="file" class="form-control @error('image') is-invalid @enderror"
-                                    id="image" name="image">
-                                @if ($product->image)
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                                        width="100" class="mt-2">
-                                @endif
-                                @error('image')
+                                <label for="images" class="form-label">新增圖片</label>
+                                <input type="file" class="form-control @error('images.*') is-invalid @enderror"
+                                    id="images" name="images[]" multiple accept="image/*">
+                                <small class="text-muted">可以選擇多張圖片上傳</small>
+                                @error('images.*')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <div id="imagePreview" class="row g-2"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">現有圖片</label>
+                                <div id="existingImages" class="row g-3">
+                                    @foreach ($product->images as $image)
+                                        <div class="col-md-3 product-image-card" data-image-id="{{ $image->id }}">
+                                            <div class="card h-100">
+                                                <div class="card-img-wrapper">
+                                                    <img src="{{ $image->image_url }}" class="card-img-top"
+                                                        alt="{{ $product->name }}">
+                                                </div>
+                                                <div class="card-footer p-2">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="form-check">
+                                                            <input type="radio" class="form-check-input primary-image"
+                                                                name="primary_image" value="{{ $image->id }}"
+                                                                {{ $image->is_primary ? 'checked' : '' }}>
+                                                            <label class="form-check-label small">主圖</label>
+                                                        </div>
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-outline-danger delete-image"
+                                                            data-image-id="{{ $image->id }}">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div class="mb-3 d-flex align-items-center">
@@ -110,3 +142,178 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <style>
+        .product-image-card {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .product-image-card .card {
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, .125);
+        }
+
+        .product-image-card .card-img-wrapper {
+            position: relative;
+            padding-top: 100%;
+            /* 1:1 寬高比 */
+            overflow: hidden;
+            background-color: #f8f9fa;
+        }
+
+        .product-image-card .card-img-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* 改為 contain 以確保圖片完整顯示 */
+            padding: 4px;
+        }
+
+        .product-image-card .card-footer {
+            background-color: #fff;
+            border-top: 1px solid rgba(0, 0, 0, .125);
+            padding: 0.5rem;
+        }
+
+        .product-image-card .form-check {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .product-image-card .form-check-input {
+            margin-top: 0.25rem;
+        }
+
+        .product-image-card .form-check-label {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+
+        .product-image-card .btn-outline-danger {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1;
+        }
+
+        /* 拖曳時的視覺效果 */
+        .sortable-ghost {
+            opacity: 0.5;
+        }
+
+        .sortable-chosen {
+            background-color: #f8f9fa;
+        }
+
+        /* 新增圖片預覽的樣式 */
+        #imagePreview .product-image-card .card-footer {
+            text-align: center;
+            color: #6c757d;
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
+            // 定義產品ID供 AJAX 使用
+            const productId = {{ $product->id }};
+
+            // 圖片預覽
+            $('#images').on('change', function(e) {
+                const $preview = $('#imagePreview');
+                $preview.empty();
+
+                $.each(e.target.files, function(index, file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $preview.append(`
+                            <div class="col-md-3 product-image-card">
+                                <div class="card h-100">
+                                    <div class="card-img-wrapper">
+                                        <img src="${e.target.result}" class="card-img-top" alt="Preview">
+                                    </div>
+                                    <div class="card-body">
+                                        <small class="text-muted">新圖片 ${index + 1}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            // 圖片排序
+            new Sortable($('#existingImages')[0], {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                chosenClass: 'sortable-chosen',
+                dragClass: 'sortable-drag',
+                handle: '.card', // 整張卡片都可以拖曳
+                onEnd: function() {
+                    const images = $('#existingImages > div').map(function(index) {
+                        return {
+                            id: $(this).data('image-id'),
+                            sort_order: index
+                        };
+                    }).get();
+
+                    // 更新排序
+                    $.ajax({
+                        url: `/admin/products/${productId}/images/order`,
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: JSON.stringify({
+                            images
+                        }),
+                        contentType: 'application/json'
+                    });
+                }
+            });
+
+            // 設置主圖
+            $('.primary-image').on('change', function() {
+                $.ajax({
+                    url: `/admin/products/${productId}/images/${$(this).val()}/primary`,
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+            });
+
+            // 刪除圖片
+            $('.delete-image').on('click', function() {
+                const $button = $(this);
+                const imageId = $button.data('image-id');
+
+                if (confirm('確定要刪除此圖片嗎？')) {
+                    $.ajax({
+                        url: `/admin/products/${productId}/images/${imageId}`,
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function() {
+                            $button.closest('.col-md-3').remove();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 
 class ProductController extends Controller
 {
@@ -28,7 +33,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with('images')->where('id', $id)->first();
         $categories = Category::all();
         return view('admin.products.edit', compact('product', 'categories'));
     }
@@ -41,31 +46,43 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|max:2048',
+            'images.*' => 'nullable|image|max:2048',
             'is_active' => 'boolean'
         ]);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image'] = $path;
+        $validated['slug'] = Str::slug($validated['name']);
+        $product = Product::create($validated);
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $image) {
+                // 只存檔名
+                $filename = Str::uuid() . '.webp';
+                
+                // 創建 ImageManager 實例
+                $manager = new ImageManager(new Driver());
+                $img = $manager->read($image);
+                $img->resize(width: 800);
+                $img->toWebp(90);
+
+                // 儲存圖片
+                Storage::disk('public')->put(
+                    "products/{$product->id}/{$filename}", 
+                    $img->encode()
+                );
+
+                // 資料庫只存檔名
+                $product->images()->create([
+                    'image_path' => $filename,
+                    'is_primary' => $index === 0,
+                    'sort_order' => $index
+                ]);
+            }
         }
 
-        $validated['slug'] = Str::slug($validated['name']);
-        
-        Product::create($validated);
-
-        return redirect()->route('admin.products.index')->with('success', '商品已創建');
+        return redirect()->route('admin.products.index')
+            ->with('success', '商品已創建');
     }
 
-    public function show($id)
-    {
-        $product = Product::with('category')->findOrFail($id);
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $product
-        ]);
-    }
 
     public function update(Request $request, $id)
     {
@@ -77,17 +94,9 @@ class ProductController extends Controller
             'price' => 'numeric|min:0',
             'stock' => 'integer|min:0',
             'category_id' => 'exists:categories,id',
-            'image' => 'nullable|image|max:2048',
+            'images.*' => 'nullable|image|max:2048',
             'is_active' => 'boolean'
         ]);
-
-        if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image'] = $path;
-        }
 
         if (isset($validated['name'])) {
             $validated['slug'] = Str::slug($validated['name']);
@@ -95,7 +104,36 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return redirect()->route('admin.products.index')->with('success', '商品已更新');
+        if ($request->hasFile('images')) {
+            $maxOrder = $product->images()->max('sort_order') ?? -1;
+
+            foreach ($request->file('images') as $image) {
+                // 只存檔名
+                $filename = Str::uuid() . '.webp';
+                
+                // 創建 ImageManager 實例
+                $manager = new ImageManager(new Driver());
+                $img = $manager->read($image);
+                $img->resize(width: 800);
+                $img->toWebp(90);
+
+                // 儲存圖片
+                Storage::disk('public')->put(
+                    "products/{$product->id}/{$filename}", 
+                    $img->encode()
+                );
+
+                // 資料庫只存檔名
+                $product->images()->create([
+                    'image_path' => $filename,
+                    'is_primary' => false,
+                    'sort_order' => ++$maxOrder
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.products.index')
+            ->with('success', '商品已更新');
     }
 
     public function destroy($id)

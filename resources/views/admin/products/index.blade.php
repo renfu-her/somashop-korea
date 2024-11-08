@@ -26,6 +26,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>圖片</th>
                             <th>名稱</th>
                             <th>價格</th>
                             <th>庫存</th>
@@ -37,6 +38,12 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->id }}</td>
+                                <td>
+                                    @if($product->images()->where('is_primary', true)->first())
+                                        <img src="{{ asset('storage/' . $product->images()->where('is_primary', true)->first()->image_path) }}"
+                                            alt="{{ $product->name }}" width="50">
+                                    @endif
+                                </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->stock }}</td>
@@ -76,7 +83,14 @@
             $('#dataTable').DataTable({
                 language: {
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
-                }
+                },
+                order: [
+                    [0, 'desc']
+                ], // 預設按 ID 降序排序
+                columnDefs: [{
+                    targets: -1, // 最後一欄（操作欄）
+                    orderable: false // 禁用排序
+                }]
             });
         });
     </script>

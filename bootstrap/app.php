@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\AdminAuthMiddleware;
+use App\Http\Middleware\VerifyCsrfToken;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,6 +20,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // 使用 alias 方法為中間件設置別名
         $middleware->alias([
             'admin.auth' => AdminAuthMiddleware::class,
+        ]);
+        
+        $middleware->validateCsrfTokens(except: [
+            'admin/products/*/images/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

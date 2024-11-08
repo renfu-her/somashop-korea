@@ -74,14 +74,19 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image" class="form-label">圖片</label>
-                                <input type="file" class="form-control @error('image') is-invalid @enderror"
-                                    id="image" name="image">
-                                @error('image')
+                                <label for="images" class="form-label">產品圖片</label>
+                                <input type="file" class="form-control @error('images.*') is-invalid @enderror"
+                                    id="images" name="images[]" multiple accept="image/*">
+                                <small class="text-muted">可以選擇多張圖片，第一張圖片將作為主圖</small>
+                                @error('images.*')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <div id="imagePreview" class="row g-2"></div>
                             </div>
 
                             <div class="mb-3 d-flex align-items-center">
@@ -106,3 +111,31 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#images').on('change', function(e) {
+                const $preview = $('#imagePreview');
+                $preview.empty();
+
+                $.each(e.target.files, function(index, file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $preview.append(`
+                    <div class="col-md-3 mb-2">
+                        <div class="card">
+                            <img src="${e.target.result}" class="card-img-top" alt="Preview">
+                            <div class="card-body p-2">
+                                <small class="text-muted">圖片 ${index + 1}</small>
+                            </div>
+                        </div>
+                    </div>
+                `);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            });
+        });
+    </script>
+@endpush
