@@ -22,16 +22,16 @@
 
         <div class="card">
             <div class="card-body">
-                <table class="table" id="dataTable">
+                <table class="table table-responsive" id="dataTable">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th style="width: 5%">ID</th>
                             <th>圖片</th>
                             <th>名稱</th>
                             <th>價格</th>
                             <th>庫存</th>
                             <th>分類</th>
-                            <th>操作</th>
+                            <th style="width: 15%">操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,8 +39,8 @@
                             <tr>
                                 <td>{{ $product->id }}</td>
                                 <td>
-                                    @if($product->images()->where('is_primary', true)->first())
-                                        <img src="{{ asset('storage/' . $product->images()->where('is_primary', true)->first()->image_path) }}"
+                                    @if ($product->images()->where('is_primary', true)->first())
+                                        <img src="{{ asset('storage/products/' . $product->id . '/' . $product->images()->where('is_primary', true)->first()->image_path) }}"
                                             alt="{{ $product->name }}" width="50">
                                     @endif
                                 </td>
@@ -77,6 +77,18 @@
     </div>
 @endsection
 
+@push('styles')
+    <style>
+        .table td img,
+        .jsgrid .jsgrid-table td img {
+            width: 100px !important;
+            height: 100px !important;
+            border-radius: 0 !important;
+            object-fit: cover;
+        }
+    </style>
+@endpush
+
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -84,6 +96,7 @@
                 language: {
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
                 },
+                responsive: true,
                 order: [
                     [0, 'desc']
                 ], // 預設按 ID 降序排序

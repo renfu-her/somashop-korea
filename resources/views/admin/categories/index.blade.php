@@ -24,10 +24,10 @@
                 <table class="table" id="dataTable">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th style="width: 5%">ID</th>
                             <th>名稱</th>
                             <th>Slug</th>
-                            <th>操作</th>
+                            <th style="width: 15%">操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,7 +71,15 @@
             $('#dataTable').DataTable({
                 language: {
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
-                }
+                },
+                responsive: true,
+                order: [
+                    [0, 'desc']
+                ], // 預設按 ID 降序排序
+                columnDefs: [{
+                    targets: -1, // 最後一欄（操作欄）
+                    orderable: false // 禁用排序
+                }]
             });
         });
     </script>
