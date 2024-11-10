@@ -21,9 +21,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin.auth' => AdminAuthMiddleware::class,
         ]);
-        
+
         $middleware->validateCsrfTokens(except: [
             'admin/products/*/images/*',
+            'admin/upload-image',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -25,7 +25,8 @@
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">描述</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" required>{{ old('description') }}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                                    cols="30" rows="10" required>{{ old('description') }}</textarea>
                                 @error('description')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -112,9 +113,70 @@
     </div>
 @endsection
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('ckeditor5/ckeditor5.css') }}">
+    <style>
+        /* 讓編輯器內容可以滾動 */
+        .ck-editor__editable {
+            height: 500px;
+            overflow-y: auto !important;
+        }
+
+        /* 可選：添加調整大小的手柄 */
+        .ck-editor__editable {
+            resize: vertical;
+        }
+    </style>
+@endpush
+
 @push('scripts')
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+
     <script>
         $(document).ready(function() {
+            ClassicEditor
+                .create(document.querySelector('#description'), {
+                    language: 'zh', // 設定介面語言為繁體中文
+                    ckfinder: {
+                        uploadUrl: '{{ route('admin.upload.image') }}' // 更新上傳路徑
+                    },
+                    height: '500px', // 固定高度
+                    toolbar: {
+                        items: [
+                            'heading', '|',
+                            'bold', 'italic', 'underline', 'link', '|',
+                            'bulletedList', 'numberedList', '|',
+                            'imageUpload', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                            'undo', 'redo'
+                        ]
+                    },
+                    image: {
+                        toolbar: [
+                            'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
+                        ]
+                    }
+                })
+                .then(editor => {
+                    // 設置最小高度和最大高度
+                    editor.editing.view.change(writer => {
+                        writer.setStyle(
+                            'min-height',
+                            '300px',
+                            editor.editing.view.document.getRoot()
+                        );
+                        writer.setStyle(
+                            'max-height',
+                            '600px',
+                            editor.editing.view.document.getRoot()
+                        );
+                    });
+
+                    console.log('編輯器初始化成功', editor);
+                })
+                .catch(error => {
+                    console.error('編輯器初始化失敗', error);
+                });
+
             $('#images').on('change', function(e) {
                 const $preview = $('#imagePreview');
                 $preview.empty();

@@ -144,6 +144,7 @@
 @endsection
 
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('ckeditor5/ckeditor5.css') }}">
     <style>
         .product-image-card {
             position: relative;
@@ -216,6 +217,8 @@
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script src="{{ asset('ckeditor5/ckeditor5.js') }}"></script>
+    <script src="{{ asset('ckeditor.js') }}"></script>
     <script>
         $(document).ready(function() {
             $.ajaxSetup({
