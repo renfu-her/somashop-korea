@@ -25,8 +25,11 @@
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">描述</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
-                                    cols="30" rows="10" required>{{ old('description') }}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" 
+                                    id="description" 
+                                    name="description"
+                                    cols="30" 
+                                    rows="10">{{ old('description') }}</textarea>
                                 @error('description')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -119,13 +122,8 @@
         /* 讓編輯器內容可以滾動 */
         .ck-editor__editable {
             height: 500px;
-            overflow-y: auto !important;
         }
 
-        /* 可選：添加調整大小的手柄 */
-        .ck-editor__editable {
-            resize: vertical;
-        }
     </style>
 @endpush
 
@@ -135,16 +133,17 @@
 
     <script>
         $(document).ready(function() {
+            let editor;
+
             ClassicEditor
                 .create(document.querySelector('#description'), {
                     language: 'zh',
                     ckfinder: {
-                        uploadUrl: '{{ route('admin.upload.image') }}', // 更新上傳路徑
+                        uploadUrl: '{{ route('admin.upload.image') }}',
                         upload: {
                             types: ['jpeg', 'png', 'gif', 'jpg', 'webp']
                         }
                     },
-                    height: '500px', // 固定高度
                     toolbar: {
                         items: [
                             'heading', '|',
@@ -160,28 +159,29 @@
                         ]
                     }
                 })
-                .then(editor => {
-                    // 設置最小高度和最大高度
-                    editor.editing.view.change(writer => {
-                        writer.setStyle(
-                            'min-height',
-                            '300px',
-                            editor.editing.view.document.getRoot()
-                        );
-                        writer.setStyle(
-                            'max-height',
-                            '600px',
-                            editor.editing.view.document.getRoot()
-                        );
-                    });
-
-                    console.log('編輯器初始化成功', editor);
+                .then(newEditor => {
+                    editor = newEditor;
                 })
                 .catch(error => {
                     console.error('編輯器初始化失敗', error);
                     alert('編輯器初始化失敗：' + error.message);
                 });
 
+            // 表單提交前驗證
+            $('form').on('submit', function(e) {
+                const description = editor.getData();
+                
+                if (!description.trim()) {
+                    e.preventDefault();
+                    alert('請填寫商品描述');
+                    return false;
+                }
+                
+                // 更新隱藏的 textarea 值
+                $('#description').val(description);
+            });
+
+            // 圖片預覽代碼保持不變
             $('#images').on('change', function(e) {
                 const $preview = $('#imagePreview');
                 $preview.empty();
