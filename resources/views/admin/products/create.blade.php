@@ -130,15 +130,19 @@
 @endpush
 
 @push('scripts')
-    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor5/zh.min.js') }}"></script>
 
     <script>
         $(document).ready(function() {
             ClassicEditor
                 .create(document.querySelector('#description'), {
-                    language: 'zh', // 設定介面語言為繁體中文
+                    language: 'zh',
                     ckfinder: {
-                        uploadUrl: '{{ route('admin.upload.image') }}' // 更新上傳路徑
+                        uploadUrl: '{{ route('admin.upload.image') }}', // 更新上傳路徑
+                        upload: {
+                            types: ['jpeg', 'png', 'gif', 'jpg', 'webp']
+                        }
                     },
                     height: '500px', // 固定高度
                     toolbar: {
@@ -175,6 +179,7 @@
                 })
                 .catch(error => {
                     console.error('編輯器初始化失敗', error);
+                    alert('編輯器初始化失敗：' + error.message);
                 });
 
             $('#images').on('change', function(e) {
