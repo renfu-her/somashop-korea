@@ -23,10 +23,7 @@ class UploadController extends Controller
                 // 使用 Intervention/Image 處理圖片
                 $manager = new ImageManager(new Driver());
                 $img = $manager->read($image);
-                // $img->resize(800, null, function ($constraint) {
-                //     $constraint->aspectRatio();
-                //     $constraint->upsize();
-                // });
+                $img->scale(height: 800);
                 $img->toWebp(90);
 
                 // 只儲存一次

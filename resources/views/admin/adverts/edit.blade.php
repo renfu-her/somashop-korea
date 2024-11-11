@@ -34,8 +34,8 @@
                             <div class="mb-3">
                                 <label class="form-label">當前圖片</label>
                                 <div>
-                                    <img src="{{ Storage::url($advert->image) }}" alt="{{ $advert->title }}"
-                                        class="img-thumbnail" style="max-width: 200px">
+                                    <img src="{{ asset('storage/adverts/' . $advert->image) }}" alt="{{ $advert->title }}"
+                                        style="max-width: 200px">
                                 </div>
                             </div>
 

@@ -212,15 +212,69 @@
             text-align: center;
             color: #6c757d;
         }
+
+        /* 讓編輯器內容可以滾動 */
+        .ck-editor__editable {
+            height: 500px;
+        }
     </style>
 @endpush
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-    <script src="{{ asset('ckeditor5/ckeditor5.js') }}"></script>
-    <script src="{{ asset('ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor5/zh.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
+            // CKEditor 初始化
+            let editor;
+            ClassicEditor
+                .create(document.querySelector('#description'), {
+                    language: 'zh',
+                    ckfinder: {
+                        uploadUrl: '{{ route('admin.upload.image') }}',
+                        upload: {
+                            types: ['jpeg', 'png', 'gif', 'jpg', 'webp']
+                        }
+                    },
+                    toolbar: {
+                        items: [
+                            'heading', '|',
+                            'bold', 'italic', 'underline', 'link', '|',
+                            'bulletedList', 'numberedList', '|',
+                            'imageUpload', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                            'undo', 'redo'
+                        ]
+                    },
+                    image: {
+                        toolbar: [
+                            'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
+                        ]
+                    }
+                })
+                .then(newEditor => {
+                    editor = newEditor;
+                })
+                .catch(error => {
+                    console.error('編輯器初始化失敗', error);
+                    alert('編輯器初始化失敗：' + error.message);
+                });
+
+            // 表單提交前驗證
+            $('form').on('submit', function(e) {
+                const description = editor.getData();
+                
+                if (!description.trim()) {
+                    e.preventDefault();
+                    alert('請填寫商品描述');
+                    return false;
+                }
+                
+                // 更新隱藏的 textarea 值
+                $('#description').val(description);
+            });
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

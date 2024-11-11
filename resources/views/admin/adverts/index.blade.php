@@ -33,8 +33,8 @@
                                 <td>{{ $advert->id }}</td>
                                 <td>{{ $advert->title }}</td>
                                 <td>
-                                    <img src="{{ Storage::url($advert->image) }}" alt="{{ $advert->title }}" 
-                                         class="img-thumbnail" style="max-width: 100px">
+                                    <img src="{{ asset('storage/adverts/' . $advert->image) }}" alt="{{ $advert->title }}"
+                                        style="max-width: 100px">
                                 </td>
                                 <td>
                                     <span class="badge {{ $advert->is_active ? 'bg-success' : 'bg-secondary' }}">
@@ -45,11 +45,10 @@
                                 <td>{{ $advert->end_date ? $advert->end_date->format('Y-m-d') : '-' }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.adverts.edit', $advert) }}" 
-                                           class="btn btn-sm btn-outline-primary">編輯</a>
-                                        <form action="{{ route('admin.adverts.destroy', $advert) }}" 
-                                              method="POST" class="d-inline"
-                                              onsubmit="return confirm('確定要刪除此廣告嗎？');">
+                                        <a href="{{ route('admin.adverts.edit', $advert) }}"
+                                            class="btn btn-sm btn-outline-primary">編輯</a>
+                                        <form action="{{ route('admin.adverts.destroy', $advert) }}" method="POST"
+                                            class="d-inline" onsubmit="return confirm('確定要刪除此廣告嗎？');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-outline-danger">刪除</button>
@@ -69,6 +68,16 @@
     </div>
 @endsection
 
+@push('styles')
+    <style>
+        .table td img,
+        .jsgrid .jsgrid-table td img {
+            width: auto;
+            border-radius: 0 !important;
+        }
+    </style>
+@endpush
+
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -77,7 +86,9 @@
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
                 },
                 responsive: true,
-                order: [[0, 'desc']],
+                order: [
+                    [0, 'desc']
+                ],
                 columnDefs: [{
                     targets: -1,
                     orderable: false

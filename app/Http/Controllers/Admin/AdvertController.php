@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Advert;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class AdvertController extends Controller
 {
@@ -38,15 +42,31 @@ class AdvertController extends Controller
             'end_date' => 'nullable|date|after:start_date'
         ]);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('adverts', 'public');
-            $validated['image'] = $path;
+        try {
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $fileName = Str::uuid7() . '.webp';
+                $uploadPath = 'adverts/' . $fileName;
+
+                // 使用 Intervention/Image 處理圖片
+                $manager = new ImageManager(new Driver());
+                $img = $manager->read($image);
+                $img->scale(height: 800);
+                $img->toWebp(90);
+
+                // 儲存圖片
+                Storage::disk('public')->put($uploadPath, $img->encode());
+                $validated['image'] = $fileName;
+            }
+
+            Advert::create($validated);
+
+            return redirect()->route('admin.adverts.index')
+                ->with('success', '廣告已創建');
+        } catch (\Exception $e) {
+            Log::error('廣告圖片處理失敗：' . $e->getMessage());
+            return back()->withErrors(['image' => '圖片處理失敗'])->withInput();
         }
-
-        Advert::create($validated);
-
-        return redirect()->route('admin.adverts.index')
-            ->with('success', '廣告已創建');
     }
 
     public function update(Request $request, $id)
@@ -63,19 +83,36 @@ class AdvertController extends Controller
             'end_date' => 'nullable|date|after:start_date'
         ]);
 
-        if ($request->hasFile('image')) {
-            // 刪除舊圖片
-            if ($advert->image) {
-                Storage::disk('public')->delete($advert->image);
+        try {
+            if ($request->hasFile('image')) {
+                // 刪除舊圖片
+                if ($advert->image) {
+                    Storage::disk('public')->delete($advert->image);
+                }
+
+                $image = $request->file('image');
+                $fileName = Str::uui7() . '.webp';
+                $uploadPath = 'adverts/' . $fileName;
+
+                // 使用 Intervention/Image 處理圖片
+                $manager = new ImageManager(new Driver());
+                $img = $manager->read($image);
+                $img->scale(height: 800);
+                $img->toWebp(90);
+
+                // 儲存圖片
+                Storage::disk('public')->put($uploadPath, $img->encode());
+                $validated['image'] = $fileName;
             }
-            $path = $request->file('image')->store('adverts', 'public');
-            $validated['image'] = $path;
+
+            $advert->update($validated);
+
+            return redirect()->route('admin.adverts.index')
+                ->with('success', '廣告已更新');
+        } catch (\Exception $e) {
+            Log::error('廣告圖片處理失敗：' . $e->getMessage());
+            return back()->withErrors(['image' => '圖片處理失敗'])->withInput();
         }
-
-        $advert->update($validated);
-
-        return redirect()->route('admin.adverts.index')
-            ->with('success', '廣告已更新');
     }
 
     public function destroy($id)
@@ -98,9 +135,9 @@ class AdvertController extends Controller
     {
         $activeAdverts = Advert::where('is_active', true)
             ->where('start_date', '<=', now())
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('end_date', '>=', now())
-                      ->orWhereNull('end_date');
+                    ->orWhereNull('end_date');
             })
             ->get();
 
