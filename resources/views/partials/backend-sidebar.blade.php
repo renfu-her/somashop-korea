@@ -4,7 +4,7 @@
             <div class="nav-link">
                 <div class="d-flex justify-content-center">
                     <h2>後台管理</h2>
-                    <span class="online-status online"></span> <!--change class online to offline or busy as needed-->
+                    <span class="online-status online"></span>
                 </div>
                 <div class="profile-name">
                     <p class="name">
@@ -18,48 +18,51 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.categories.index') }}">
-                <i class="icon-menu menu-icon"></i>
-                <span class="menu-title">分類管理</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.products.index') }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#product-management" aria-expanded="false">
                 <i class="fas fa-box menu-icon"></i>
-                <span class="menu-title">商品管理</span>
+                <span class="menu-title">商品維護</span>
+                <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="product-management">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.categories.index') }}">分類管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.products.index') }}">商品管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.carts.index') }}">購物車管理</a>
+                    </li>
+                </ul>
+            </div>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.carts.index') }}">
-                <i class="fas fa-shopping-cart menu-icon"></i>
-                <span class="menu-title">購物車管理</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.faq-categories.index') }}">
+            <a class="nav-link" data-bs-toggle="collapse" href="#faq-management" aria-expanded="false">
                 <i class="fas fa-question-circle menu-icon"></i>
-                <span class="menu-title">常見問題分類管理</span>
+                <span class="menu-title">常見問題維護</span>
+                <i class="menu-arrow"></i>
             </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.faqs.index') }}">
-                <i class="fas fa-question-circle menu-icon"></i>
-                <span class="menu-title">常見問題管理</span>
-            </a>
+            <div class="collapse" id="faq-management">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.faq-categories.index') }}">分類管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.faqs.index') }}">問題管理</a>
+                    </li>
+                </ul>
+            </div>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.adverts.index') }}">
                 <i class="fas fa-ad menu-icon"></i>
-                <span class="menu-title">廣告管理</span>
+                <span class="menu-title">廣告維護</span>
             </a>
         </li>
 
-        <!-- 更多導航項目 -->
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.logout') }}"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
