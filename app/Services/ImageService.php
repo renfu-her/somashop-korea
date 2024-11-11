@@ -13,7 +13,7 @@ class ImageService
     public function uploadImage(
         UploadedFile $image, 
         string $path, 
-        int $height = 800, 
+        int $width = 800, 
         int $quality = 90
     ): string {
         $filename = Str::uuid7() . '.webp';
@@ -21,7 +21,7 @@ class ImageService
 
         $manager = new ImageManager(new Driver());
         $img = $manager->read($image);
-        $img->scale(height: $height);
+        $img->scale(width: $width);
         $img->toWebp($quality);
 
         Storage::disk('public')->put($fullPath, $img->encode());
