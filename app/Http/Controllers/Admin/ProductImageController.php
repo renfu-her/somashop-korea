@@ -97,7 +97,7 @@ class ProductImageController extends Controller
         $image = $product->images()->findOrFail($imageId);
 
         // 刪除實際檔案
-        Storage::disk('public')->delete($image->image_path);
+        Storage::disk('public')->delete('products/' . $product->id . '/' . $image->image_path);
 
         $image->delete();
 
