@@ -12,10 +12,18 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use App\Services\ImageService;
 
 
 class ProductController extends Controller
 {
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+
     public function index()
     {
         $products = Product::with('category')
@@ -55,22 +63,11 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
-                // 只存檔名
-                $filename = Str::uuid7() . '.webp';
-
-                // 創建 ImageManager 實例
-                $manager = new ImageManager(new Driver());
-                $img = $manager->read($image);
-                $img->scale(height: 800);
-                $img->toWebp(90);
-
-                // 儲存圖片
-                Storage::disk('public')->put(
-                    "products/{$product->id}/{$filename}",
-                    $img->encode()
+                $filename = $this->imageService->uploadImage(
+                    $image, 
+                    "products/{$product->id}"
                 );
 
-                // 資料庫只存檔名
                 $product->images()->create([
                     'image_path' => $filename,
                     'is_primary' => $index === 0,
@@ -108,22 +105,11 @@ class ProductController extends Controller
             $maxOrder = $product->images()->max('sort_order') ?? -1;
 
             foreach ($request->file('images') as $image) {
-                // 只存檔名
-                $filename = Str::uuid7() . '.webp';
-
-                // 創建 ImageManager 實例
-                $manager = new ImageManager(new Driver());
-                $img = $manager->read($image);
-                $img->scale(height: 800);
-                $img->toWebp(90);
-
-                // 儲存圖片
-                Storage::disk('public')->put(
-                    "products/{$product->id}/{$filename}",
-                    $img->encode()
+                $filename = $this->imageService->uploadImage(
+                    $image, 
+                    "products/{$product->id}"
                 );
 
-                // 資料庫只存檔名
                 $product->images()->create([
                     'image_path' => $filename,
                     'is_primary' => false,

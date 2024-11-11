@@ -10,9 +10,17 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use App\Services\ImageService;
 
 class AdvertController extends Controller
 {
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+
     public function index()
     {
         $adverts = Advert::latest()->paginate(15);
@@ -44,19 +52,10 @@ class AdvertController extends Controller
 
         try {
             if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $fileName = Str::uuid7() . '.webp';
-                $uploadPath = 'adverts/' . $fileName;
-
-                // 使用 Intervention/Image 處理圖片
-                $manager = new ImageManager(new Driver());
-                $img = $manager->read($image);
-                $img->scale(height: 800);
-                $img->toWebp(90);
-
-                // 儲存圖片
-                Storage::disk('public')->put($uploadPath, $img->encode());
-                $validated['image'] = $fileName;
+                $validated['image'] = $this->imageService->uploadImage(
+                    $request->file('image'),
+                    'adverts'
+                );
             }
 
             Advert::create($validated);
