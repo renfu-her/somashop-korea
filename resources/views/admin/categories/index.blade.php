@@ -27,6 +27,7 @@
                             <th style="width: 5%">ID</th>
                             <th>名稱</th>
                             <th>Slug</th>
+                            <th>商品數量</th>
                             <th style="width: 15%">操作</th>
                         </tr>
                     </thead>
@@ -36,6 +37,7 @@
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->slug }}</td>
+                                <td>{{ $category->products_count }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.categories.edit', $category) }}"
@@ -53,6 +55,32 @@
                                     </div>
                                 </td>
                             </tr>
+                            @foreach ($category->children as $child)
+                                <tr>
+                                    <td>{{ $child->id }}</td>
+                                    <td>
+                                        <span class="ms-3">└ {{ $child->name }}</span>
+                                    </td>
+                                    <td>{{ $child->slug }}</td>
+                                    <td>{{ $child->products_count }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{{ route('admin.categories.edit', $child) }}"
+                                                class="btn btn-sm btn-outline-primary">
+                                                編輯
+                                            </a>
+                                            <form action="{{ route('admin.categories.destroy', $child) }}" method="POST"
+                                                onsubmit="return confirm('確定要刪除此分類嗎？');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    刪除
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         @endforeach
                     </tbody>
                 </table>
@@ -73,13 +101,7 @@
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
                 },
                 responsive: true,
-                order: [
-                    [0, 'desc']
-                ], // 預設按 ID 降序排序
-                columnDefs: [{
-                    targets: -1, // 最後一欄（操作欄）
-                    orderable: false // 禁用排序
-                }]
+                ordering: false,
             });
         });
     </script>

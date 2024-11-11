@@ -22,6 +22,25 @@
                                 @enderror
                             </div>
 
+                            <div class="mb-3">
+                                <label for="parent_id" class="form-label">上層分類</label>
+                                <select class="form-control @error('parent_id') is-invalid @enderror" 
+                                        id="parent_id" 
+                                        name="parent_id">
+                                    <option value="0">無上層分類</option>
+                                    @foreach($parentCategories as $parentCategory)
+                                        <option value="{{ $parentCategory->id }}">
+                                            {{ $parentCategory->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('parent_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">
                                     創建分類
