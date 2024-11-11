@@ -104,7 +104,7 @@
     <script>
         $(document).ready(function() {
             $('.flatpickr').flatpickr({
-                locale: 'zh-tw'
+                locale: 'zh_tw'
             });
         });
     </script>

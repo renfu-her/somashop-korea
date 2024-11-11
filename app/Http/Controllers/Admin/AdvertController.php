@@ -43,12 +43,13 @@ class AdvertController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'required|image|max:2048',
+            'image' => 'required|image|max:4096',
             'url' => 'nullable|url',
             'is_active' => 'boolean',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date'
         ]);
+
 
         try {
             if ($request->hasFile('image')) {
@@ -75,7 +76,7 @@ class AdvertController extends Controller
         $validated = $request->validate([
             'title' => 'string|max:255',
             'description' => 'string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:4096',
             'url' => 'nullable|url',
             'is_active' => 'boolean',
             'start_date' => 'date',
@@ -89,19 +90,12 @@ class AdvertController extends Controller
                     Storage::disk('public')->delete($advert->image);
                 }
 
-                $image = $request->file('image');
-                $fileName = Str::uui7() . '.webp';
-                $uploadPath = 'adverts/' . $fileName;
-
-                // 使用 Intervention/Image 處理圖片
-                $manager = new ImageManager(new Driver());
-                $img = $manager->read($image);
-                $img->scale(height: 800);
-                $img->toWebp(90);
-
-                // 儲存圖片
-                Storage::disk('public')->put($uploadPath, $img->encode());
-                $validated['image'] = $fileName;
+                if ($request->hasFile('image')) {
+                    $validated['image'] = $this->imageService->uploadImage(
+                        $request->file('image'),
+                        'adverts'
+                    );
+                }
             }
 
             $advert->update($validated);
