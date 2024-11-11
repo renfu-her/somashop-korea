@@ -1,0 +1,25 @@
+.alert-success {
+    color: #000 !important;
+    font-weight: bold;
+    font-size: 16px;
+}
+.alert-danger {
+    color: #000 !important;
+    font-weight: bold;
+    font-size: 16px;
+}
+.alert-warning {
+    color: #000 !important;
+    font-weight: bold;
+    font-size: 16px;
+}
+.alert-info {
+    color: #000 !important;
+    font-weight: bold;
+        font-size: 16px;
+}
+.alert-light {
+    color: #000 !important;
+    font-weight: bold;
+    font-size: 16px;
+}

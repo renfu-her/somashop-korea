@@ -47,7 +47,17 @@
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->stock }}</td>
-                                <td>{{ $product->category->name ?? '未分類' }}</td>
+                                <td>
+                                    @if($product->category)
+                                        @if($product->category->parent_id > 0)
+                                            {{ $product->category->parent->name }} / {{ $product->category->name }}
+                                        @else
+                                            {{ $product->category->name }}
+                                        @endif
+                                    @else
+                                        未分類
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.products.edit', $product) }}"

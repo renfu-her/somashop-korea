@@ -29,6 +29,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    
     @stack('styles')
 </head>
 

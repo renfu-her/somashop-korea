@@ -39,6 +39,20 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.faq-categories.index') }}">
+                <i class="fas fa-question-circle menu-icon"></i>
+                <span class="menu-title">常見問題分類管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.faqs.index') }}">
+                <i class="fas fa-question-circle menu-icon"></i>
+                <span class="menu-title">常見問題管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.adverts.index') }}">
                 <i class="fas fa-ad menu-icon"></i>
                 <span class="menu-title">廣告管理</span>

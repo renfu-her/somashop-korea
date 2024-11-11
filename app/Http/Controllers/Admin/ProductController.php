@@ -35,14 +35,18 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::with('children')
+            ->where('parent_id', 0)
+            ->get();
         return view('admin.products.create', compact('categories'));
     }
 
     public function edit($id)
     {
-        $product = Product::with('images')->where('id', $id)->first();
-        $categories = Category::all();
+        $product = Product::with('images')->findOrFail($id);
+        $categories = Category::with('children')
+            ->where('parent_id', 0)
+            ->get();
         return view('admin.products.edit', compact('product', 'categories'));
     }
 

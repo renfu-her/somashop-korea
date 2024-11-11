@@ -61,13 +61,23 @@
 
                             <div class="mb-3">
                                 <label for="category_id" class="form-label">分類</label>
-                                <select class="form-control @error('category_id') is-invalid @enderror" id="category_id"
-                                    name="category_id" required>
+                                <select class="form-control @error('category_id') is-invalid @enderror" 
+                                        id="category_id"
+                                        name="category_id" 
+                                        required>
+                                    <option value="">請選擇分類</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{-- 父分類只作為標題顯示，不能選擇 --}}
+                                        <option value="" disabled style="background-color: #f8f9fa; font-weight: bold;">
                                             {{ $category->name }}
                                         </option>
+                                        {{-- 只顯示子分類供選擇 --}}
+                                        @foreach ($category->children as $child)
+                                            <option value="{{ $child->id }}" 
+                                                {{ old('category_id') == $child->id ? 'selected' : '' }}>
+                                                ├─ {{ $child->name }}
+                                            </option>
+                                        @endforeach
                                     @endforeach
                                 </select>
                                 @error('category_id')

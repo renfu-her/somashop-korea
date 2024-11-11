@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FaqCategoryController;
 
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -45,4 +47,7 @@ Route::group([
         // 刪除圖片
         Route::delete('{product}/images/{image}', [ProductImageController::class, 'destroy'])->name('images.destroy');
     });
+
+    Route::resource('faqs', FaqController::class);
+    Route::resource('faq-categories', FaqCategoryController::class);
 });
