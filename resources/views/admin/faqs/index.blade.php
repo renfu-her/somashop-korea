@@ -4,7 +4,10 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>常見問題管理</h2>
-            <a href="{{ route('admin.faqs.create') }}" class="btn btn-primary">新增常見問題</a>
+            <div>
+                <a href="{{ route('admin.faq-categories.index') }}" class="btn btn-outline-primary me-2">分類管理</a>
+                <a href="{{ route('admin.faqs.create') }}" class="btn btn-primary">新增常見問題</a>
+            </div>
         </div>
 
         @if (session('success'))
@@ -19,6 +22,7 @@
                     <thead>
                         <tr>
                             <th style="width: 5%">ID</th>
+                            <th>分類</th>
                             <th>標題</th>
                             <th>排序</th>
                             <th>狀態</th>
@@ -29,6 +33,11 @@
                         @foreach ($faqs as $faq)
                             <tr>
                                 <td>{{ $faq->id }}</td>
+                                <td>
+                                    <span class="badge bg-info">
+                                        {{ $faq->category->title }}
+                                    </span>
+                                </td>
                                 <td>{{ $faq->title }}</td>
                                 <td>{{ $faq->sort_order }}</td>
                                 <td>
@@ -77,4 +86,4 @@
             });
         });
     </script>
-@endpush 
+@endpush
