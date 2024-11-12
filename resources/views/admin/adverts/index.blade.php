@@ -59,10 +59,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
-                <div class="mt-4">
-                    {{ $adverts->links() }}
-                </div>
             </div>
         </div>
     </div>

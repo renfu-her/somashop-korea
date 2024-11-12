@@ -17,8 +17,7 @@ class CategoryController extends Controller
                     ->orderBy('created_at', 'desc');
             }])
             ->where('parent_id', 0)
-            ->latest()
-            ->paginate(15);
+            ->get();
 
         return view('admin.categories.index', compact('categories'));
     }

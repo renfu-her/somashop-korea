@@ -12,9 +12,7 @@ class CartController extends Controller
 {
     public function index()
     {
-        $carts = Cart::with(['user', 'product'])
-            ->latest()
-            ->paginate(15);
+        $carts = Cart::with(['user', 'product'])->get();
 
         return view('admin.carts.index', compact('carts'));
     }

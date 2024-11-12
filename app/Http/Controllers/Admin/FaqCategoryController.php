@@ -10,9 +10,7 @@ class FaqCategoryController extends Controller
 {
     public function index()
     {
-        $categories = FaqCategory::withCount('faqs')
-            ->orderBy('sort_order')
-            ->paginate(15);
+        $categories = FaqCategory::withCount('faqs')->get();
 
         return view('admin.faq-categories.index', compact('categories'));
     }

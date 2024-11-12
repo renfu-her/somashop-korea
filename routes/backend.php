@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FaqCategoryController;
+use App\Http\Controllers\Admin\ActivityController;
 
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -50,4 +51,5 @@ Route::group([
 
     Route::resource('faqs', FaqController::class);
     Route::resource('faq-categories', FaqCategoryController::class);
+    Route::resource('activities', ActivityController::class);
 });
