@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -53,15 +54,17 @@ class AdminController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($admin->id)],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'phone' => ['nullable', 'string', 'max:20'],
-            'is_admin' => ['boolean'],
-            'permissions' => ['array'],
         ]);
 
+        // 處理密碼
         if (!empty($validated['password'])) {
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
         }
+
+        // 處理 is_active
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         $admin->update($validated);
 
@@ -71,7 +74,7 @@ class AdminController extends Controller
 
     public function destroy(User $admin)
     {
-        if ($admin->id === auth()->id()) {
+        if ($admin->id === Auth::id()) {
             return redirect()->route('admin.admins.index')
                 ->with('error', '無法刪除當前登入的管理者帳號！');
         }

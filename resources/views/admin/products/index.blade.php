@@ -31,6 +31,7 @@
                             <th>價格</th>
                             <th>庫存</th>
                             <th>分類</th>
+                            <th>是否啟用</th>
                             <th style="width: 15%">操作</th>
                         </tr>
                     </thead>
@@ -59,6 +60,11 @@
                                     @endif
                                 </td>
                                 <td>
+                                    <span class="badge bg-{{ $product->is_active ? 'success' : 'danger' }}">
+                                        {{ $product->is_active ? '啟用' : '停用' }}
+                                    </span>
+                                </td>
+                                <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.products.edit', $product) }}"
                                             class="btn btn-sm btn-outline-primary">
@@ -73,7 +79,7 @@
                                             </button>
                                         </form>
                                     </div>
-                                </td>
+                                </span>
                             </tr>
                         @endforeach
                     </tbody>

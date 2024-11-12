@@ -94,12 +94,13 @@ class ProductController extends Controller
             'stock' => 'integer|min:0',
             'category_id' => 'exists:categories,id',
             'images.*' => 'nullable|image|max:2048',
-            'is_active' => 'boolean'
         ]);
 
         if (isset($validated['name'])) {
             $validated['slug'] = Str::slug($validated['name']);
         }
+
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         $product->update($validated);
 

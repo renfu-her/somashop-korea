@@ -41,8 +41,8 @@
                                 <td>{{ $admin->email }}</td>
                                 <td>{{ $admin->phone }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $admin->is_admin ? 'success' : 'danger' }}">
-                                        {{ $admin->is_admin ? '啟用' : '停用' }}
+                                    <span class="badge bg-{{ $admin->is_active ? 'success' : 'danger' }}">
+                                        {{ $admin->is_active ? '啟用' : '停用' }}
                                     </span>
                                 </td>
                                 <td>{{ $admin->last_login_at ?? '尚未登入' }}</td>

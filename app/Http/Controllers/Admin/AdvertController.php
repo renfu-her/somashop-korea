@@ -78,7 +78,6 @@ class AdvertController extends Controller
             'description' => 'string',
             'image' => 'nullable|image|max:4096',
             'url' => 'nullable|url',
-            'is_active' => 'boolean',
             'start_date' => 'date',
             'end_date' => 'nullable|date|after:start_date'
         ]);
@@ -97,6 +96,9 @@ class AdvertController extends Controller
                     );
                 }
             }
+
+            // 處理 is_active
+            $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
             $advert->update($validated);
 
