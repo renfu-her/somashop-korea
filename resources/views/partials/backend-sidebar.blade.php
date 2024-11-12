@@ -18,6 +18,20 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.admins.index') }}">
+                <i class="fas fa-users menu-icon"></i>
+                <span class="menu-title">管理者管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.members.index') }}">
+                <i class="fas fa-users menu-icon"></i>
+                <span class="menu-title">會員管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#product-management" aria-expanded="false">
                 <i class="fas fa-box menu-icon"></i>
                 <span class="menu-title">商品維護</span>

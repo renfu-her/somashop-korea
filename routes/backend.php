@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\ActivityController;
+use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\AdminController;
 
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -52,4 +54,6 @@ Route::group([
     Route::resource('faqs', FaqController::class);
     Route::resource('faq-categories', FaqCategoryController::class);
     Route::resource('activities', ActivityController::class);
+    Route::resource('members', MemberController::class);
+    Route::resource('admins', AdminController::class);
 });
