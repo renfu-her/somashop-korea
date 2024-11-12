@@ -58,7 +58,7 @@
 
             <span class="fake-row mx-auto"><!-- hidden spacer to center brand on mobile --></span>
             <a class="navbar-brand mx-auto" href="{{ route('home') }}">
-                <img src="{{ asset('frontend/img/brand_logo.png') }}" class="img-fluid">
+                <img src="{{ asset('frontend/img/brand_top_logo.png') }}" class="img-fluid">
             </a>
 
 
