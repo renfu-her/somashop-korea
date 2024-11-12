@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\Frontend\HomeController;
 
-Route::get('/', function () {
-    return 'Hello, World!';
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 
