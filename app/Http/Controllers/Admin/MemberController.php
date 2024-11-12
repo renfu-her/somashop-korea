@@ -53,7 +53,6 @@ class MemberController extends Controller
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'phone' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:255'],
-            'is_active' => ['boolean'],
         ]);
 
         if (!empty($validated['password'])) {
@@ -61,6 +60,8 @@ class MemberController extends Controller
         } else {
             unset($validated['password']);
         }
+
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         $member->update($validated);
 
