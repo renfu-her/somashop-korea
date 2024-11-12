@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\PostController;
 
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -56,4 +57,5 @@ Route::group([
     Route::resource('activities', ActivityController::class);
     Route::resource('members', MemberController::class);
     Route::resource('admins', AdminController::class);
+    Route::resource('posts', PostController::class);
 });

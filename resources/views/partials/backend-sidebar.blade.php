@@ -71,6 +71,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.posts.index') }}">
+                <i class="fas fa-newspaper menu-icon"></i>
+                <span class="menu-title">文章維護</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.activities.index') }}">
                 <i class="fas fa-calendar-alt menu-icon"></i>
                 <span class="menu-title">活動維護</span>
