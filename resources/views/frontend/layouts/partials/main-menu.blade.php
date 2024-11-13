@@ -10,13 +10,14 @@
                 aria-haspopup="true" aria-expanded="false">
                 關於我們 <i class="fas fa-angle-down"></i>
             </a>
-            @foreach ($navData['about'] as $item)
-                <ul class="dropdown-menu" aria-labelledby="aboutUsDropdown">
+
+            <ul class="dropdown-menu" aria-labelledby="aboutUsDropdown">
+                @foreach ($navData['about'] as $item)
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ $item->title }}</a>
+                        <a class="nav-link" href="{{ route('post.show', $item->id) }}">{{ $item->title }}</a>
                     </li>
-                </ul>
-            @endforeach
+                @endforeach
+            </ul>
         </li>
 
         <li class="nav-item">
