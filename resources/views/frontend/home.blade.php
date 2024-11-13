@@ -109,4 +109,73 @@
             </div>
         </div>
     </div>
+
+    <section class="parrallax py-5">
+        <div class="container my-md-4 my-0">
+            <div class="row mx-auto my-auto" style="overflow-x: hidden; overflow-y: hidden;">
+
+                <div class="d-md-flex flex-md-equal w-100 pl-md-3 mb-5 aos-init aos-animate" data-aos="fade-down-left"
+                    data-aos-delay="100" data-aos-anchor-placement="top-bottom" data-aos-once="true">
+                    <div class="col-md-6 offset-md-6 col-12 mr-md-3 px-3 px-md-5 text-center overflow-hidden">
+                        <div class="mx-auto">
+                            <img src="{{ asset('assets/images/6551c1d1b17797fade62dc420cc5adc3.png') }}"
+                                class="img-fluid">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-black display-5">傳承 永恆 對寶貝的期望</h3>
+                            <p class="mb-0">將您對寶貝的祝福語＆期望交給我們</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="d-md-flex flex-md-equal w-100 mt-n8 mt-sm-0 pl-md-3 mb-5 aos-init aos-animate"
+                    data-aos="fade-down-right" data-aos-delay="450" data-aos-anchor-placement="top-bottom"
+                    data-aos-once="true">
+                    <div class="col-md-6 col-12 ml-md-3 px-3 px-md-5 text-center overflow-hidden">
+                        <div class="mx-auto">
+                            <img src="{{ asset('assets/images/4d140b0ae20490ae88f00a00083b5174.png') }}"
+                                class="img-fluid">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-black display-5">飽滿的布局不漏財</h3>
+                            <p class="mb-0">爸爸媽媽給予寶貝的見面禮、彌月禮</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-md-flex flex-md-equal w-100 mt-n8 mt-sm-0 pl-md-3 aos-init aos-animate"
+                    data-aos="fade-up-left" data-aos-delay="800" data-aos-anchor-placement="top-bottom"
+                    data-aos-once="true">
+                    <div class="col-md-6 offset-md-6 col-12 mr-md-3 px-3 px-md-5 text-center overflow-hidden">
+                        <div class="mx-auto">
+                            <img src="{{ asset('assets/images/8c5b9fdbffb5d6c1e3c189216cb3ced0.png') }}"
+                                class="img-fluid">
+                        </div>
+                        <div class="py-3">
+                            <h3 class="text-black display-5">新手媽咪首選</h3>
+                            <p class="mb-0">爸爸媽媽給予寶貝的見面禮、彌月禮</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="container my-3">
+
+        <div class="row mx-auto my-5" style="overflow-x: hidden; overflow-y: hidden;">
+            <div class="col-md-12 col-sm-12 py-2 aos-init aos-animate" data-aos="zoom-in-right" data-aos-offset="0"
+                data-aos-once="true">
+                <h2 class="text-dark font-weight-bold"><img src="{{ asset('frontend/img/logo_red.png') }}"></h2>
+                <p class="text-justify mb-1">您好 歡迎來店挑選，我們將會有專人為您服務<span class="px-3">|</span> 營業時間 :
+                    上午09:00~晚上21:00(全年無休)</p>
+                <div class="card no-border p0 map-container"><iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.08330759507!2d121.49602831562903!3d25.031246744554526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a9b1e1c611f5%3A0xb7f7029aa88763fc!2zMTA45Y-w5YyX5biC6JCs6I-v5Y2A6I6S5YWJ6LevMzAy6Jmf!5e0!3m2!1szh-TW!2stw!4v1561976370651!5m2!1szh-TW!2stw"
+                        width="100%" height="320" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 @endpush
