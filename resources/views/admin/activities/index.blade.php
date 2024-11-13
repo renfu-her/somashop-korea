@@ -38,9 +38,8 @@
                                 <td>{{ $activity->id }}</td>
                                 <td>
                                     @if ($activity->image)
-                                        <img src="{{ Storage::url($activity->image) }}" 
-                                             alt="{{ $activity->title }}" 
-                                             class="activity-image">
+                                        <img src="{{ asset('storage/activities/' . $activity->id . '/' . $activity->image) }}"
+                                            alt="{{ $activity->title }}" class="activity-image">
                                     @endif
                                 </td>
                                 <td>{{ $activity->title }}</td>
@@ -52,9 +51,8 @@
                                             class="btn btn-sm btn-outline-primary">
                                             編輯
                                         </a>
-                                        <form action="{{ route('admin.activities.destroy', $activity) }}" 
-                                              method="POST"
-                                              onsubmit="return confirm('確定要刪除此活動嗎？');">
+                                        <form action="{{ route('admin.activities.destroy', $activity) }}" method="POST"
+                                            onsubmit="return confirm('確定要刪除此活動嗎？');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -81,19 +79,19 @@
             border-radius: 0 !important;
             object-fit: cover;
         }
-        
+
         /* DataTables 響應式調整 */
         .table-responsive {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
-        
+
         /* 按鈕組樣式 */
         .btn-group {
             display: flex;
             gap: 5px;
         }
-        
+
         /* 表格內容垂直置中 */
         .table td {
             vertical-align: middle;

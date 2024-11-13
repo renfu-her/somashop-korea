@@ -54,7 +54,7 @@ class ActivityController extends Controller
             );
             
             $activity->update([
-                'image' => "activities/{$activity->id}/{$filename}"
+                'image' => "{$filename}"
             ]);
         }
 
@@ -100,7 +100,7 @@ class ActivityController extends Controller
             );
             
             $activity->update([
-                'image' => "activities/{$activity->id}/{$filename}"
+                'image' => "{$filename}"
             ]);
         }
 

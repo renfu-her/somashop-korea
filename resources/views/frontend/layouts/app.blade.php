@@ -59,6 +59,8 @@
         @yield('content')
     </div>
 
+    @stack('home-content')
+
     <footer class="bg-footer d-flex align-items-center">
         <div class="container">
             <div class="row flex-row align-items-center">
@@ -77,10 +79,6 @@
                                             src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png">
                                         台北市萬華區莒光路302號</p>
                                 </div>
-                                <!--<div class="col-auto pl-md-0">
-                  <p class="m-0 text-dark"><i class="far fa-clock"></i> 營業時間 : <br class="d-md-none">
-                  <span class="pl-md-0 pl-3">上午09:00~晚上21:00(全年無休)</span></p>
-                </div>-->
                             </div>
                         </div>
                     </div>
@@ -100,9 +98,8 @@
                             src="{{ asset('frontend/img/ic_small_line.png') }}" class="img-fluid px-md-0 px-3">
                         <p class="pt-2">點我連結</p>
                     </a>
-                    <a href="https://www.instagram.com/a0908512899/" target="_blank"
-                        class="px-md-3 px-0 hvr-bob"><img src="{{ asset('frontend/img/ic_small_ig.png') }}"
-                            class="img-fluid px-md-0 px-3">
+                    <a href="https://www.instagram.com/a0908512899/" target="_blank" class="px-md-3 px-0 hvr-bob"><img
+                            src="{{ asset('frontend/img/ic_small_ig.png') }}" class="img-fluid px-md-0 px-3">
                         <p class="pt-2">點我連結</p>
                     </a>
                 </div>
