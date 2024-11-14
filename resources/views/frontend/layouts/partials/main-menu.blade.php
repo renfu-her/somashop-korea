@@ -21,7 +21,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="act_list.php">活動訊息</a>
+            <a class="nav-link" href="#">活動訊息</a>
         </li>
 
         <li class="nav-item product-item dropdown no-arrow">
