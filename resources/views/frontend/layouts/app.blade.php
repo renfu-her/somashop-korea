@@ -156,45 +156,12 @@
         })();
 
 
-        function checkform() {
-            $('#loading').fadeIn(300, function() {
-                $.ajax({
-                    type: "POST",
-                    url: 'proc.php?proc=contact',
-                    data: 'uname=' + $('input[name="name"]').val() +
-                        '&tel=' + $('input[name="tel"]').val() +
-                        '&email=' + $('input[name="email"]').val() +
-                        '&info=' + $('textarea').val() +
-                        '&captcha=' + $('input[name="captcha"]').val(),
-                    error: function(xhr) {
-                        $('#loading').fadeOut();
-                        alert('網路錯誤');
-                    },
-                    success: function(data, status, xhr) {
-                        $('#loading').fadeOut();
-                        if (data == 'succ') {
-                            alert('感謝您的來信 ,我們已收到信件將會處理確認');
-                            // $('input').val('');
-                            // $('textarea').val('');
-                        } else if (data == 'captcha') {
-                            alert('驗證碼錯誤!');
-                        } else {
-                            // top.location.href = "./";
-                        }
-
-                    }
-                });
-            });
-            return false;
-        }
-
-
         $(function() {
             $('.btn-refresh').click(function() {
                 $('#loading').fadeIn(300, function() {
                     $.ajax({
                         type: "POST",
-                        url: 'proc.php?proc=captcha',
+                        url: '{{ route('captcha.generate') }}',
                         data: '',
                         error: function(xhr) {
                             $('#loading').fadeOut();

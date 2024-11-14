@@ -45,4 +45,4 @@ Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
         ->name('show');
 });
 
-Route::get('/captcha', [CaptchaController::class, 'generate'])->name('captcha');
+Route::get('/captcha', [CaptchaController::class, 'generate'])->name('captcha.generate');

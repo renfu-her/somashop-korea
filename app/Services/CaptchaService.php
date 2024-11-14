@@ -4,19 +4,17 @@ namespace App\Services;
 
 class CaptchaService
 {
-    private $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // 排除容易混淆的字符
     
-    public function generateCaptcha($length = 4)
+    public function generateCaptcha(int $length = 6)
     {
-        $captcha = '';
-        $max = strlen($this->characters) - 1;
+        $characters = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ'; // 移除容易混淆的字符
+        $code = '';
         
         for ($i = 0; $i < $length; $i++) {
-            $captcha .= $this->characters[random_int(0, $max)];
+            $code .= $characters[random_int(0, strlen($characters) - 1)];
         }
         
-        session(['captcha' => strtoupper($captcha)]);
-        return $captcha;
+        return $code;
     }
     
     public function validateCaptcha($input)

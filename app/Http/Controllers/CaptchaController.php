@@ -18,10 +18,12 @@ class CaptchaController extends Controller
 
     public function generate()
     {
-        $code = $this->captchaService->generateCaptcha();
+        $code = $this->captchaService->generateCaptcha(5);
+
+        session(['captcha_code' => $code]);
 
         $manager = new ImageManager(new Driver());
-        $img = $manager->create(120, 40);
+        $img = $manager->create(140, 60);
 
         // 設置淺色背景
         $img->fill('#ffffff');
@@ -29,8 +31,8 @@ class CaptchaController extends Controller
         // 添加干擾線
         for ($i = 0; $i < 6; $i++) {
             $img->drawLine(function ($draw) {
-                $draw->from(random_int(0, 120), random_int(0, 40));
-                $draw->to(random_int(0, 120), random_int(0, 40));
+                $draw->from(random_int(0, 180), random_int(0, 40));
+                $draw->to(random_int(0, 180), random_int(0, 40));
                 // 使用較淺的顏色
                 $draw->color('#' . str_pad(dechex(mt_rand(0xCCCCCC, 0xEEEEEE)), 6, '0', STR_PAD_LEFT));
             });
@@ -39,7 +41,7 @@ class CaptchaController extends Controller
         // 添加文字 - 每個字符單獨處理以增加隨機性
         $length = strlen($code);
         for ($i = 0; $i < $length; $i++) {
-            $x = 25 + ($i * 20); // 字符間距
+            $x = 20 + ($i * 25); // 調整間距以適應 6 個字符
             $y = random_int(20, 30); // 隨機上下位置
 
             $img->text($code[$i], $x, $y, function ($font) {

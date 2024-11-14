@@ -31,7 +31,7 @@
                 class="aos-init aos-animate">
                 <div class="row justify-content-center py-3">
                     <div class="col-md-7 col-sm-12 my-3">
-                        <form method="post" action="proc.php?proc=login" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('login.process') }}" enctype="multipart/form-data">
                             <div class="form-group row mb-3">
                                 <label for="inputEmail" class="col-sm-3 col-form-label text-md-right text-sm-left"><span
                                         class="text-danger">*</span>電子郵件 </label>
