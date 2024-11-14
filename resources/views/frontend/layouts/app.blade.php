@@ -59,7 +59,7 @@
         @yield('content')
     </div>
 
-    @stack('home-content')
+    @stack('app-content')
 
     <footer class="bg-footer d-flex align-items-center">
         <div class="container">

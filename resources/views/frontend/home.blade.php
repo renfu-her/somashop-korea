@@ -3,7 +3,7 @@
 @section('content')
 @endsection
 
-@push('home-content')
+@push('app-content')
     <div class="container py-4">
         <h2 class="text-center font-weight-bold mb-0 pt-5 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="300"
             data-aos-offset="0" data-aos-once="true">

@@ -42,7 +42,8 @@
                         <ul class="dropdown-menu sub-sub-menu" aria-labelledby="navbarDropdown">
                             @foreach ($item->children as $child)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="product_list.php?c=28">{{ $child->name }}</a>
+                                    <a class="nav-link"
+                                        href="{{ route('product.index', $child->id) }}">{{ $child->name }}</a>
                                 </li>
                             @endforeach
                         </ul>
