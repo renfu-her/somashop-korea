@@ -62,10 +62,10 @@
                     <a class="nav-link" href="{{ route('login') }}">登入</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="join.php">加入會員</a>
+                    <a class="nav-link" href="{{ route('join') }}">加入會員</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="forget.php">忘記密碼</a>
+                    <a class="nav-link" href="{{ route('forget') }}">忘記密碼</a>
                 </li>
             </ul>
         </li>

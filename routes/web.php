@@ -20,6 +20,11 @@ Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.pro
 Route::get('/join', [JoinController::class, 'index'])->name('join');
 Route::post('/join', [JoinController::class, 'joinProcess'])->name('join.process');
 
+
+// 忘記密碼路由
+Route::get('/forget', [LoginController::class, 'forget'])->name('forget');
+Route::post('/forget', [LoginController::class, 'forgetProcess'])->name('forget.process');
+
 // 文章路由
 Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');
 

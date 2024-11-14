@@ -24,4 +24,14 @@ class LoginController extends Controller
         Auth::logout();
         return redirect()->route('home');
     }
+
+    public function forget()
+    {
+        return view('frontend.login.forget');
+    }
+
+    public function forgetProcess(Request $request)
+    {
+        dd($request->all());
+    }
 }
