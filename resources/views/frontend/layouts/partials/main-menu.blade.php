@@ -59,7 +59,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="memberDropdown">
                 <li class="nav-item">
-                    <a class="nav-link" href="login.php">登入</a>
+                    <a class="nav-link" href="{{ route('login') }}">登入</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="join.php">加入會員</a>
