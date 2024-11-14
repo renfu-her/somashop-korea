@@ -13,6 +13,33 @@
                             @csrf
 
                             <div class="mb-3">
+                                <label for="category_id" class="form-label">分類</label>
+                                <select class="form-control @error('category_id') is-invalid @enderror" id="category_id"
+                                    name="category_id" required>
+                                    <option value="">請選擇分類</option>
+                                    @foreach ($categories as $category)
+                                        {{-- 父分類只作為標題顯示，不能選擇 --}}
+                                        <option value="" disabled
+                                            style="background-color: #f8f9fa; font-weight: bold;">
+                                            {{ $category->name }}
+                                        </option>
+                                        {{-- 只顯示子分類供選擇 --}}
+                                        @foreach ($category->children as $child)
+                                            <option value="{{ $child->id }}"
+                                                {{ old('category_id') == $child->id ? 'selected' : '' }}>
+                                                ├─ {{ $child->name }}
+                                            </option>
+                                        @endforeach
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="name" class="form-label">產品名稱</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
                                     id="name" name="name" value="{{ old('name') }}" required>
@@ -24,12 +51,20 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="sub_title" class="form-label">副標題</label>
+                                <input type="text" class="form-control @error('sub_title') is-invalid @enderror"
+                                    id="sub_title" name="sub_title" value="{{ old('sub_title') }}">
+                                @error('sub_title')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="description" class="form-label">描述</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror" 
-                                    id="description" 
-                                    name="description"
-                                    cols="30" 
-                                    rows="10">{{ old('description') }}</textarea>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
+                                    cols="30" rows="10">{{ old('description') }}</textarea>
                                 @error('description')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -38,10 +73,21 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="price" class="form-label">價格</label>
+                                <label for="price" class="form-label">原價</label>
                                 <input type="number" class="form-control @error('price') is-invalid @enderror"
                                     id="price" name="price" value="{{ old('price') }}" required>
                                 @error('price')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="cash_price" class="form-label">現金價</label>
+                                <input type="number" class="form-control @error('cash_price') is-invalid @enderror"
+                                    id="cash_price" name="cash_price" value="{{ old('cash_price') }}">
+                                @error('cash_price')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -60,35 +106,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="category_id" class="form-label">分類</label>
-                                <select class="form-control @error('category_id') is-invalid @enderror" 
-                                        id="category_id"
-                                        name="category_id" 
-                                        required>
-                                    <option value="">請選擇分類</option>
-                                    @foreach ($categories as $category)
-                                        {{-- 父分類只作為標題顯示，不能選擇 --}}
-                                        <option value="" disabled style="background-color: #f8f9fa; font-weight: bold;">
-                                            {{ $category->name }}
-                                        </option>
-                                        {{-- 只顯示子分類供選擇 --}}
-                                        @foreach ($category->children as $child)
-                                            <option value="{{ $child->id }}" 
-                                                {{ old('category_id') == $child->id ? 'selected' : '' }}>
-                                                ├─ {{ $child->name }}
-                                            </option>
-                                        @endforeach
-                                    @endforeach
-                                </select>
-                                @error('category_id')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="images" class="form-label">產品圖片</label>
+                                <label for="images" class="form-label">新增圖片</label>
                                 <input type="file" class="form-control @error('images.*') is-invalid @enderror"
                                     id="images" name="images[]" multiple accept="image/*">
                                 <small class="text-muted">可以選擇多張圖片，第一張圖片將作為主圖</small>
@@ -133,7 +151,6 @@
         .ck-editor__editable {
             height: 500px;
         }
-
     </style>
 @endpush
 
@@ -180,13 +197,13 @@
             // 表單提交前驗證
             $('form').on('submit', function(e) {
                 const description = editor.getData();
-                
+
                 if (!description.trim()) {
                     e.preventDefault();
                     alert('請填寫商品描述');
                     return false;
                 }
-                
+
                 // 更新隱藏的 textarea 值
                 $('#description').val(description);
             });

@@ -25,8 +25,9 @@ class ProductController extends Controller
             ->orderBy('name')
             ->get();
 
-        // 獲取當前分類的產品
+        // 獲取當前分類的產品，並確保加載主圖
         $products = Product::where('category_id', $id)
+            ->with('primaryImage')
             ->orderBy('created_at', 'desc')
             ->paginate(9);
 

@@ -52,15 +52,21 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'sub_title' => 'nullable|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
+            'cash_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
             'images.*' => 'nullable|image|max:2048',
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
+            'is_new' => 'boolean'
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
+        $validated['is_new'] = $request->has('is_new') ? 1 : 0;
+        $validated['is_active'] = $request->has('is_active') ? 1 : 0;
+        
         $product = Product::create($validated);
 
         if ($request->hasFile('images')) {
@@ -89,8 +95,10 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'name' => 'string|max:255',
+            'sub_title' => 'nullable|string|max:255',
             'description' => 'string',
             'price' => 'numeric|min:0',
+            'cash_price' => 'nullable|numeric|min:0',
             'stock' => 'integer|min:0',
             'category_id' => 'exists:categories,id',
             'images.*' => 'nullable|image|max:2048',
@@ -100,6 +108,7 @@ class ProductController extends Controller
             $validated['slug'] = Str::slug($validated['name']);
         }
 
+        $validated['is_new'] = $request->has('is_new') ? 1 : 0;
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
         $product->update($validated);

@@ -10,15 +10,19 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
+        'sub_title',
         'description',
         'price',
+        'cash_price',
         'stock',
         'category_id',
-        'is_active'
+        'is_active',
+        'is_new'
     ];
 
     protected $casts = [
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
+        'is_new' => 'boolean'
     ];
 
     // 與分類的關係

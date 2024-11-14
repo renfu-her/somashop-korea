@@ -28,7 +28,8 @@
                             <th style="width: 5%">ID</th>
                             <th>圖片</th>
                             <th>名稱</th>
-                            <th>價格</th>
+                            <th>原價</th>
+                            <th>現金價</th>
                             <th>庫存</th>
                             <th>分類</th>
                             <th>是否啟用</th>
@@ -46,7 +47,8 @@
                                     @endif
                                 </td>
                                 <td>{{ $product->name }}</td>
-                                <td>{{ $product->price }}</td>
+                                <td>{{ number_format($product->price) }}</td>
+                                <td>{{ number_format($product->cash_price) }}</td>
                                 <td>{{ $product->stock }}</td>
                                 <td>
                                     @if($product->category)
