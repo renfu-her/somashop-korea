@@ -320,8 +320,8 @@
                                         <input type="text" class="form-control align-self-center" id="verify"
                                             placeholder="" required name="captcha">
                                         <div class="d-flex pl-2 align-self-center">
-                                            <img src="uploads/captcha/simple-php-captcha.php?_CAPTCHA&amp;t=0.91778000+1731558472"
-                                                width="68px" height="24px" class="img-fluid captchaImg" />
+                                            <img src="{{ route('captcha') }}" width="68px" height="24px"
+                                                class="img-fluid captchaImg" />
                                         </div>
                                         <div class="input-group-append">
                                             <label class="refresh mn-0">

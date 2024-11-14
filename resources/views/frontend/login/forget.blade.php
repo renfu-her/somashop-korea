@@ -32,8 +32,7 @@
             <section data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="900" data-aos-offset="0">
                 <div class="row justify-content-center">
                     <div class="col-md-7 col-sm-12 my-3">
-                        <form method="post" action="#" enctype="multipart/form-data"
-                            onsubmit="return checkform();">
+                        <form method="post" action="#" enctype="multipart/form-data" onsubmit="return checkform();">
                             <div class="form-group row mb-3">
                                 <label for="inputEmail" class="col-sm-3 col-form-label text-md-right text-sm-left pr-0">
                                     <span class="text-danger">*</span>電子郵件
@@ -52,8 +51,8 @@
                                         <input type="text" class="form-control align-self-center" id="verify"
                                             placeholder="" required name="captcha">
                                         <div class="d-flex pl-2 align-self-center">
-                                            <img src="uploads/captcha/simple-php-captcha.php?_CAPTCHA&amp;t=0.47529200+1731576610"
-                                                width="68px" height="24px" class="img-fluid" />
+                                            <img src="{{ route('captcha') }}" width="68px" height="24px"
+                                                class="img-fluid" />
                                         </div>
                                         <div class="input-group-append">
                                             <label class="refresh mn-0">

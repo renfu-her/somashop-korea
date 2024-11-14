@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\LoginController;
 use App\Http\Controllers\Frontend\JoinController;
 use App\Http\Controllers\Frontend\ActivityController;
+use App\Http\Controllers\CaptchaController;
 
 // 首頁路由
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -43,3 +44,5 @@ Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
     Route::get('show/{id}', [App\Http\Controllers\Frontend\ProductController::class, 'show'])
         ->name('show');
 });
+
+Route::get('/captcha', [CaptchaController::class, 'generate'])->name('captcha');
