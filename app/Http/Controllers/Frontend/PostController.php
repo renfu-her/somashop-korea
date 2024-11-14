@@ -20,6 +20,18 @@ class PostController extends Controller
         $post = Post::find($id);
         $posts = Post::get();
 
-        return view('frontend.post', compact('post', 'posts'));
+        // 使用正則表達式處理圖片標籤
+        $postContent = preg_replace(
+            '/<img(.*?)width="[^"]*"(.*?)height="[^"]*"(.*?)>/',
+            '<img$1$2$3 style="width: 100%; height: auto;">',
+            $post->content
+        );
+
+        $postTitle = $post->title;
+
+        return view(
+            'frontend.post',
+            compact('postContent', 'posts', 'postTitle')
+        );
     }
 }
