@@ -7,11 +7,23 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="./">首頁</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><a
-                                    href="product_list.php?c=14">胎毛肚臍章、開運章</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><a href="product_list.php?c=14">南非赤牛角</a>
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('home') }}">首頁</a>
                             </li>
+                            @if($currentCategory)
+                                @if($currentCategory->parent_id > 0)
+                                    <li class="breadcrumb-item">
+                                        <a href="{{ route('products.category', $currentCategory->parent->id) }}">
+                                            {{ $currentCategory->parent->name }}
+                                        </a>
+                                    </li>
+                                @endif
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    <a href="{{ route('products.category', $currentCategory->id) }}">
+                                        {{ $currentCategory->name }}
+                                    </a>
+                                </li>
+                            @endif
                         </ol>
                     </nav>
                 </div>

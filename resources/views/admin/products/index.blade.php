@@ -65,6 +65,9 @@
                                     <span class="badge bg-{{ $product->is_active ? 'success' : 'danger' }}">
                                         {{ $product->is_active ? '啟用' : '停用' }}
                                     </span>
+                                    @if($product->is_new)
+                                        <span class="badge bg-info">新品</span>
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="btn-group">

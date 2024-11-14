@@ -153,10 +153,17 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3 d-flex align-items-center">
-                                <input type="checkbox" class="form-check-input p-1" id="is_active" name="is_active"
-                                    value="1" {{ old('is_active', $product->is_active) == 1 ? 'checked' : '' }}>
-                                <label class="form-check-label p-1" for="is_active">是否啟用</label>
+                            <div class="mb-3 d-flex align-items-center gap-4">
+                                <div>
+                                    <input type="checkbox" class="form-check-input p-1" id="is_active" name="is_active"
+                                        value="1" {{ old('is_active', $product->is_active) == 1 ? 'checked' : '' }}>
+                                    <label class="form-check-label p-1" for="is_active">是否啟用</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" class="form-check-input p-1" id="is_new" name="is_new"
+                                        value="1" {{ old('is_new', $product->is_new) == 1 ? 'checked' : '' }}>
+                                    <label class="form-check-label p-1" for="is_new">新品標籤</label>
+                                </div>
                             </div>
 
                             <div class="d-grid gap-2">
