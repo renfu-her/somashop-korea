@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Article;
 use App\Models\Faq;
 use App\Models\FaqCategory;
+use App\Models\SealKnowledgeCategory;
 
 class NavigationController extends Controller
 {
@@ -16,8 +17,8 @@ class NavigationController extends Controller
         $data = [
             'about' => $this->getAboutPages(),
             'categories' => $this->getProductCategories(),
-            'articles' => $this->getArticleCategories(),
             'faqCategories' => $this->getFaqCategories(),
+            'sealKnowledgeCategories' => $this->getSealKnowledgeCategories(),
         ];
 
         return $data;
@@ -40,9 +41,13 @@ class NavigationController extends Controller
         return $categories;
     }
 
-    private function getArticleCategories()
+    private function getSealKnowledgeCategories()
     {
-        return ['印章的秘密', '印章材質介紹', '印章保養方法', '印章字體介紹', '剃胎毛/胎毛筆', '產品介紹', '服務介紹'];
+        $sealKnowledgeCategories = SealKnowledgeCategory::where('status', true)
+            ->orderBy('order')
+            ->get();
+
+        return $sealKnowledgeCategories;
     }
 
     private function getFaqCategories()

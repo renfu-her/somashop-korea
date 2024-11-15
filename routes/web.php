@@ -10,6 +10,8 @@ use App\Http\Controllers\Frontend\JoinController;
 use App\Http\Controllers\Frontend\ActivityController;
 use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\Frontend\FaqController;
+use App\Http\Controllers\Frontend\SealKnowledgeController;
+use App\Http\Controllers\Frontend\SealKnowledgeCategoryController;
 
 // 首頁路由
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -41,9 +43,18 @@ Route::get('/faqs/{category?}', [FaqController::class, 'index'])->name('faqs.ind
 
 // 產品分類路由
 Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
-    Route::get('category/{id}', [App\Http\Controllers\Frontend\ProductController::class, 'index'])
+    Route::get('category/{id}', [ProductController::class, 'index'])
         ->name('category');
-    Route::get('show/{id}', [App\Http\Controllers\Frontend\ProductController::class, 'show'])
+    Route::get('show/{id}', [ProductController::class, 'show'])
+        ->name('show');
+});
+
+// 印章知識路由
+Route::group(['prefix' => 'seal-knowledge', 'as' => 'seal-knowledge.'], function () {
+    Route::get('/', [SealKnowledgeController::class, 'index'])->name('index');
+    Route::get('/category/{id}', [SealKnowledgeCategoryController::class, 'show'])->name('category');
+    Route::get('/{id}', [SealKnowledgeController::class, 'show'])
+        ->where('id', '[0-9]+')
         ->name('show');
 });
 

@@ -76,33 +76,12 @@
                 認識印章 <i class="fas fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="infomationDropdown">
-                <li class="nav-item">
-                    <a class="nav-link" href="article-list.php?c=7">印章的秘密</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="article-list.php?c=6">印章材質介紹</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="article-list.php?c=5">印章保養方法</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="article-list.php?c=10">印章字體介紹</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="article-list.php?c=9">剃胎毛/胎毛筆</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="article-list.php?c=8">產品介紹</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="article-list.php?c=2">服務介紹</a>
-                </li>
+                @foreach ($navData['sealKnowledgeCategories'] as $item)
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{{ route('seal-knowledge.category', $item->id) }}">{{ $item->name }}</a>
+                    </li>
+                @endforeach
             </ul>
         </li>
 
