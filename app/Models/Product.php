@@ -74,4 +74,10 @@ class Product extends Model
     {
         return asset('storage/products/' . $this->id . '/' . $filename);
     }
+
+    // 在現有的 Product 模型中添加這個關聯
+    public function specifications()
+    {
+        return $this->hasMany(ProductSpecification::class)->orderBy('sort_order');
+    }
 }
