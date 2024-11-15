@@ -22,7 +22,6 @@ Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.pro
 Route::get('/join', [JoinController::class, 'index'])->name('join');
 Route::post('/join', [JoinController::class, 'joinProcess'])->name('join.process');
 
-
 // 忘記密碼路由
 Route::get('/forget', [LoginController::class, 'forget'])->name('forget');
 Route::post('/forget', [LoginController::class, 'forgetProcess'])->name('forget.process');
@@ -39,7 +38,6 @@ Route::get('/activity/{id}', [ActivityController::class, 'detail'])->name('activ
 
 // 常見問題路由
 Route::get('/faqs/{category?}', [FaqController::class, 'index'])->name('faqs.index');
-
 
 // 產品分類路由
 Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
