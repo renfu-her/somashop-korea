@@ -78,7 +78,8 @@ class Product extends Model
     // 在現有的 Product 模型中添加這個關聯
     public function specifications()
     {
-        return $this->belongsToMany(ProductSpecification::class, 'product_specification_items')
+        return $this->belongsToMany(ProductSpecification::class, 'product_specification_items', 
+            'product_id', 'specification_id')
             ->withPivot('is_active')
             ->orderBy('sort_order');
     }

@@ -19,6 +19,8 @@ class ProductSpecification extends Model
     // 多對多關聯，因為一個規格可以被多個產品使用
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_specification_items');
+        return $this->belongsToMany(Product::class, 'product_specification_items',
+            'specification_id', 'product_id')
+            ->withPivot('is_active');
     }
 } 
