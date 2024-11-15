@@ -40,6 +40,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
+
         // 獲取產品詳細信息，包括分類、主圖和所有圖片
         $product = Product::with(['category.parent', 'primaryImage', 'images'])
             ->findOrFail($id);
@@ -56,6 +57,7 @@ class ProductController extends Controller
             ->get();
 
         $currentCategory = $product->category;
+
 
         return view('frontend.product.detail', compact(
             'product',

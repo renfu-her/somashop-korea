@@ -10,8 +10,8 @@
                             <li class="breadcrumb-item">
                                 <a href="{{ route('home') }}">首頁</a>
                             </li>
-                            @if($currentCategory)
-                                @if($currentCategory->parent_id > 0)
+                            @if ($currentCategory)
+                                @if ($currentCategory->parent_id > 0)
                                     <li class="breadcrumb-item">
                                         <a href="{{ route('products.category', $currentCategory->parent->id) }}">
                                             {{ $currentCategory->parent->name }}
@@ -62,7 +62,7 @@
                                             </div>
                                             <div class="card-body px-0">
                                                 <h5 class="card-title">{{ $product->name }}</h5>
-                                                @if($product->sub_title)
+                                                @if ($product->sub_title)
                                                     <h6 class="card-subtitle mb-2 text-muted">{{ $product->sub_title }}</h6>
                                                 @endif
                                                 <h6 class="card-text">原價 NT$ {{ number_format($product->price) }}</h6>
