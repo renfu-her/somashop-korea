@@ -95,5 +95,5 @@ Route::group([
         ->name('seal-knowledge-category.active');
 
     // 規格管理
-    Route::resource('product-specifications', ProductSpecificationController::class);
+    Route::resource('specifications', ProductSpecificationController::class);
 });
