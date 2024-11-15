@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SealKnowledgeController;
 use App\Http\Controllers\Admin\SealKnowledgeCategoryController;
-
+use App\Http\Controllers\Admin\ProductSpecificationController;
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', function () {
@@ -93,4 +93,7 @@ Route::group([
         ->name('seal-knowledge-category.toggle-status');
     Route::get('seal-knowledge-category/active/list', [SealKnowledgeCategoryController::class, 'getActiveCategories'])
         ->name('seal-knowledge-category.active');
+
+    // 規格管理
+    Route::resource('product-specifications', ProductSpecificationController::class);
 });

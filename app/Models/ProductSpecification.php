@@ -6,10 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductSpecification extends Model
 {
-    protected $table = 'product_specifications';
-
     protected $fillable = [
-        'product_id',
         'name',
         'sort_order',
         'is_active'
@@ -19,8 +16,9 @@ class ProductSpecification extends Model
         'is_active' => 'boolean'
     ];
 
-    public function product()
+    // 多對多關聯，因為一個規格可以被多個產品使用
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsToMany(Product::class, 'product_specification_items');
     }
 } 

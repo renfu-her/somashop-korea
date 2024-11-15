@@ -46,6 +46,9 @@
                         <a class="nav-link" href="{{ route('admin.products.index') }}">商品管理</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.product-specifications.index') }}">規格管理</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.carts.index') }}">購物車管理</a>
                     </li>
                 </ul>
