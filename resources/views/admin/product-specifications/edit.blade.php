@@ -37,7 +37,7 @@
 
                             <div class="mb-3 d-flex align-items-center">
                                 <input type="checkbox" class="form-check-input p-1" id="is_active" name="is_active"
-                                    value="1" {{ old('is_active', $advert->is_active) == 1 ? 'checked' : '' }}>
+                                    value="1" {{ old('is_active', $specification->is_active) == 1 ? 'checked' : '' }}>
                                 <label class="form-check-label p-1" for="is_active">啟用</label>
                             </div>
 
