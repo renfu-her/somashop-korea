@@ -39,8 +39,9 @@
 
                             <div class="mb-3">
                                 <label for="content" class="form-label required">內容</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10"
-                                    required>{{ old('content') }}</textarea>
+                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content"
+                                    style="display: none;">{{ old('content') }}</textarea>
+                                <div id="editor" class="@error('content') is-invalid @enderror"></div>
                                 @error('content')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -120,10 +121,9 @@
         <script src="{{ asset('ckeditor5/zh.min.js') }}"></script>
         <script>
             $(document).ready(function() {
-                // CKEditor 初始化
                 let editor;
                 ClassicEditor
-                    .create(document.querySelector('#content'), {
+                    .create(document.querySelector('#editor'), {
                         language: 'zh',
                         ckfinder: {
                             uploadUrl: '{{ route('admin.upload.image') }}',
@@ -154,6 +154,19 @@
                         alert('編輯器初始化失敗：' + error.message);
                     });
 
+                // 表單提交前驗證
+                $('form').on('submit', function(e) {
+                    const content = editor.getData();
+
+                    if (!content.trim()) {
+                        e.preventDefault();
+                        alert('請填寫內容');
+                        return false;
+                    }
+
+                    // 更新隱藏的 textarea 值
+                    $('#content').val(content);
+                });
             });
         </script>
     @endpush

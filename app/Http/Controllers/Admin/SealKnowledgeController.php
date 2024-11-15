@@ -19,13 +19,13 @@ class SealKnowledgeController extends Controller
             ->get();
 
         $query = SealKnowledge::with('category')->orderBy('sort');
-        
+
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
 
         $knowledges = $query->get();
-            
+
         return view('admin.seal-knowledge.index', compact('knowledges', 'categories'));
     }
 
@@ -55,7 +55,9 @@ class SealKnowledgeController extends Controller
         ]);
 
         try {
-            SealKnowledge::create($validated);
+            $sealKnowledge = new SealKnowledge();
+            $sealKnowledge->fill($validated);
+            $sealKnowledge->save();
             return redirect()
                 ->route('admin.seal-knowledge.index')
                 ->with('success', '建立成功');
@@ -186,7 +188,7 @@ class SealKnowledgeController extends Controller
         }
 
         $knowledges = $query->orderBy('sort')->paginate(15);
-        
+
         if ($request->ajax()) {
             return view('admin.seal-knowledge.partials.table', compact('knowledges'));
         }
@@ -194,4 +196,4 @@ class SealKnowledgeController extends Controller
         $categories = SealKnowledgeCategory::where('status', true)->get();
         return view('admin.seal-knowledge.index', compact('knowledges', 'categories'));
     }
-} 
+}
