@@ -12,6 +12,9 @@ use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\Frontend\FaqController;
 use App\Http\Controllers\Frontend\SealKnowledgeController;
 use App\Http\Controllers\Frontend\SealKnowledgeCategoryController;
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\OrderController;
 
 // 首頁路由
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -60,3 +63,20 @@ Route::group(['prefix' => 'seal-knowledge', 'as' => 'seal-knowledge.'], function
 
 // 驗證碼路由
 Route::get('/captcha', [CaptchaController::class, 'generate'])->name('captcha.generate');
+
+// 購物車和結帳路由
+Route::group(['middleware' => 'auth'], function () {
+    // 購物車
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::put('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');
+
+    // 結帳流程
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    
+    // 訂單
+    Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+});
