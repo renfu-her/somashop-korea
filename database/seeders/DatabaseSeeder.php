@@ -6,6 +6,7 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Member;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,16 +17,25 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => '管理員',
+        // User::factory()->create([
+        //     'name' => '管理員',
+        //     'email' => 'renfu.her@gmail.com',
+        //     'password' => Hash::make('Qq123456'),
+        //     'is_admin' => true,
+        // ]);
+        // User::factory()->create([
+        //     'name' => '小編',
+        //     'email' => 'zivhsiao@gmail.com',
+        //     'password' => Hash::make('Qq123456'),
+        // ]);
+
+        Member::factory()->create([
+            'name' => '小編',
             'email' => 'renfu.her@gmail.com',
             'password' => Hash::make('Qq123456'),
-            'is_admin' => true,
-        ]);
-        User::factory()->create([
-            'name' => '小編',
-            'email' => 'zivhsiao@gmail.com',
-            'password' => Hash::make('Qq123456'),
+            'is_active' => true,
+            'gender' => 1,
+            'agree' => 1
         ]);
     }
 }

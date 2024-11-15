@@ -11,6 +11,7 @@ class OrderController extends Controller
 {
     public function store(Request $request, $productId)
     {
+        dd($request->all());
         $request->validate([
             'specification' => 'required|exists:product_specifications,id',
             'quantity' => 'required|integer|min:1'
