@@ -12,14 +12,21 @@ class SealKnowledgeController extends Controller
     /**
      * 顯示列表
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $knowledges = SealKnowledge::with('category')
+        $categories = SealKnowledgeCategory::where('status', true)
             ->orderBy('sort')
             ->get();
+
+        $query = SealKnowledge::with('category')->orderBy('sort');
+        
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $knowledges = $query->get();
             
-        return view('admin.seal-knowledge.index', compact('knowledges'));
+        return view('admin.seal-knowledge.index', compact('knowledges', 'categories'));
     }
 
     /**
