@@ -52,8 +52,8 @@ class Product extends Model
     // 輔助方法：獲取主圖 URL
     public function getPrimaryImageUrlAttribute()
     {
-        return $this->primaryImage?->image_path 
-            ? asset('storage/' . $this->primaryImage->image_path) 
+        return $this->primaryImage?->image_path
+            ? asset('storage/' . $this->primaryImage->image_path)
             : null;
     }
 
@@ -75,12 +75,21 @@ class Product extends Model
         return asset('storage/products/' . $this->id . '/' . $filename);
     }
 
-    // 在現有的 Product 模型中添加這個關聯
     public function specifications()
     {
-        return $this->belongsToMany(ProductSpecification::class, 'product_specification_items', 
-            'product_id', 'specification_id')
+        return $this->belongsToMany(
+            ProductSpecification::class,
+            'product_specification_items',
+            'product_id',
+            'specification_id'
+        )
             ->withPivot('is_active')
-            ->orderBy('sort_order');
+            ->withTimestamps();
+    }
+
+    // 新增一個方法來獲取已啟用的規格
+    public function activeSpecifications()
+    {
+        return $this->specifications()->wherePivot('is_active', true);
     }
 }

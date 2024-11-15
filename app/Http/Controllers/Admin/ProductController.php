@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Category;
+use App\Models\ProductSpecification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -39,13 +40,11 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories'));
     }
 
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $product = Product::with('images')->findOrFail($id);
-        $categories = Category::with('children')
-            ->where('parent_id', 0)
-            ->get();
-        return view('admin.products.edit', compact('product', 'categories'));
+        $categories = Category::orderBy('name')->get();
+        $specifications = ProductSpecification::orderBy('name')->get();
+        return view('admin.products.edit', compact('product', 'categories', 'specifications'));
     }
 
     public function store(Request $request)
@@ -89,10 +88,8 @@ class ProductController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        $product = Product::findOrFail($id);
-
         $validated = $request->validate([
             'name' => 'string|max:255',
             'sub_title' => 'nullable|string|max:255',
@@ -129,6 +126,13 @@ class ProductController extends Controller
                 ]);
             }
         }
+
+        $specifications = $request->input('specifications', []);
+        $product->specifications()->sync(
+            collect($specifications)->mapWithKeys(function ($id) {
+                return [$id => ['is_active' => true]];
+            })
+        );
 
         return redirect()->route('admin.products.index')
             ->with('success', '商品已更新');

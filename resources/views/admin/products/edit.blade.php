@@ -153,6 +153,23 @@
                                 </div>
                             </div>
 
+                            <div class="mb-3">
+                                <label class="form-label">產品規格</label>
+                                <div class="border p-3 rounded">
+                                    @foreach ($specifications as $spec)
+                                        <div class="form-check mb-2 ps-3">
+                                            <input type="checkbox" class="form-check-input"
+                                                id="spec_{{ $spec->id }}" name="specifications[]"
+                                                value="{{ $spec->id }}"
+                                                {{ in_array($spec->id, $product->specifications->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="spec_{{ $spec->id }}">
+                                                {{ $spec->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
                             <div class="mb-3 d-flex align-items-center gap-4">
                                 <div>
                                     <input type="checkbox" class="form-check-input p-1" id="is_active" name="is_active"
