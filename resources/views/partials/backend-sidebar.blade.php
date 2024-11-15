@@ -71,6 +71,24 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#seal-knowledge-management" aria-expanded="false">
+                <i class="fas fa-stamp menu-icon"></i>
+                <span class="menu-title">認識印章維護</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="seal-knowledge-management">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.seal-knowledge-category.index') }}">分類管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin.seal-knowledge.index') }}">文章管理</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.posts.index') }}">
                 <i class="fas fa-newspaper menu-icon"></i>
                 <span class="menu-title">文章維護</span>
