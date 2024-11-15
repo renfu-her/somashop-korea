@@ -9,13 +9,22 @@ use Illuminate\Http\Request;
 
 class FaqController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $faqs = Faq::with('category')
+        $categories = FaqCategory::where('is_active', true)
             ->orderBy('sort_order')
             ->get();
 
-        return view('admin.faqs.index', compact('faqs'));
+        $query = Faq::with('category')->orderBy('sort_order');
+        
+        // 如果有選擇分類
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $faqs = $query->get();
+            
+        return view('admin.faqs.index', compact('faqs', 'categories'));
     }
 
     public function create()

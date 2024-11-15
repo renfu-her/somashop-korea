@@ -25,6 +25,10 @@
     <!-- fontawesome -->
     <link href="{{ asset('frontend/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css?t=' . time()) }}">
+
+    @stack('styles')
+
     <!-- Google Tag Manager -->
     <script>
         (function(w, d, s, l, i) {
@@ -134,6 +138,8 @@
 
     <!-- Custom JavaScript -->
     <script src="{{ asset('frontend/js/babyin.js') }}"></script>
+
+    @stack('scripts')
 
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields

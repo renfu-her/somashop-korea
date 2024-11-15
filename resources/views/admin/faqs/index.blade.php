@@ -4,7 +4,16 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>常見問題管理</h2>
-            <div>
+            <div class="d-flex align-items-center">
+                <select id="categoryFilter" class="form-select me-2" style="width: auto;">
+                    <option value="">所有分類</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" 
+                            {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->title }}
+                        </option>
+                    @endforeach
+                </select>
                 <a href="{{ route('admin.faq-categories.index') }}" class="btn btn-outline-primary me-2">分類管理</a>
                 <a href="{{ route('admin.faqs.create') }}" class="btn btn-primary">新增常見問題</a>
             </div>
@@ -73,12 +82,18 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable({
+            const table = $('#dataTable').DataTable({
                 language: {
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
                 },
                 responsive: true,
                 ordering: false,
+            });
+
+            $('#categoryFilter').change(function() {
+                const categoryId = $(this).val();
+                window.location.href = '{{ route("admin.faqs.index") }}' + 
+                    (categoryId ? '?category_id=' + categoryId : '');
             });
         });
     </script>

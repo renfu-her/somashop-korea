@@ -1,5 +1,17 @@
 @extends('frontend.layouts.app')
 
+@section('title', '加入會員')
+
+@push('scripts')
+    <script src="{{ asset('frontend/js/jquery.twzipcode.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/twzipcode.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#twzipcode').twzipcode();
+        });
+    </script>
+@endpush
+
 @push('app-content')
     <header>
         <div class="container">
@@ -38,8 +50,11 @@
                                     class="col-sm-3 col-form-label text-md-right text-sm-left align-self-center"><span
                                         class="text-danger">*</span>電子郵件 </label>
                                 <div class="col-sm-7 align-self-center">
-                                    <input type="text" class="form-control" id="inputEmail" placeholder="此為日後登入帳號"
-                                        required name="email" value="">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="inputEmail" name="email" value="{{ old('email') }}" required>
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -132,23 +147,26 @@
                                 </div>
                             </div>
 
+
                             <div class="form-group row mb-3">
                                 <label class="col-sm-3 col-form-label text-md-right text-sm-left"><span
                                         class="text-danger">*</span>地址</label>
                                 <div class="col-sm-7">
                                     <div class="row">
-                                        <div class="form-group col-md-6 col-sm-12">
-                                            <select id="city" class="form-control" name="city" data-width="fit">
-                                                <option value="" selected="" disabled="">縣市</option>
-                                            </select>
+                                        <div id="twzipcode" class="col-12">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 mb-2">
+                                                    <select data-role="county" class="form-control"
+                                                        name="county"></select>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-2">
+                                                    <select data-role="district" class="form-control"
+                                                        name="district"></select>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" data-role="zipcode" />
                                         </div>
-                                        <div class="form-group col-md-6 col-sm-12">
-                                            <select id="city" class="form-control" name="district"
-                                                data-width="fit">
-                                                <option value="" selected="" disabled="">鄉鎮市區</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-12 col-sm-12">
+                                        <div class="col-12">
                                             <input type="text" class="form-control" id="address" placeholder=""
                                                 required name="address" value="">
                                         </div>
@@ -207,4 +225,88 @@
 
         </div>
     </article>
+@endpush
+
+@push('scripts')
+    <script>
+        function checkform() {
+            // 密碼驗證
+            const password = $('#inputPassword').val();
+            const passwordConfirm = $('#inputPasswordAgain').val();
+
+            if (password !== passwordConfirm) {
+                alert('兩次輸入的密碼不一致');
+                return false;
+            }
+
+            if (!/^(?=.*[A-Za-z])(?=.*\d).{6,15}$/.test(password)) {
+                alert('密碼必須為6~15字元，且至少包含一個英文字母和數字');
+                return false;
+            }
+
+            // 手機號碼驗證
+            const phone = $('#inputPhone').val();
+            if (!/^09\d{8}$/.test(phone)) {
+                alert('請輸入有效的手機號碼');
+                return false;
+            }
+
+            // 生日驗證
+            const year = $('select[name="year"]').val();
+            const month = $('select[name="month"]').val();
+            const day = $('select[name="day"]').val();
+
+            if (!year || !month || !day) {
+                alert('請選擇完整的出生日期');
+                return false;
+            }
+
+            // 地址驗證
+            const county = $('select[name="county"]').val();
+            const district = $('select[name="district"]').val();
+            const address = $('#address').val();
+
+            if (!county || !district || !address) {
+                alert('請填寫完整的地址資訊');
+                return false;
+            }
+
+            // 驗證碼驗證
+            const captcha = $('#verify').val();
+            if (!captcha || captcha.length !== 6) {
+                alert('請輸入6位驗證碼');
+                return false;
+            }
+
+            // 會員條款確認
+            if (!$('input[name="agree"]').is(':checked')) {
+                alert('請同意會員條款');
+                return false;
+            }
+
+            return true;
+        }
+
+        // 即時密碼驗證
+        $('#inputPasswordAgain').on('input', function() {
+            const password = $('#inputPassword').val();
+            const confirmPassword = $(this).val();
+
+            if (password !== confirmPassword) {
+                $(this).addClass('is-invalid');
+            } else {
+                $(this).removeClass('is-invalid');
+            }
+        });
+
+        // 即時手機號碼驗證
+        $('#inputPhone').on('input', function() {
+            const phone = $(this).val();
+            if (!/^09\d{8}$/.test(phone)) {
+                $(this).addClass('is-invalid');
+            } else {
+                $(this).removeClass('is-invalid');
+            }
+        });
+    </script>
 @endpush

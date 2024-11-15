@@ -19,10 +19,10 @@ class CaptchaService
     
     public function validateCaptcha($input)
     {
-        if (!session()->has('captcha')) {
+        if (!session()->has('captcha_code')) {
             return false;
         }
         
-        return strtoupper($input) === session('captcha');
+        return strtoupper($input) === session('captcha_code');
     }
 } 
