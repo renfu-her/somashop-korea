@@ -1,0 +1,25 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: create-directory
+      uses: Comori/ssh@v0.0.1
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        command: |
+          cd /home/dev-vue-e-commerce-dev/htdocs/e-commerce-dev.dev-vue.com
+          git pull
+          composer install
+          php artisan migrate --force
+          php artisan config:cache
+          php artisan view:cache
+          php artisan route:cache
+          php artisan config:cache
+
