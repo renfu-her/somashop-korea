@@ -7,9 +7,15 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="./">首頁</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">首頁</a></li>
                             <li class="breadcrumb-item active" aria-current="page">常見問答</li>
-                            <li class="breadcrumb-item active" aria-current="page">會員購物相關聲明</li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @foreach($categories as $category)
+                                    @if($categoryId == $category->id)
+                                        {{ $category->title }}
+                                    @endif
+                                @endforeach
+                            </li>
                         </ol>
                     </nav>
                 </div>
