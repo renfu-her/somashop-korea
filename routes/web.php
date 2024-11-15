@@ -47,4 +47,5 @@ Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
         ->name('show');
 });
 
+// 驗證碼路由
 Route::get('/captcha', [CaptchaController::class, 'generate'])->name('captcha.generate');
