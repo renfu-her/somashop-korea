@@ -114,7 +114,7 @@
             <ul class="dropdown-menu" aria-labelledby="faqDropdown">
                 @foreach ($navData['faqCategories'] as $item)
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ $item->title }}</a>
+                        <a class="nav-link" href="{{ route('faqs.index', $item->id) }}">{{ $item->title }}</a>
                     </li>
                 @endforeach
 

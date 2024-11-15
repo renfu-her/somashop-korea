@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\LoginController;
 use App\Http\Controllers\Frontend\JoinController;
 use App\Http\Controllers\Frontend\ActivityController;
 use App\Http\Controllers\CaptchaController;
+use App\Http\Controllers\Frontend\FaqController;
 
 // 首頁路由
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -35,6 +36,9 @@ Route::get('/product/{id}', [ProductController::class, 'index'])->name('product.
 // 活動訊息路由
 Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index');
 Route::get('/activity/{id}', [ActivityController::class, 'detail'])->name('activity.detail');
+
+// 常見問題路由
+Route::get('/faqs/{category?}', [FaqController::class, 'index'])->name('faqs.index');
 
 
 // 產品分類路由
