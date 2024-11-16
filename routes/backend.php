@@ -39,7 +39,7 @@ Route::group([
     // Route::resource('notes', AdminNoteController::class);
 
     // 廣告管理     
-    Route::resource('adverts', AdvertController::class)->except(['show']);
+    Route::resource('adverts', AdvertController::class);
 
     // 分類管理
     Route::resource('categories', CategoryController::class);
