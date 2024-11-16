@@ -3,9 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ProductSpecificationItem extends Model
 {
+    use HasFactory;
+
+    protected $table = 'product_specification_items';
+
     protected $fillable = [
         'product_id',
         'specification_id',
