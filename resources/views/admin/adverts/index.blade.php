@@ -19,8 +19,8 @@
                     <thead>
                         <tr>
                             <th style="width: 5%">ID</th>
-                            <th>標題</th>
                             <th>圖片</th>
+                            <th>標題</th>
                             <th>狀態</th>
                             <th>開始日期</th>
                             <th>結束日期</th>
@@ -31,11 +31,11 @@
                         @foreach ($adverts as $advert)
                             <tr>
                                 <td>{{ $advert->id }}</td>
-                                <td>{{ $advert->title }}</td>
                                 <td>
                                     <img src="{{ asset('storage/adverts/' . $advert->image) }}" alt="{{ $advert->title }}"
                                         width="200" />
                                 </td>
+                                <td>{{ $advert->title }}</td>
                                 <td>
                                     <span class="badge {{ $advert->is_active ? 'bg-success' : 'bg-secondary' }}">
                                         {{ $advert->is_active ? '啟用' : '停用' }}
