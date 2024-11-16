@@ -6,18 +6,16 @@
 @push('app-content')
     <header id="babyinCarousel" class="carousel slide">
         <ol class="carousel-indicators">
-            <li data-target="#babyinCarousel" data-slide-to="0" class="active"></li>
-
-            <li data-target="#babyinCarousel" data-slide-to="1" class=""></li>
-        </ol>
+            @foreach ($adverts as $advert)
+                <li data-target="#babyinCarousel" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
+            @endforeach
+        </ol>   
         <div class="carousel-inner">
-            <a class="carousel-item active">
-                <img src="uploads/a49d190ed3fe88f1d294ddf5b2f933e5.jpg" class="d-block w-100" alt="">
-            </a>
-
-            <a class="carousel-item" href="https://www.babyin.tw/act_list.php">
-                <img src="uploads/0cf5e1d7c11ab8e45600eec493619949.jpg" class="d-block w-100" alt="">
-            </a>
+            @foreach($adverts as $advert)
+                <a class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                    <img src="{{ asset('storage/adverts/' . $advert->image) }}" class="d-block w-100" alt="">
+                </a>
+            @endforeach
         </div>
         <a class="carousel-control-prev text-black-50 w-auto" href="#babyinCarousel" role="button" data-slide="prev">
             <i class="fas fa-chevron-left"></i>

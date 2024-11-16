@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Activity;
 use App\Models\Product;
-
+use App\Models\Advert;
 class HomeController extends Controller
 {
     public function index()
@@ -21,6 +21,8 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        return view('frontend.home', compact('actives', 'hotProducts'));
+        $adverts = Advert::orderByDesc('id')->get();
+
+        return view('frontend.home', compact('actives', 'hotProducts', 'adverts'));
     }
 }
