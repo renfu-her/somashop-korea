@@ -23,8 +23,6 @@ class HomeController extends Controller
 
         $adverts = Advert::orderByDesc('id')->get();
 
-        dd($adverts);
-
         return view('frontend.home', compact('actives', 'hotProducts', 'adverts'));
     }
 }
