@@ -141,4 +141,10 @@ class AdvertController extends Controller
             'data' => $activeAdverts
         ]);
     }
+
+    public function show($id)
+    {
+        $advert = Advert::findOrFail($id);
+        return view('admin.adverts.show', compact('advert'));
+    }
 }

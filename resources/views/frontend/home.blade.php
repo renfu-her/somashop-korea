@@ -4,13 +4,38 @@
 @endsection
 
 @push('app-content')
+    <header id="babyinCarousel" class="carousel slide">
+        <ol class="carousel-indicators">
+            <li data-target="#babyinCarousel" data-slide-to="0" class="active"></li>
+
+            <li data-target="#babyinCarousel" data-slide-to="1" class=""></li>
+        </ol>
+        <div class="carousel-inner">
+            <a class="carousel-item active">
+                <img src="uploads/a49d190ed3fe88f1d294ddf5b2f933e5.jpg" class="d-block w-100" alt="">
+            </a>
+
+            <a class="carousel-item" href="https://www.babyin.tw/act_list.php">
+                <img src="uploads/0cf5e1d7c11ab8e45600eec493619949.jpg" class="d-block w-100" alt="">
+            </a>
+        </div>
+        <a class="carousel-control-prev text-black-50 w-auto" href="#babyinCarousel" role="button" data-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next text-black-50 w-auto" href="#babyinCarousel" role="button" data-slide="next">
+            <i class="fas fa-chevron-right"></i>
+            <span class="sr-only">Next</span>
+        </a>
+    </header>
+
     <div class="container py-4">
         <h2 class="text-center font-weight-bold mb-0 pt-5 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="300"
             data-aos-offset="0" data-aos-once="true">
             <span class="bg-white px-5 py-2">與我聯絡</span>
         </h2>
-        <h4 class="text-center text-gold aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="450" data-aos-offset="0"
-            data-aos-once="true">
+        <h4 class="text-center text-gold aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="450"
+            data-aos-offset="0" data-aos-once="true">
             <span class="bg-white px-5">Contact Us</span>
         </h4>
         <hr class="w-100 my-0 mt-n4">
@@ -163,7 +188,7 @@
         </div>
     </section>
 
-    <div class="container mb-5">
+    <div class="container mb-5 pt-5">
         <h2 class="text-center font-weight-bold mb-0 border-frame aos-init aos-animate" data-aos="zoom-in-up"
             data-aos-delay="300" data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
             熱賣商品
@@ -175,21 +200,22 @@
         </h4>
         <div class="page-content">
             <div class="row">
-                @foreach($hotProducts as $product)
+                @foreach ($hotProducts as $product)
                     <div class="col-md-4 col-6 my-md-3 my-2 px-md-3 pl-2 pr-1 aos-init aos-animate" data-aos="zoom-in"
                         data-aos-delay="0" data-aos-anchor-placement="center-bottom">
                         <a href="{{ route('products.show', $product->id) }}">
                             <div class="card product-card border-0">
                                 <div class="card-top">
-                                    <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}" 
-                                         class="card-img-top img-fluid" alt="{{ $product->name }}">
+                                    <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}"
+                                        class="card-img-top img-fluid" alt="{{ $product->name }}">
                                     <b class="float-tag text-white bg-danger">新品</b>
                                 </div>
                                 <div class="card-body px-0">
                                     <h5 class="card-title">{{ $product->name }}</h5>
                                     <p class="card-text">{{ $product->sub_title }}</p>
-                                    @if($product->original_price)
-                                        <h6 class="card-text text-muted" style="text-decoration: line-through; color: black">
+                                    @if ($product->original_price)
+                                        <h6 class="card-text text-muted"
+                                            style="text-decoration: line-through; color: black">
                                             原價 NT$ {{ number_format($product->original_price) }}
                                         </h6>
                                     @endif
