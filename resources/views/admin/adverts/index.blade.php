@@ -33,8 +33,9 @@
                                 <td>{{ $advert->id }}</td>
                                 <td>{{ $advert->title }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/adverts/' . $advert->image) }}" alt="{{ $advert->title }}"
-                                        style="max-width: 100px">
+                                    {{ asset('storage/adverts/' . $advert->image) }}
+                                    {{-- <img src="{{ asset('storage/adverts/' . $advert->image) }}" alt="{{ $advert->title }}"
+                                        style="max-width: 100px"> --}}
                                 </td>
                                 <td>
                                     <span class="badge {{ $advert->is_active ? 'bg-success' : 'bg-secondary' }}">
