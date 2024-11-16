@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use App\Services\ImageService;
 
-class AdvertController extends Controller
+class AdController extends Controller
 {
     protected $imageService;
 
@@ -23,19 +23,19 @@ class AdvertController extends Controller
 
     public function index()
     {
-        $adverts = Advert::all();
-        return view('admin.adverts.index', compact('adverts'));
+        $ads = Advert::all();
+        return view('admin.ads.index', compact('ads'));
     }
 
     public function create()
     {
-        return view('admin.adverts.create');
+        return view('admin.ads.create');
     }
 
     public function edit($id)
     {
-        $advert = Advert::findOrFail($id);
-        return view('admin.adverts.edit', compact('advert'));
+        $ad = Advert::findOrFail($id);
+        return view('admin.ads.edit', compact('ad'));
     }
 
     public function store(Request $request)
@@ -55,13 +55,13 @@ class AdvertController extends Controller
         if ($request->hasFile('image')) {
             $validated['image'] = $this->imageService->uploadImage(
                 $request->file('image'),
-                'adverts'
+                'ads'
             );
         }
 
         Advert::create($validated);
 
-        return redirect()->route('admin.adverts.index')
+        return redirect()->route('admin.ads.index')
             ->with('success', '廣告已創建');
         // } catch (\Exception $e) {
         //     Log::error('廣告圖片處理失敗：' . $e->getMessage());
@@ -71,7 +71,7 @@ class AdvertController extends Controller
 
     public function update(Request $request, $id)
     {
-        $advert = Advert::findOrFail($id);
+        $ad = Advert::findOrFail($id);
 
         $validated = $request->validate([
             'title' => 'string|max:255',
@@ -85,14 +85,14 @@ class AdvertController extends Controller
         // try {
             if ($request->hasFile('image')) {
                 // 刪除舊圖片
-                if ($advert->image) {
-                    Storage::disk('public')->delete($advert->image);
+                if ($ad->image) {
+                    Storage::disk('public')->delete($ad->image);
                 }
 
                 if ($request->hasFile('image')) {
                     $validated['image'] = $this->imageService->uploadImage(
                         $request->file('image'),
-                        'adverts'
+                        'ads'
                     );
                 }
             }
@@ -100,9 +100,9 @@ class AdvertController extends Controller
             // 處理 is_active
             $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
-            $advert->update($validated);
+            $ad->update($validated);
 
-            return redirect()->route('admin.adverts.index')
+            return redirect()->route('admin.ads.index')
                 ->with('success', '廣告已更新');
         // } catch (\Exception $e) {
         //     Log::error('廣告圖片處理失敗：' . $e->getMessage());
@@ -112,23 +112,23 @@ class AdvertController extends Controller
 
     public function destroy($id)
     {
-        $advert = Advert::findOrFail($id);
+        $ad = Advert::findOrFail($id);
 
         // 刪除廣告圖片
-        if ($advert->image) {
-            Storage::disk('public')->delete($advert->image);
+        if ($ad->image) {
+            Storage::disk('public')->delete($ad->image);
         }
 
-        $advert->delete();
+        $ad->delete();
 
-        return redirect()->route('admin.adverts.index')
+        return redirect()->route('admin.ads.index')
             ->with('success', '廣告已刪除');
     }
 
     // 獲取當前活動的廣告 (API 方法保留)
     public function getActiveAdverts()
     {
-        $activeAdverts = Advert::where('is_active', true)
+        $activeAds = Advert::where('is_active', true)
             ->where('start_date', '<=', now())
             ->where(function ($query) {
                 $query->where('end_date', '>=', now())
@@ -138,13 +138,13 @@ class AdvertController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => $activeAdverts
+            'data' => $activeAds
         ]);
     }
 
     public function show($id)
     {
-        $advert = Advert::findOrFail($id);
-        return view('admin.adverts.show', compact('advert'));
+        $ad = Advert::findOrFail($id);
+        return view('admin.ads.show', compact('ad'));
     }
 }

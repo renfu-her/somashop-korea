@@ -4,7 +4,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>廣告管理</h2>
-            <a href="{{ route('admin.adverts.create') }}" class="btn btn-primary">新增廣告</a>
+            <a href="{{ route('admin.ads.create') }}" class="btn btn-primary">新增廣告</a>
         </div>
 
         @if (session('success'))
@@ -28,25 +28,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($adverts as $advert)
+                        @foreach ($ads as $ad)
                             <tr>
-                                <td>{{ $advert->id }}</td>
+                                <td>{{ $ad->id }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/adverts/' . $advert->image) }}" alt="{{ $advert->title }}" width="200" />
+                                    <img src="{{ asset('storage/ads/' . $ad->image) }}" alt="{{ $ad->title }}"
+                                        width="200" />
                                 </td>
-                                <td>{{ $advert->title }}</td>
+                                <td>{{ $ad->title }}</td>
                                 <td>
-                                    <span class="badge {{ $advert->is_active ? 'bg-success' : 'bg-secondary' }}">
-                                        {{ $advert->is_active ? '啟用' : '停用' }}
+                                    <span class="badge {{ $ad->is_active ? 'bg-success' : 'bg-secondary' }}">
+                                        {{ $ad->is_active ? '啟用' : '停用' }}
                                     </span>
                                 </td>
-                                <td>{{ $advert->start_date->format('Y-m-d') }}</td>
-                                <td>{{ $advert->end_date ? $advert->end_date->format('Y-m-d') : '-' }}</td>
+                                <td>{{ $ad->start_date->format('Y-m-d') }}</td>
+                                <td>{{ $ad->end_date ? $ad->end_date->format('Y-m-d') : '-' }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.adverts.edit', $advert) }}"
+                                        <a href="{{ route('admin.ads.edit', $ad) }}"
                                             class="btn btn-sm btn-outline-primary">編輯</a>
-                                        <form action="{{ route('admin.adverts.destroy', $advert) }}" method="POST"
+                                        <form action="{{ route('admin.ads.destroy', $ad) }}" method="POST"
                                             class="d-inline" onsubmit="return confirm('確定要刪除此廣告嗎？');">
                                             @csrf
                                             @method('DELETE')

@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SealKnowledgeController;
 use App\Http\Controllers\Admin\SealKnowledgeCategoryController;
 use App\Http\Controllers\Admin\ProductSpecificationController;
+use App\Http\Controllers\Admin\AdController;
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', function () {
@@ -39,7 +40,7 @@ Route::group([
     // Route::resource('notes', AdminNoteController::class);
 
     // 廣告管理     
-    Route::resource('adverts', AdvertController::class)->except(['show']);
+    Route::resource('ads', AdController::class)->except(['show']);
 
     // 分類管理
     Route::resource('categories', CategoryController::class);

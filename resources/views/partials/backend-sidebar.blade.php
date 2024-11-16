@@ -106,7 +106,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.adverts.index') }}">
+            <a class="nav-link" href="{{ route('admin.ads.index') }}">
                 <i class="fas fa-ad menu-icon"></i>
                 <span class="menu-title">廣告維護</span>
             </a>

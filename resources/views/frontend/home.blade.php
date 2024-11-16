@@ -6,14 +6,14 @@
 @push('app-content')
     <header id="babyinCarousel" class="carousel slide">
         <ol class="carousel-indicators">
-            @foreach ($adverts as $advert)
+            @foreach ($ads as $ad)
                 <li data-target="#babyinCarousel" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
             @endforeach
         </ol>   
         <div class="carousel-inner">
-            @foreach($adverts as $advert)
+            @foreach($ads as $ad)
                 <a class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <img src="{{ asset('storage/adverts/' . $advert->image) }}" class="d-block w-100" alt="">
+                    <img src="{{ asset('storage/ads/' . $ad->image) }}" class="d-block w-100" alt="">
                 </a>
             @endforeach
         </div>

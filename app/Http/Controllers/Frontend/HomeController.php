@@ -21,8 +21,8 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        $adverts = Advert::orderByDesc('id')->get();
+        $ads = Advert::orderByDesc('id')->get();
 
-        return view('frontend.home', compact('actives', 'hotProducts', 'adverts'));
+        return view('frontend.home', compact('actives', 'hotProducts', 'ads'));
     }
 }
