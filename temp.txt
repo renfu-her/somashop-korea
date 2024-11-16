@@ -1,0 +1,4 @@
+M  app/Http/Controllers/Frontend/HomeController.php
+M  resources/views/frontend/home.blade.php
+M  smart-commit.sh
+?? temp.txt

@@ -122,7 +122,7 @@
                                 class="img-fluid">
                         </div>
                         <div class="p-3">
-                            <h3 class="text-black display-5">傳承 永恆 對寶貝的期望</h3>
+                            <h3 class="text-black display-5">傳承 永恆 對寶��的期望</h3>
                             <p class="mb-0">將您對寶貝的祝福語＆期望交給我們</p>
                         </div>
 
@@ -163,18 +163,44 @@
         </div>
     </section>
 
-    <div class="container my-3">
-        <div class="row mx-auto my-5" style="overflow-x: hidden; overflow-y: hidden;">
-            <div class="col-md-12 col-sm-12 py-2 aos-init aos-animate" data-aos="zoom-in-right" data-aos-offset="0"
-                data-aos-once="true">
-                <h2 class="text-dark font-weight-bold"><img src="{{ asset('frontend/img/logo_red.png') }}"></h2>
-                <p class="text-justify mb-1">您好 歡迎來店挑選，我們將會有專人為您服務<span class="px-3">|</span> 營業時間 :
-                    上午09:00~晚上21:00(全年無休)</p>
-                <div class="card no-border p0 map-container"><iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.08330759507!2d121.49602831562903!3d25.031246744554526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a9b1e1c611f5%3A0xb7f7029aa88763fc!2zMTA45Y-w5YyX5biC6JCs6I-v5Y2A6I6S5YWJ6LevMzAy6Jmf!5e0!3m2!1szh-TW!2stw!4v1561976370651!5m2!1szh-TW!2stw"
-                        width="100%" height="320" frameborder="0" style="border:0" allowfullscreen=""></iframe>
-                </div>
+    <div class="container mb-5">
+        <h2 class="text-center font-weight-bold mb-0 border-frame aos-init aos-animate" data-aos="zoom-in-up"
+            data-aos-delay="300" data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
+            熱賣商品
+        </h2>
+        <h4 class="text-center text-gold mb-4 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="350"
+            data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
+            Hot items
+            <div style="border-top: 1px solid #cbc8c8; margin: 20px 0; width: 100%"></div>
+        </h4>
+        <div class="page-content">
+            <div class="row">
+                @foreach($hotProducts as $product)
+                    <div class="col-md-4 col-6 my-md-3 my-2 px-md-3 pl-2 pr-1 aos-init aos-animate" data-aos="zoom-in"
+                        data-aos-delay="0" data-aos-anchor-placement="center-bottom">
+                        <a href="{{ route('products.show', $product->id) }}">
+                            <div class="card product-card border-0">
+                                <div class="card-top">
+                                    <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}" 
+                                         class="card-img-top img-fluid" alt="{{ $product->name }}">
+                                    <b class="float-tag text-white bg-danger">新品</b>
+                                </div>
+                                <div class="card-body px-0">
+                                    <h5 class="card-title">{{ $product->name }}</h5>
+                                    <p class="card-text">{{ $product->sub_title }}</p>
+                                    @if($product->original_price)
+                                        <h6 class="card-text text-muted" style="text-decoration: line-through; color: black">
+                                            原價 NT$ {{ number_format($product->original_price) }}
+                                        </h6>
+                                    @endif
+                                    <h5 class="card-text text-danger">現金價 NT$ {{ number_format($product->price) }}</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
+
 @endpush

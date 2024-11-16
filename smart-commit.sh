@@ -1,92 +1,92 @@
 #!/bin/bash
 
-# 颜色定义
+# 顏色定義
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-# 获取变更文件列表
+# 獲取變更檔案列表
 changed_files=$(git status --porcelain)
 
 if [ -z "$changed_files" ]; then
-    echo -e "${YELLOW}没有需要提交的更改${NC}"
+    echo -e "${YELLOW}沒有需要提交的更改${NC}"
     exit 0
 fi
 
 commit_message=""
 
-# 检查是否有配置文件更改
+# 檢查是否有配置檔案更改
 if echo "$changed_files" | grep -q "config\|.env\|.yml\|.json"; then
-    commit_message+="📦 配置: 更新配置文件\n"
+    commit_message+="📦 配置: 更新配置檔案\n"
 fi
 
-# 检查是否有数据库迁移文件
+# 檢查是否有資料庫遷移檔案
 if echo "$changed_files" | grep -q "database/migrations"; then
-    commit_message+="🗃️ 数据库: 更新迁移文件\n"
+    commit_message+="🗃️ 遷移: 更新遷移檔案\n"
 fi
 
-# 检查是否有依赖更新
+# 檢查是否有依賴更新
 if echo "$changed_files" | grep -q "composer.json\|package.json\|yarn.lock\|composer.lock"; then
-    commit_message+="📚 依赖: 更新项目依赖\n"
+    commit_message+="📚 依賴: 更新專案依賴\n"
 fi
 
-# 检查是否有文档更新
+# 檢查是否有文件更新
 if echo "$changed_files" | grep -q "README\|docs/\|.md"; then
-    commit_message+="📝 文档: 更新文档\n"
+    commit_message+="📝 文件: 更新文件\n"
 fi
 
-# 检查是否有测试文件更新
+# 檢查是否有測試檔案更新
 if echo "$changed_files" | grep -q "tests/\|.test.\|.spec."; then
-    commit_message+="🧪 测试: 更新测试用例\n"
+    commit_message+="🧪 測試: 更新測試用例\n"
 fi
 
-# 检查是否有样式文件更新
+# 檢查是否有樣式檔案更新
 if echo "$changed_files" | grep -q ".css\|.scss\|.less\|.style"; then
-    commit_message+="💄 样式: 更新界面样式\n"
+    commit_message+="💄 樣式: 更新介面樣式\n"
 fi
 
-# 检查是否有控制器更新
+# 檢查是否有控制器更新
 if echo "$changed_files" | grep -q "app/Http/Controllers"; then
-    commit_message+="🎮 控制器: 更新控制器逻辑\n"
+    commit_message+="🎮 Controller 控制器: 更新控制器邏輯\n"
 fi
 
-# 检查是否有模型更新
+# 檢查是否有模型更新
 if echo "$changed_files" | grep -q "app/Models"; then
-    commit_message+="📊 模型: 更新数据模型\n"
+    commit_message+="📊 Model 模型: 更新資料模型\n"
 fi
 
-# 检查是否有视图文件更新
+# 檢查是否有視圖檔案更新
 if echo "$changed_files" | grep -q "resources/views"; then
-    commit_message+="🎨 视图: 更新页面模板\n"
+    commit_message+="🎨 View 視圖: 更新頁面模板\n"
 fi
 
-# 如果没有匹配到特定类型，则添加默认消息
+# 如果沒有匹配到特定類型，則添加預設訊息
 if [ -z "$commit_message" ]; then
-    commit_message="🔨 更新: 代码优化与更新"
+    commit_message="🔨 更新: 程式碼優化與更新"
 fi
 
-# 显示变更文件
-echo -e "${BLUE}变更文件列表:${NC}"
+# 顯示變更檔案
+echo -e "${BLUE}變更檔案列表:${NC}"
 echo "$changed_files"
-echo -e "\n${BLUE}提交信息:${NC}"
+echo -e "\n${BLUE}提交訊息:${NC}"
 echo -e "$commit_message"
 
-# 询问是否继续
-read -p "是否继续提交? (y/n) " -n 1 -r
+# 詢問是否繼續
+read -p "是否繼續提交? (y/n) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # 执行 git 命令
+    # 執行 git 命令
     git add .
     git commit -m "$commit_message"
     
-    # 询问是否推送
-    read -p "是否推送到远程仓库? (y/n) " -n 1 -r
+    # 詢問是否推送
+    read -p "是否推送到遠端儲存庫? (y/n) " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         git push
-        echo -e "${GREEN}已成功推送到远程仓库${NC}"
+        echo -e "${GREEN}已成功推送到遠端儲存庫${NC}"
     fi
 else
     echo -e "${YELLOW}取消提交${NC}"
