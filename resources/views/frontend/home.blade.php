@@ -4,28 +4,35 @@
 @endsection
 
 @push('app-content')
-    <header id="babyinCarousel" class="carousel slide">
-        <ol class="carousel-indicators">
-            @foreach ($ads as $ad)
-                <li data-target="#babyinCarousel" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
-            @endforeach
-        </ol>   
-        <div class="carousel-inner">
-            @foreach($ads as $ad)
-                <a class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <img src="{{ asset('storage/ads/' . $ad->image) }}" class="d-block w-100" alt="">
+    @if ($ads->count() > 0)
+        <div class="container px-0">
+            <header id="babyinCarousel" class="carousel slide">
+                <ol class="carousel-indicators">
+                    @foreach ($ads as $ad)
+                        <li data-target="#babyinCarousel" data-slide-to="{{ $loop->index }}"
+                            class="{{ $loop->first ? 'active' : '' }}"></li>
+                    @endforeach
+                </ol>
+                <div class="carousel-inner">
+                    @foreach ($ads as $ad)
+                        <a class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                            <img src="{{ asset('storage/ads/' . $ad->image) }}" class="d-block w-100" alt="">
+                        </a>
+                    @endforeach
+                </div>
+                <a class="carousel-control-prev text-black-50 w-auto" href="#babyinCarousel" role="button"
+                    data-slide="prev">
+                    <i class="fas fa-chevron-left"></i>
+                    <span class="sr-only">Previous</span>
                 </a>
-            @endforeach
+                <a class="carousel-control-next text-black-50 w-auto" href="#babyinCarousel" role="button"
+                    data-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+            </header>
         </div>
-        <a class="carousel-control-prev text-black-50 w-auto" href="#babyinCarousel" role="button" data-slide="prev">
-            <i class="fas fa-chevron-left"></i>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next text-black-50 w-auto" href="#babyinCarousel" role="button" data-slide="next">
-            <i class="fas fa-chevron-right"></i>
-            <span class="sr-only">Next</span>
-        </a>
-    </header>
+    @endif
 
     <div class="container py-4">
         <h2 class="text-center font-weight-bold mb-0 pt-5 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="300"
