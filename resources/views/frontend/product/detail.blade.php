@@ -64,12 +64,15 @@
                                     <h3 class="text-danger">現金價：NT$ {{ number_format($product->cash_price) }}</h3>
                                 </div>
 
-                                <form action="{{ route('products.order', $product->id) }}" method="POST">
+                                <form action="{{ Auth::check() ? route('checkout') : route('login') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="redirect_to" value="{{ route('checkout') }}">
+                                    
                                     <div class="form-group row my-4">
                                         <label class="col-sm-2 col-form-label">規格</label>
                                         <div class="col-10 col-md-10">
-                                            <select class="form-control" name="specification">
+                                            <select class="form-control" name="specification_id">
                                                 <option value="">請選擇</option>
                                                 @foreach ($product->specifications as $spec)
                                                     <option value="{{ $spec->id }}">{{ $spec->name }}</option>
@@ -92,15 +95,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row my-4">
-                                        <div class="col-12">
-                                            <span class="text-danger">全館商品免運費</span>
-                                        </div>
-                                    </div>
-
                                     <div class="form-group row">
                                         <div class="col-6">
-                                            <button type="submit" class="btn btn-danger w-100 rounded-pill">立即訂購</button>
+                                            <a href="{{ Auth::check() ? route('checkout') : route('login') }}" class="btn btn-danger w-100 rounded-pill">
+                                                {{ Auth::check() ? '立即訂購' : '登入後訂購' }}
+                                            </a>
                                         </div>
                                         <div class="col-6">
                                             <button type="button"

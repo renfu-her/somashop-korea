@@ -58,15 +58,34 @@
                 會員專區 <i class="fas fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="memberDropdown">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">登入</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('join') }}">加入會員</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('forget') }}">忘記密碼</a>
-                </li>
+                @auth('member')
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">個人資料修改</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">訂單查詢</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                   document.getElementById('logout-form').submit();">
+                            登出
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">登入</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('join') }}">加入會員</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('forget') }}">忘記密碼</a>
+                    </li>
+                @endauth
             </ul>
         </li>
 

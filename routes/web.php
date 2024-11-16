@@ -31,6 +31,9 @@ Route::post('/join', [JoinController::class, 'joinProcess'])->name('join.process
 Route::get('/forget', [LoginController::class, 'forget'])->name('forget');
 Route::post('/forget', [LoginController::class, 'forgetProcess'])->name('forget.process');
 
+// 登出路由
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 // 文章路由
 Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');
 
@@ -65,7 +68,7 @@ Route::group(['prefix' => 'seal-knowledge', 'as' => 'seal-knowledge.'], function
 Route::get('/captcha', [CaptchaController::class, 'generate'])->name('captcha.generate');
 
 // 購物車和結帳路由
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth:member'], function () {
     // 購物車
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
@@ -74,7 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // 結帳流程
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
     
     // 訂單
     Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');

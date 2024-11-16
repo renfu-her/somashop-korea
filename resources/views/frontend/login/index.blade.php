@@ -32,20 +32,37 @@
                 <div class="row justify-content-center py-3">
                     <div class="col-md-7 col-sm-12 my-3">
                         <form method="post" action="{{ route('login.process') }}" enctype="multipart/form-data">
+                            @csrf
                             <div class="form-group row mb-3">
-                                <label for="inputEmail" class="col-sm-3 col-form-label text-md-right text-sm-left"><span
-                                        class="text-danger">*</span>電子郵件 </label>
+                                <label for="inputEmail" class="col-sm-3 col-form-label text-md-right text-sm-left">
+                                    <span class="text-danger">*</span>電子郵件
+                                </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputEmail" placeholder="" required=""
-                                        name="email">
+                                    <input type="email" 
+                                           class="form-control @error('email') is-invalid @enderror" 
+                                           id="inputEmail" 
+                                           name="email" 
+                                           value="{{ old('email') }}" 
+                                           required>
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
+                            
                             <div class="form-group row mb-3">
-                                <label for="inputPassword" class="col-sm-3 col-form-label text-md-right text-sm-left"><span
-                                        class="text-danger">*</span>密碼</label>
+                                <label for="inputPassword" class="col-sm-3 col-form-label text-md-right text-sm-left">
+                                    <span class="text-danger">*</span>密碼
+                                </label>
                                 <div class="col-sm-7">
-                                    <input type="password" class="form-control" id="inputPassword" placeholder=""
-                                        required="" name="password">
+                                    <input type="password" 
+                                           class="form-control @error('password') is-invalid @enderror" 
+                                           id="inputPassword" 
+                                           name="password" 
+                                           required>
+                                    @error('password')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
