@@ -51,22 +51,22 @@ class AdvertController extends Controller
         ]);
 
 
-        try {
-            if ($request->hasFile('image')) {
-                $validated['image'] = $this->imageService->uploadImage(
-                    $request->file('image'),
-                    'adverts'
-                );
-            }
-
-            Advert::create($validated);
-
-            return redirect()->route('admin.adverts.index')
-                ->with('success', '廣告已創建');
-        } catch (\Exception $e) {
-            Log::error('廣告圖片處理失敗：' . $e->getMessage());
-            return back()->withErrors(['image' => '圖片處理失敗'])->withInput();
+        // try {
+        if ($request->hasFile('image')) {
+            $validated['image'] = $this->imageService->uploadImage(
+                $request->file('image'),
+                'adverts'
+            );
         }
+
+        Advert::create($validated);
+
+        return redirect()->route('admin.adverts.index')
+            ->with('success', '廣告已創建');
+        // } catch (\Exception $e) {
+        //     Log::error('廣告圖片處理失敗：' . $e->getMessage());
+        //     return back()->withErrors(['image' => '圖片處理失敗'])->withInput();
+        // }
     }
 
     public function update(Request $request, $id)
@@ -82,7 +82,7 @@ class AdvertController extends Controller
             'end_date' => 'nullable|date|after:start_date'
         ]);
 
-        try {
+        // try {
             if ($request->hasFile('image')) {
                 // 刪除舊圖片
                 if ($advert->image) {
@@ -104,10 +104,10 @@ class AdvertController extends Controller
 
             return redirect()->route('admin.adverts.index')
                 ->with('success', '廣告已更新');
-        } catch (\Exception $e) {
-            Log::error('廣告圖片處理失敗：' . $e->getMessage());
-            return back()->withErrors(['image' => '圖片處理失敗'])->withInput();
-        }
+        // } catch (\Exception $e) {
+        //     Log::error('廣告圖片處理失敗：' . $e->getMessage());
+        //     return back()->withErrors(['image' => '圖片處理失敗'])->withInput();
+        // }
     }
 
     public function destroy($id)
