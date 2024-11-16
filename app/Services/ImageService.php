@@ -19,6 +19,10 @@ class ImageService
         $filename = Str::uuid7() . '.webp';
         $fullPath = "{$path}/{$filename}";
 
+        if($path === 'ads') {
+            $width = 1920;
+        }
+
         $manager = new ImageManager(new Driver());
         $img = $manager->read($image);
         $img->scale(width: $width);
