@@ -44,7 +44,7 @@ class NavigationController extends Controller
     private function getSealKnowledgeCategories()
     {
         $sealKnowledgeCategories = SealKnowledgeCategory::where('status', true)
-            ->orderBy('order')
+            ->orderBy('sort')
             ->get();
 
         return $sealKnowledgeCategories;
