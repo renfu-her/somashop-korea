@@ -32,7 +32,7 @@
                             <tr>
                                 <td>{{ $advert->id }}</td>
                                 <td>
-                                    <img src="{{ $advert->image }}" alt="{{ $advert->title }}" width="200" />
+                                    <img src="{{ asset('storage/adverts/' . $advert->image) }}" alt="{{ $advert->title }}" width="200" />
                                 </td>
                                 <td>{{ $advert->title }}</td>
                                 <td>
