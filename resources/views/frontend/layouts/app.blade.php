@@ -60,6 +60,8 @@
     @include('frontend.layouts.partials.nav')
 
     <div class="container">
+        @include('frontend.layouts.partials.toast-messages')
+
         @yield('content')
     </div>
 
@@ -111,6 +113,7 @@
         </div>
     </footer>
 
+    
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -138,6 +141,8 @@
 
     <!-- Custom JavaScript -->
     <script src="{{ asset('frontend/js/babyin.js') }}"></script>
+
+    <script src="{{ asset('frontend/js/custom.js?v=' . time()) }}"></script>
 
     @stack('scripts')
 
@@ -215,6 +220,7 @@
             top: 50%;
         }
     </style>
+
 
 </body>
 

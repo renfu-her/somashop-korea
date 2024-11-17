@@ -21,7 +21,17 @@ class NavigationController extends Controller
             'sealKnowledgeCategories' => $this->getSealKnowledgeCategories(),
         ];
 
-        return $data;
+        // 獲取購物車數量
+        $cartItems = session('cart', []);
+        $cartCount = is_array($cartItems) ? count($cartItems) : 0;
+
+        return [
+            'about' => $data['about'],
+            'categories' => $data['categories'],
+            'faqCategories' => $data['faqCategories'],
+            'sealKnowledgeCategories' => $data['sealKnowledgeCategories'],
+            'cartCount' => $cartCount,
+        ];
     }
 
     private function getAboutPages()

@@ -13,7 +13,16 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
-        $cart = session()->get('cart', []);
+        
+        if(session()->has('cart')){
+            $cart = session()->get('cart', []);
+        }else{
+            $cart = [];
+        }
+
+        if (empty($cart)) {
+            return redirect()->route('home')->with('error', '購物車是空的');
+        }
         $total = 0;
 
         // 計算總價
