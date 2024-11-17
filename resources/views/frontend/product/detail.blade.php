@@ -64,7 +64,7 @@
                                     <h3 class="text-danger">現金價：NT$ {{ number_format($product->cash_price) }}</h3>
                                 </div>
 
-                                <form action="{{ Auth::guard('member')->check() ? route('checkout') : route('login') }}"
+                                <form action="{{ Auth::guard('member')->check() ? route('checkout.add') : route('login') }}"
                                     @if (Auth::guard('member')->check())
                                         method="POST"
                                     @else
@@ -73,7 +73,6 @@
                                 >
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <input type="hidden" name="redirect_to" value="{{ route('checkout') }}">
 
                                     <div class="form-group row my-4">
                                         <label class="col-sm-2 col-form-label">規格</label>

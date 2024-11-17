@@ -49,10 +49,9 @@ Route::get('/faqs/{category?}', [FaqController::class, 'index'])->name('faqs.ind
 
 // 產品分類路由
 Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
-    Route::get('category/{id}', [ProductController::class, 'index'])
-        ->name('category');
-    Route::get('show/{id}', [ProductController::class, 'show'])
-        ->name('show');
+    Route::get('/', [ProductController::class, 'index'])->name('index');
+    Route::get('category/{id}', [ProductController::class, 'index'])->name('category');
+    Route::get('show/{id}', [ProductController::class, 'show'])->name('show');
 });
 
 // 印章知識路由
@@ -74,10 +73,15 @@ Route::group(['middleware' => 'auth:member'], function () {
     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
     Route::put('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');
+    
+    // 需要添加的路由
+    Route::post('/cart/update-quantity', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
+    Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::get('/checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
 
     // 結帳流程
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'addToCart'])->name('checkout.add');
     
     // 訂單
     Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');

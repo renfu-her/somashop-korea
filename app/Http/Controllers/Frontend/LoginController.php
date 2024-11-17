@@ -40,6 +40,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::guard('member')->logout();
+        session()->forget('cart');
         return redirect()->route('home');
     }
 
