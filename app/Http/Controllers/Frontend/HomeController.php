@@ -18,7 +18,6 @@ class HomeController extends Controller
             ->where('is_active', 1)
             ->where('is_new', 1)
             ->orderByDesc('id')
-            ->limit(6)
             ->get();
 
         $ads = Advert::orderByDesc('id')->get();

@@ -34,7 +34,8 @@
         </div>
     @endif
 
-    <div class="container py-4">
+    {{-- TODO: 移除與我聯絡 --}}
+    {{-- <div class="container py-4">
         <h2 class="text-center font-weight-bold mb-0 pt-5 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="300"
             data-aos-offset="0" data-aos-once="true">
             <span class="bg-white px-5 py-2">與我聯絡</span>
@@ -80,8 +81,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Page Features -->
+        </div> 
         <div class="row my-4" style="overflow-x: hidden; overflow-y: hidden;">
             <div class="col-md-4 offset-md-1 col-12 mb-md-0 mb-4 aos-init aos-animate" data-aos="zoom-in-right"
                 data-aos-delay="450" data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
@@ -95,9 +95,9 @@
                     印鑑工坊進而推廣實行精緻刻印之精神及其專業服務態度.望能持續推廣中國文化之美與傳承</p>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="container mb-5">
+    <div class="container mb-5 mt-5">
         <h2 class="text-center font-weight-bold mb-0 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="300"
             data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">活動訊息</h2>
         <h4 class="text-center text-gold mb-4 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="350"

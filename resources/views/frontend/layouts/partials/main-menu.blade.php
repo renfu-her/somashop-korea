@@ -89,7 +89,8 @@
             </ul>
         </li>
 
-        <li class="nav-item dropdown no-arrow">
+        {{-- TODO: 移除認識印章 --}}
+        {{-- <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="infomationDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 認識印章 <i class="fas fa-angle-down"></i>
@@ -102,7 +103,7 @@
                     </li>
                 @endforeach
             </ul>
-        </li>
+        </li>--}}
 
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="faqDropdown" role="button" data-toggle="dropdown"
