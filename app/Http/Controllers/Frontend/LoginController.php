@@ -24,7 +24,7 @@ class LoginController extends Controller
 
         if (Auth::guard('member')->attempt($credentials)) {
             $request->session()->regenerate();
-            
+
             if ($request->has('redirect_to')) {
                 return redirect($request->redirect_to);
             }

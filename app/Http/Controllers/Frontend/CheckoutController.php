@@ -6,9 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductSpecification;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        dd($request->all());
+
+        return view('frontend.checkout.index');
+    }
+
     public function checkout(Request $request)
     {
         $validated = $request->validate([

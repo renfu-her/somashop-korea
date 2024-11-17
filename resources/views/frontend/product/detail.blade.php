@@ -64,11 +64,17 @@
                                     <h3 class="text-danger">現金價：NT$ {{ number_format($product->cash_price) }}</h3>
                                 </div>
 
-                                <form action="{{ Auth::check() ? route('checkout') : route('login') }}" method="POST">
+                                <form action="{{ Auth::guard('member')->check() ? route('checkout') : route('login') }}"
+                                    @if (Auth::guard('member')->check())
+                                        method="POST"
+                                    @else
+                                        method="GET"
+                                    @endif
+                                >
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="redirect_to" value="{{ route('checkout') }}">
-                                    
+
                                     <div class="form-group row my-4">
                                         <label class="col-sm-2 col-form-label">規格</label>
                                         <div class="col-10 col-md-10">
@@ -97,9 +103,13 @@
 
                                     <div class="form-group row">
                                         <div class="col-6">
-                                            <a href="{{ Auth::check() ? route('checkout') : route('login') }}" class="btn btn-danger w-100 rounded-pill">
-                                                {{ Auth::check() ? '立即訂購' : '登入後訂購' }}
-                                            </a>
+                                            <button type="submit" class="btn btn-danger w-100 rounded-pill">
+                                                @if (Auth::guard('member')->check())
+                                                    立即訂購
+                                                @else
+                                                    登入後訂購
+                                                @endif
+                                            </button>
                                         </div>
                                         <div class="col-6">
                                             <button type="button"
@@ -126,7 +136,7 @@
             // 數量加減按鈕
             $('.btn-minus').click(function() {
                 var input = $(this).closest('.input-group').find('input');
-                var value = parseInt(input.val());
+                var value = parseInt(input.val()) || 1;
                 if (value > 1) {
                     input.val(value - 1);
                 }
@@ -134,8 +144,18 @@
 
             $('.btn-plus').click(function() {
                 var input = $(this).closest('.input-group').find('input');
-                var value = parseInt(input.val());
+                var value = parseInt(input.val()) || 1;
                 input.val(value + 1);
+            });
+
+            // 確保輸入框只能輸入數字
+            $('input[name="quantity"]').on('input', function() {
+                var value = $(this).val();
+                // 移除非數字字符並轉換為整數
+                value = parseInt(value.replace(/[^0-9]/g, '')) || 1;
+                // 確保最小值為1
+                if (value < 1) value = 1;
+                $(this).val(value);
             });
         });
     </script>
