@@ -64,7 +64,7 @@
                                     <h3 class="text-danger">現金價：NT$ {{ number_format($product->cash_price) }}</h3>
                                 </div>
 
-                                <form action="{{ Auth::guard('member')->check() ? route('checkout.add') : route('login') }}"
+                                <form action="{{ Auth::guard('member')->check() ? route('cart.add') : route('login') }}"
                                     @if (Auth::guard('member')->check())
                                         method="POST"
                                     @else

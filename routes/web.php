@@ -70,7 +70,8 @@ Route::get('/captcha', [CaptchaController::class, 'generate'])->name('captcha.ge
 Route::group(['middleware' => 'auth:member'], function () {
     // 購物車
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    // Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
     Route::put('/cart/update/{item}', [CartController::class, 'update'])->name('cart.update');
     

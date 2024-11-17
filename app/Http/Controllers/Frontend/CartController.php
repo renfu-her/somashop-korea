@@ -7,16 +7,54 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
+use App\Models\ProductSpecification;
 
 class CartController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cart = Cart::where('user_id', auth()->id())
-            ->with(['items.product', 'items.specification'])
-            ->first();
+        $cart = session()->get('cart', []);
+        $total = 0;
 
-        return view('frontend.cart.index', compact('cart'));
+        // 計算總價
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+
+        return view(
+            'frontend.cart.index',
+            compact('cart', 'total')
+        );
+    }
+
+    public function addToCart(Request $request)
+    {
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'specification_id' => 'required|exists:product_specifications,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        $product = Product::findOrFail($validated['product_id']);
+        $specification = ProductSpecification::findOrFail($validated['specification_id']);
+
+        // 獲取當前購物車
+        $cart = session()->get('cart', []);
+
+        // 新增商品到購物車
+        $cart[] = [
+            'product_id' => $validated['product_id'],
+            'specification_id' => $validated['specification_id'],
+            'quantity' => $validated['quantity'],
+            'price' => $product->cash_price,
+            'product_name' => $product->name,
+            'specification_name' => $specification->name,
+            'primary_image' => asset('storage/products/' . $validated['product_id'] . '/' . $product->primaryImage->image_path)
+        ];
+
+        session()->put('cart', $cart);
+
+        return redirect()->route('cart.index');
     }
 
     public function add(Request $request, Product $product)
@@ -86,4 +124,4 @@ class CartController extends Controller
         return redirect()->route('cart.index')
             ->with('success', '商品已從購物車移除');
     }
-} 
+}
