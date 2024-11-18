@@ -59,7 +59,10 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'images.*' => 'nullable|image|max:2048',
             'is_active' => 'boolean',
-            'is_new' => 'boolean'
+            'is_new' => 'boolean',
+            'meta_title' => 'nullable|string|max:60',
+            'meta_description' => 'nullable|string|max:160',
+            'meta_keywords' => 'nullable|string|max:255',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -99,6 +102,9 @@ class ProductController extends Controller
             'stock' => 'integer|min:0',
             'category_id' => 'exists:categories,id',
             'images.*' => 'nullable|image|max:2048',
+            'meta_title' => 'nullable|string|max:60',
+            'meta_description' => 'nullable|string|max:160',
+            'meta_keywords' => 'nullable|string|max:255',
         ]);
 
         if (isset($validated['name'])) {

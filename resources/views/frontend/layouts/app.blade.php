@@ -5,11 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="format-detection" content="telephone=no">
-    <meta name="keywords" content="印章店,刻印章,印章 刻印,臍帶章,臍帶印章,肚臍印章,臍帶章推薦,印章開運,手工印章,客製化印章,剃胎毛">
-    <meta name="description" content="各式印鑑.肚臍章,手工刻、印章、開運章、臍帶章、胎毛章,髮財章終生保固~七天鑑賞期不滿意全額微笑退費~古井鏡面刻工.">
-    <meta name="author" content="">
-
-    <title>Babyin 寶貝印 印鑑工坊</title>
+    
+    {{-- SEO Meta Tags --}}
+    <title>@yield('meta_title', '德善堂')</title>
+    <meta name="keywords" content="@yield('meta_keywords', '德善堂')">
+    <meta name="description" content="@yield('meta_description', '德善堂')">
+    
+    {{-- Open Graph Tags --}}
+    <meta property="og:title" content="@yield('meta_title', '德善堂')">
+    <meta property="og:description" content="@yield('meta_description')">
+    <meta property="og:image" content="@yield('og_image', asset('frontend/img/brand_logo_bg-red.png'))">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
 
     <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 

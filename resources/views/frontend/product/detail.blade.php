@@ -1,5 +1,9 @@
 @extends('frontend.layouts.app')
 
+@section('meta_title', trim($product->meta_title) ? trim($product->meta_title) : $product->name . ' - 德善堂')
+@section('meta_description', trim($product->meta_description))
+@section('meta_keywords', trim($product->meta_keywords))
+
 @push('app-content')
     <header>
         <div class="container">
@@ -137,7 +141,7 @@
         $(document).ready(function() {
             $('.checkout-btn, .cart-btn').click(function(e) {
                 e.preventDefault();
-                
+
                 // 检查规格是否已选择
                 const specificationId = $('select[name="specification_id"]').val();
                 if (!specificationId) {

@@ -183,6 +183,38 @@
                                 </div>
                             </div>
 
+                            <div class="card mt-4">
+                                <div class="card-header">
+                                    SEO 設定
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="meta_title" class="form-label">SEO 標題</label>
+                                        <input type="text" class="form-control @error('meta_title') is-invalid @enderror"
+                                            id="meta_title" name="meta_title" 
+                                            value="{{ old('meta_title', $product->meta_title) }}"
+                                            maxlength="60">
+                                        <small class="text-muted">建議長度：60 字元以內</small>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="meta_description" class="form-label">SEO 描述</label>
+                                        <textarea class="form-control @error('meta_description') is-invalid @enderror"
+                                            id="meta_description" name="meta_description" 
+                                            rows="3" maxlength="160">{{ old('meta_description', $product->meta_description) }}</textarea>
+                                        <small class="text-muted">建議長度：160 字元以內</small>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="meta_keywords" class="form-label">SEO 關鍵字</label>
+                                        <input type="text" class="form-control @error('meta_keywords') is-invalid @enderror"
+                                            id="meta_keywords" name="meta_keywords" 
+                                            value="{{ old('meta_keywords', $product->meta_keywords) }}">
+                                        <small class="text-muted">多個關鍵字請用逗號分隔</small>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">
                                     更新產品

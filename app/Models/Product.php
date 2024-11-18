@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -22,7 +23,10 @@ class Product extends Model
         'stock',
         'category_id',
         'is_active',
-        'is_new'
+        'is_new',
+        'meta_title',
+        'meta_description',
+        'meta_keywords'
     ];
 
     protected $casts = [
@@ -96,5 +100,17 @@ class Product extends Model
     public function activeSpecifications()
     {
         return $this->specifications()->wherePivot('is_active', true);
+    }
+
+    // 獲取 SEO 標題
+    public function getMetaTitleAttribute($value)
+    {
+        return $value ?: $this->name;
+    }
+
+    // 獲取 SEO 描述
+    public function getMetaDescriptionAttribute($value)
+    {
+        return $value ?: Str::limit(strip_tags($this->description), 160);
     }
 }
