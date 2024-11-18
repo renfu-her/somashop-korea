@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {
-    protected $middleware = [
-        'guest:admin' => ['except' => ['logout']]
-    ];
 
     public function showLoginForm()
     {
