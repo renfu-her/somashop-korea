@@ -75,6 +75,7 @@ class JoinController extends Controller
             'county' => $request->county,
             'district' => $request->district,
             'address' => $request->address,
+            'zipcode' => $request->zipcode,
             'status' => 1,
             'email_verified_at' => now(),
         ]);

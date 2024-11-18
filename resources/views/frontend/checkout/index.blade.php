@@ -370,11 +370,12 @@
 
 @push('scripts')
     <script src="{{ asset('frontend/js/jquery.twzipcode.min.js') }}"></script>
-    <script src="{{ asset('frontend/js/twzipcode.js') }}"></script>
     <script>
         $(document).ready(function() {
 
-            $('#twzipcode').twzipcode('{{ Auth::guard('member')->user()->zipcode }}');
+            $('#twzipcode').twzipcode({
+                "zipcodeSel": "{{ Auth::guard('member')->user()->zipcode }}",
+            });
 
             // 監聽"同訂購人資料"複選框的變化
             $('input[name="sameAsMember"]').change(function() {

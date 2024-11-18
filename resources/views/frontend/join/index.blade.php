@@ -156,7 +156,7 @@
                                                         name="district"></select>
                                                 </div>
                                             </div>
-                                            <input type="hidden" data-role="zipcode" />
+                                            <input type="hidden" data-role="zipcode" name="zipcode" />
                                         </div>
                                         <div class="col-12">
                                             <input type="text" class="form-control" id="address" placeholder=""
@@ -226,7 +226,6 @@
 
 @push('scripts')
     <script src="{{ asset('frontend/js/jquery.twzipcode.min.js') }}"></script>
-    <script src="{{ asset('frontend/js/twzipcode.js') }}"></script>
     <script>
         function checkform() {
             // 密碼驗證
