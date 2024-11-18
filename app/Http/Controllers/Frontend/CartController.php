@@ -41,7 +41,8 @@ class CartController extends Controller
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
             'specification_id' => 'required|exists:product_specifications,id',
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|integer|min:1',
+            'checkout_direct' => 'boolean'
         ]);
 
         $product = Product::findOrFail($validated['product_id']);
@@ -63,42 +64,43 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
+        // 根據 checkout_direct 參數決定跳轉
+        if ($request->boolean('checkout_direct')) {
+            return redirect()->route('checkout.index');
+        }
+
         return redirect()->route('cart.index');
     }
 
-    public function add(Request $request, Product $product)
+    public function add(Request $request)
     {
-        $request->validate([
-            'specification' => 'required|exists:product_specifications,id',
-            'quantity' => 'required|integer|min:1'
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'specification_id' => 'required|exists:product_specifications,id',
+            'quantity' => 'required|integer|min:1',
+            'checkout_direct' => 'boolean'
         ]);
 
-        $cart = Cart::firstOrCreate([
-            'user_id' => Auth::guard('member')->id()
-        ]);
+        // 獲取當前購物車
+        $cart = session()->get('cart', []);
 
-        // 檢查是否已存在相同商品和規格
-        $existingItem = CartItem::where('cart_id', $cart->id)
-            ->where('product_id', $product->id)
-            ->where('specification_id', $request->specification)
-            ->first();
+        // 新增商品到購物車
+        $cartItem = [
+            'product_id' => $validated['product_id'],
+            'specification_id' => $validated['specification_id'],
+            'quantity' => $validated['quantity']
+        ];
+        
+        // 存储到购物车 session
+        $cart[] = $cartItem;
+        session()->put('cart', $cart);
 
-        if ($existingItem) {
-            $existingItem->update([
-                'quantity' => $existingItem->quantity + $request->quantity
-            ]);
-        } else {
-            CartItem::create([
-                'cart_id' => $cart->id,
-                'product_id' => $product->id,
-                'specification_id' => $request->specification,
-                'quantity' => $request->quantity,
-                'price' => $product->cash_price
-            ]);
+        // 根据 checkout_direct 参数决定跳转
+        if ($request->boolean('checkout_direct')) {
+            return redirect()->route('checkout');
         }
 
-        return redirect()->route('cart.index')
-            ->with('success', '商品已加入購物車');
+        return redirect()->back()->with('success', '商品已加入購物車');
     }
 
     public function update(Request $request, CartItem $item)
@@ -107,7 +109,7 @@ class CartController extends Controller
             'quantity' => 'required|integer|min:1'
         ]);
 
-        if ($item->cart->user_id !== auth()->id()) {
+        if ($item->cart->user_id !== Auth::guard('member')->id()) {
             abort(403);
         }
 
@@ -124,7 +126,7 @@ class CartController extends Controller
 
     public function remove(CartItem $item)
     {
-        if ($item->cart->user_id !== auth()->id()) {
+        if ($item->cart->user_id !== Auth::guard('member')->id()) {
             abort(403);
         }
 

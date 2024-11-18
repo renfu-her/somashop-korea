@@ -65,14 +65,12 @@
                                 </div>
 
                                 <form action="{{ Auth::guard('member')->check() ? route('cart.add') : route('login') }}"
-                                    @if (Auth::guard('member')->check())
-                                        method="POST"
+                                    @if (Auth::guard('member')->check()) method="POST"
                                     @else
-                                        method="GET"
-                                    @endif
-                                >
+                                        method="GET" @endif>
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="checkout_direct" id="checkout_direct" value="0">
 
                                     <div class="form-group row my-4">
                                         <label class="col-sm-2 col-form-label">規格</label>
@@ -101,19 +99,24 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-6">
-                                            <button type="submit" class="btn btn-danger w-100 rounded-pill">
-                                                @if (Auth::guard('member')->check())
+                                        @if (Auth::guard('member')->check())
+                                            <div class="col-6">
+                                                <button type="submit"
+                                                    class="btn btn-danger w-100 rounded-pill checkout-btn">
                                                     立即訂購
-                                                @else
-                                                    登入後訂購
-                                                @endif
-                                            </button>
-                                        </div>
-                                        <div class="col-6">
-                                            <button type="button"
-                                                class="btn btn-outline-danger w-100 rounded-pill">加入購物車</button>
-                                        </div>
+                                                </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="submit"
+                                                    class="btn btn-outline-danger w-100 rounded-pill cart-btn">加入購物車</button>
+                                            </div>
+                                        @else
+                                            <div class="col-12">
+                                                <a href="{{ route('login') }}" class="btn btn-danger w-100 rounded-pill">
+                                                    登入後購買
+                                                </a>
+                                            </div>
+                                        @endif
                                     </div>
                                 </form>
                             </div>
@@ -132,29 +135,20 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            // 數量加減按鈕
-            $('.btn-minus').click(function() {
-                var input = $(this).closest('.input-group').find('input');
-                var value = parseInt(input.val()) || 1;
-                if (value > 1) {
-                    input.val(value - 1);
+            $('.checkout-btn, .cart-btn').click(function(e) {
+                e.preventDefault();
+                
+                // 检查规格是否已选择
+                const specificationId = $('select[name="specification_id"]').val();
+                if (!specificationId) {
+                    // 创建并显示 toast 消息
+                    showToast('請選擇商品規格', 'error');
+                    return;
                 }
-            });
 
-            $('.btn-plus').click(function() {
-                var input = $(this).closest('.input-group').find('input');
-                var value = parseInt(input.val()) || 1;
-                input.val(value + 1);
-            });
-
-            // 確保輸入框只能輸入數字
-            $('input[name="quantity"]').on('input', function() {
-                var value = $(this).val();
-                // 移除非數字字符並轉換為整數
-                value = parseInt(value.replace(/[^0-9]/g, '')) || 1;
-                // 確保最小值為1
-                if (value < 1) value = 1;
-                $(this).val(value);
+                // 继续提交表单
+                $('#checkout_direct').val($(this).hasClass('checkout-btn') ? '1' : '0');
+                $(this).closest('form').submit();
             });
         });
     </script>
