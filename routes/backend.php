@@ -20,7 +20,7 @@ use App\Http\Controllers\Admin\SealKnowledgeController;
 use App\Http\Controllers\Admin\SealKnowledgeCategoryController;
 use App\Http\Controllers\Admin\ProductSpecificationController;
 use App\Http\Controllers\Admin\AdController;
-
+use App\Http\Controllers\Admin\EmailSettingController;
 
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -99,4 +99,7 @@ Route::group([
 
     // 規格管理
     Route::resource('specifications', ProductSpecificationController::class);
+
+    // 郵件設定
+    Route::resource('email-settings', EmailSettingController::class);
 });
