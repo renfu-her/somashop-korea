@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\CaptchaService;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-use Intervention\Image\Encoders\PngEncoder;
 
 class CaptchaController extends Controller
 {
@@ -18,46 +15,6 @@ class CaptchaController extends Controller
 
     public function generate()
     {
-        $code = $this->captchaService->generateCaptcha(5);
-
-        session(['captcha_code' => $code]);
-
-        $manager = new ImageManager(new Driver());
-        $img = $manager->create(140, 60);
-
-        // 設置淺色背景
-        $img->fill('#ffffff');
-
-        // 添加干擾線
-        for ($i = 0; $i < 6; $i++) {
-            $img->drawLine(function ($draw) {
-                $draw->from(random_int(0, 180), random_int(0, 40));
-                $draw->to(random_int(0, 180), random_int(0, 40));
-                // 使用較淺的顏色
-                $draw->color('#' . str_pad(dechex(mt_rand(0xCCCCCC, 0xEEEEEE)), 6, '0', STR_PAD_LEFT));
-            });
-        }
-
-        // 添加文字 - 每個字符單獨處理以增加隨機性
-        $length = strlen($code);
-        for ($i = 0; $i < $length; $i++) {
-            $x = 20 + ($i * 25); // 調整間距以適應 6 個字符
-            $y = random_int(20, 30); // 隨機上下位置
-
-            $img->text($code[$i], $x, $y, function ($font) {
-                $font->file(public_path('fonts/arial.ttf')); // 使用下載的字體
-                $font->size(24);
-                $font->color('#000000');
-                $font->align('center');
-                $font->valign('middle');
-            });
-        }
-
-        $encoder = new PngEncoder();
-        $encodedImage = $img->encode($encoder);
-
-        return response($encodedImage->toString(), 200)
-            ->header('Content-Type', 'image/png')
-            ->header('Cache-Control', 'no-store, no-cache, must-revalidate');
+        return $this->captchaService->generateCaptcha();
     }
 }

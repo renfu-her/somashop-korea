@@ -113,7 +113,7 @@
         </div>
     </footer>
 
-    
+
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -171,17 +171,15 @@
             $('.btn-refresh').click(function() {
                 $('#loading').fadeIn(300, function() {
                     $.ajax({
-                        type: "POST",
+                        type: "GET", 
                         url: '{{ route('captcha.generate') }}',
-                        data: '',
                         error: function(xhr) {
                             $('#loading').fadeOut();
                             alert('網路錯誤');
                         },
                         success: function(data, status, xhr) {
                             $('#loading').fadeOut();
-                            $('.captchaImg').attr('src', 'uploads/captcha/' + data);
-
+                            $('.captchaImg').attr('src', '{{ route('captcha.generate') }}?' + new Date().getTime());
                         }
                     });
                 });

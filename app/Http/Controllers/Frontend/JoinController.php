@@ -6,9 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Services\CaptchaService;
 
 class JoinController extends Controller
 {
+    protected $captchaService;
+    
+    public function __construct(CaptchaService $captchaService)
+    {
+        $this->captchaService = $captchaService;
+    }
+
     public function index()
     {
         return view('frontend.join.index');
@@ -17,7 +25,7 @@ class JoinController extends Controller
     public function joinProcess(Request $request)
     {
         // 驗證驗證碼
-        if (session('captcha_code') !== $request->captcha) {
+        if (!$this->captchaService->validate($request->captcha)) {
             return back()->withErrors(['captcha' => '驗證碼不正確'])->withInput();
         }
 

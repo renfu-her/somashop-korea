@@ -278,7 +278,7 @@
                 return false;
             }
 
-            // 會員條款確認
+            // 是否同意會員條款
             if (!$('input[name="agree"]').is(':checked')) {
                 alert('請同意會員條款');
                 return false;
@@ -307,6 +307,10 @@
             } else {
                 $(this).removeClass('is-invalid');
             }
+        });
+
+        $(document).ready(function() {
+
         });
     </script>
 @endpush

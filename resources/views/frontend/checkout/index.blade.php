@@ -21,8 +21,8 @@
     <article class="page-wrapper my-3">
         <div class="container">
             <div class="page-title">
-                <h2 class="text-black text-center font-weight-bold mb-0" data-aos="zoom-in-up">購物車</h2>
-                <h4 class="text-center text-gold mb-4" data-aos="zoom-in-up" data-aos-delay="150">Shopping Cart</h4>
+                <h2 class="text-black text-center font-weight-bold mb-0" data-aos="zoom-in-up">我要結帳</h2>
+                <h4 class="text-center text-gold mb-4" data-aos="zoom-in-up" data-aos-delay="150">Checkout</h4>
             </div>
 
             <section class="mx-md-5 my-md-2 m-sm-1" data-aos="fade-up" data-aos-delay="450">
@@ -37,7 +37,6 @@
                                     <th scope="col">現金價</th>
                                     <th scope="col">數量</th>
                                     <th scope="col">小計</th>
-                                    <th scope="col">刪除</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -47,8 +46,7 @@
                                     <tr class="cart-item">
                                         <td scope="row"></td>
                                         <td class="thumb-img align-middle">
-                                            <img class="item-img" src="{{ $item['primary_image'] }}"
-                                                width="106px">
+                                            <img class="item-img" src="{{ $item['primary_image'] }}" width="106px">
                                         </td>
                                         <td class="align-middle border-sm-top">
                                             <span class="cart-tag d-block d-sm-none text-muted" disable>規格</span>
@@ -63,41 +61,18 @@
                                         </td>
                                         <td class="quantity align-middle border-sm-top">
                                             <span class="cart-tag d-block d-sm-none text-muted" disable>數量</span>
-                                            <div class="input-group num-row">
-                                                <button class="btn btn-minus btn-light border btn-sm"
-                                                    data-product-id="{{ $item['product_id'] }}"
-                                                    data-specification-id="{{ $item['specification_id'] }}">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                                <input type="text" class="form-control bg-white text-center qty_input"
-                                                    value="{{ $item['quantity'] }}"
-                                                    data-product-id="{{ $item['product_id'] }}"
-                                                    data-specification-id="{{ $item['specification_id'] }}">
-                                                <button class="btn btn-plus btn-light border btn-sm"
-                                                    data-product-id="{{ $item['product_id'] }}"
-                                                    data-specification-id="{{ $item['specification_id'] }}">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
+                                            <p class="mb-0">{{ $item['quantity'] }}</p>
                                         </td>
                                         <td class="total align-middle border-sm-top">
                                             <span class="cart-tag d-block d-sm-none text-muted" disable>小計</span>
                                             <p class="text-danger mb-0 money">
                                                 NT${{ number_format($item['price'] * $item['quantity']) }}</p>
                                         </td>
-                                        <td class="align-middle border-sm-top">
-                                            <button type="button"
-                                                class="btn bg-transparent border-0 hvr-buzz-out remove-item"
-                                                data-product-id="{{ $item['product_id'] }}"
-                                                data-specification-id="{{ $item['specification_id'] }}">
-                                                <i class="far fa-trash-alt"></i>
-                                            </button>
-                                        </td>
                                         <td></td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="text-center">購物車是空的</td>
+                                        <td colspan="7" class="text-center">購物車是空的</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -107,31 +82,277 @@
                     <div class="col-sm-12 dot-line">
                         <div class="row">
                             <div class="col-sm-3 offset-sm-9 pb-3">
-                                <h5 class="shopping-free-tag text-danger">全館周年慶商品免運</h5>
+                                <h5 class="text-danger">全館周年慶商品免運</h5>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-sm-12 my-3">
                         <div class="row">
-                            <div class="col-sm-3 offset-sm-9 col-xs-6 offset-xs-6">
+                            <div class="col-md-4 offset-md-8 col-sm-6 offset-sm-6">
                                 <h2 class="text-black mb-0">
                                     總計
-                                    <span class="pl-3 priceTotalplusFee">NT${{ number_format($total) }}</span>
+                                    <span class="pl-3">NT${{ number_format($total) }}</span>
                                 </h2>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12">
-                        <div class="row my-3">
-                            <div class="col-sm-3 offset-sm-9">
-                                <button class="btn btn-danger btn-purchase w-100 rounded-pill mb-3 cartNext"
-                                    type="button">我要結帳</button>
-                                <button class="btn btn-danger btn-addcart w-100 rounded-pill mb-3" type="button"
-                                    onclick="javascript:location.href='product_list.php'">繼續購物</button>
+
+                    <form class="w-100" method="post" action="proc.php?proc=shoppingFinish" enctype="multipart/form-data">
+                        <div class="col-sm-12 border rounded mt-3">
+                            <div class="form-group row m-3">
+                                <legend
+                                    class="col-form-label col-sm-3 text-md-right text-sm-left text-danger align-self-center">
+                                    <h3 class="mb-0">付款方式</h3>
+                                </legend>
+                                <div class="col-sm-9 align-self-center">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="payment" id="inlineRadio1"
+                                            value="1" checked>
+                                        <label class="form-check-label" for="inlineRadio1">線上刷卡</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="payment" id="inlineRadio2"
+                                            value="2">
+                                        <label class="form-check-label" for="inlineRadio2">ATM轉帳</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="col-sm-12 border rounded mt-3">
+
+                            <div class="form-group row m-3">
+                                <div class="col-md-3 col-sm-12 align-self-center">
+                                    <h3 class="text-md-right text-sm-left text-danger mb-0">收貨人資訊</h3>
+                                </div>
+                                <div class="col-md-9 col-sm-12 align-self-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck1" name="sameAsMember">
+                                        <label class="form-check-label" for="gridCheck1">同訂購人資料</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row m-3">
+                                <div class="col-md-9 offset-md-3 col-sm-12">
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
+                                            for="name"><span class="text-danger">*</span>收貨姓名</label>
+                                        <div class="col-sm-6 align-self-center">
+                                            <input ref="test" type="text" class="form-control" id="name"
+                                                placeholder="請填真實姓名" required name="uname">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"><span
+                                                class="text-danger">*</span>性別</label>
+                                        <div class="col-sm-6 align-self-center">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender"
+                                                    id="male" value="1" checked ref="1">
+                                                <label class="form-check-label" for="male">男</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="gender"
+                                                    id="female" value="2" ref="1">
+                                                <label class="form-check-label" for="female">女</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
+                                            for="phone"><span class="text-danger">*</span>聯絡電話</label>
+                                        <div class="col-sm-6 align-self-center">
+                                            <input type="text" class="form-control" id="phone" placeholder=""
+                                                required name="tel" ref="0922013171">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
+                                            for="shippment"><span class="text-danger">*</span>寄送方式</label>
+                                        <div class="col-sm-6 align-self-center">
+                                            <select id="shippment" class="form-control" name="shippment"
+                                                data-width="fit">
+                                                <option value="0">請選擇</option>
+                                                <option value="1">郵寄</option>
+                                                <option value="2">到店自取</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row addr" style="display:none;">
+                                        <label class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left"><span
+                                                class="text-danger">*</span>寄送地址</label>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="form-group col-md-6 col-sm-12">
+                                                    <select id="city" class="form-control checkSameMember"
+                                                        name="city" data-width="fit" ref="花蓮縣">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6 col-sm-12">
+                                                    <select id="city" class="form-control" name="district"
+                                                        data-width="fit" ref="花蓮市">
+                                                        <option value="0">鄉鎮市區</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12">
+                                                    <input type="text" class="form-control" id="address"
+                                                        placeholder="" required name="addr" ref="test">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left"
+                                            for="note">訂購備註</label>
+                                        <div class="col-sm-6">
+                                            <textarea class="form-control" rows="5" id="note" name="info"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+
+
+                        <div class="col-sm-12 border rounded mt-3">
+
+                            <div class="form-group row m-3">
+                                <legend
+                                    class="col-form-label col-sm-3 text-md-right text-sm-left text-danger align-self-center">
+                                    <h3 class="mb-0">開立發票</h3>
+                                </legend>
+                                <div class="col-sm-9 align-self-center">
+                                    <div class="form-check form-check-inline mr-0">
+                                        <input class="form-check-input" type="radio" name="receipt" id="donate"
+                                            value="1" checked>
+                                        <label class="form-check-label" for="donate">公益捐贈</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mx-1">
+                                        <input class="form-check-input" type="radio" name="receipt" id="receipt2"
+                                            value="2">
+                                        <label class="form-check-label" for="receipt2">二聯式</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-0">
+                                        <input class="form-check-input" type="radio" name="receipt" id="receipt3"
+                                            value="3">
+                                        <label class="form-check-label" for="receipt3">三聯式</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row m-3 invoiceArea" style="display:none;">
+                                <div class="col-md-9 offset-md-3 col-sm-12">
+                                    <div class="form-group row">
+                                        <label
+                                            class="col-sm-2 col-form-label text-md-right text-sm-left align-self-center pr-0"
+                                            for="note">發票寄送地址</label>
+                                        <div class="col-sm-6 align-self-center">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="idCheck1"
+                                                    name="invoiceSameAsMember">
+                                                <label class="form-check-label" for="idCheck1">同訂購人資料</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2"></label>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="form-group col-md-6 col-sm-12">
+                                                    <select id="city" class="form-control invoiceCheckSameMember"
+                                                        data-width="fit" name="invoiceCity" data-width="fit"
+                                                        ref="花蓮縣">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6 col-sm-12">
+                                                    <select id="city" class="form-control" name="invoiceDistrict"
+                                                        data-width="fit">
+                                                        <option value="0">鄉鎮市區</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12">
+                                                    <input type="text" class="form-control" id="address"
+                                                        placeholder="" required name="invoiceAddr" ref="test">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row invoiceTitleArea">
+                                        <label
+                                            class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
+                                            for="billtitle">發票抬頭</label>
+                                        <div class="col-sm-6 align-self-center">
+                                            <input type="text" class="form-control" id="billtitle" placeholder="發票抬頭"
+                                                name="invoiceTitle">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row invoiceTitleArea">
+                                        <label
+                                            class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
+                                            for="taxid">發票統編</label>
+                                        <div class="col-sm-6 align-self-center">
+                                            <input type="text" class="form-control" id="taxid" placeholder="發票統編"
+                                                name="invoiceTaxid">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 sum-row">
+                            <div class="form-group row mt-4">
+                                <div class="col-md-9 offset-md-3 col-sm-12">
+                                    <div class="form-group row mb-3">
+                                        <label class="col-sm-2 col-form-label text-md-right px-0 align-self-center">
+                                            <span class="text-danger">*</span>輸入右方驗證碼
+                                        </label>
+                                        <div class="col-sm-6 align-self-center">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control align-self-center"
+                                                    id="verify" placeholder="" required name="captcha">
+                                                <div class="d-flex pl-2 align-self-center">
+                                                    <img src="{{ route('captcha.generate') }}" width="68px"
+                                                        height="24px" class="img-fluid captchaImg" />
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <label class="refresh mn-0">
+                                                        <a class="btn btn-refresh hvr-icon-spin"
+                                                            style="cursor: pointer;">更換 <i
+                                                                class="fas fa-sync-alt hvr-icon px-1"></i>
+                                                        </a>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 offset-sm-2">
+                                            <button type="submit"
+                                                class="btn btn-danger btn-purchase w-100 rounded-pill mb-3 px-5 py-3 shoppingFinish">訂購完成</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
                 </div>
             </section>
 
@@ -140,80 +361,12 @@
     </article>
 @endpush
 
-@push('script')
+@push('scripts')
+    <script src="{{ asset('frontend/js/jquery.twzipcode.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/twzipcode.js') }}"></script>
     <script>
         $(document).ready(function() {
-            // 更新數量
-            $('.btn-plus, .btn-minus').click(function() {
-                const productId = $(this).data('product-id');
-                const specificationId = $(this).data('specification-id');
-                let input = $(this).closest('.num-row').find('.qty_input');
-                let quantity = parseInt(input.val());
-
-                if ($(this).hasClass('btn-plus')) {
-                    quantity++;
-                } else {
-                    quantity = quantity > 1 ? quantity - 1 : 1;
-                }
-
-                updateCartQuantity(productId, specificationId, quantity);
-            });
-
-            // 移除商品
-            $('.remove-item').click(function() {
-                const productId = $(this).data('product-id');
-                const specificationId = $(this).data('specification-id');
-                if (confirm('確定要移除此商品嗎？')) {
-                    removeFromCart(productId, specificationId);
-                }
-            });
-
-            function updateCartQuantity(productId, specificationId, quantity) {
-                $.ajax({
-                    url: '{{ route('cart.update-quantity') }}',
-                    method: 'POST',
-                    data: {
-                        product_id: productId,
-                        specification_id: specificationId,
-                        quantity: quantity,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        location.reload();
-                    },
-                    error: function(xhr) {
-                        alert('更新數量失敗，請稍後再試');
-                    }
-                });
-            }
-
-            function removeFromCart(productId, specificationId) {
-                $.ajax({
-                    url: '{{ route('cart.remove') }}',
-                    method: 'POST',
-                    data: {
-                        product_id: productId,
-                        specification_id: specificationId,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        location.reload();
-                    },
-                    error: function(xhr) {
-                        alert('移除商品失敗，請稍後再試');
-                    }
-                });
-            }
-
-            // 繼續購物按鈕
-            $('.btn-addcart').click(function() {
-                window.location.href = '{{ route('products.index') }}';
-            });
-
-            // 結帳按鈕
-            $('.cartNext').click(function() {
-                window.location.href = '{{ route('checkout.payment') }}';
-            });
+            $('#twzipcode').twzipcode();
         });
     </script>
 @endpush
