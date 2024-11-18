@@ -29,19 +29,19 @@ class LoginController extends Controller
                 return redirect($request->redirect_to);
             }
             
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('home'))->with('success', '登入成功');
         }
 
         return back()->withErrors([
             'email' => '帳號或密碼錯誤',
-        ])->withInput();
+        ])->withInput()->with('error', '帳號或密碼錯誤');
     }
 
     public function logout()
     {
         Auth::guard('member')->logout();
         session()->forget('cart');
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', '登出成功');
     }
 
     public function forget()
