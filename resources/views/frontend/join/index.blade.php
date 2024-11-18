@@ -2,16 +2,6 @@
 
 @section('title', '加入會員')
 
-@push('scripts')
-    <script src="{{ asset('frontend/js/jquery.twzipcode.min.js') }}"></script>
-    <script src="{{ asset('frontend/js/twzipcode.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#twzipcode').twzipcode();
-        });
-    </script>
-@endpush
-
 @push('app-content')
     <header>
         <div class="container">
@@ -228,6 +218,8 @@
 @endpush
 
 @push('scripts')
+    <script src="{{ asset('frontend/js/jquery.twzipcode.min.js') }}"></script>
+    <script src="{{ asset('frontend/js/twzipcode.js') }}"></script>
     <script>
         function checkform() {
             // 密碼驗證
@@ -310,7 +302,7 @@
         });
 
         $(document).ready(function() {
-
+            $('#twzipcode').twzipcode();
         });
     </script>
 @endpush

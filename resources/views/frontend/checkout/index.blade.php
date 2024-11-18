@@ -98,7 +98,7 @@
                         </div>
                     </div>
 
-                    <form class="w-100" method="post" action="proc.php?proc=shoppingFinish" enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="#" enctype="multipart/form-data">
                         <div class="col-sm-12 border rounded mt-3">
                             <div class="form-group row m-3">
                                 <legend
@@ -139,10 +139,12 @@
                                     <div class="form-group row">
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
-                                            for="name"><span class="text-danger">*</span>收貨姓名</label>
+                                            for="name">
+                                            <span class="text-danger">*</span>收貨姓名
+                                        </label>
                                         <div class="col-sm-6 align-self-center">
                                             <input ref="test" type="text" class="form-control" id="name"
-                                                placeholder="請填真實姓名" required name="uname">
+                                                placeholder="請填真實姓名" required name="username">
                                         </div>
                                     </div>
 
@@ -170,21 +172,28 @@
                                             for="phone"><span class="text-danger">*</span>聯絡電話</label>
                                         <div class="col-sm-6 align-self-center">
                                             <input type="text" class="form-control" id="phone" placeholder=""
-                                                required name="tel" ref="0922013171">
+                                                required name="phone" ref="0922013171">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
-                                            for="shippment"><span class="text-danger">*</span>寄送方式</label>
+                                            for="shippment">
+                                            <span class="text-danger">*</span>寄送方式
+                                        </label>
                                         <div class="col-sm-6 align-self-center">
                                             <select id="shippment" class="form-control" name="shippment"
                                                 data-width="fit">
-                                                <option value="0">請選擇</option>
-                                                <option value="1">郵寄</option>
-                                                <option value="2">到店自取</option>
+                                                <option value="">請選擇</option>
+                                                <option value="mail_send">郵寄</option>
+                                                <option value="711_b2c">7-11 店到店</option>
+                                                <option value="family_b2c">全家 店到店</option>
                                             </select>
+                                            <button type="button" class="btn btn-primary mt-2 map-btn"
+                                                style="display: none;">
+                                                <i class="fas fa-map-marker-alt"></i> 選擇門市
+                                            </button>
                                         </div>
                                     </div>
 
@@ -193,20 +202,22 @@
                                                 class="text-danger">*</span>寄送地址</label>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <div class="form-group col-md-6 col-sm-12">
-                                                    <select id="city" class="form-control checkSameMember"
-                                                        name="city" data-width="fit" ref="花蓮縣">
-                                                    </select>
+                                                <div id="twzipcode" class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6 mb-2">
+                                                            <select data-role="county" class="form-control"
+                                                                name="county"></select>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 mb-2">
+                                                            <select data-role="district" class="form-control"
+                                                                name="district"></select>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" data-role="zipcode" />
                                                 </div>
-                                                <div class="form-group col-md-6 col-sm-12">
-                                                    <select id="city" class="form-control" name="district"
-                                                        data-width="fit" ref="花蓮市">
-                                                        <option value="0">鄉鎮市區</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12">
+                                                <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        placeholder="" required name="addr" ref="test">
+                                                        placeholder="" required name="address" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -233,14 +244,9 @@
                                     <h3 class="mb-0">開立發票</h3>
                                 </legend>
                                 <div class="col-sm-9 align-self-center">
-                                    <div class="form-check form-check-inline mr-0">
-                                        <input class="form-check-input" type="radio" name="receipt" id="donate"
-                                            value="1" checked>
-                                        <label class="form-check-label" for="donate">公益捐贈</label>
-                                    </div>
                                     <div class="form-check form-check-inline mx-1">
                                         <input class="form-check-input" type="radio" name="receipt" id="receipt2"
-                                            value="2">
+                                            checked value="2">
                                         <label class="form-check-label" for="receipt2">二聯式</label>
                                     </div>
                                     <div class="form-check form-check-inline mr-0">
@@ -270,21 +276,22 @@
                                         <label class="col-sm-2"></label>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <div class="form-group col-md-6 col-sm-12">
-                                                    <select id="city" class="form-control invoiceCheckSameMember"
-                                                        data-width="fit" name="invoiceCity" data-width="fit"
-                                                        ref="花蓮縣">
-                                                    </select>
+                                                <div id="twzipcode" class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6 mb-2">
+                                                            <select data-role="county" class="form-control"
+                                                                name="county"></select>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 mb-2">
+                                                            <select data-role="district" class="form-control"
+                                                                name="district"></select>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" data-role="zipcode" />
                                                 </div>
-                                                <div class="form-group col-md-6 col-sm-12">
-                                                    <select id="city" class="form-control" name="invoiceDistrict"
-                                                        data-width="fit">
-                                                        <option value="0">鄉鎮市區</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12">
+                                                <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        placeholder="" required name="invoiceAddr" ref="test">
+                                                        placeholder="" required name="address" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -366,7 +373,88 @@
     <script src="{{ asset('frontend/js/twzipcode.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#twzipcode').twzipcode();
+
+            $('#twzipcode').twzipcode('{{ Auth::guard('member')->user()->zipcode }}');
+
+            // 監聽"同訂購人資料"複選框的變化
+            $('input[name="sameAsMember"]').change(function() {
+                if ($(this).is(':checked')) {
+                    // 如果勾選，填入會員資料
+                    $('input[name="username"]').val('{{ Auth::guard('member')->user()->name }}');
+                    $('input[name="phone"]').val('{{ Auth::guard('member')->user()->phone }}');
+
+                    // 設置性別
+                    if ('{{ Auth::guard('member')->user()->gender }}' === '1') {
+                        $('#male').prop('checked', true);
+                    } else {
+                        $('#female').prop('checked', true);
+                    }
+
+                    // 如果地址區塊是顯示的，則填入地址資料
+                    if ($('.addr').is(':visible')) {
+                        // 修正地址欄位的選擇器，使用 twzipcode 的方法
+                        $('select[data-role="county"]').val('{{ Auth::guard('member')->user()->county }}')
+                            .trigger('change');
+                        $('select[data-role="district"]').val(
+                            '{{ Auth::guard('member')->user()->district }}');
+                        $('input[name="address"]').val('{{ Auth::guard('member')->user()->address }}');
+                    }
+                } else {
+                    // 如果取消勾選，清空所有欄位
+                    $('input[name="username"]').val('');
+                    $('input[name="phone"]').val('');
+                    $('select[data-role="county"]').val('');
+                    $('select[data-role="district"]').val('');
+                    $('input[name="address"]').val('');
+                }
+            });
+
+            // 監聽寄送方式的變化
+            $('#shippment').change(function() {
+                const selectedValue = $(this).val();
+                const addrArea = $('.addr');
+                const mapBtn = $('.map-btn');
+
+                // 根據選擇顯示不同內容
+                switch (selectedValue) {
+                    case 'mail_send':
+                        addrArea.show();
+                        mapBtn.hide();
+                        break;
+                    case '711_b2c':
+                    case 'family_b2c':
+                        addrArea.hide();
+                        mapBtn.show();
+                        break;
+                    default:
+                        addrArea.hide();
+                        mapBtn.hide();
+                        break;
+                }
+            });
+
+            // 門市地圖按鈕點擊事件
+            $('.map-btn').click(function() {
+                const shippmentType = $('#shippment').val();
+                // 根據不同超商打開對應地圖
+                if (shippmentType === '711_b2c') {
+                    openSevenMap();
+                } else if (shippmentType === 'family_b2c') {
+                    openFamilyMap();
+                }
+            });
         });
+
+        // 開啟 7-11 地圖
+        function openSevenMap() {
+            // 這裡添加開啟 7-11 電子地圖的邏輯
+            alert('開啟 7-11 門市地圖');
+        }
+
+        // 開啟全家地圖
+        function openFamilyMap() {
+            // 這裡添加開啟全家電子地圖的邏輯
+            alert('開啟全家門市地圖');
+        }
     </script>
 @endpush

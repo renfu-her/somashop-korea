@@ -140,7 +140,7 @@
         </div>
     </div>
 
-    <section class="parrallax py-5">
+    {{-- <section class="parrallax py-5">
         <div class="container my-md-4 my-0">
             <div class="row mx-auto my-auto" style="overflow-x: hidden; overflow-y: hidden;">
 
@@ -191,7 +191,7 @@
 
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <div class="container mb-5 pt-5">
         <h2 class="text-center font-weight-bold mb-0 border-frame aos-init aos-animate" data-aos="zoom-in-up"
