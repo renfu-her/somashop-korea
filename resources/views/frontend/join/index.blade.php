@@ -18,7 +18,6 @@
         </div>
     </header>
 
-
     <!-- Page Content Start -->
     <article class="page-wrapper my-3">
         <div class="container">
@@ -49,32 +48,35 @@
                             </div>
 
                             <div class="form-group row mb-3">
-                                <label for="inputPassword"
+                                <label for="password"
                                     class="col-sm-3 col-form-label text-md-right text-sm-left align-self-center"><span
                                         class="text-danger">*</span>密碼</label>
                                 <div class="col-sm-7 align-self-center">
-                                    <input type="password" class="form-control" id="inputPassword"
-                                        placeholder="6~15字元，至少搭配 1 個英文字母" required name="password">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                        id="password" name="password" required>
+                                    @error('password')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="form-group row mb-3">
-                                <label for="inputPasswordAgain"
+                                <label for="password_confirmation"
                                     class="col-sm-3 col-form-label text-md-right text-sm-left align-self-center"><span
                                         class="text-danger">*</span>再次輸入密碼 </label>
                                 <div class="col-sm-7 align-self-center">
-                                    <input type="password" class="form-control" id="inputPasswordAgain"
+                                    <input type="password" class="form-control" id="password_confirmation"
                                         placeholder="請再輸入一次密碼" required name="password_confirmation">
                                 </div>
                             </div>
 
                             <div class="form-group row mb-3">
-                                <label for="inputUsername"
+                                <label for="name"
                                     class="col-sm-3 col-form-label text-md-right text-sm-left align-self-center"><span
                                         class="text-danger">*</span>姓名</label>
                                 <div class="col-sm-7 align-self-center">
-                                    <input type="text" class="form-control" id="inputUsername" placeholder="請填真實姓名"
-                                        required name="name" value="">
+                                    <input type="text" class="form-control" id="name" placeholder="請填真實姓名" required
+                                        name="name" value="">
                                 </div>
                             </div>
 
@@ -130,9 +132,9 @@
 
                             <div class="form-group row mb-3">
                                 <label class="col-sm-3 col-form-label text-md-right text-sm-left align-self-center"
-                                    for="inputPhone"><span class="text-danger">*</span>手機</label>
+                                    for="phone"><span class="text-danger">*</span>手機</label>
                                 <div class="col-sm-7 align-self-center">
-                                    <input type="phone" class="form-control" id="inputPhone" placeholder="請輸入電話"
+                                    <input type="phone" class="form-control" id="phone" placeholder="請輸入電話"
                                         required name="phone" value="">
                                 </div>
                             </div>
@@ -190,10 +192,15 @@
                                 <div class="col-sm-7 offset-sm-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" value="" name="agree" required>
+                                            <input type="checkbox" name="agree" value="1"
+                                                {{ old('agree') ? 'checked' : '' }}
+                                                class="@error('agree') is-invalid @enderror" required>
                                             我已閱讀<a href="#" class="text-danger px-1"
                                                 target="_blank">會員條款</a>並同意接受條款內容
                                         </label>
+                                        @error('agree')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -223,8 +230,8 @@
     <script>
         function checkform() {
             // 密碼驗證
-            const password = $('#inputPassword').val();
-            const passwordConfirm = $('#inputPasswordAgain').val();
+            const password = $('#password').val();
+            const passwordConfirm = $('#password_confirmation').val();
 
             if (password !== passwordConfirm) {
                 alert('兩次輸入的密碼不一致');
@@ -232,24 +239,14 @@
             }
 
             if (!/^(?=.*[A-Za-z])(?=.*\d).{6,15}$/.test(password)) {
-                alert('密碼必須為6~15字元，且至少包含一個英文字母和數字');
+                alert('密碼必須為 6~15 字元，且至少包含一個英文字母和數字');
                 return false;
             }
 
             // 手機號碼驗證
-            const phone = $('#inputPhone').val();
+            const phone = $('#phone').val();
             if (!/^09\d{8}$/.test(phone)) {
                 alert('請輸入有效的手機號碼');
-                return false;
-            }
-
-            // 生日驗證
-            const year = $('select[name="year"]').val();
-            const month = $('select[name="month"]').val();
-            const day = $('select[name="day"]').val();
-
-            if (!year || !month || !day) {
-                alert('請選擇完整的出生日期');
                 return false;
             }
 
@@ -265,23 +262,24 @@
 
             // 驗證碼驗證
             const captcha = $('#verify').val();
-            if (!captcha || captcha.length !== 6) {
-                alert('請輸入6位驗證碼');
+            if (!captcha || captcha.length !== 5) {
+                alert('請輸入 5 位驗證碼');
                 return false;
             }
 
             // 是否同意會員條款
-            if (!$('input[name="agree"]').is(':checked')) {
-                alert('請同意會員條款');
-                return false;
+            if (!$('input[name="agree"]:checked').length) {
+                errorMessage += '請同意會員條款\n';
+                $('input[name="agree"]').addClass('is-invalid');
+                hasError = true;
             }
 
             return true;
         }
 
         // 即時密碼驗證
-        $('#inputPasswordAgain').on('input', function() {
-            const password = $('#inputPassword').val();
+        $('#password_confirmation').on('input', function() {
+            const password = $('#password').val();
             const confirmPassword = $(this).val();
 
             if (password !== confirmPassword) {
@@ -292,7 +290,7 @@
         });
 
         // 即時手機號碼驗證
-        $('#inputPhone').on('input', function() {
+        $('#phone').on('input', function() {
             const phone = $(this).val();
             if (!/^09\d{8}$/.test(phone)) {
                 $(this).addClass('is-invalid');

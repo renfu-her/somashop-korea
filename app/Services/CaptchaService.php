@@ -20,7 +20,7 @@ class CaptchaService
             ->header('Cache-Control', 'no-store, no-cache, must-revalidate');
     }
 
-    private function generateCode(int $length = 6)
+    private function generateCode(int $length = 5)
     {
         $characters = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
         $code = '';
@@ -35,7 +35,7 @@ class CaptchaService
     private function generateImage($code)
     {
         $manager = new ImageManager(new Driver());
-        $img = $manager->create(140, 60);
+        $img = $manager->create(150, 60);
 
         // 設置淺色背景
         $img->fill('#ffffff');

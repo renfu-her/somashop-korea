@@ -77,13 +77,11 @@
                         </div>
                         <div class="col-md-12 col-12">
                             <div class="row">
-                                <div class="col-auto">
-                                    <p class="m-0 text-dark"><i class="fas fa-phone-volume"></i> (02)2302-5558</p>
-                                </div>
+
                                 <div class="col-auto pl-md-0">
                                     <p class="m-0 text-dark"><img
                                             src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png">
-                                        台北市萬華區莒光路302號</p>
+                                        桃園市桃園區中正路 1247 號 15 樓之 4</p>
                                 </div>
                             </div>
                         </div>
@@ -92,21 +90,10 @@
                 </div>
                 <div
                     class="col-auto social-link d-flex justify-content-between align-items-center ml-auto text-center px-md-3 px-4">
-                    <a href="tel:(02)2302-5558" target="_blank" class="px-md-3 px-2 hvr-bob"><img
-                            src="{{ asset('frontend/img/ic_small_phone.png') }}" class="img-fluid px-md-0 px-3">
-                        <p class="pt-2">點我連結</p>
-                    </a>
-                    <a href="https://www.facebook.com/babyin1688/" target="_blank" class="px-md-3 px-2 hvr-bob"><img
-                            src="{{ asset('frontend/img/ic_small_fb.png') }}" class="img-fluid px-md-0 px-3">
-                        <p class="pt-2">點我連結</p>
-                    </a>
+
                     <a href="https://line.me/ti/p/@zfa7556c" target="_blank" class="px-md-3 px-0 hvr-bob"><img
                             src="{{ asset('frontend/img/ic_small_line.png') }}" class="img-fluid px-md-0 px-3">
-                        <p class="pt-2">點我連結</p>
-                    </a>
-                    <a href="https://www.instagram.com/a0908512899/" target="_blank" class="px-md-3 px-0 hvr-bob"><img
-                            src="{{ asset('frontend/img/ic_small_ig.png') }}" class="img-fluid px-md-0 px-3">
-                        <p class="pt-2">點我連結</p>
+
                     </a>
                 </div>
             </div>
@@ -171,7 +158,7 @@
             $('.btn-refresh').click(function() {
                 $('#loading').fadeIn(300, function() {
                     $.ajax({
-                        type: "GET", 
+                        type: "GET",
                         url: '{{ route('captcha.generate') }}',
                         error: function(xhr) {
                             $('#loading').fadeOut();
@@ -179,17 +166,13 @@
                         },
                         success: function(data, status, xhr) {
                             $('#loading').fadeOut();
-                            $('.captchaImg').attr('src', '{{ route('captcha.generate') }}?' + new Date().getTime());
+                            $('.captchaImg').attr('src',
+                                '{{ route('captcha.generate') }}?' + new Date()
+                                .getTime());
                         }
                     });
                 });
             });
-
-
-            $('.map-container').html(
-                '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.08330759507!2d121.49602831562903!3d25.031246744554526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a9b1e1c611f5%3A0xb7f7029aa88763fc!2zMTA45Y-w5YyX5biC6JCs6I-v5Y2A6I6S5YWJ6LevMzAy6Jmf!5e0!3m2!1szh-TW!2stw!4v1561976370651!5m2!1szh-TW!2stw" width="100%" height="320" frameborder="0" style="border:0" allowfullscreen></iframe>'
-            );
-
         });
     </script>
 

@@ -15,6 +15,11 @@ class Member extends Authenticatable
         'password',
         'phone',
         'address',
+        'county',
+        'district',
+        'zipcode',
+        'gender',
+        'birthday',
     ];
 
     protected $hidden = [

@@ -8,7 +8,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
 use App\Models\ProductSpecification;
-
+use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
     public function index(Request $request)
@@ -74,7 +74,7 @@ class CartController extends Controller
         ]);
 
         $cart = Cart::firstOrCreate([
-            'user_id' => auth()->id()
+            'user_id' => Auth::guard('member')->id()
         ]);
 
         // 檢查是否已存在相同商品和規格
