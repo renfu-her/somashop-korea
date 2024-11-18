@@ -86,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="m-0 text-dark">&copy; 2019 All Rights Reversed. babyin Co., Ltd. All rights reserved.</p>
+                    <p class="m-0 text-dark">&copy; 2024 All Rights Reversed. 德善堂. All rights reserved.</p>
                 </div>
                 <div
                     class="col-auto social-link d-flex justify-content-between align-items-center ml-auto text-center px-md-3 px-4">

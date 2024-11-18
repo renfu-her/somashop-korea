@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\SealKnowledgeCategoryController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Frontend\TestController;
 
 // 首頁路由
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -87,8 +88,14 @@ Route::group(['middleware' => 'auth:member'], function () {
 
     // 驗證表單
     Route::post('/checkout/validate', [CheckoutController::class, 'validateOrder'])->name('checkout.validate');
-    
+
     // 訂單
     Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+});
+
+
+// 測試郵件
+Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
+    Route::get('/mail', [TestController::class, 'test'])->name('test');
 });

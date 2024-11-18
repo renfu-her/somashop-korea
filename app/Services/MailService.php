@@ -21,36 +21,25 @@ class MailService
      */
     public function send($to, string $subject, $content, ?string $template = null, array $data = []): bool
     {
-        try {
-            // 處理收件者格式
-            $recipients = is_array($to) ? $to : ['email' => $to];
 
-            // 處理內容格式
-            $mailData = is_array($content) ? $content : ['content' => $content];
-            $mailData = array_merge($mailData, $data);
+        // 處理收件者格式
+        $recipients = is_array($to) ? $to : ['email' => $to];
 
-            // 如果沒有指定模板，使用預設模板
-            $view = $template ?? 'emails.default';
+        // 處理內容格式
+        $mailData = is_array($content) ? $content : ['content' => $content];
+        $mailData = array_merge($mailData, $data);
 
-            // 發送郵件
-            Mail::to($recipients)->send(new GenericMail(
-                $subject,
-                $view,
-                $mailData
-            ));
+        // 如果沒有指定模板，使用預設模板
+        $view = $template ?? 'emails.default';
 
-            return true;
-        } catch (\Exception $e) {
-            Log::error('Mail sending failed', [
-                'to' => $to,
-                'subject' => $subject,
-                'content' => $content,
-                'template' => $template,
-                'data' => $data,
-                'error' => $e->getMessage()
-            ]);
-            return false;
-        }
+        // 發送郵件
+        Mail::to($recipients)->send(new GenericMail(
+            $subject,
+            $view,
+            $mailData
+        ));
+
+        return true;
     }
 
     /**
@@ -103,4 +92,4 @@ class MailService
             ]
         );
     }
-} 
+}
