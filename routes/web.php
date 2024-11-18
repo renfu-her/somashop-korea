@@ -95,7 +95,7 @@ Route::group(['middleware' => 'auth:member'], function () {
 });
 
 
-// 測試郵件
+// TODO: 測試路由，記得刪除
 Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
     Route::get('/mail', [TestController::class, 'test'])->name('test');
 });
