@@ -20,6 +20,8 @@ use App\Http\Controllers\Admin\SealKnowledgeController;
 use App\Http\Controllers\Admin\SealKnowledgeCategoryController;
 use App\Http\Controllers\Admin\ProductSpecificationController;
 use App\Http\Controllers\Admin\AdController;
+
+
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', function () {
