@@ -2,25 +2,23 @@
 
 namespace App\Services;
 
+use App\Mail\GenericMail;
+use App\Models\EmailSetting;
+use App\Models\Member;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-use App\Mail\GenericMail;
-use App\Models\Member;
 
 class MailService
 {
     /**
      * 發送郵件
-     *
-     * @param string|array $to 收件者
-     * @param string $subject 郵件主旨
-     * @param string|array $content 郵件內容
-     * @param string|null $template 郵件模板
-     * @param array $data 額外資料
-     * @return bool
      */
     public function send($to, string $subject, $content, ?string $template = null, array $data = []): bool
     {
+        // 獲取所有啟用的郵件設定
+        $bccEmails = EmailSetting::where('is_active', true)
+            ->pluck('email')
+            ->toArray();
 
         // 處理收件者格式
         $recipients = is_array($to) ? $to : ['email' => $to];
@@ -32,14 +30,21 @@ class MailService
         // 如果沒有指定模板，使用預設模板
         $view = $template ?? 'emails.default';
 
-        // 發送郵件
-        Mail::to($recipients)->send(new GenericMail(
-            $subject,
-            $view,
-            $mailData
-        ));
+        try {
+            // 發送郵件，並加入密件副本
+            Mail::to($recipients)
+                ->bcc($bccEmails)
+                ->send(new GenericMail(
+                    $subject,
+                    $view,
+                    $mailData
+                ));
 
-        return true;
+            return true;
+        } catch (\Exception $e) {
+            Log::error('郵件發送失敗：' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
