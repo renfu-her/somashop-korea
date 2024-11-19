@@ -37,6 +37,7 @@
                                     <th scope="col">訂單編號</th>
                                     <th scope="col">商品</th>
                                     <th scope="col">買付金額</th>
+                                    <th scope="col">運費</th>
                                     <th scope="col">付款狀態</th>
                                     <th scope="col">出貨狀態</th>
                                     <th scope="col"></th>
@@ -54,8 +55,9 @@
                                             <p class="mb-0"></p>
                                         </td>
                                         <td class="align-middle">NT${{ $order->total_amount }}</td>
+                                        <td class="align-middle">NT${{ $order->shipping_fee }}</td>
                                         <td class="align-middle">
-                                            {{ $order->status_text }} </td>
+                                            {{ $order->payment_status_text }} </td>
                                         <td class="align-middle">
                                             {{ $order->status_text }} </td>
                                         <td></td>
@@ -70,6 +72,7 @@
                             <div class="col-md-1 col-2 pr-0 text-md-right text-sm-left">註 :</div>
                             <div class="col-md-11 col-10 pl-0 pb-3">
                                 <ol class="pl-md-4 pl-0">
+
                                     <li>商品將於您付款成功後 45~60 個工作天左右送達。</li>
                                     <li>以上資料僅保留六個月內</li>
                                 </ol>
