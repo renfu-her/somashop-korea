@@ -67,7 +67,6 @@ class PaymentController extends Controller
         $order->payment_status = Order::PAYMENT_STATUS_PENDING;
 
         // 運送相關
-        $order->shipping_method = '運費';
         $order->shipping_status = Order::SHIPPING_STATUS_PENDING;
         $order->shipping_fee = $shippingFee;
 

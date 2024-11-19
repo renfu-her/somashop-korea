@@ -37,12 +37,12 @@
 <body class="sidebar-dark">
     <div class="container-scroller">
         <!-- Navbar -->
-        @include('partials.backend-navbar')
+        @include('admin.partials.backend-navbar')
         <!-- End Navbar -->
 
         <div class="container-fluid page-body-wrapper">
             <!-- Sidebar -->
-            @include('partials.backend-sidebar')
+            @include('admin.partials.backend-sidebar')
             <!-- End Sidebar -->
 
             <div class="main-panel">
@@ -51,7 +51,7 @@
                 </div>
                 <!-- content-wrapper ends -->
                 <!-- Footer -->
-                @include('partials.backend-footer')
+                @include('admin.partials.backend-footer')
                 <!-- End Footer -->
             </div>
             <!-- main-panel ends -->

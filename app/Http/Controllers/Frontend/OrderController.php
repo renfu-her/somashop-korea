@@ -16,4 +16,9 @@ class OrderController extends Controller
 
         return view('frontend.order.index');
     }
+
+    public function status()
+    {
+        return view('frontend.order.status');
+    }
 } 

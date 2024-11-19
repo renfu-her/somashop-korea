@@ -96,6 +96,7 @@ Route::group(['middleware' => 'auth:member'], function () {
       // 訂單
     Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/orders/status', [OrderController::class, 'status'])->name('orders.status');
 });
 
 

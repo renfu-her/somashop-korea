@@ -161,7 +161,7 @@
                                             <p class="mb-0">{{ $order->recipient_phone }}</p>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    {{-- <div class="form-group row">
                                         <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
                                             <p class="mb-0">寄送方式</p>
                                         </div>
@@ -176,21 +176,13 @@
                                         <div class="col-md-6 col-7">
                                             <p class="mb-0">花蓮縣花蓮市test</p>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
-                                            <p class="mb-0">匯款帳號後五碼</p>
-                                        </div>
-                                        <div class="col-md-6 col-7">
-                                            <p class="mb-0">12345</p>
-                                        </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group row">
                                         <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
                                             <p class="mb-0">訂購備註</p>
                                         </div>
                                         <div class="col-md-6 col-7">
-                                            <p class="mb-0">系統測試，請勿理會</p>
+                                            <p class="mb-0">{{ $order->note }}</p>
                                         </div>
                                     </div>
                                 </div>
