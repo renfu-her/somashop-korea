@@ -34,4 +34,24 @@ class OrderItem extends Model
     {
         return $this->belongsTo(ProductSpecification::class);
     }
+
+    public function productImage()
+    {
+        return $this->hasOne(ProductImage::class, 'product_id', 'product_id')
+            ->where('is_primary', true);
+    }
+
+    public function getProductImageUrlAttribute()
+    {
+        if ($this->productImage) {
+            return $this->productImage->image_url;
+        }
+        
+        return asset('images/no-image.png');
+    }
+
+    public function getProductNameAttribute()
+    {
+        return $this->product ? $this->product->name : '商品已刪除';
+    }
 } 

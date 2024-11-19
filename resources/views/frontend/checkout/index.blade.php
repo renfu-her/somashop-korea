@@ -113,11 +113,11 @@
                                             value="1" checked>
                                         <label class="form-check-label" for="inlineRadio1">線上刷卡</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    {{-- <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="payment" id="inlineRadio2"
                                             value="2">
                                         <label class="form-check-label" for="inlineRadio2">ATM轉帳</label>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -197,6 +197,9 @@
                                                 <i class="fas fa-map-marker-alt"></i> 選擇門市
                                             </button>
                                             <input type="hidden" name="store_id" value="">
+                                            <input type="hidden" name="store_name" value="">
+                                            <input type="hidden" name="store_address" value="">
+                                            <input type="hidden" name="store_telephone" value="">
                                         </div>
                                     </div>
 
@@ -706,6 +709,10 @@
 
             $('.store-info').closest('.form-group').remove();
             $('#shippment').closest('.form-group').after(storeInfoHtml);
+
+            $('input[name="store_name"]').val(storeData.store_name);
+            $('input[name="store_address"]').val(storeData.store_address);
+            $('input[name="store_telephone"]').val(storeData.store_telephone);
 
             // 更新隱藏欄位
             if (!$('input[name="store_id"]').length) {

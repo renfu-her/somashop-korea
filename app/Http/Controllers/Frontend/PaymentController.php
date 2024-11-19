@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Setting;
+use App\Models\Member;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,6 @@ class PaymentController extends Controller
         // try {
 
         //     DB::beginTransaction();
-
         // 獲取購物車資料
         $cart = session('cart', []);
         // 計算訂單總金額
@@ -59,7 +59,7 @@ class PaymentController extends Controller
         $order->order_number = $today . $newNumber;
         $order->order_id = 'OID-' . $today . $newNumber;
         $order->member_id = Auth::guard('member')->id();
-        $order->total_amount = $totalAmount + $shippingFee;
+        $order->total_amount = $totalAmount;
         $order->status = Order::STATUS_PENDING;
 
         // 付款相關
@@ -79,7 +79,9 @@ class PaymentController extends Controller
         $order->shipping_district = $request->district ?? '';
         $order->shipping_address = $request->address ?? '';
         $order->store_id = $request->store_id ?? '';
-
+        $order->store_name = $request->store_name ?? '';
+        $order->store_address = $request->store_address ?? '';
+        $order->store_telephone = $request->store_telephone ?? '';
 
         // 發票資訊
         $order->receipt_type = $request->receipt;
@@ -116,7 +118,7 @@ class PaymentController extends Controller
             'MerchantTradeNo' => $order->order_number,
             'MerchantTradeDate' => date('Y/m/d H:i:s'),
             'PaymentType' => 'aio',
-            'TotalAmount' => $order->total_amount,
+            'TotalAmount' => $order->total_amount + $shippingFee,
             'TradeDesc' => '商品訂單',
             'ItemName' => $this->getItemNames($cart),
             'ReturnURL' => route('payment.notify'),
@@ -188,8 +190,11 @@ class PaymentController extends Controller
         $paymentResult = $request->all();
 
         // 根據訂單編號查詢訂單
-        $order = Order::where('order_number', $paymentResult['MerchantTradeNo'])->firstOrFail();
-        $orderItems = OrderItem::with('product')->where('order_id', $order->id)->get();
+        $order = Order::where('order_number', $paymentResult['MerchantTradeNo'])->first();
+        $orderItems = OrderItem::with(['product', 'productImage'])->where('order_id', $order->id)->get();
+        $shippingFee = Setting::where('key', 'shipping_fee')->first()->value;
+        $totalAmount = $order->total_amount;
+        $member = Member::find($order->member_id);
 
         // 更新訂單付款狀態
         if ($paymentResult['RtnCode'] === '1') {
@@ -226,7 +231,10 @@ class PaymentController extends Controller
             'orderNumber' => $paymentResult['MerchantTradeNo'],
             'paymentMethod' => $this->mapPaymentType($paymentResult['PaymentType']),
             'order' => $order,
-            'orderItems' => $orderItems
+            'orderItems' => $orderItems,
+            'shippingFee' => $shippingFee,
+            'totalAmount' => $totalAmount,
+            'member' => $member
         ]);
     }
 
