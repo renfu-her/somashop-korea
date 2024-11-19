@@ -26,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin/products/*/images/*',
             'admin/upload-image',
             'checkout/map/rewrite',
+            'payment/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

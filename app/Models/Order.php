@@ -24,6 +24,9 @@ class Order extends Model
         'shipping_method',
         'shipping_status',
         'shipping_fee',
+        'shipping_county',
+        'shipping_district',
+        'shipping_zipcode',
         // 收件人資訊
         'recipient_name',
         'recipient_phone',
@@ -41,7 +44,15 @@ class Order extends Model
         'tax_id',
         'company_name',
         // 其他
-        'note'
+        'note',
+        'receipt_type',
+        'invoice_title',
+        'invoice_number',
+        'invoice_county',
+        'invoice_district',
+        'invoice_address',
+        'shipping_county',  
+        'shipping_district',
     ];
 
     protected $casts = [

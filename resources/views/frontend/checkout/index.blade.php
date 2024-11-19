@@ -98,7 +98,8 @@
                         </div>
                     </div>
 
-                    <form class="w-100" method="post" action="{{ route('payment.result') }}" enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{ route('payment.process') }}"
+                        enctype="multipart/form-data">
                         <div class="col-sm-12 border rounded mt-3">
                             <div class="form-group row m-3">
                                 <legend
@@ -218,7 +219,7 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        placeholder="" required name="address" value="">
+                                                        name="address" placeholder="請輸入詳細地址" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -277,22 +278,22 @@
                                         <label class="col-sm-2"></label>
                                         <div class="col-sm-6">
                                             <div class="row">
-                                                <div id="twzipcode" class="col-12">
+                                                <div id="invoice_twzipcode" class="col-12">
                                                     <div class="row">
                                                         <div class="col-12 col-md-6 mb-2">
                                                             <select data-role="county" class="form-control"
-                                                                name="county"></select>
+                                                                name="invoice_county"></select>
                                                         </div>
                                                         <div class="col-12 col-md-6 mb-2">
                                                             <select data-role="district" class="form-control"
-                                                                name="district"></select>
+                                                                name="invoice_district"></select>
                                                         </div>
                                                     </div>
                                                     <input type="hidden" data-role="zipcode" />
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        placeholder="" required name="address" value="">
+                                                        name="invoice_address" placeholder="請輸入詳細地址" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -301,20 +302,20 @@
                                     <div class="form-group row invoiceTitleArea">
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
-                                            for="billtitle">發票抬頭</label>
+                                            for="invoice_title">發票抬頭</label>
                                         <div class="col-sm-6 align-self-center">
-                                            <input type="text" class="form-control" id="billtitle" placeholder="發票抬頭"
-                                                name="invoiceTitle">
+                                            <input type="text" class="form-control" id="invoice_title" placeholder="發票抬頭"
+                                                name="invoice_title">
                                         </div>
                                     </div>
 
                                     <div class="form-group row invoiceTitleArea">
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
-                                            for="taxid">發票統編</label>
+                                            for="invoice_taxid">發票統編</label>
                                         <div class="col-sm-6 align-self-center">
-                                            <input type="text" class="form-control" id="taxid" placeholder="發票統編"
-                                                name="invoiceTaxid">
+                                            <input type="text" class="form-control" id="invoice_taxid" placeholder="發票統編"
+                                                name="invoice_taxid">
                                         </div>
                                     </div>
 
@@ -378,6 +379,13 @@
                 "zipcodeSel": "{{ Auth::guard('member')->user()->zipcode }}",
             });
 
+            $('#invoice_twzipcode').twzipcode({
+                "countyName": "invoice_county",
+                "districtName": "invoice_district",
+                "zipcodeName": "invoice_zipcode",
+                "zipcodeSel": "{{ Auth::guard('member')->user()->invoice_zipcode }}",
+            });
+
             // 監聽"同訂購人資料"複選框的變化
             $('input[name="sameAsMember"]').change(function() {
                 if ($(this).is(':checked')) {
@@ -411,7 +419,7 @@
                 }
             });
 
-            // 監聽寄送方式的變化
+            // 寄送方式變更處理
             $('#shippment').change(function() {
                 const selectedValue = $(this).val();
                 const addrArea = $('.addr');
@@ -450,7 +458,7 @@
             window.addEventListener('message', function(event) {
                 if (event.data.type === 'STORE_SELECTED') {
                     const storeData = event.data.data;
-                    
+
                     // 在寄送方式下方顯示選擇的門市資訊
                     const storeInfoHtml = `
                         <div class="form-group row">
@@ -466,13 +474,13 @@
                             </div>
                         </div>
                     `;
-                    
+
                     // 移除舊的門市資訊（如果有的話）
                     $('.store-info').closest('.form-group').remove();
-                    
+
                     // 添加新的門市資訊 - 改為添加在寄送方式的 form-group 後面
                     $('#shippment').closest('.form-group').after(storeInfoHtml);
-                    
+
                     // 將門市資訊存入隱藏欄位（方便表單提交）
                     if (!$('input[name="store_id"]').length) {
                         $('<input>').attr({
@@ -485,22 +493,154 @@
                     }
                 }
             });
+
+            // 表單提交前的驗證
+            $('form').submit(function(e) {
+                const shippmentType = $('#shippment').val();
+
+                if (!shippmentType) {
+                    e.preventDefault();
+                    alert('請選擇寄送方式');
+                    return false;
+                }
+
+                // 如果選擇超商取貨，檢查是否已選擇門市
+                if ((shippmentType === '711_b2c' || shippmentType === 'family_b2c') &&
+                    !$('input[name="store_id"]').val()) {
+                    e.preventDefault();
+                    alert('請選擇取貨門市');
+                    return false;
+                }
+
+                // 如果選擇郵寄，檢查縣市區域是否選擇
+                if (shippmentType === 'mail_send') {
+                    if (!$('select[name="county"]').val() ||
+                        !$('select[name="district"]').val()) {
+                        e.preventDefault();
+                        alert('請選擇縣市及區域');
+                        return false;
+                    }
+                }
+            });
+
+            // 發票類型變更處理
+            $('input[name="receipt"]').change(function() {
+                const selectedValue = $(this).val();
+                const invoiceArea = $('.invoiceArea'); // 假設三聯式發票區塊的 class 是 invoice-area
+                console.log(invoiceArea);
+                console.log(selectedValue);
+
+                // 如果選擇三聯式發票(value=3)，顯示發票資訊區域
+                if (selectedValue === '3') {
+                    invoiceArea.show();
+                    // 當顯示時，設置必填欄位
+                    $('input[name="invoiceTaxid"]').prop('required', true);
+                    $('input[name="invoiceTitle"]').prop('required', true);
+                } else {
+                    invoiceArea.hide();
+                    // 當隱藏時，移除必填屬性
+                    $('input[name="invoiceTaxid"]').prop('required', false);
+                    $('input[name="invoiceTitle"]').prop('required', false);
+                    // 清空欄位值
+                    $('input[name="invoiceTaxid"]').val('');
+                    $('input[name="invoiceTitle"]').val('');
+                }
+            });
+
+            // 初始檢查發票類型
+            $('input[name="receipt"]:checked').trigger('change');
+
+            // 監聽發票區域的"同訂購人資料"複選框
+            $('input[name="invoiceSameAsMember"]').change(function() {
+                if ($(this).is(':checked')) {
+                    // 如果勾選，填入會員資料
+                    $('#invoice_twzipcode select[data-role="county"]')
+                        .val('{{ Auth::guard('member')->user()->county }}')
+                        .trigger('change');
+                    
+                    $('#invoice_twzipcode select[data-role="district"]')
+                        .val('{{ Auth::guard('member')->user()->district }}');
+                    
+                    $('input[name="invoice_address"]')
+                        .val('{{ Auth::guard('member')->user()->address }}');
+                    
+                    // 如果是三聯式發票，也可以填入公司資訊（如果有的話）
+                    // if ($('input[name="receipt"]:checked').val() === '3') {
+                    //     $('input[name="invoice_title"]')
+                    //         .val('{{ Auth::guard('member')->user()->company_name ?? "" }}');
+                    //     $('input[name="invoice_taxid"]')
+                    //         .val('{{ Auth::guard('member')->user()->tax_id ?? "" }}');
+                    // }
+                } else {
+                    // 如果取消勾選，清空所有欄位
+                    $('#invoice_twzipcode select[data-role="county"]').val('');
+                    $('#invoice_twzipcode select[data-role="district"]').val('');
+                    $('input[name="invoice_address"]').val('');
+                    $('input[name="invoice_title"]').val('');
+                    $('input[name="invoice_taxid"]').val('');
+                }
+            });
+
+            // 當收貨人資訊的"同訂購人資料"被勾選時，如果發票區域的"同訂購人資料"也被勾選，
+            // 則同步更新發票地址
+            $('input[name="sameAsMember"]').change(function() {
+                if ($('input[name="invoiceSameAsMember"]').is(':checked')) {
+                    if ($(this).is(':checked')) {
+                        // 同步更新發票地址為會員資料
+                        $('#invoice_twzipcode select[data-role="county"]')
+                            .val('{{ Auth::guard('member')->user()->county }}')
+                            .trigger('change');
+                        $('#invoice_twzipcode select[data-role="district"]')
+                            .val('{{ Auth::guard('member')->user()->district }}');
+                        $('input[name="invoice_address"]')
+                            .val('{{ Auth::guard('member')->user()->address }}');
+                    }
+                }
+            });
+
+            // 當發票類型改變時，重置發票地址區域
+            $('input[name="receipt"]').change(function() {
+                const selectedValue = $(this).val();
+                const invoiceArea = $('.invoiceArea');
+
+                if (selectedValue === '3') {
+                    invoiceArea.show();
+                    // 如果"同訂購人資料"已勾選，則自動填入地址
+                    if ($('input[name="invoiceSameAsMember"]').is(':checked')) {
+                        $('#invoice_twzipcode select[data-role="county"]')
+                            .val('{{ Auth::guard('member')->user()->county }}')
+                            .trigger('change');
+                        $('#invoice_twzipcode select[data-role="district"]')
+                            .val('{{ Auth::guard('member')->user()->district }}');
+                        $('input[name="invoice_address"]')
+                            .val('{{ Auth::guard('member')->user()->address }}');
+                    }
+                } else {
+                    invoiceArea.hide();
+                    // 清空所有發票相關欄位
+                    $('#invoice_twzipcode select[data-role="county"]').val('');
+                    $('#invoice_twzipcode select[data-role="district"]').val('');
+                    $('input[name="invoice_address"]').val('');
+                    $('input[name="invoice_title"]').val('');
+                    $('input[name="invoice_taxid"]').val('');
+                }
+            });
         });
 
-        // 開啟 7-11 地圖
+        // 開 7-11 地圖
         function openSevenMap(shippmentType) {
             // 計算視窗位置，使其置中
             const width = 1000;
             const height = 700;
             const left = (window.screen.width - width) / 2;
             const top = (window.screen.height - height) / 2;
-            
+
             const mapWindow = window.open(
-                `{{ url('checkout/map/711-store/') }}/${shippmentType}`, 
-                'mapWindow', 
+                `{{ url('checkout/map/711-store/') }}/${shippmentType}`,
+                'mapWindow',
                 `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
             );
-            
+
             // 設置輪詢檢查視窗是否關閉
             const timer = setInterval(function() {
                 if (mapWindow.closed) {
@@ -517,13 +657,13 @@
             const height = 700;
             const left = (window.screen.width - width) / 2;
             const top = (window.screen.height - height) / 2;
-            
+
             const mapWindow = window.open(
-                `{{ url('checkout/map/family-store/') }}/${shippmentType}`, 
-                'mapWindow', 
+                `{{ url('checkout/map/family-store/') }}/${shippmentType}`,
+                'mapWindow',
                 `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
             );
-            
+
             // 設置輪詢檢查視窗是否關閉
             const timer = setInterval(function() {
                 if (mapWindow.closed) {
@@ -536,7 +676,7 @@
         // 檢查門市選擇
         function checkStoreSelection() {
             $.ajax({
-                url: '{{ route("checkout.get.store") }}', // 需要新增這個路由
+                url: '{{ route('checkout.get.store') }}', // 需要新增這個路由
                 method: 'GET',
                 success: function(response) {
                     if (response.store) {
@@ -562,10 +702,10 @@
                     </div>
                 </div>
             `;
-            
+
             $('.store-info').closest('.form-group').remove();
             $('#shippment').closest('.form-group').after(storeInfoHtml);
-            
+
             // 更新隱藏欄位
             if (!$('input[name="store_id"]').length) {
                 $('<input>').attr({
