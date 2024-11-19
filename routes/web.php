@@ -2,22 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CaptchaController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\PostController;
-use App\Http\Controllers\Frontend\ProductController;
-use App\Http\Controllers\Frontend\LoginController;
-use App\Http\Controllers\Frontend\JoinController;
-use App\Http\Controllers\Frontend\ActivityController;
-use App\Http\Controllers\Frontend\FaqController;
 use App\Http\Controllers\Frontend\{
+    HomeController,
+    PostController,
+    ProductController,
+    LoginController,
+    JoinController,
+    ActivityController,
+    FaqController,
     SealKnowledgeController,
-    SealKnowledgeCategoryController
+    SealKnowledgeCategoryController,
+    ProfileController,
 };
 use App\Http\Controllers\Frontend\{
     CartController,
     CheckoutController,
     PaymentController,
-    OrderController
+    OrderController,
 };
 
 use App\Http\Controllers\Frontend\TestController;
@@ -97,6 +98,10 @@ Route::group(['middleware' => 'auth:member'], function () {
     Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');
     Route::get('/orders/list/{order}', [OrderController::class, 'orderShow'])->name('orders.show');
     Route::get('/orders/list', [OrderController::class, 'orderList'])->name('orders.list');
+
+    // 會員資料
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 

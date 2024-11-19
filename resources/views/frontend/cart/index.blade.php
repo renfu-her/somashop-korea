@@ -47,8 +47,7 @@
                                     <tr class="cart-item">
                                         <td scope="row"></td>
                                         <td class="thumb-img align-middle">
-                                            <img class="item-img" src="{{ $item['primary_image'] }}"
-                                                width="106px">
+                                            <img class="item-img" src="{{ $item['primary_image'] }}" width="106px">
                                         </td>
                                         <td class="align-middle border-sm-top">
                                             <span class="cart-tag d-block d-sm-none text-muted" disable>規格</span>
@@ -125,10 +124,10 @@
                     <div class="col-sm-12">
                         <div class="row my-3">
                             <div class="col-sm-3 offset-sm-9">
-                                <button class="btn btn-danger btn-purchase w-100 rounded-pill mb-3 cartNext"
-                                    type="button" onclick="window.location.href='{{ route('checkout.index') }}'">我要結帳</button>
+                                <button class="btn btn-danger btn-purchase w-100 rounded-pill mb-3 cartNext" type="button"
+                                    onclick="window.location.href='{{ route('checkout.index') }}'">我要結帳</button>
                                 <button class="btn btn-danger btn-addcart w-100 rounded-pill mb-3" type="button"
-                                    onclick="javascript:location.href='{{ route('products.index') }}'">繼續購物</button>
+                                    onclick="#">繼續購物</button>
                             </div>
                         </div>
                     </div>

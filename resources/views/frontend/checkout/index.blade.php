@@ -634,8 +634,8 @@
         // 開 7-11 地圖
         function openSevenMap(shippmentType) {
             // 計算視窗位置，使其置中
-            const width = 1000;
-            const height = 700;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
             const left = (window.screen.width - width) / 2;
             const top = (window.screen.height - height) / 2;
 
@@ -657,8 +657,8 @@
         // 開啟全家地圖
         function openFamilyMap(shippmentType) {
             // 計算視窗位置，使其置中
-            const width = 1000;
-            const height = 700;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
             const left = (window.screen.width - width) / 2;
             const top = (window.screen.height - height) / 2;
 
