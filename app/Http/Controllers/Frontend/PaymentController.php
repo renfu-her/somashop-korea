@@ -130,7 +130,7 @@ class PaymentController extends Controller
         $ecpayData['CheckMacValue'] = $this->generateCheckMacValue($ecpayData);
 
         // 清空購物車
-        session()->forget(['cart', 'cart_total']);
+        session()->forget(['cart']);
 
         // 回傳表單到前端自動提交
         return view('frontend.payment.ecpay-form', [
