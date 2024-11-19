@@ -93,17 +93,20 @@ Route::group(['middleware' => 'auth:member'], function () {
 
     // 結帳驗證
     Route::post('/payment/process', [PaymentController::class, 'paymentProcess'])->name('payment.process');
-    // 付款結果
-    Route::get('/payment/result', [PaymentController::class, 'paymentResult'])->name('payment.result');
-
-    // 訂單
+      // 訂單
     Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
 
+
+// 付款結果
+Route::post('/payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
+Route::get('/payment/notify', [PaymentController::class, 'notify'])->name('payment.notify');
+
 // 門市地圖
 Route::get('/checkout/map/711-store/{shippmentType}', [CheckoutController::class, 'openSevenMap'])->name('checkout.map.711');
 Route::get('/checkout/map/family-store/{shippmentType}', [CheckoutController::class, 'openFamilyMap'])->name('checkout.map.family');
+
 // 重寫門市地圖
 Route::post('/checkout/map/rewrite', [CheckoutController::class, 'rewriteMap'])->name('checkout.map.rewrite');
 // 獲取已選擇的門市資訊

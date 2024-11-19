@@ -21,7 +21,7 @@ use App\Http\Controllers\Admin\SealKnowledgeCategoryController;
 use App\Http\Controllers\Admin\ProductSpecificationController;
 use App\Http\Controllers\Admin\AdController;
 use App\Http\Controllers\Admin\EmailSettingController;
-
+use App\Http\Controllers\Admin\SettingController;
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', function () {
@@ -102,4 +102,7 @@ Route::group([
 
     // 郵件設定
     Route::resource('email-settings', EmailSettingController::class);
+
+    // 系統設定
+    Route::resource('settings', SettingController::class);
 });

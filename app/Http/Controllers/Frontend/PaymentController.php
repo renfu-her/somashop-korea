@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Setting;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -28,12 +32,20 @@ class PaymentController extends Controller
 
         //     DB::beginTransaction();
 
+        // 獲取購物車資料
+        $cart = session('cart', []);
+        // 計算訂單總金額
+        $totalAmount = collect($cart)->sum(function ($item) {
+            return $item['price'] * $item['quantity'];
+        });
+
         // 建立訂單
         $order = new Order();
+        $shippingFee = Setting::getValue('shipping_fee', 60);
 
         // 生成訂單編號
         $today = date('Ymd');
-        $lastOrder = Order::where('order_number', 'like', "OID-{$today}%")
+        $lastOrder = Order::where('order_number', 'like', "{$today}%")
             ->orderBy('order_number', 'desc')
             ->first();
 
@@ -44,9 +56,10 @@ class PaymentController extends Controller
             $newNumber = '0001';
         }
 
-        $order->order_number = "OID-" . $today . $newNumber;
-        $order->member_id = auth()->guard('member')->id();
-        $order->total_amount = session('cart_total', 0);
+        $order->order_number = $today . $newNumber;
+        $order->order_id = 'OID-' . $today . $newNumber;
+        $order->member_id = Auth::guard('member')->id();
+        $order->total_amount = $totalAmount + $shippingFee;
         $order->status = Order::STATUS_PENDING;
 
         // 付款相關
@@ -54,22 +67,19 @@ class PaymentController extends Controller
         $order->payment_status = Order::PAYMENT_STATUS_PENDING;
 
         // 運送相關
-        $order->shipping_method = $request->shippment;
+        $order->shipping_method = '運費';
         $order->shipping_status = Order::SHIPPING_STATUS_PENDING;
+        $order->shipping_fee = $shippingFee;
 
         // 收件人資訊
         $order->recipient_name = $request->username;
         $order->recipient_phone = $request->phone;
         $order->recipient_gender = $request->gender;
+        $order->shipping_county = $request->county ?? '';
+        $order->shipping_district = $request->district ?? '';
+        $order->shipping_address = $request->address ?? '';
+        $order->store_id = $request->store_id ?? '';
 
-        // 根據配送方式儲存地址
-        if ($request->shippment === 'mail_send') {
-            $order->shipping_county = $request->county;
-            $order->shipping_district = $request->district;
-            $order->shipping_address = $request->address;
-        } else {
-            $order->store_id = $request->store_id;
-        }
 
         // 發票資訊
         $order->receipt_type = $request->receipt;
@@ -87,7 +97,6 @@ class PaymentController extends Controller
         $order->save();
 
         // 建立訂單項目
-        $cart = session('cart', []);
         foreach ($cart as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
@@ -111,10 +120,10 @@ class PaymentController extends Controller
             'TradeDesc' => '商品訂單',
             'ItemName' => $this->getItemNames($cart),
             'ReturnURL' => route('payment.notify'),
-            'OrderResultURL' => route('payment.result'),
+            'OrderResultURL' => route('payment.callback'),
             'ChoosePayment' => $this->getECPayMethod($request->payment),
             'EncryptType' => 1,
-            'ClientBackURL' => route('payment.result'),
+            'ClientBackURL' => route('payment.callback'),
         ];
 
         // 加入檢查碼
@@ -171,6 +180,72 @@ class PaymentController extends Controller
         }
 
         return redirect()->route('index')->with('error', '付款驗證失敗');
+    }
+
+    // 付款結果
+    public function paymentCallback(Request $request)
+    {
+        $paymentResult = $request->all();
+
+        // 根據訂單編號查詢訂單
+        $order = Order::where('order_number', $paymentResult['MerchantTradeNo'])->firstOrFail();
+        $orderItems = OrderItem::with('product')->where('order_id', $order->id)->get();
+
+        // 更新訂單付款狀態
+        if ($paymentResult['RtnCode'] === '1') {
+            $order->update([
+                'payment_status' => Order::PAYMENT_STATUS_PAID,
+                'status' => Order::STATUS_PROCESSING,
+                'payment_method' => $this->mapPaymentType($paymentResult['PaymentType']),
+                'payment_date' => $paymentResult['PaymentDate'],
+                'trade_no' => $paymentResult['TradeNo'],
+                'payment_fee' => $paymentResult['PaymentTypeChargeFee']
+            ]);
+
+            // 記錄付款成功日誌
+            Log::info('付款成功', [
+                'order_number' => $order->order_number,
+                'payment_result' => $paymentResult
+            ]);
+        } else {
+            $order->update([
+                'payment_status' => Order::PAYMENT_STATUS_FAILED,
+                'status' => Order::STATUS_CANCELLED
+            ]);
+
+            // 記錄付款失敗日誌
+            Log::error('付款失敗', [
+                'order_number' => $order->order_number,
+                'payment_result' => $paymentResult
+            ]);
+        }
+
+        return view('frontend.payment.complete', [
+            'success' => ($paymentResult['RtnCode'] == 1),
+            'message' => $paymentResult['RtnMsg'],
+            'orderNumber' => $paymentResult['MerchantTradeNo'],
+            'paymentMethod' => $this->mapPaymentType($paymentResult['PaymentType']),
+            'order' => $order,
+            'orderItems' => $orderItems
+        ]);
+    }
+
+    // 對應綠界支付方式到系統支付方式
+    private function mapPaymentType($ecpayPaymentType)
+    {
+        switch ($ecpayPaymentType) {
+            case 'Credit_CreditCard':
+                return Order::PAYMENT_METHOD_CREDIT;
+            case 'ATM_TAISHIN':
+            case 'ATM_ESUN':
+            case 'ATM_BOT':
+            case 'ATM_FUBON':
+            case 'ATM_CHINATRUST':
+            case 'ATM_FIRST':
+                return Order::PAYMENT_METHOD_ATM;
+            default:
+                return $ecpayPaymentType;
+        }
     }
 
     private function getPaymentMethod($payment)

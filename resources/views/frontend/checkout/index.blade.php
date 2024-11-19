@@ -82,7 +82,8 @@
                     <div class="col-sm-12 dot-line">
                         <div class="row">
                             <div class="col-sm-3 offset-sm-9 pb-3">
-                                <h5 class="text-danger">全館周年慶商品免運</h5>
+                                <h5 class="text-danger">運費</h5>
+                                <p class="mb-0">NT${{ number_format($shippingFee) }}</p>
                             </div>
                         </div>
                     </div>
@@ -92,7 +93,7 @@
                             <div class="col-md-4 offset-md-8 col-sm-6 offset-sm-6">
                                 <h2 class="text-black mb-0">
                                     總計
-                                    <span class="pl-3">NT${{ number_format($total) }}</span>
+                                    <span class="pl-3">NT${{ number_format($total + $shippingFee) }}</span>
                                 </h2>
                             </div>
                         </div>
@@ -304,8 +305,8 @@
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
                                             for="invoice_title">發票抬頭</label>
                                         <div class="col-sm-6 align-self-center">
-                                            <input type="text" class="form-control" id="invoice_title" placeholder="發票抬頭"
-                                                name="invoice_title">
+                                            <input type="text" class="form-control" id="invoice_title"
+                                                placeholder="發票抬頭" name="invoice_title">
                                         </div>
                                     </div>
 
@@ -314,8 +315,8 @@
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
                                             for="invoice_taxid">發票統編</label>
                                         <div class="col-sm-6 align-self-center">
-                                            <input type="text" class="form-control" id="invoice_taxid" placeholder="發票統編"
-                                                name="invoice_taxid">
+                                            <input type="text" class="form-control" id="invoice_taxid"
+                                                placeholder="發票統編" name="invoice_taxid">
                                         </div>
                                     </div>
 
@@ -557,19 +558,19 @@
                     $('#invoice_twzipcode select[data-role="county"]')
                         .val('{{ Auth::guard('member')->user()->county }}')
                         .trigger('change');
-                    
+
                     $('#invoice_twzipcode select[data-role="district"]')
                         .val('{{ Auth::guard('member')->user()->district }}');
-                    
+
                     $('input[name="invoice_address"]')
                         .val('{{ Auth::guard('member')->user()->address }}');
-                    
+
                     // 如果是三聯式發票，也可以填入公司資訊（如果有的話）
                     // if ($('input[name="receipt"]:checked').val() === '3') {
                     //     $('input[name="invoice_title"]')
-                    //         .val('{{ Auth::guard('member')->user()->company_name ?? "" }}');
+                    //         .val('{{ Auth::guard('member')->user()->company_name ?? '' }}');
                     //     $('input[name="invoice_taxid"]')
-                    //         .val('{{ Auth::guard('member')->user()->tax_id ?? "" }}');
+                    //         .val('{{ Auth::guard('member')->user()->tax_id ?? '' }}');
                     // }
                 } else {
                     // 如果取消勾選，清空所有欄位

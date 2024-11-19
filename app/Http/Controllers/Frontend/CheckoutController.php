@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Services\CaptchaService;
 use Illuminate\Support\Facades\Http;
+use App\Models\Setting;
 
 class CheckoutController extends Controller
 {
@@ -36,10 +37,14 @@ class CheckoutController extends Controller
         // 獲取會員資料
         $member = Auth::guard('member')->user();
 
+        // 獲取運費
+        $shippingFee = Setting::where('key', 'shipping_fee')->first()->value;
+
         return view('frontend.checkout.index', compact(
             'cart',
             'total',
             'member',
+            'shippingFee'
         ));
     }
 
