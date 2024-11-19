@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth:member'], function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'addToCart'])->name('checkout.add');
 
+
     // 驗證表單
     Route::post('/checkout/validate', [CheckoutController::class, 'validateOrder'])->name('checkout.validate');
 
@@ -94,6 +95,13 @@ Route::group(['middleware' => 'auth:member'], function () {
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
 
+// 門市地圖
+Route::get('/checkout/map/711-store/{shippmentType}', [CheckoutController::class, 'openSevenMap'])->name('checkout.map.711');
+Route::get('/checkout/map/family-store/{shippmentType}', [CheckoutController::class, 'openFamilyMap'])->name('checkout.map.family');
+// 重寫門市地圖
+Route::post('/checkout/map/rewrite', [CheckoutController::class, 'rewriteMap'])->name('checkout.map.rewrite');
+// 獲取已選擇的門市資訊
+Route::get('/checkout/get-store', [CheckoutController::class, 'getSelectedStore'])->name('checkout.get.store');
 
 // TODO: 測試路由，記得刪除
 Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {

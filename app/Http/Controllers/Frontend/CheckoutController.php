@@ -8,11 +8,12 @@ use App\Models\Member;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Services\CaptchaService;
+use Illuminate\Support\Facades\Http;
 
 class CheckoutController extends Controller
 {
     protected $captchaService;
-    
+
     public function __construct(CaptchaService $captchaService)
     {
         $this->captchaService = $captchaService;
@@ -35,24 +36,10 @@ class CheckoutController extends Controller
         // 獲取會員資料
         $member = Auth::guard('member')->user();
 
-        // 配送時段選項
-        $timeSlots = [
-            '09:00-10:00',
-            '10:00-11:00',
-            '11:00-12:00',
-            '12:00-13:00',
-            '13:00-14:00',
-            '14:00-15:00',
-            '15:00-16:00',
-            '16:00-17:00',
-            '17:00-18:00'
-        ];
-
         return view('frontend.checkout.index', compact(
             'cart',
             'total',
             'member',
-            'timeSlots'
         ));
     }
 
@@ -92,5 +79,85 @@ class CheckoutController extends Controller
     public function generateCaptcha()
     {
         return $this->captchaService->generateCaptcha();
+    }
+
+    // 開啟 7-11 門市地圖
+    public function openSevenMap(Request $request, $shippmentType)
+    {
+
+        $logisticsSubType = 'UNIMART';
+
+        if (env('APP_ENV') == 'production') {
+            $mapApi = config('config.ecpay_map_api');
+        } else {
+            $mapApi = config('config.ecpay_stage_map_api');
+        }
+
+        $parameters  = [
+            'MerchantID' => config('config.ecpay_merchant_id'),
+            'LogisticsType' => 'CVS',
+            'LogisticsSubType' => $logisticsSubType,
+            'ServerReplyURL' => url('checkout/map/rewrite'),
+            'IsCollection' => 'N'
+        ];
+
+        return redirect($mapApi . '?' . http_build_query($parameters));
+    }
+
+    public function openFamilyMap(Request $request, $shippmentType)
+    {
+        $logisticsSubType = 'FAMI';
+
+        if (env('APP_ENV') == 'production') {
+            $mapApi = config('config.ecpay_map_api');
+        } else {
+            $mapApi = config('config.ecpay_stage_map_api');
+        }
+
+        $parameters  = [
+            'MerchantID' => config('config.ecpay_merchant_id'),
+            'LogisticsType' => 'CVS',
+            'LogisticsSubType' => $logisticsSubType,
+            'ServerReplyURL' => url('checkout/map/rewrite'),
+            'IsCollection' => 'N'
+        ];
+
+        return redirect($mapApi . '?' . http_build_query($parameters));
+    }
+
+    public function rewriteMap(Request $request)
+    {
+        // 關閉 CSRF 驗證
+        $this->middleware('web');
+        
+        $data = $request->all();
+        
+        // 將門市資料存入 session
+        session()->put('selected_store', [
+            'store_id' => $data['CVSStoreID'],
+            'store_name' => $data['CVSStoreName'],
+            'store_address' => $data['CVSAddress'],
+            'store_telephone' => $data['CVSTelephone'],
+        ]);
+
+
+        session()->save();
+        
+        // 關閉視窗並傳送資料給父視窗
+        return view('frontend.checkout.store-callback', [
+            'store_data' => $data
+        ]);
+    }
+
+    /**
+     * 獲取已選擇的門市資訊
+     */
+    public function getSelectedStore()
+    {
+        $store = session()->get('selected_store');
+        return response()->json([
+            'success' => true,
+            'store' => $store
+        ]);
     }
 }

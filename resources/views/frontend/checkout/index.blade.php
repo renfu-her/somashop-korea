@@ -439,23 +439,124 @@
                 const shippmentType = $('#shippment').val();
                 // 根據不同超商打開對應地圖
                 if (shippmentType === '711_b2c') {
-                    openSevenMap();
+                    openSevenMap(shippmentType);
                 } else if (shippmentType === 'family_b2c') {
-                    openFamilyMap();
+                    openFamilyMap(shippmentType);
+                }
+            });
+
+            // 監聽來自子視窗的消息
+            window.addEventListener('message', function(event) {
+                if (event.data.type === 'STORE_SELECTED') {
+                    const storeData = event.data.data;
+                    
+                    // 在寄送方式下方顯示選擇的門市資訊
+                    const storeInfoHtml = `
+                        <div class="form-group row">
+                            <div class="col-sm-6 offset-sm-2">
+                                <div class="store-info mt-2">
+                                    <div class="alert alert-info mb-0">
+                                        <strong>已選擇門市：</strong><br>
+                                        門市：${storeData.store_name}<br>
+                                        地址：${storeData.store_address}<br>
+                                        電話：${storeData.store_telephone}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 移除舊的門市資訊（如果有的話）
+                    $('.store-info').closest('.form-group').remove();
+                    
+                    // 添加新的門市資訊 - 改為添加在寄送方式的 form-group 後面
+                    $('#shippment').closest('.form-group').after(storeInfoHtml);
+                    
+                    // 將門市資訊存入隱藏欄位（方便表單提交）
+                    if (!$('input[name="store_id"]').length) {
+                        $('<input>').attr({
+                            type: 'hidden',
+                            name: 'store_id',
+                            value: storeData.store_id
+                        }).appendTo('form');
+                    } else {
+                        $('input[name="store_id"]').val(storeData.store_id);
+                    }
                 }
             });
         });
 
         // 開啟 7-11 地圖
-        function openSevenMap() {
-            // 這裡添加開啟 7-11 電子地圖的邏輯
-            alert('開啟 7-11 門市地圖');
+        function openSevenMap(shippmentType) {
+            const mapWindow = window.open(`{{ url('checkout/map/711-store/') }}/${shippmentType}`, 'mapWindow', 'width=1000,height=700');
+            
+            // 設置輪詢檢查視窗是否關閉
+            const timer = setInterval(function() {
+                if (mapWindow.closed) {
+                    clearInterval(timer);
+                    // 視窗關閉後，檢查 session 中的門市資料
+                    checkStoreSelection();
+                }
+            }, 500);
         }
 
         // 開啟全家地圖
-        function openFamilyMap() {
-            // 這裡添加開啟全家電子地圖的邏輯
-            alert('開啟全家門市地圖');
+        function openFamilyMap(shippmentType) {
+            const mapWindow = window.open(`{{ url('checkout/map/family-store/') }}/${shippmentType}`, 'mapWindow', 'width=1000,height=700');
+            
+            // 設置輪詢檢查視窗是否關閉
+            const timer = setInterval(function() {
+                if (mapWindow.closed) {
+                    clearInterval(timer);
+                    // 視窗關閉後，檢查 session 中的門市資料
+                    checkStoreSelection();
+                }
+            }, 500);
+        }
+
+        // 檢查門市選擇
+        function checkStoreSelection() {
+            $.ajax({
+                url: '{{ route("checkout.get.store") }}', // 需要新增這個路由
+                method: 'GET',
+                success: function(response) {
+                    if (response.store) {
+                        updateStoreInfo(response.store);
+                    }
+                }
+            });
+        }
+
+        // 更新門市資訊顯示
+        function updateStoreInfo(storeData) {
+            const storeInfoHtml = `
+                <div class="form-group row">
+                    <div class="col-sm-6 offset-sm-2">
+                        <div class="store-info mt-2">
+                            <div class="alert alert-info mb-0">
+                                <strong>已選擇門市：</strong><br>
+                                門市：${storeData.store_name}<br>
+                                地址：${storeData.store_address}<br>
+                                電話：${storeData.store_telephone}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            $('.store-info').closest('.form-group').remove();
+            $('#shippment').closest('.form-group').after(storeInfoHtml);
+            
+            // 更新隱藏欄位
+            if (!$('input[name="store_id"]').length) {
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'store_id',
+                    value: storeData.store_id
+                }).appendTo('form');
+            } else {
+                $('input[name="store_id"]').val(storeData.store_id);
+            }
         }
     </script>
 @endpush

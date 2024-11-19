@@ -25,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'admin/products/*/images/*',
             'admin/upload-image',
+            'checkout/map/rewrite',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
