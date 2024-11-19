@@ -76,6 +76,7 @@ class CheckoutController extends Controller
         ]);
     }
 
+    // 產生驗證碼
     public function generateCaptcha()
     {
         return $this->captchaService->generateCaptcha();
@@ -104,6 +105,7 @@ class CheckoutController extends Controller
         return redirect($mapApi . '?' . http_build_query($parameters));
     }
 
+    // 開啟全家門市地圖
     public function openFamilyMap(Request $request, $shippmentType)
     {
         $logisticsSubType = 'FAMI';
@@ -159,5 +161,10 @@ class CheckoutController extends Controller
             'success' => true,
             'store' => $store
         ]);
+    }
+
+    public function payment(Request $request)
+    {
+        dd($request->all());
     }
 }

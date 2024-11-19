@@ -98,7 +98,7 @@
                         </div>
                     </div>
 
-                    <form class="w-100" method="post" action="#" enctype="multipart/form-data">
+                    <form class="w-100" method="post" action="{{ route('payment.result') }}" enctype="multipart/form-data">
                         <div class="col-sm-12 border rounded mt-3">
                             <div class="form-group row m-3">
                                 <legend
@@ -194,6 +194,7 @@
                                                 style="display: none;">
                                                 <i class="fas fa-map-marker-alt"></i> 選擇門市
                                             </button>
+                                            <input type="hidden" name="store_id" value="">
                                         </div>
                                     </div>
 
@@ -488,13 +489,22 @@
 
         // 開啟 7-11 地圖
         function openSevenMap(shippmentType) {
-            const mapWindow = window.open(`{{ url('checkout/map/711-store/') }}/${shippmentType}`, 'mapWindow', 'width=1000,height=700');
+            // 計算視窗位置，使其置中
+            const width = 1000;
+            const height = 700;
+            const left = (window.screen.width - width) / 2;
+            const top = (window.screen.height - height) / 2;
+            
+            const mapWindow = window.open(
+                `{{ url('checkout/map/711-store/') }}/${shippmentType}`, 
+                'mapWindow', 
+                `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
+            );
             
             // 設置輪詢檢查視窗是否關閉
             const timer = setInterval(function() {
                 if (mapWindow.closed) {
                     clearInterval(timer);
-                    // 視窗關閉後，檢查 session 中的門市資料
                     checkStoreSelection();
                 }
             }, 500);
@@ -502,13 +512,22 @@
 
         // 開啟全家地圖
         function openFamilyMap(shippmentType) {
-            const mapWindow = window.open(`{{ url('checkout/map/family-store/') }}/${shippmentType}`, 'mapWindow', 'width=1000,height=700');
+            // 計算視窗位置，使其置中
+            const width = 1000;
+            const height = 700;
+            const left = (window.screen.width - width) / 2;
+            const top = (window.screen.height - height) / 2;
+            
+            const mapWindow = window.open(
+                `{{ url('checkout/map/family-store/') }}/${shippmentType}`, 
+                'mapWindow', 
+                `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
+            );
             
             // 設置輪詢檢查視窗是否關閉
             const timer = setInterval(function() {
                 if (mapWindow.closed) {
                     clearInterval(timer);
-                    // 視窗關閉後，檢查 session 中的門市資料
                     checkStoreSelection();
                 }
             }, 500);

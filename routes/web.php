@@ -1,20 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\PostController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\LoginController;
 use App\Http\Controllers\Frontend\JoinController;
 use App\Http\Controllers\Frontend\ActivityController;
-use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\Frontend\FaqController;
-use App\Http\Controllers\Frontend\SealKnowledgeController;
-use App\Http\Controllers\Frontend\SealKnowledgeCategoryController;
-use App\Http\Controllers\Frontend\CartController;
-use App\Http\Controllers\Frontend\CheckoutController;
-use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Frontend\{
+    SealKnowledgeController,
+    SealKnowledgeCategoryController
+};
+use App\Http\Controllers\Frontend\{
+    CartController,
+    CheckoutController,
+    PaymentController,
+    OrderController
+};
+
 use App\Http\Controllers\Frontend\TestController;
 
 // 首頁路由
@@ -86,9 +91,10 @@ Route::group(['middleware' => 'auth:member'], function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'addToCart'])->name('checkout.add');
 
-
-    // 驗證表單
-    Route::post('/checkout/validate', [CheckoutController::class, 'validateOrder'])->name('checkout.validate');
+    // 結帳驗證
+    Route::post('/payment/process', [PaymentController::class, 'paymentProcess'])->name('payment.process');
+    // 付款結果
+    Route::get('/payment/result', [PaymentController::class, 'paymentResult'])->name('payment.result');
 
     // 訂單
     Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');
@@ -102,6 +108,8 @@ Route::get('/checkout/map/family-store/{shippmentType}', [CheckoutController::cl
 Route::post('/checkout/map/rewrite', [CheckoutController::class, 'rewriteMap'])->name('checkout.map.rewrite');
 // 獲取已選擇的門市資訊
 Route::get('/checkout/get-store', [CheckoutController::class, 'getSelectedStore'])->name('checkout.get.store');
+
+
 
 // TODO: 測試路由，記得刪除
 Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
