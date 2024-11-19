@@ -63,7 +63,7 @@
                         <a class="nav-link" href="#">個人資料修改</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">訂單查詢</a>
+                        <a class="nav-link" href="{{ route('orders.list') }}">訂單查詢</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}"

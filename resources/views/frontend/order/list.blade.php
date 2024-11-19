@@ -44,40 +44,23 @@
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td class="align-middle">2024/11/19</td>
-                                    <td class="align-middle">20241119012494</td>
-                                    <td class="align-middle text-left">
-
-                                        <span class="mb-0">紅木外攜外出盒 不含印章</span>
-                                        <p class="mb-0">款式請下單後「備註」留言 * 1</p>
-                                        <br>
-                                    </td>
-                                    <td class="align-middle">NT$360</td>
-                                    <td class="align-middle">
-                                        待確認 </td>
-                                    <td class="align-middle">
-                                        備貨中 </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td class="align-middle">2024/11/19</td>
-                                    <td class="align-middle">20241119012493</td>
-                                    <td class="align-middle text-left">
-
-                                        <span class="mb-0">紅木外攜外出盒 不含印章</span>
-                                        <p class="mb-0">款式請下單後「備註」留言 * 1</p>
-                                        <br>
-                                    </td>
-                                    <td class="align-middle">NT$360</td>
-                                    <td class="align-middle">
-                                        待確認 </td>
-                                    <td class="align-middle">
-                                        備貨中 </td>
-                                    <td></td>
-                                </tr>
+                                @foreach ($orders as $order)
+                                    <tr style="height: 100px;">
+                                        <th scope="row"></th>
+                                        <td class="align-middle">{{ $order->created_at->format('Y-m-d H:i') }}</td>
+                                        <td class="align-middle">{{ $order->order_number }}</td>
+                                        <td class="align-middle text-left">
+                                            <span class="mb-0">{!! $order->items->first() !!}</span>
+                                            <p class="mb-0"></p>
+                                        </td>
+                                        <td class="align-middle">NT${{ $order->total_amount }}</td>
+                                        <td class="align-middle">
+                                            {{ $order->status_text }} </td>
+                                        <td class="align-middle">
+                                            {{ $order->status_text }} </td>
+                                        <td></td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -87,7 +70,7 @@
                             <div class="col-md-1 col-2 pr-0 text-md-right text-sm-left">註 :</div>
                             <div class="col-md-11 col-10 pl-0 pb-3">
                                 <ol class="pl-md-4 pl-0">
-                                    <li>商品將於您付款成功後45~60個工作天左右送達。</li>
+                                    <li>商品將於您付款成功後 45~60 個工作天左右送達。</li>
                                     <li>以上資料僅保留六個月內</li>
                                 </ol>
                             </div>

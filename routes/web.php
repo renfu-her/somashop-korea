@@ -95,8 +95,8 @@ Route::group(['middleware' => 'auth:member'], function () {
     Route::post('/payment/process', [PaymentController::class, 'paymentProcess'])->name('payment.process');
       // 訂單
     Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::get('/orders/status', [OrderController::class, 'status'])->name('orders.status');
+    Route::get('/orders/list/{order}', [OrderController::class, 'orderShow'])->name('orders.show');
+    Route::get('/orders/list', [OrderController::class, 'orderList'])->name('orders.list');
 });
 
 
