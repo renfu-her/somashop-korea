@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\{
     SealKnowledgeController,
     SealKnowledgeCategoryController,
     ProfileController,
+    LogisticsController,
 };
 use App\Http\Controllers\Frontend\{
     CartController,
@@ -124,3 +125,7 @@ Route::get('/checkout/get-store', [CheckoutController::class, 'getSelectedStore'
 Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
     Route::get('/mail', [TestController::class, 'test'])->name('test');
 });
+
+// 物流通知路由
+Route::post('logistics/notify', [LogisticsController::class, 'notify'])->name('logistics.notify');
+Route::post('logistics/store/notify', [LogisticsController::class, 'storeNotify'])->name('logistics.store.notify');

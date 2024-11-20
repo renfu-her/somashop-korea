@@ -99,10 +99,9 @@ class Order extends Model
     // 發票類型
     const INVOICE_TYPE_PERSONAL = 'personal';
     const INVOICE_TYPE_COMPANY = 'company';
-    const INVOICE_TYPE_DONATION = 'donation';
-
-    const SHIPPING_STATUS_PROCESSING = 'processing';
-    const SHIPPING_STATUS_FAILED = 'failed';
+    const INVOICE_TYPE_DONATION = 'donation';    // 配送失敗
+    const SHIPPING_STATUS_STORE_ARRIVED = 'store_arrived';  // 已送達門市
+    const SHIPPING_STATUS_COMPLETED = 'completed'; 
 
     public function member()
     {
