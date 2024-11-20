@@ -7,7 +7,8 @@
                 <div class="card">
                     <div class="card-header">
                         編輯產品
-                        <a href="{{ route('admin.products.specs.index', $product->id) }}" class="btn btn-info btn-sm float-end">
+                        <a href="{{ route('admin.products.specs.index', $product->id) }}"
+                            class="btn btn-info btn-sm float-end">
                             管理產品規格
                         </a>
                     </div>
@@ -159,19 +160,26 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">產品規格</label>
+                                <label class="form-label">產品規格 <small class="text-muted">(管理產品規格按鈕進行設定)</small></label>
                                 <div class="border p-3 rounded">
-                                    @foreach ($specifications as $spec)
-                                        <div class="form-check mb-2 ps-3">
-                                            <input type="checkbox" class="form-check-input"
-                                                id="spec_{{ $spec->id }}" name="specifications[]"
-                                                value="{{ $spec->id }}"
-                                                {{ in_array($spec->id, $product->specifications->pluck('id')->toArray()) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="spec_{{ $spec->id }}">
-                                                {{ $spec->name }}
-                                            </label>
-                                        </div>
-                                    @endforeach
+                                    <div class="row">
+                                        @foreach ($product->specs->chunk(4) as $specChunk)
+                                            @foreach ($specChunk as $spec)
+                                                <div class="col-md-3 mb-2">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" style="margin-left: 3px;"
+                                                            id="spec_{{ $spec->id }}" name="specs[]"
+                                                            value="{{ $spec->id }}"
+                                                            {{ in_array($spec->id, $product->specs->pluck('id')->toArray()) ? 'checked' : '' }}
+                                                            onclick="return false;">
+                                                        <label class="form-check-label" for="spec_{{ $spec->id }}">
+                                                            {{ $spec->name }}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
 
@@ -195,25 +203,25 @@
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label for="meta_title" class="form-label">SEO 標題</label>
-                                        <input type="text" class="form-control @error('meta_title') is-invalid @enderror"
-                                            id="meta_title" name="meta_title" 
-                                            value="{{ old('meta_title', $product->meta_title) }}"
+                                        <input type="text"
+                                            class="form-control @error('meta_title') is-invalid @enderror" id="meta_title"
+                                            name="meta_title" value="{{ old('meta_title', $product->meta_title) }}"
                                             maxlength="60">
                                         <small class="text-muted">建議長度：60 字元以內</small>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="meta_description" class="form-label">SEO 描述</label>
-                                        <textarea class="form-control @error('meta_description') is-invalid @enderror"
-                                            id="meta_description" name="meta_description" 
-                                            rows="3" maxlength="160">{{ old('meta_description', $product->meta_description) }}</textarea>
+                                        <textarea class="form-control @error('meta_description') is-invalid @enderror" id="meta_description"
+                                            name="meta_description" rows="3" maxlength="160">{{ old('meta_description', $product->meta_description) }}</textarea>
                                         <small class="text-muted">建議長度：160 字元以內</small>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="meta_keywords" class="form-label">SEO 關鍵字</label>
-                                        <input type="text" class="form-control @error('meta_keywords') is-invalid @enderror"
-                                            id="meta_keywords" name="meta_keywords" 
+                                        <input type="text"
+                                            class="form-control @error('meta_keywords') is-invalid @enderror"
+                                            id="meta_keywords" name="meta_keywords"
                                             value="{{ old('meta_keywords', $product->meta_keywords) }}">
                                         <small class="text-muted">多個關鍵字請用逗號分隔</small>
                                     </div>

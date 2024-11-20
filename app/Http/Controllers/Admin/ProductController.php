@@ -133,12 +133,13 @@ class ProductController extends Controller
             }
         }
 
-        $specifications = $request->input('specifications', []);
-        $product->specifications()->sync(
-            collect($specifications)->mapWithKeys(function ($id) {
-                return [$id => ['is_active' => true]];
-            })
-        );
+        // $specs = $request->input('specs', []);
+        
+        // $product->specs()->sync(
+        //     collect($specs)->mapWithKeys(function ($id) {
+        //         return [$id => ['is_active' => true]];
+        //     })
+        // );
 
         return redirect()->route('admin.products.index')
             ->with('success', '商品已更新');
