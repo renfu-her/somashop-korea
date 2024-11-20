@@ -49,25 +49,25 @@
                     <div class="page-content">
                         <div class="row">
                             @foreach ($products as $product)
-                                <div class="col-md-4 col-6 my-md-3 my-2 px-md-3 pl-2 pr-1" data-aos="zoom-in"
-                                    data-aos-delay="0" data-aos-anchor-placement="center-bottom">
+                                <div class="col-md-4 col-6 mb-4">
                                     <a href="{{ route('products.show', $product->id) }}">
                                         <div class="card product-card border-0">
-                                            <div class="card-top">
+                                            <div class="card-img-wrapper">
                                                 <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}"
-                                                    class="card-img-top img-fluid" alt="{{ $product->name }}">
+                                                    class="card-img-top" alt="{{ $product->name }}">
                                                 @if ($product->is_new)
-                                                    <b class="float-tag text-white bg-danger">新品</b>
+                                                    <span class="badge">新品</span>
                                                 @endif
                                             </div>
                                             <div class="card-body px-0">
-                                                <h5 class="card-title">{{ $product->name }}</h5>
+                                                <h5 class="card-title text-truncate">{{ $product->name }}</h5>
                                                 @if ($product->sub_title)
-                                                    <h6 class="card-subtitle mb-2 text-muted">{{ $product->sub_title }}</h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted text-truncate">
+                                                        {{ $product->sub_title }}</h6>
                                                 @endif
-                                                <h6 class="card-text">原價 NT$ {{ number_format($product->price) }}</h6>
-                                                <h5 class="card-text text-danger">現金價 NT$
-                                                    {{ number_format($product->cash_price) }}</h5>
+                                                <p class="card-text mb-1">原價 NT$ {{ number_format($product->price) }}</p>
+                                                <p class="card-text text-danger h5 mb-0">現金價 NT$
+                                                    {{ number_format($product->cash_price) }}</p>
                                             </div>
                                         </div>
                                     </a>
@@ -85,4 +85,66 @@
             </div>
         </div>
     </article>
+@endpush
+
+@push('styles')
+    <style>
+        .product-card .card-img-wrapper {
+            position: relative;
+            padding-top: 100%;
+            /* 1:1 寬高比 */
+            overflow: hidden;
+        }
+
+        .product-card .card-img-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-card {
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card .badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            background-color: #dc3545;
+            color: white;
+            font-size: 1rem;
+            padding: 0.7em 1.4em;
+            border-radius: 0;
+            margin: 0;
+        }
+
+        .product-card .card-body {
+            padding: 1rem;
+            background-color: #fff;
+        }
+
+        .product-card .card-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-card .card-text {
+            color: #666;
+            margin-bottom: 0.25rem;
+        }
+
+        .product-card .text-danger {
+            color: #dc3545 !important;
+            font-weight: bold;
+        }
+    </style>
 @endpush
