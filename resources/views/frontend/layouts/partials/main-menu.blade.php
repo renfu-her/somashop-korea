@@ -29,8 +29,6 @@
                 aria-haspopup="true" aria-expanded="false">
                 商品專區 <i class="fas fa-angle-down"></i>
             </a>
-
-
             <ul class="dropdown-menu sub-menu" aria-labelledby="navbarDropdown">
                 @foreach ($navData['categories'] as $item)
                     <li class="nav-item dropdown no-arrow">

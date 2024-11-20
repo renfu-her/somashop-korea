@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="format-detection" content="telephone=no">
-    
+
     {{-- SEO Meta Tags --}}
     <title>@yield('meta_title', '德善堂')</title>
     <meta name="keywords" content="@yield('meta_keywords', '德善堂')">
     <meta name="description" content="@yield('meta_description', '德善堂')">
-    
+
     {{-- Open Graph Tags --}}
     <meta property="og:title" content="@yield('meta_title', '德善堂')">
     <meta property="og:description" content="@yield('meta_description')">
@@ -77,36 +77,39 @@
     <footer class="bg-footer d-flex align-items-center">
         <div class="container">
             <div class="row flex-row align-items-center">
-                <div class="col-auto mb-3">
-                    <div class="row my-md-0 my-2">
-                        <div class="col-md-12 col-12">
-                            <img src="{{ asset('frontend/img/brand_logo_bg-red.png') }}">
-                        </div>
+                <div class="img-logo">
+                    <img src="{{ asset('frontend/img/logo_1.png') }}" style="max-width: 100%; max-height: 80px; object-fit: contain">
+                </div>
+                <div class="col-auto mb-3" style="margin-top: 50px">
+                    <div class="row my-md-0 my-2" style="margin-left: -30px">
                         <div class="col-md-12 col-12">
                             <div class="row">
-
+                                <div class="col-auto"></div>
                                 <div class="col-auto pl-md-0">
-                                    <p class="m-0 text-dark"><img
-                                            src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png">
-                                        桃園市桃園區中正路 1247 號 15 樓之 4</p>
+                                    <p class="m-0 text-dark">
+                                        <img src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png">
+                                        桃園市桃園區中正路 1247 號 15 樓之 4
+                                    </p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-                    <p class="m-0 text-dark">&copy; 2024 All Rights Reversed. 德善堂. All rights reserved.</p>
+                    <p class="m-0 text-dark">
+                        © 2024 All Rights Reversed. Huabang Co., Ltd. All rights
+                        reserved.
+                    </p>
                 </div>
                 <div
                     class="col-auto social-link d-flex justify-content-between align-items-center ml-auto text-center px-md-3 px-4">
 
-                    <a href="https://line.me/ti/p/@zfa7556c" target="_blank" class="px-md-3 px-0 hvr-bob"><img
+                    <a href="https://line.me/R/ti/p/%40696wxsca" target="_blank" class="px-md-3 px-0 hvr-bob"><img
                             src="{{ asset('frontend/img/ic_small_line.png') }}" class="img-fluid px-md-0 px-3">
 
-                    </a>
                 </div>
             </div>
         </div>
     </footer>
-
 
     <script>
         window.dataLayer = window.dataLayer || [];
