@@ -12,7 +12,8 @@ class OrderItem extends Model
         'specification_id',
         'quantity',
         'price',
-        'total'
+        'total',
+        'spec_id',
     ];
 
     protected $casts = [
@@ -33,6 +34,11 @@ class OrderItem extends Model
     public function specification()
     {
         return $this->belongsTo(ProductSpecification::class);
+    }
+
+    public function spec()
+    {
+        return $this->belongsTo(ProductSpec::class, 'spec_id');
     }
 
     public function productImage()
