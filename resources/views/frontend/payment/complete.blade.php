@@ -56,7 +56,8 @@
                                         <tr>
                                             <td scope="row"></td>
                                             <td class="thumb-img align-middle">
-                                                <img class="item-img" src="{{ asset('storage/products/' . $item->product->id . '/' . $item->productImage->image_path) }}"
+                                                <img class="item-img"
+                                                    src="{{ asset('storage/products/' . $item->product->id . '/' . $item->productImage->image_path) }}"
                                                     width="106px">
                                             </td>
                                             <td class="align-middle border-sm-top">
@@ -161,22 +162,26 @@
                                             <p class="mb-0">{{ $order->recipient_phone }}</p>
                                         </div>
                                     </div>
-                                    {{-- <div class="form-group row">
-                                        <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
-                                            <p class="mb-0">寄送方式</p>
+
+                                    @if ($order->shipment_method == 'mail_send')
+                                        <div class="form-group row">
+                                            <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
+                                                <p class="mb-0">寄送方式</p>
+                                            </div>
+                                            <div class="col-md-6 col-7">
+                                                <p class="mb-0">郵寄</p>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6 col-7">
-                                            <p class="mb-0">到店自取</p>
+                                        <div class="form-group row">
+                                            <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
+                                                <p class="mb-0">寄送地址</p>
+                                            </div>
+                                            <div class="col-md-6 col-7">
+                                                <p class="mb-0">{{ $order->recipient_address }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
-                                            <p class="mb-0">寄送地址</p>
-                                        </div>
-                                        <div class="col-md-6 col-7">
-                                            <p class="mb-0">花蓮縣花蓮市test</p>
-                                        </div>
-                                    </div> --}}
+                                    @endif
+
                                     <div class="form-group row">
                                         <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
                                             <p class="mb-0">訂購備註</p>

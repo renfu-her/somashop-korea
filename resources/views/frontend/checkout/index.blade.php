@@ -337,7 +337,7 @@
                                         <div class="col-sm-6 align-self-center">
                                             <div class="input-group">
                                                 <input type="text" class="form-control align-self-center"
-                                                    id="verify" placeholder="" required name="captcha">
+                                                    id="verify" placeholder="" required name="captcha" style="text-transform: uppercase" oninput="this.value = this.value.toUpperCase()">
                                                 <div class="d-flex pl-2 align-self-center">
                                                     <img src="{{ route('captcha.generate') }}" width="68px"
                                                         height="24px" class="img-fluid captchaImg" />

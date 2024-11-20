@@ -29,7 +29,11 @@ class PaymentController extends Controller
 
     public function paymentProcess(Request $request)
     {
-        // try {
+        
+        // 驗證驗證碼
+        if ($request->captcha != session('captcha_code')) {
+            return redirect()->back()->with('error', '驗證碼錯誤');
+        }
 
         // 獲取購物車資料
         $cart = session('cart', []);
@@ -66,6 +70,7 @@ class PaymentController extends Controller
         $order->payment_status = Order::PAYMENT_STATUS_PENDING;
 
         // 運送相關
+        $order->shipment_method = $request->shipment;
         $order->shipping_status = Order::SHIPPING_STATUS_PENDING;
         $order->shipping_fee = $shippingFee;
 
@@ -137,10 +142,7 @@ class PaymentController extends Controller
                 : 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
             'ecpayData' => $ecpayData
         ]);
-        // } catch (\Exception $e) {
-        //     DB::rollBack();
-        //     return back()->with('error', '訂單建立失敗，請稍後再試');
-        // }
+        
     }
 
     // 接收綠界支付通知

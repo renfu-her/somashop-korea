@@ -113,4 +113,9 @@ class Product extends Model
     {
         return $value ?: Str::limit(strip_tags($this->description), 160);
     }
+
+    public function specs()
+    {
+        return $this->hasMany(ProductSpec::class);
+    }
 }

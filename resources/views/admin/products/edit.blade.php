@@ -5,7 +5,12 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">編輯產品</div>
+                    <div class="card-header">
+                        編輯產品
+                        <a href="{{ route('admin.products.specs.index', $product->id) }}" class="btn btn-info btn-sm float-end">
+                            管理產品規格
+                        </a>
+                    </div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.products.update', $product) }}"

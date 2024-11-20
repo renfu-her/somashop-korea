@@ -5,6 +5,17 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <!-- 規格提示區塊 -->
+                <div class="card mb-4">
+                    <div class="card-header">規格管理</div>
+                    <div class="card-body">
+                        <p class="text-muted mb-0">
+                            請先創建產品，保存後即可在編輯頁面中管理產品規格。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 原有的創建表單 -->
                 <div class="card">
                     <div class="card-header">新增產品</div>
 

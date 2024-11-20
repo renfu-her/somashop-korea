@@ -54,6 +54,7 @@ class Order extends Model
         'invoice_address',
         'shipping_county',  
         'shipping_district',
+        'shipment_method',
     ];
 
     protected $casts = [
