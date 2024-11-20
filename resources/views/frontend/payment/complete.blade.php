@@ -125,7 +125,13 @@
                                 <div class="col-md-9 col-sm-12 align-self-center">
                                     <div class="row">
                                         <p class="col-md-2 col-sm-12 text-md-right text-sm-left pl-md-0 pr-0 mb-0">
-                                            刷卡
+                                            @if ($order->payment_method == 'credit')
+                                                刷卡
+                                            @elseif ($order->payment_method == 'atm')
+                                                網路ATM
+                                            @elseif ($order->payment_method == 'transfer')
+                                                網路銀行轉帳
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
@@ -177,19 +183,30 @@
                                                 <p class="mb-0">寄送地址</p>
                                             </div>
                                             <div class="col-md-6 col-7">
-                                                <p class="mb-0">{{ $order->recipient_address }}</p>
+                                                <p class="mb-0">{{ $order->recipient_county . $order->recipient_district . $order->recipient_address }}</p>
                                             </div>
                                         </div>
                                     @endif
-
-                                    <div class="form-group row">
-                                        <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
-                                            <p class="mb-0">訂購備註</p>
+                                    @if ($order->shipment_method == '711_b2c')
+                                        <div class="form-group row">
+                                            <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
+                                                <p class="mb-0">寄送方式</p>
+                                            </div>
+                                            <div class="col-md-6 col-7">
+                                                <p class="mb-0">7-11 門市取貨</p>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6 col-7">
-                                            <p class="mb-0">{{ $order->note }}</p>
+                                    @endif
+                                    @if ($order->shipment_method == 'family_b2c')
+                                        <div class="form-group row">
+                                            <div class="col-md-2 col-5 pl-md-0 pr-0  text-right">
+                                                <p class="mb-0">寄送方式</p>
+                                            </div>
+                                            <div class="col-md-6 col-7">
+                                                <p class="mb-0">全家便利商店取貨</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

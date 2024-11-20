@@ -29,7 +29,7 @@ class PaymentController extends Controller
 
     public function paymentProcess(Request $request)
     {
-        
+
         // 驗證驗證碼
         if ($request->captcha != session('captcha_code')) {
             return redirect()->back()->with('error', '驗證碼錯誤');
@@ -205,6 +205,18 @@ class PaymentController extends Controller
                 'payment_fee' => $paymentResult['PaymentTypeChargeFee']
             ]);
 
+            // 物流方式 API
+            if ($order->shipment_method != 'mail_send') {
+                
+            }
+
+            // 發票 API
+            if ($order->receipt_type == '3') {
+                $order->update([
+                    'invoice_number' => $paymentResult['InvoiceNumber']
+                ]);
+            }
+
             // 記錄付款成功日誌
             Log::info('付款成功', [
                 'order_number' => $order->order_number,
@@ -309,9 +321,9 @@ class PaymentController extends Controller
     }
 
     // 新增物流相關的輔助方法
-    private function getLogisticsSubType($shippingMethod)
+    private function getLogisticsSubType($shipment)
     {
-        switch ($shippingMethod) {
+        switch ($shipment) {
             case 'seven':
                 return 'UNIMART'; // 7-11 B2C
             case 'family':

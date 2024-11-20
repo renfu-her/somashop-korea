@@ -185,7 +185,7 @@
                                             <span class="text-danger">*</span>寄送方式
                                         </label>
                                         <div class="col-sm-6 align-self-center">
-                                            <select id="shippment" class="form-control" name="shippment"
+                                            <select id="shipment" class="form-control" name="shipment"
                                                 data-width="fit">
                                                 <option value="">請選擇</option>
                                                 <option value="mail_send">郵寄</option>
@@ -223,7 +223,7 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        name="address" placeholder="請輸入詳細地址" value="{{ Auth::guard('member')->user()->address }}">
+                                                        name="address" placeholder="請���入詳細地址" value="{{ Auth::guard('member')->user()->address }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -390,7 +390,7 @@
                 "zipcodeSel": "{{ Auth::guard('member')->user()->invoice_zipcode }}",
             });
 
-            // 監聽"同訂購人資料"複選框的變化
+            // 監聽"同訂購人資料"��選框的變化
             $('input[name="sameAsMember"]').change(function() {
                 if ($(this).is(':checked')) {
                     // 如果勾選，填入會員資料
@@ -423,8 +423,8 @@
                 }
             });
 
-            // 寄送方���變更處理
-            $('#shippment').change(function() {
+            // 寄送方式變更處理
+            $('#shipment').change(function() {
                 const selectedValue = $(this).val();
                 const addrArea = $('.addr');
                 const mapBtn = $('.map-btn');
@@ -449,12 +449,12 @@
 
             // 門市地圖按鈕點擊事件
             $('.map-btn').click(function() {
-                const shippmentType = $('#shippment').val();
+                const shipmentType = $('#shipment').val();
                 // 根據不同超商打開對應地圖
-                if (shippmentType === '711_b2c') {
-                    openSevenMap(shippmentType);
-                } else if (shippmentType === 'family_b2c') {
-                    openFamilyMap(shippmentType);
+                if (shipmentType === '711_b2c') {
+                    openSevenMap(shipmentType);
+                } else if (shipmentType === 'family_b2c') {
+                    openFamilyMap(shipmentType);
                 }
             });
 
@@ -483,7 +483,7 @@
                     $('.store-info').closest('.form-group').remove();
 
                     // 添加新的門市資訊 - 改為添加在寄送方式的 form-group 後面
-                    $('#shippment').closest('.form-group').after(storeInfoHtml);
+                    $('#shipment').closest('.form-group').after(storeInfoHtml);
 
                     // 將門市資訊存入隱藏欄位（方便表單提交）
                     if (!$('input[name="store_id"]').length) {
@@ -500,16 +500,16 @@
 
             // 表單提交前的驗證
             $('form').submit(function(e) {
-                const shippmentType = $('#shippment').val();
+                const shipmentType = $('#shipment').val();
 
-                if (!shippmentType) {
+                if (!shipmentType) {
                     e.preventDefault();
                     alert('請選擇寄送方式');
                     return false;
                 }
 
                 // 如果選擇超商取貨，檢查是否已選擇門市
-                if ((shippmentType === '711_b2c' || shippmentType === 'family_b2c') &&
+                if ((shipmentType === '711_b2c' || shipmentType === 'family_b2c') &&
                     !$('input[name="store_id"]').val()) {
                     e.preventDefault();
                     alert('請選擇取貨門市');
@@ -517,7 +517,7 @@
                 }
 
                 // 如果選擇郵寄，檢查縣市區域是否選擇
-                if (shippmentType === 'mail_send') {
+                if (shipmentType === 'mail_send') {
                     if (!$('select[name="county"]').val() ||
                         !$('select[name="district"]').val()) {
                         e.preventDefault();
@@ -632,7 +632,7 @@
         });
 
         // 開 7-11 地圖
-        function openSevenMap(shippmentType) {
+        function openSevenMap(shipment) {
             // 計算視窗位置，使其置中
             const width = window.innerWidth;
             const height = window.innerHeight;
@@ -640,7 +640,7 @@
             const top = (window.screen.height - height) / 2;
 
             const mapWindow = window.open(
-                `{{ url('checkout/map/711-store/') }}/${shippmentType}`,
+                `{{ url('checkout/map/711-store/') }}/${shipment}`,
                 'mapWindow',
                 `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
             );
@@ -655,7 +655,7 @@
         }
 
         // 開啟全家地圖
-        function openFamilyMap(shippmentType) {
+        function openFamilyMap(shipment) {
             // 計算視窗位置，使其置中
             const width = window.innerWidth;
             const height = window.innerHeight;
@@ -663,7 +663,7 @@
             const top = (window.screen.height - height) / 2;
 
             const mapWindow = window.open(
-                `{{ url('checkout/map/family-store/') }}/${shippmentType}`,
+                `{{ url('checkout/map/family-store/') }}/${shipment}`,
                 'mapWindow',
                 `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
             );
@@ -708,7 +708,7 @@
             `;
 
             $('.store-info').closest('.form-group').remove();
-            $('#shippment').closest('.form-group').after(storeInfoHtml);
+            $('#shipment').closest('.form-group').after(storeInfoHtml);
 
             $('input[name="store_name"]').val(storeData.store_name);
             $('input[name="store_address"]').val(storeData.store_address);
