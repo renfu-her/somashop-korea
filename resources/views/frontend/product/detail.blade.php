@@ -81,7 +81,7 @@
                                         <div class="col-10 col-md-10">
                                             <select class="form-control" name="specification_id">
                                                 <option value="">請選擇</option>
-                                                @foreach ($product->specifications as $spec)
+                                                @foreach ($product->specs as $spec)
                                                     <option value="{{ $spec->id }}">{{ $spec->name }}</option>
                                                 @endforeach
                                             </select>
