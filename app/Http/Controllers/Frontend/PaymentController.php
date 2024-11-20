@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 
 class PaymentController extends Controller
 {
@@ -207,7 +208,7 @@ class PaymentController extends Controller
 
             // 物流方式 API
             if ($order->shipment_method != 'mail_send') {
-                
+                $this->createLogisticsOrder($order, $member);
             }
 
             // 發票 API
@@ -372,6 +373,87 @@ class PaymentController extends Controller
                 return Order::SHIPPING_STATUS_COMPLETED;
             default:
                 return Order::SHIPPING_STATUS_PROCESSING;
+        }
+    }
+
+    private function createLogisticsOrder($order, $member)
+    {
+        // 準備物流 API 需要的資料
+        $logisticsData = [
+            'MerchantID' => $this->merchantID,
+            'MerchantTradeNo' => $order->order_number,
+            'MerchantTradeDate' => date('Y/m/d H:i:s'),
+            'LogisticsType' => 'CVS',
+            'LogisticsSubType' => $this->getLogisticsSubType($order->shipment_method),
+            'GoodsAmount' => $order->total_amount,
+            'CollectionAmount' => 0,
+            'IsCollection' => 'N',
+            'GoodsName' => '商品一批',
+            'SenderName' => $order->store_name,
+            'SenderPhone' => $order->store_telephone,
+            'SenderCellPhone' => $order->store_telephone,
+            'ReceiverName' => $order->recipient_name,
+            'ReceiverPhone' => $order->recipient_phone,
+            'ReceiverCellPhone' => $order->recipient_phone,
+            'ReceiverEmail' => $member->email,
+            'TradeDesc' => '商品配送',
+            'ServerReplyURL' => route('logistics.notify'),
+            'LogisticsC2CReplyURL' => route('logistics.store.notify'),
+            'Remark' => $order->note ?? '',
+            'PlatformID' => '',
+        ];
+
+        // 如果是超商取貨，加入商店資訊
+        if ($order->store_id) {
+            $logisticsData['ReceiverStoreID'] = $order->store_id;
+        }
+
+        // 加入檢查碼
+        $logisticsData['CheckMacValue'] = $this->generateCheckMacValue($logisticsData);
+
+        try {
+            // 使用 Laravel HTTP 客戶端發送請求
+            $response = Http::asForm()->post(
+                config('app.env') === 'production' 
+                    ? 'https://logistics.ecpay.com.tw/Express/Create'
+                    : 'https://logistics-stage.ecpay.com.tw/Express/Create',
+                $logisticsData
+            );
+
+            $result = $response->json();
+
+            if ($result['RtnCode'] == 1) {
+                // 更新訂單物流資訊
+                $order->update([
+                    'shipping_status' => Order::SHIPPING_STATUS_PROCESSING,
+                    'logistics_id' => $result['AllPayLogisticsID'] ?? null,
+                    'logistics_type' => $result['LogisticsType'] ?? null,
+                    'logistics_sub_type' => $result['LogisticsSubType'] ?? null,
+                    'cvs_payment_no' => $result['CVSPaymentNo'] ?? null,
+                    'cvs_validation_no' => $result['CVSValidationNo'] ?? null,
+                    'booking_note' => $result['BookingNote'] ?? null
+                ]);
+
+                Log::info('物流訂單建立成功', [
+                    'order_number' => $order->order_number,
+                    'logistics_result' => $result
+                ]);
+
+                return true;
+            }
+
+            Log::error('物流訂單建立失敗', [
+                'order_number' => $order->order_number,
+                'logistics_result' => $result
+            ]);
+            return false;
+
+        } catch (\Exception $e) {
+            Log::error('物流 API 呼叫失敗', [
+                'order_number' => $order->order_number,
+                'error' => $e->getMessage()
+            ]);
+            return false;
         }
     }
 }

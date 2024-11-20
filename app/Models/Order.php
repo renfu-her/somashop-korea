@@ -11,7 +11,7 @@ class Order extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'orders';
-    
+
     protected $fillable = [
         'order_number',
         'order_id',
@@ -52,9 +52,16 @@ class Order extends Model
         'invoice_county',
         'invoice_district',
         'invoice_address',
-        'shipping_county',  
+        'shipping_county',
         'shipping_district',
         'shipment_method',
+        'logistics_id',
+        'logistics_type',
+        'logistics_sub_type',
+        'cvs_payment_no',
+        'cvs_validation_no',
+        'booking_note',
+        'paid_at',
     ];
 
     protected $casts = [
@@ -93,6 +100,9 @@ class Order extends Model
     const INVOICE_TYPE_PERSONAL = 'personal';
     const INVOICE_TYPE_COMPANY = 'company';
     const INVOICE_TYPE_DONATION = 'donation';
+
+    const SHIPPING_STATUS_PROCESSING = 'processing';
+    const SHIPPING_STATUS_FAILED = 'failed';
 
     public function member()
     {
@@ -134,4 +144,4 @@ class Order extends Model
             self::SHIPPING_STATUS_DELIVERED => '已送達'
         ][$this->shipping_status] ?? '未知';
     }
-} 
+}
