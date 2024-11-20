@@ -102,6 +102,7 @@ class Order extends Model
     const INVOICE_TYPE_DONATION = 'donation';    // 配送失敗
     const SHIPPING_STATUS_STORE_ARRIVED = 'store_arrived';  // 已送達門市
     const SHIPPING_STATUS_COMPLETED = 'completed'; 
+    const SHIPPING_STATUS_PROCESSING = 'processing';
 
     public function member()
     {
