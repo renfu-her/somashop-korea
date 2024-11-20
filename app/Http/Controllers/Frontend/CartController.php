@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\ProductSpec;
+
 use Illuminate\Http\Request;
 use App\Models\ProductSpecification;
 use Illuminate\Support\Facades\Auth;
@@ -38,15 +40,16 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
+
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'specification_id' => 'required|exists:product_specifications,id',
+            'spec_id' => 'required|exists:product_specs,id',
             'quantity' => 'required|integer|min:1',
             'checkout_direct' => 'boolean'
         ]);
 
         $product = Product::findOrFail($validated['product_id']);
-        $specification = ProductSpecification::findOrFail($validated['specification_id']);
+        $specification = ProductSpec::findOrFail($validated['spec_id']);
 
         // 獲取當前購物車
         $cart = session()->get('cart', []);
@@ -54,11 +57,11 @@ class CartController extends Controller
         // 新增商品到購物車
         $cart[] = [
             'product_id' => $validated['product_id'],
-            'specification_id' => $validated['specification_id'],
+            'spec_id' => $validated['spec_id'],
             'quantity' => $validated['quantity'],
             'price' => $product->cash_price,
             'product_name' => $product->name,
-            'specification_name' => $specification->name,
+            'spec_name' => $specification->name,
             'primary_image' => asset('storage/products/' . $validated['product_id'] . '/' . $product->primaryImage->image_path)
         ];
 
@@ -74,9 +77,10 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
+
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'specification_id' => 'required|exists:product_specifications,id',
+            'spec_id' => 'required|exists:product_specs,id',
             'quantity' => 'required|integer|min:1',
             'checkout_direct' => 'boolean'
         ]);
@@ -87,7 +91,7 @@ class CartController extends Controller
         // 新增商品到購物車
         $cartItem = [
             'product_id' => $validated['product_id'],
-            'specification_id' => $validated['specification_id'],
+            'spec_id' => $validated['spec_id'],
             'quantity' => $validated['quantity']
         ];
         
@@ -134,5 +138,43 @@ class CartController extends Controller
 
         return redirect()->route('cart.index')
             ->with('success', '商品已從購物車移除');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'spec_id' => 'required|exists:product_specs,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        $product = Product::findOrFail($request->product_id);
+        $spec = ProductSpec::findOrFail($request->spec_id);
+
+        // 創建購物車項目的唯一鍵值
+        $cartKey = $product->id . '-' . $spec->id;
+
+        // 準備購物車項目資料
+        $cartItem = [
+            'product_id' => $product->id,
+            'product_name' => $product->name,
+            'spec_id' => $spec->id,
+            'spec_name' => $spec->name,  // 確保這裡有規格名稱
+            'price' => $product->cash_price,
+            'quantity' => $request->quantity,
+            'primary_image' => $product->primaryImageUrl
+        ];
+
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$cartKey])) {
+            $cart[$cartKey]['quantity'] += $request->quantity;
+        } else {
+            $cart[$cartKey] = $cartItem;
+        }
+
+        session()->put('cart', $cart);
+
+        return redirect()->back()->with('success', '商品已加入購物車');
     }
 }

@@ -52,7 +52,7 @@
                                             <span class="cart-tag d-block d-sm-none text-muted" disable>規格</span>
                                             <div class="product-details text-md-left text-sm-center">
                                                 <p class="mb-0">{{ $item['product_name'] }}</p>
-                                                <p class="mb-0">{{ $item['specification_name'] }}</p>
+                                                <p class="mb-0">{{ $item['spec_name'] }}</p>
                                             </div>
                                         </td>
                                         <td class="align-middle border-sm-top">
@@ -423,7 +423,7 @@
                 }
             });
 
-            // 寄送方式變更處理
+            // 寄送方���變更處理
             $('#shippment').change(function() {
                 const selectedValue = $(this).val();
                 const addrArea = $('.addr');

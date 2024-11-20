@@ -79,7 +79,7 @@
                                     <div class="form-group row my-4">
                                         <label class="col-sm-2 col-form-label">規格</label>
                                         <div class="col-10 col-md-10">
-                                            <select class="form-control" name="specification_id">
+                                            <select class="form-control" name="spec_id">
                                                 <option value="">請選擇</option>
                                                 @foreach ($product->specs as $spec)
                                                     <option value="{{ $spec->id }}">{{ $spec->name }}</option>
@@ -142,15 +142,13 @@
             $('.checkout-btn, .cart-btn').click(function(e) {
                 e.preventDefault();
 
-                // 检查规格是否已选择
-                const specificationId = $('select[name="specification_id"]').val();
-                if (!specificationId) {
-                    // 创建并显示 toast 消息
+                // 檢查規格是否已選擇
+                const specId = $('select[name="spec_id"]').val();
+                if (!specId) {
                     showToast('請選擇商品規格', 'error');
                     return;
                 }
 
-                // 继续提交表单
                 $('#checkout_direct').val($(this).hasClass('checkout-btn') ? '1' : '0');
                 $(this).closest('form').submit();
             });

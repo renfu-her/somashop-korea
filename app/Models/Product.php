@@ -84,36 +84,6 @@ class Product extends Model
         return asset('storage/products/' . $this->id . '/' . $filename);
     }
 
-    public function specifications()
-    {
-        return $this->belongsToMany(
-            ProductSpecification::class,
-            'product_specification_items',
-            'product_id',
-            'specification_id'
-        )
-            ->withPivot('is_active')
-            ->withTimestamps();
-    }
-
-    // 新增一個方法來獲取已啟用的規格
-    public function activeSpecifications()
-    {
-        return $this->specifications()->wherePivot('is_active', true);
-    }
-
-    // 獲取 SEO 標題
-    public function getMetaTitleAttribute($value)
-    {
-        return $value ?: $this->name;
-    }
-
-    // 獲取 SEO 描述
-    public function getMetaDescriptionAttribute($value)
-    {
-        return $value ?: Str::limit(strip_tags($this->description), 160);
-    }
-
     public function specs()
     {
         return $this->hasMany(ProductSpec::class);
