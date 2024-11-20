@@ -27,9 +27,11 @@ class ProfileController extends Controller
         if (!$member) {
             return $this->error('使用者不存在');
         }
+
         if ($request->password != $request->password_confirm) {
             return $this->error('密碼與確認密碼不相符');
         }
+
         $member->password = Hash::make($request->password);
         $member->county = $request->county;
         $member->district = $request->district;

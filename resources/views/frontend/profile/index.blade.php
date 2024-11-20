@@ -49,7 +49,7 @@
                                         class="text-danger">*</span>密碼</label>
                                 <div class="col-sm-7 align-self-center">
                                     <input type="password" class="form-control" id="password"
-                                        placeholder="6~15字元，至少搭配 1 個英文字母" required name="pwd">
+                                        placeholder="6~15字元，至少搭配 1 個英文字母" required name="password">
                                 </div>
                             </div>
 
@@ -59,7 +59,7 @@
                                         class="text-danger">*</span>再次輸入密碼 </label>
                                 <div class="col-sm-7 align-self-center">
                                     <input type="password" class="form-control" id="password_confirm" placeholder="請再輸入一次密碼"
-                                        required name="repwd">
+                                        required name="password_confirm">
                                 </div>
                             </div>
 
