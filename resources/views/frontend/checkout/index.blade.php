@@ -110,14 +110,14 @@
                                 <div class="col-sm-9 align-self-center">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="payment" id="inlineRadio1"
-                                            value="1" checked>
+                                            value="Credit" checked>
                                         <label class="form-check-label" for="inlineRadio1">線上刷卡</label>
                                     </div>
-                                    {{-- <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="payment" id="inlineRadio2"
-                                            value="2">
-                                        <label class="form-check-label" for="inlineRadio2">ATM轉帳</label>
-                                    </div> --}}
+                                            value="WebATM">
+                                        <label class="form-check-label" for="inlineRadio2">WebATM 轉帳</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +174,7 @@
                                             for="phone"><span class="text-danger">*</span>聯絡電話</label>
                                         <div class="col-sm-6 align-self-center">
                                             <input type="text" class="form-control" id="phone" placeholder=""
-                                                required name="phone" ref="0922013171">
+                                                required name="phone" ref="">
                                         </div>
                                     </div>
 
@@ -223,7 +223,7 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        name="address" placeholder="請輸入詳細地址" value="">
+                                                        name="address" placeholder="請輸入詳細地址" value="{{ Auth::guard('member')->user()->address }}">
                                                 </div>
                                             </div>
                                         </div>

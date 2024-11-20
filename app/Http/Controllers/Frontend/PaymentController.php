@@ -31,7 +31,6 @@ class PaymentController extends Controller
     {
         // try {
 
-        //     DB::beginTransaction();
         // 獲取購物車資料
         $cart = session('cart', []);
         // 計算訂單總金額
@@ -108,8 +107,6 @@ class PaymentController extends Controller
                 'total' => $item['price'] * $item['quantity']
             ]);
         }
-
-        DB::commit();
 
         // 準備綠界支付需要的資料
         $ecpayData = [
@@ -243,12 +240,17 @@ class PaymentController extends Controller
         switch ($ecpayPaymentType) {
             case 'Credit_CreditCard':
                 return Order::PAYMENT_METHOD_CREDIT;
-            case 'ATM_TAISHIN':
-            case 'ATM_ESUN':
-            case 'ATM_BOT':
-            case 'ATM_FUBON':
-            case 'ATM_CHINATRUST':
-            case 'ATM_FIRST':
+            case 'WebATM_TAISHIN':
+            case 'WebATM_ESUN':
+            case 'WebATM_BOT':
+            case 'WebATM_FUBON':
+            case 'WebATM_CHINATRUST':
+            case 'WebATM_FIRST':
+            case 'WebATM_CATHAY':
+            case 'WebATM_MEGA':
+            case 'WebATM_LAND':
+            case 'WebATM_TACHONG':
+            case 'WebATM_SINOPAC':
                 return Order::PAYMENT_METHOD_ATM;
             default:
                 return $ecpayPaymentType;
@@ -263,10 +265,10 @@ class PaymentController extends Controller
     private function getECPayMethod($payment)
     {
         switch ($payment) {
-            case 1:
+            case 'Credit':
                 return 'Credit';
-            case 2:
-                return 'ATM';
+            case 'WebATM':
+                return 'WebATM';
             default:
                 return 'ALL';
         }
@@ -302,5 +304,60 @@ class PaymentController extends Controller
         unset($data['CheckMacValue']);
 
         return $this->generateCheckMacValue($data) === $checkMacValue;
+    }
+
+    // 新增物流相關的輔助方法
+    private function getLogisticsSubType($shippingMethod)
+    {
+        switch ($shippingMethod) {
+            case 'seven':
+                return 'UNIMART'; // 7-11 B2C
+            case 'family':
+                return 'FAMI';    // 全家 B2C 
+            case 'hilife':
+                return 'HILIFE';  // 萊爾富 B2C
+            default:
+                return 'UNIMART';
+        }
+    }
+
+    // 物流狀態通知
+    public function logisticsNotify(Request $request)
+    {
+        $data = $request->all();
+
+        if ($this->checkMacValue($data)) {
+            $order = Order::where('order_number', $data['MerchantTradeNo'])->first();
+
+            if ($order) {
+                // 更新訂單物流狀態
+                $order->shipping_status = $this->mapLogisticsStatus($data['RtnCode']);
+                $order->save();
+
+                Log::info('物流狀態更新', [
+                    'order_number' => $order->order_number,
+                    'status' => $data['RtnCode'],
+                    'message' => $data['RtnMsg']
+                ]);
+            }
+
+            return '1|OK';
+        }
+
+        return '0|FAIL';
+    }
+
+    private function mapLogisticsStatus($rtnCode)
+    {
+        switch ($rtnCode) {
+            case 300: // 訂單建立成功
+                return Order::SHIPPING_STATUS_PENDING;
+            case 2030: // 商品已送達門市
+                return Order::SHIPPING_STATUS_STORE_ARRIVED;
+            case 3018: // 消費者取貨完成
+                return Order::SHIPPING_STATUS_COMPLETED;
+            default:
+                return Order::SHIPPING_STATUS_PROCESSING;
+        }
     }
 }
