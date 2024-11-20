@@ -21,11 +21,19 @@ class PaymentController extends Controller
     private $hashKey;
     private $hashIV;
 
+    private $shipmentMerchantID;
+    private $shipmentHashKey;
+    private $shipmentHashIV;
+
     public function __construct()
     {
-        $this->merchantID = env('ECPAY_MERCHANT_ID');
-        $this->hashKey = env('ECPAY_HASH_KEY');
-        $this->hashIV = env('ECPAY_HASH_IV');
+        $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
+        $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
+        $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_hash_iv') : config('config.ecpay_stage_hash_iv');
+
+        $this->shipmentMerchantID = config('app.env') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
+        $this->shipmentHashKey = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
+        $this->shipmentHashIV = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
     }
 
     public function paymentProcess(Request $request)
@@ -49,7 +57,7 @@ class PaymentController extends Controller
 
         // 生成訂單編號
         $today = date('Ymd');
-        $lastOrder = Order::where('order_number', 'like', "{$today}%")
+        $lastOrder = Order::where('order_number', 'like', "OID{$today}%")
             ->orderBy('order_number', 'desc')
             ->first();
 
@@ -60,7 +68,7 @@ class PaymentController extends Controller
             $newNumber = '0001';
         }
 
-        $order->order_number = $today . $newNumber;
+        $order->order_number = "OID" . $today . $newNumber;
         $order->order_id = 'OID-' . $today . $newNumber;
         $order->member_id = Auth::guard('member')->id();
         $order->total_amount = $totalAmount;
@@ -143,7 +151,6 @@ class PaymentController extends Controller
                 : 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',
             'ecpayData' => $ecpayData
         ]);
-        
     }
 
     // 接收綠界支付通知
@@ -313,6 +320,24 @@ class PaymentController extends Controller
         return strtoupper(hash('sha256', $checkStr));
     }
 
+    private function generateShipmentCheckMacValue($data)
+    {
+        // 排序參數
+        // 按照綠界規範產生檢查碼
+        ksort($data);
+        $checkStr = "HashKey={$this->shipmentHashKey}";
+
+        foreach ($data as $key => $value) {
+            $checkStr .= "&{$key}={$value}";
+        }
+
+        $checkStr .= "&HashIV={$this->shipmentHashIV}";
+        $checkStr = urlencode($checkStr);
+        $checkStr = strtolower($checkStr);
+
+        return strtoupper(md5($checkStr));
+    }
+
     private function paymentCheckMacValue($data)
     {
         $checkMacValue = $data['CheckMacValue'];
@@ -376,11 +401,11 @@ class PaymentController extends Controller
         }
     }
 
-    private function createLogisticsOrder($order, $member)
+    public function createLogisticsOrder($order, $member)
     {
         // 準備物流 API 需要的資料
         $logisticsData = [
-            'MerchantID' => $this->merchantID,
+            'MerchantID' => $this->shipmentMerchantID,
             'MerchantTradeNo' => $order->order_number,
             'MerchantTradeDate' => date('Y/m/d H:i:s'),
             'LogisticsType' => 'CVS',
@@ -400,7 +425,6 @@ class PaymentController extends Controller
             'ServerReplyURL' => route('logistics.notify'),
             'LogisticsC2CReplyURL' => route('logistics.store.notify'),
             'Remark' => $order->note ?? '',
-            'PlatformID' => '',
         ];
 
         // 如果是超商取貨，加入商店資訊
@@ -409,51 +433,60 @@ class PaymentController extends Controller
         }
 
         // 加入檢查碼
-        $logisticsData['CheckMacValue'] = $this->generateCheckMacValue($logisticsData);
+        $logisticsData['CheckMacValue'] = $this->generateShipmentCheckMacValue($logisticsData);
 
-        try {
-            // 使用 Laravel HTTP 客戶端發送請求
-            $response = Http::asForm()->post(
-                config('app.env') === 'production' 
-                    ? 'https://logistics.ecpay.com.tw/Express/Create'
-                    : 'https://logistics-stage.ecpay.com.tw/Express/Create',
-                $logisticsData
-            );
+        // 使用 Laravel HTTP 客戶端發送請求
+        $response = Http::asForm()->post(
+            config('app.env') === 'production'
+                ? 'https://logistics.ecpay.com.tw/Express/Create'
+                : 'https://logistics-stage.ecpay.com.tw/Express/Create',
+            $logisticsData
+        );
 
-            $result = $response->json();
+        $result = [];
+        $rtnCode = 0;
+        $responseBody = $response->body();
 
-            if ($result['RtnCode'] == 1) {
-                // 更新訂單物流資訊
-                $order->update([
-                    'shipping_status' => Order::SHIPPING_STATUS_PROCESSING,
-                    'logistics_id' => $result['AllPayLogisticsID'] ?? null,
-                    'logistics_type' => $result['LogisticsType'] ?? null,
-                    'logistics_sub_type' => $result['LogisticsSubType'] ?? null,
-                    'cvs_payment_no' => $result['CVSPaymentNo'] ?? null,
-                    'cvs_validation_no' => $result['CVSValidationNo'] ?? null,
-                    'booking_note' => $result['BookingNote'] ?? null
-                ]);
+        
+        // 解析回傳資料
+        if (strpos($responseBody, '1|') === 0) {
+            // 成功
+            $rtnCode = 1;
+            $data = substr($responseBody, 2);
+            parse_str($data, $parsedData);
+            $result = array_merge(['RtnCode' => 300], $parsedData);
+        } else {
+            // 失敗 
+            $result = [
+                'RtnCode' => 0,
+                'RtnMsg' => substr($responseBody, 2)
+            ];
+        }
 
-                Log::info('物流訂單建立成功', [
-                    'order_number' => $order->order_number,
-                    'logistics_result' => $result
-                ]);
+        if ($rtnCode == 1) {
+            // 更新訂單物流資訊
+            $order->update([
+                'shipping_status' => Order::SHIPPING_STATUS_PROCESSING,
+                'logistics_id' => $result['AllPayLogisticsID'] ?? null,
+                'logistics_type' => $result['LogisticsType'] ?? null,
+                'logistics_sub_type' => $result['LogisticsSubType'] ?? null,
+                'cvs_payment_no' => $result['CVSPaymentNo'] ?? null,
+                'cvs_validation_no' => $result['CVSValidationNo'] ?? null,
+                'booking_note' => $result['BookingNote'] ?? null
+            ]);
 
-                return true;
-            }
-
-            Log::error('物流訂單建立失敗', [
+            Log::info('物流訂單建立成功', [
                 'order_number' => $order->order_number,
                 'logistics_result' => $result
             ]);
-            return false;
 
-        } catch (\Exception $e) {
-            Log::error('物流 API 呼叫失敗', [
-                'order_number' => $order->order_number,
-                'error' => $e->getMessage()
-            ]);
-            return false;
+            return true;
         }
+
+        Log::error('物流訂單建立失敗', [
+            'order_number' => $order->order_number,
+            'logistics_result' => $result
+        ]);
+        return false;
     }
 }

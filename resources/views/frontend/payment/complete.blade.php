@@ -64,7 +64,9 @@
                                                 <span class="cart-tag d-block d-sm-none text-muted" disable>規格</span>
                                                 <div class="product-details text-md-left text-sm-center">
                                                     <p class="mb-0">{{ $item->product->name }}</p>
-                                                    <p class="mb-0">{{ $item->product->sub_title }}</p>
+                                                    @if ($item->spec)
+                                                        <p class="mb-0">規格: {{ $item->spec->value }}</p>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td class="align-middle border-sm-top">
@@ -183,7 +185,9 @@
                                                 <p class="mb-0">寄送地址</p>
                                             </div>
                                             <div class="col-md-6 col-7">
-                                                <p class="mb-0">{{ $order->recipient_county . $order->recipient_district . $order->recipient_address }}</p>
+                                                <p class="mb-0">
+                                                    {{ $order->recipient_county . $order->recipient_district . $order->recipient_address }}
+                                                </p>
                                             </div>
                                         </div>
                                     @endif
