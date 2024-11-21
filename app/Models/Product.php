@@ -62,7 +62,7 @@ class Product extends Model
     public function getPrimaryImageUrlAttribute()
     {
         return $this->primaryImage?->image_path
-            ? asset('storage/' . $this->primaryImage->image_path)
+            ? asset('storage/products/' . $this->id . '/' . $this->primaryImage->image_path)
             : null;
     }
 

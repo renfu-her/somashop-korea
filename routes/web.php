@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\{
     SealKnowledgeCategoryController,
     ProfileController,
     LogisticsController,
+    SearchController,
 };
 use App\Http\Controllers\Frontend\{
     CartController,
@@ -130,5 +131,8 @@ Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
 // 物流通知路由
 Route::post('logistics/notify', [LogisticsController::class, 'notify'])->name('logistics.notify');
 Route::post('logistics/store/notify', [LogisticsController::class, 'storeNotify'])->name('logistics.store.notify');
+
+Route::get('/search', [SearchController::class, 'index'])
+    ->name('search');
 
 
