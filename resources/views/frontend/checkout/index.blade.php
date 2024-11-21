@@ -157,12 +157,12 @@
                                         <div class="col-sm-6 align-self-center">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender"
-                                                    id="male" value="1" checked ref="1">
+                                                    id="male" value="1" @if(Auth::guard('member')->user()->gender == 1) checked @endif>
                                                 <label class="form-check-label" for="male">男</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender"
-                                                    id="female" value="2" ref="1">
+                                                    id="female" value="2" @if(Auth::guard('member')->user()->gender == 2) checked @endif>
                                                 <label class="form-check-label" for="female">女</label>
                                             </div>
                                         </div>
