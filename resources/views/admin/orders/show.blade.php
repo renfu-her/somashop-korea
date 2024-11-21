@@ -75,7 +75,7 @@
                     </p>
                     <p class="mb-2">
                         運送狀態：
-                        <span class="badge bg-info">{{ $order->shipping_status }}</span>
+                        <span class="badge bg-info">{{ $order->shipping_status_text }}</span>
                     </p>
                 </div>
             </div>
