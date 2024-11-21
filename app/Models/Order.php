@@ -21,6 +21,8 @@ class Order extends Model
         // 付款相關
         'payment_method',
         'payment_status',
+        'payment_date',
+        'payment_fee',
         // 運送相關
         'shipping_method',
         'shipping_status',
@@ -62,9 +64,7 @@ class Order extends Model
         'cvs_validation_no',
         'booking_note',
         'paid_at',
-        'payment_date',
         'trade_no',
-        'payment_fee',
     ];
 
     protected $casts = [
