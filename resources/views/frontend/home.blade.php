@@ -15,7 +15,8 @@
                 </ol>
                 <div class="carousel-inner">
                     @foreach ($ads as $ad)
-                        <a class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                        <a class="carousel-item {{ $loop->first ? 'active' : '' }}"
+                            @if (!empty($ad->url)) href="{{ $ad->url }}" @endif target="_blank">
                             <img src="{{ asset('storage/ads/' . $ad->image) }}" class="d-block w-100" alt="">
                         </a>
                     @endforeach
@@ -148,8 +149,7 @@
                     data-aos-delay="100" data-aos-anchor-placement="top-bottom" data-aos-once="true">
                     <div class="col-md-6 offset-md-6 col-12 mr-md-3 px-3 px-md-5 text-center overflow-hidden">
                         <div class="mx-auto">
-                            <img src="{{ asset('assets/images/6551c1d1b17797fade62dc420cc5adc3.png') }}"
-                                class="img-fluid">
+                            <img src="{{ asset('assets/images/6551c1d1b17797fade62dc420cc5adc3.png') }}" class="img-fluid">
                         </div>
                         <div class="p-3">
                             <h3 class="text-black display-5">傳承 永恆 對寶貝的期望</h3>
@@ -164,8 +164,7 @@
                     data-aos-once="true">
                     <div class="col-md-6 col-12 ml-md-3 px-3 px-md-5 text-center overflow-hidden">
                         <div class="mx-auto">
-                            <img src="{{ asset('assets/images/4d140b0ae20490ae88f00a00083b5174.png') }}"
-                                class="img-fluid">
+                            <img src="{{ asset('assets/images/4d140b0ae20490ae88f00a00083b5174.png') }}" class="img-fluid">
                         </div>
                         <div class="p-3">
                             <h3 class="text-black display-5">飽滿的布局不漏財</h3>
