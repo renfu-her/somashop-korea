@@ -27,6 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin/upload-image',
             'checkout/map/rewrite',
             'payment/*',
+            'logout',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
