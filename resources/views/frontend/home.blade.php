@@ -140,7 +140,7 @@
         </div>
     </div>
 
-    {{-- <section class="parrallax py-5">
+    <section class="parrallax py-5">
         <div class="container my-md-4 my-0">
             <div class="row mx-auto my-auto" style="overflow-x: hidden; overflow-y: hidden;">
 
@@ -152,7 +152,7 @@
                                 class="img-fluid">
                         </div>
                         <div class="p-3">
-                            <h3 class="text-black display-5">傳承 永恆 對寶��的期望</h3>
+                            <h3 class="text-black display-5">傳承 永恆 對寶貝的期望</h3>
                             <p class="mb-0">將您對寶貝的祝福語＆期望交給我們</p>
                         </div>
 
@@ -191,7 +191,7 @@
 
             </div>
         </div>
-    </section> --}}
+    </section>
 
     <div class="container mb-5 pt-5">
         <h2 class="text-center font-weight-bold mb-0 border-frame aos-init aos-animate" data-aos="zoom-in-up"
