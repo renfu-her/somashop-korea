@@ -32,13 +32,15 @@
             <section data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="900" data-aos-offset="0">
                 <div class="row justify-content-center">
                     <div class="col-md-7 col-sm-12 my-3">
-                        <form method="post" action="#" enctype="multipart/form-data" onsubmit="return checkform();">
+                        <form method="post" action="{{ route('forget.process') }}" enctype="multipart/form-data"
+                            onsubmit="return checkform();">
+                            @csrf
                             <div class="form-group row mb-3">
-                                <label for="inputEmail" class="col-sm-3 col-form-label text-md-right text-sm-left pr-0">
+                                <label for="email" class="col-sm-3 col-form-label text-md-right text-sm-left pr-0">
                                     <span class="text-danger">*</span>電子郵件
                                 </label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="inputEmail" placeholder="" required
+                                    <input type="text" class="form-control" id="email" placeholder="" required
                                         name="email">
                                 </div>
                             </div>
@@ -48,11 +50,12 @@
                                         class="text-danger">*</span>輸入右方驗證碼</label>
                                 <div class="col-sm-7 align-self-center">
                                     <div class="input-group">
-                                        <input type="text" class="form-control align-self-center" id="verify"
-                                            placeholder="" required name="captcha">
+                                        <input type="text" class="form-control align-self-center" id="captcha"
+                                            placeholder="" required name="captcha" style="text-transform: uppercase"
+                                            oninput="this.value = this.value.toUpperCase()">
                                         <div class="d-flex pl-2 align-self-center">
-                                            <img src="{{ route('captcha') }}" width="68px" height="24px"
-                                                class="img-fluid" />
+                                            <img src="{{ route('captcha.generate') }}" width="120" height="60"
+                                                class="captchaImg" />
                                         </div>
                                         <div class="input-group-append">
                                             <label class="refresh mn-0">

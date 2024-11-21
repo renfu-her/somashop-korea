@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\{
     ProfileController,
     LogisticsController,
     SearchController,
+    ForgetController,
 };
 use App\Http\Controllers\Frontend\{
     CartController,
@@ -37,8 +38,8 @@ Route::get('/join', [JoinController::class, 'index'])->name('join');
 Route::post('/join', [JoinController::class, 'joinProcess'])->name('join.process');
 
 // 忘記密碼路由
-Route::get('/forget', [LoginController::class, 'forget'])->name('forget');
-Route::post('/forget', [LoginController::class, 'forgetProcess'])->name('forget.process');
+Route::get('/forget', [ForgetController::class, 'forget'])->name('forget');
+Route::post('/forget', [ForgetController::class, 'forgetProcess'])->name('forget.process');
 
 // 登出路由
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

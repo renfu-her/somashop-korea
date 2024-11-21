@@ -44,13 +44,4 @@ class LoginController extends Controller
         return redirect()->route('home')->with('success', '登出成功');
     }
 
-    public function forget()
-    {
-        return view('frontend.login.forget');
-    }
-
-    public function forgetProcess(Request $request)
-    {
-        dd($request->all());
-    }
 }
