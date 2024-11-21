@@ -141,7 +141,10 @@ class Order extends Model
         return [
             self::SHIPPING_STATUS_PENDING => '待出貨',
             self::SHIPPING_STATUS_SHIPPED => '已出貨',
-            self::SHIPPING_STATUS_DELIVERED => '已送達'
+            self::SHIPPING_STATUS_DELIVERED => '已送達',
+            self::SHIPPING_STATUS_STORE_ARRIVED => '已送達門市',
+            self::SHIPPING_STATUS_COMPLETED => '已完成',
+            self::SHIPPING_STATUS_PROCESSING => '處理中'
         ][$this->shipping_status] ?? '未知';
     }
 }
