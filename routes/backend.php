@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\{
     SealKnowledgeCategoryController,
     SealKnowledgeController,
     MemberController,
+    HomeAdsController,
 };
 
 
@@ -117,4 +118,8 @@ Route::group([
 
     // 訂單管理
     Route::resource('orders', OrderController::class);
+
+    // 首頁廣告管理
+    Route::resource('home-ads', HomeAdsController::class)->except(['show']);
+    Route::post('home-ads/update-order', [HomeAdsController::class, 'updateOrder'])->name('home-ads.update-order');
 });

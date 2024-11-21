@@ -93,6 +93,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.home-ads.index') }}">
+                <i class="fas fa-ad menu-icon"></i>
+                <span class="menu-title">首頁廣告管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.posts.index') }}">
                 <i class="fas fa-newspaper menu-icon"></i>
                 <span class="menu-title">文章維護</span>
