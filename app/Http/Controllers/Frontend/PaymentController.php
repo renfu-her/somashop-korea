@@ -193,8 +193,6 @@ class PaymentController extends Controller
     // 付款結果
     public function paymentCallback(Request $request)
     {
-
-        dd($request->all());
         $paymentResult = $request->all();
 
         // 根據訂單編號查詢訂單
