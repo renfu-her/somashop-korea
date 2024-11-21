@@ -96,45 +96,46 @@
     </div> --}}
 
     <div class="container mb-5 mt-5">
-        <h2 class="text-center font-weight-bold mb-0 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="300"
+        <h2 class="text-center font-weight-bold mb-0" data-aos="zoom-in-up" data-aos-delay="300"
             data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">活動訊息</h2>
-        <h4 class="text-center text-gold mb-4 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="350"
+        <h4 class="text-center text-gold mb-4" data-aos="zoom-in-up" data-aos-delay="350"
             data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">Activity Message</h4>
-        <div class="row mx-auto my-auto">
-            <div id="MessageCarousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner row w-100 mx-auto" role="listbox">
 
-                    @foreach ($actives as $active)
-                        <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-4 active">
-                            <a href="{{ route('activity.detail', $active->id) }}">
-                                <div class="card border-0">
-                                    <img class="card-img-top img-fluid"
-                                        src="{{ asset('storage/activities/' . $active->id . '/' . $active->image) }}"
-                                        alt="">
-                                    <div class="card-body px-0">
-                                        <p class="card-text mb-1"><small
-                                                class="text-gold">{{ $active->created_at->format('Y-m-d') }}</small></p>
-                                        <h4 class="card-title">{{ $active->title }}</h4>
-                                        <p class="card-text">{{ $active->subtitle }}</p>
-                                    </div>
+        <div id="MessageCarousel" class="carousel slide" data-interval="false">
+            <div class="carousel-inner">
+                @foreach ($actives->chunk(3) as $key => $chunk)
+                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                        <div class="row">
+                            @foreach ($chunk as $active)
+                                <div class="col-md-4">
+                                    <a href="{{ route('activity.detail', $active->id) }}" class="activity-card">
+                                        <div class="card border-0">
+                                            <div class="card-img-wrapper">
+                                                <img src="{{ asset('storage/activities/' . $active->id . '/' . $active->image) }}"
+                                                    alt="{{ $active->title }}">
+                                            </div>
+                                            <div class="card-body px-0">
+                                                <p class="card-text mb-1">
+                                                    <small
+                                                        class="text-gold">{{ $active->created_at->format('Y-m-d') }}</small>
+                                                </p>
+                                                <h4 class="card-title">{{ $active->title }}</h4>
+                                                <p class="card-text">{{ $active->subtitle }}</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
+                            @endforeach
                         </div>
-                    @endforeach
-
-                </div>
-
-                <a class="carousel-control-prev text-black-50 w-auto" href="#MessageCarousel" role="button"
-                    data-slide="prev">
-                    <i class="fas fa-chevron-left"></i>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next text-black-50 w-auto" href="#MessageCarousel" role="button"
-                    data-slide="next">
-                    <i class="fas fa-chevron-right"></i>
-                    <span class="sr-only">Next</span>
-                </a>
+                    </div>
+                @endforeach
             </div>
+            <a class="carousel-control-prev" href="#MessageCarousel" role="button" data-slide="prev">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <a class="carousel-control-next" href="#MessageCarousel" role="button" data-slide="next">
+                <i class="fas fa-chevron-right"></i>
+            </a>
         </div>
     </div>
 
@@ -221,6 +222,79 @@
             width: 100%;
             height: 400px;
             object-fit: cover;
+        }
+
+        /* 活動訊息卡片樣式 */
+        .activity-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .activity-card:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .activity-card .card-img-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 75%;
+            /* 4:3 比例 */
+            overflow: hidden;
+        }
+
+        .activity-card .card-img-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* 輪播控制樣式 */
+        #MessageCarousel .carousel-control-prev,
+        #MessageCarousel .carousel-control-next {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            top: 30%;
+            transform: translateY(-50%);
+            opacity: 1;
+        }
+
+        #MessageCarousel .carousel-control-prev {
+            left: -50px;
+        }
+
+        #MessageCarousel .carousel-control-next {
+            right: -50px;
+        }
+
+        #MessageCarousel .carousel-control-prev:hover,
+        #MessageCarousel .carousel-control-next:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        #MessageCarousel .carousel-item {
+            display: none !important;
+        }
+
+        #MessageCarousel .carousel-item.active {
+            display: block !important;
+        }
+
+
+        #MessageCarousel .fas {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        /* 輪播動畫 */
+        #MessageCarousel .carousel-item {
+            transition: transform .6s ease-in-out;
         }
     </style>
 @endpush
