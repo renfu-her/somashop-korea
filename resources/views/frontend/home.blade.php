@@ -1,8 +1,5 @@
 @extends('frontend.layouts.app')
 
-@section('content')
-@endsection
-
 @push('app-content')
     @if ($ads->count() > 0)
         <div class="container px-0">
@@ -141,56 +138,38 @@
         </div>
     </div>
 
-    <section class="parrallax py-5">
-        <div class="container my-md-4 my-0">
-            <div class="row mx-auto my-auto" style="overflow-x: hidden; overflow-y: hidden;">
-
-                <div class="d-md-flex flex-md-equal w-100 pl-md-3 mb-5 aos-init aos-animate" data-aos="fade-down-left"
-                    data-aos-delay="100" data-aos-anchor-placement="top-bottom" data-aos-once="true">
-                    <div class="col-md-6 offset-md-6 col-12 mr-md-3 px-3 px-md-5 text-center overflow-hidden">
-                        <div class="mx-auto">
-                            <img src="{{ asset('assets/images/6551c1d1b17797fade62dc420cc5adc3.png') }}" class="img-fluid">
-                        </div>
-                        <div class="p-3">
-                            <h3 class="text-black display-5">傳承 永恆 對寶貝的期望</h3>
-                            <p class="mb-0">將您對寶貝的祝福語＆期望交給我們</p>
-                        </div>
-
-                    </div>
+    {{-- 中間廣告區塊 --}}
+    @if ($homeAds->count() > 0)
+        <div class="container px-0">
+            <header id="homeAdsCarousel" class="carousel slide">
+                <ol class="carousel-indicators">
+                    @foreach ($homeAds as $ad)
+                        <li data-target="#homeAdsCarousel" data-slide-to="{{ $loop->index }}"
+                            class="{{ $loop->first ? 'active' : '' }}"></li>
+                    @endforeach
+                </ol>
+                <div class="carousel-inner">
+                    @foreach ($homeAds as $ad)
+                        <a class="carousel-item {{ $loop->first ? 'active' : '' }}"
+                            @if ($ad->link) href="{{ $ad->link }}" @endif target="_blank">
+                            <img src="{{ asset('storage/home_ads/' . $ad->image) }}" class="d-block w-100"
+                                alt="{{ $ad->title }}">
+                        </a>
+                    @endforeach
                 </div>
-
-                <div class="d-md-flex flex-md-equal w-100 mt-n8 mt-sm-0 pl-md-3 mb-5 aos-init aos-animate"
-                    data-aos="fade-down-right" data-aos-delay="450" data-aos-anchor-placement="top-bottom"
-                    data-aos-once="true">
-                    <div class="col-md-6 col-12 ml-md-3 px-3 px-md-5 text-center overflow-hidden">
-                        <div class="mx-auto">
-                            <img src="{{ asset('assets/images/4d140b0ae20490ae88f00a00083b5174.png') }}" class="img-fluid">
-                        </div>
-                        <div class="p-3">
-                            <h3 class="text-black display-5">飽滿的布局不漏財</h3>
-                            <p class="mb-0">爸爸媽媽給予寶貝的見面禮、彌月禮</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-md-flex flex-md-equal w-100 mt-n8 mt-sm-0 pl-md-3 aos-init aos-animate"
-                    data-aos="fade-up-left" data-aos-delay="800" data-aos-anchor-placement="top-bottom"
-                    data-aos-once="true">
-                    <div class="col-md-6 offset-md-6 col-12 mr-md-3 px-3 px-md-5 text-center overflow-hidden">
-                        <div class="mx-auto">
-                            <img src="{{ asset('assets/images/8c5b9fdbffb5d6c1e3c189216cb3ced0.png') }}"
-                                class="img-fluid">
-                        </div>
-                        <div class="py-3">
-                            <h3 class="text-black display-5">新手媽咪首選</h3>
-                            <p class="mb-0">爸爸媽媽給予寶貝的見面禮、彌月禮</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+                <a class="carousel-control-prev text-black-50 w-auto" href="#homeAdsCarousel" role="button"
+                    data-slide="prev">
+                    <i class="fas fa-chevron-left"></i>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next text-black-50 w-auto" href="#homeAdsCarousel" role="button"
+                    data-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+            </header>
         </div>
-    </section>
+    @endif
 
     <div class="container mb-5 pt-5">
         <h2 class="text-center font-weight-bold mb-0 border-frame aos-init aos-animate" data-aos="zoom-in-up"
@@ -233,4 +212,15 @@
         </div>
     </div>
 
+@endpush
+
+@push('styles')
+    <style>
+        #babyinCarousel .carousel-item img,
+        #homeAdsCarousel .carousel-item img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+    </style>
 @endpush

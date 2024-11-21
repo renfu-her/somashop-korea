@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Activity;
 use App\Models\Product;
 use App\Models\Advert;
+use App\Models\HomeAd;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -15,33 +16,33 @@ class HomeController extends Controller
     {
         $actives = Activity::orderByDesc('id')->get();
         
-        // 獲取最新商品
         $hotProducts = Product::with('primaryImage')
             ->where('is_active', 1)
             ->where('is_new', 1)
             ->orderByDesc('id')
             ->get();
 
-        // 獲取當前有效的廣告
         $now = Carbon::now();
-        
-        $ads = Advert::where('is_active', 1)  // 啟用狀態
+        $ads = Advert::where('is_active', 1)
             ->where(function($query) use ($now) {
                 $query->where(function($q) use ($now) {
-                    // 如果有設定開始和結束日期，檢查是否在日期範圍內
                     $q->whereNotNull('start_date')
                       ->whereNotNull('end_date')
                       ->where('start_date', '<=', $now)
                       ->where('end_date', '>=', $now);
                 })->orWhere(function($q) {
-                    // 如果沒有設定日期，則視為永久有效
                     $q->whereNull('start_date')
                       ->whereNull('end_date');
                 });
             })
-            ->orderByDesc('id')      // 相同排序則依照ID降序
+            ->orderByDesc('id')
             ->get();
 
-        return view('frontend.home', compact('actives', 'hotProducts', 'ads'));
+        $homeAds = HomeAd::where('is_active', 1)
+            ->orderBy('sort_order')
+            ->orderByDesc('id')
+            ->get();
+
+        return view('frontend.home', compact('actives', 'hotProducts', 'ads', 'homeAds'));
     }
 }
