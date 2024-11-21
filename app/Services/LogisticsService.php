@@ -18,7 +18,6 @@ class LogisticsService
         $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
         $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
         $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
-    
     }
 
     public function createLogisticsOrder(Order $order, Member $member)
@@ -88,7 +87,7 @@ class LogisticsService
                     'booking_note' => $result['BookingNote'] ?? null
                 ]);
 
-                Log::info('物流订单建立成功', [
+                Log::info('物流訂單建立成功', [
                     'order_number' => $order->order_number,
                     'logistics_result' => $result
                 ]);
@@ -96,14 +95,14 @@ class LogisticsService
                 return true;
             }
 
-            Log::error('物流订单建立失败', [
+            Log::error('物流訂單建立失敗', [
                 'order_number' => $order->order_number,
                 'logistics_result' => $result
             ]);
             return false;
 
         } catch (\Exception $e) {
-            Log::error('物流订单建立异常', [
+            Log::error('物流訂單建立異常', [
                 'order_number' => $order->order_number,
                 'error' => $e->getMessage()
             ]);

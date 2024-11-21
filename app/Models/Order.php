@@ -83,6 +83,8 @@ class Order extends Model
     const PAYMENT_STATUS_PENDING = 'pending';
     const PAYMENT_STATUS_PAID = 'paid';
     const PAYMENT_STATUS_FAILED = 'failed';
+    const PAYMENT_STATUS_REFUNDED = 'refunded';
+    const PAYMENT_STATUS_PROCESSING = 'processing';
 
     // 付款方式
     const PAYMENT_METHOD_CREDIT = 'credit';
@@ -92,20 +94,43 @@ class Order extends Model
     // 運送狀態
     const SHIPPING_STATUS_PENDING = 'pending';
     const SHIPPING_STATUS_SHIPPED = 'shipped';
-    const SHIPPING_STATUS_DELIVERED = 'delivered';
+    const SHIPPING_STATUS_ARRIVING = 'arriving';    // 配送中
+    const SHIPPING_STATUS_ARRIVED_STORE = 'arrived_store'; // 已到店
+    const SHIPPING_STATUS_DELIVERED = 'delivered';  // 已送達
+    const SHIPPING_STATUS_RETURNING = 'returning';  // 退貨中
+    const SHIPPING_STATUS_RETURNED = 'returned';    // 已退貨
+    const SHIPPING_STATUS_REJECTED = 'rejected';    // 拒收
+    const SHIPPING_STATUS_STORE_CLOSED = 'store_closed'; // 門市關閉
+    const SHIPPING_STATUS_FAILED = 'failed';
 
     // 運送方式
     const SHIPPING_METHOD_MAIL = 'mail_send';
     const SHIPPING_METHOD_711 = '711_b2c';
     const SHIPPING_METHOD_FAMILY = 'family_b2c';
 
+    // 物流類型
+    const SHIPPING_TYPE_SEVEN = 'seven';          // 7-11
+    const SHIPPING_TYPE_FAMILY = 'family';        // 全家
+    const SHIPPING_TYPE_HILIFE = 'hilife';        // 萊爾富
+    const SHIPPING_TYPE_OKMART = 'okmart';        // OK超商
+    const SHIPPING_TYPE_HOME = 'home';
+
     // 發票類型
     const INVOICE_TYPE_PERSONAL = 'personal';
     const INVOICE_TYPE_COMPANY = 'company';
     const INVOICE_TYPE_DONATION = 'donation';    // 配送失敗
     const SHIPPING_STATUS_STORE_ARRIVED = 'store_arrived';  // 已送達門市
-    const SHIPPING_STATUS_COMPLETED = 'completed'; 
+    const SHIPPING_STATUS_COMPLETED = 'completed';
     const SHIPPING_STATUS_PROCESSING = 'processing';
+
+    // 訂單狀態
+    const ORDER_STATUS_PENDING = 'pending';       // 待處理
+    const ORDER_STATUS_PROCESSING = 'processing'; // 處理中
+    const ORDER_STATUS_COMPLETED = 'completed';   // 已完成
+    const ORDER_STATUS_CANCELLED = 'cancelled';   // 已取消
+    const ORDER_STATUS_REFUNDING = 'refunding';   // 退款中
+    const ORDER_STATUS_REFUNDED = 'refunded';     // 已退款
+    const ORDER_STATUS_CLOSED = 'closed';
 
     public function member()
     {

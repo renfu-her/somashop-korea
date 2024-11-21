@@ -15,10 +15,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use App\Services\PaymentService;
+use App\Services\LogisticsService;
 
 class PaymentController extends Controller
 {
     private $paymentService;
+    private $logisticsService;
 
     private $merchantID;
     private $hashKey;
@@ -28,9 +30,12 @@ class PaymentController extends Controller
     private $shipmentHashKey;
     private $shipmentHashIV;
 
-    public function __construct(PaymentService $paymentService)
-    {
+    public function __construct(
+        PaymentService $paymentService,
+        LogisticsService $logisticsService
+    ) {
         $this->paymentService = $paymentService;
+        $this->logisticsService = $logisticsService;
 
         $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
         $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
@@ -39,7 +44,6 @@ class PaymentController extends Controller
         $this->shipmentMerchantID = config('app.env') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
         $this->shipmentHashKey = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
         $this->shipmentHashIV = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
-    
     }
 
     public function paymentProcess(Request $request)
@@ -109,7 +113,7 @@ class PaymentController extends Controller
 
             // 物流方式 API
             if ($order->shipment_method != 'mail_send') {
-                $this->createLogisticsOrder($order, $member);
+                $this->logisticsService->createLogisticsOrder($order, $member);
             }
 
             // 發票 API
@@ -190,23 +194,6 @@ class PaymentController extends Controller
         return strtoupper(hash('sha256', $checkStr));
     }
 
-    private function generateShipmentCheckMacValue($data)
-    {
-        // 排序參數
-        // 按照綠界規範產生檢查碼
-        ksort($data);
-        $checkStr = "HashKey={$this->shipmentHashKey}";
-
-        foreach ($data as $key => $value) {
-            $checkStr .= "&{$key}={$value}";
-        }
-
-        $checkStr .= "&HashIV={$this->shipmentHashIV}";
-        $checkStr = urlencode($checkStr);
-        $checkStr = strtolower($checkStr);
-
-        return strtoupper(md5($checkStr));
-    }
 
     private function paymentCheckMacValue($data)
     {
@@ -216,21 +203,7 @@ class PaymentController extends Controller
         return $this->generateCheckMacValue($data) === $checkMacValue;
     }
 
-    // 新增物流相關的輔助方法
-    private function getLogisticsSubType($shipment)
-    {
-        switch ($shipment) {
-            case 'seven':
-                return 'UNIMART'; // 7-11 B2C
-            case 'family':
-                return 'FAMI';    // 全家 B2C 
-            case 'hilife':
-                return 'HILIFE';  // 萊爾富 B2C
-            default:
-                return 'UNIMART';
-        }
-    }
-
+    
     // 物流狀態通知
     public function logisticsNotify(Request $request)
     {
@@ -269,94 +242,5 @@ class PaymentController extends Controller
             default:
                 return Order::SHIPPING_STATUS_PROCESSING;
         }
-    }
-
-    public function createLogisticsOrder($order, $member)
-    {
-        // 準備物流 API 需要的資料
-        $logisticsData = [
-            'MerchantID' => $this->shipmentMerchantID,
-            'MerchantTradeNo' => $order->order_number,
-            'MerchantTradeDate' => date('Y/m/d H:i:s'),
-            'LogisticsType' => 'CVS',
-            'LogisticsSubType' => $this->getLogisticsSubType($order->shipment_method),
-            'GoodsAmount' => $order->total_amount,
-            'CollectionAmount' => 0,
-            'IsCollection' => 'N',
-            'GoodsName' => '商品一批',
-            'SenderName' => $order->store_name,
-            'SenderPhone' => $order->store_telephone,
-            'SenderCellPhone' => $order->store_telephone,
-            'ReceiverName' => $order->recipient_name,
-            'ReceiverPhone' => $order->recipient_phone,
-            'ReceiverCellPhone' => $order->recipient_phone,
-            'ReceiverEmail' => $member->email,
-            'TradeDesc' => '商品配送',
-            'ServerReplyURL' => route('logistics.notify'),
-            'LogisticsC2CReplyURL' => route('logistics.store.notify'),
-            'Remark' => $order->note ?? '',
-        ];
-
-        // 如果是超商取貨，加入商店資訊
-        if ($order->store_id) {
-            $logisticsData['ReceiverStoreID'] = $order->store_id;
-        }
-
-        // 加入檢查碼
-        $logisticsData['CheckMacValue'] = $this->generateShipmentCheckMacValue($logisticsData);
-
-        // 使用 Laravel HTTP 客戶端發送請求
-        $response = Http::asForm()->post(
-            config('app.env') === 'production'
-                ? 'https://logistics.ecpay.com.tw/Express/Create'
-                : 'https://logistics-stage.ecpay.com.tw/Express/Create',
-            $logisticsData
-        );
-
-        $result = [];
-        $rtnCode = 0;
-        $responseBody = $response->body();
-
-        
-        // 解析回傳資料
-        if (strpos($responseBody, '1|') === 0) {
-            // 成功
-            $rtnCode = 1;
-            $data = substr($responseBody, 2);
-            parse_str($data, $parsedData);
-            $result = array_merge(['RtnCode' => 300], $parsedData);
-        } else {
-            // 失敗 
-            $result = [
-                'RtnCode' => 0,
-                'RtnMsg' => substr($responseBody, 2)
-            ];
-        }
-
-        if ($rtnCode == 1) {
-            // 更新訂單物流資訊
-            $order->update([
-                'shipping_status' => Order::SHIPPING_STATUS_PROCESSING,
-                'logistics_id' => $result['AllPayLogisticsID'] ?? null,
-                'logistics_type' => $result['LogisticsType'] ?? null,
-                'logistics_sub_type' => $result['LogisticsSubType'] ?? null,
-                'cvs_payment_no' => $result['CVSPaymentNo'] ?? null,
-                'cvs_validation_no' => $result['CVSValidationNo'] ?? null,
-                'booking_note' => $result['BookingNote'] ?? null
-            ]);
-
-            Log::info('物流訂單建立成功', [
-                'order_number' => $order->order_number,
-                'logistics_result' => $result
-            ]);
-
-            return true;
-        }
-
-        Log::error('物流訂單建立失敗', [
-            'order_number' => $order->order_number,
-            'logistics_result' => $result
-        ]);
-        return false;
     }
 }

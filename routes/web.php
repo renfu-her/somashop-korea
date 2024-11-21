@@ -122,13 +122,6 @@ Route::post('/checkout/map/rewrite', [CheckoutController::class, 'rewriteMap'])-
 Route::get('/checkout/get-store', [CheckoutController::class, 'getSelectedStore'])->name('checkout.get.store');
 
 
-
-// TODO: 測試路由，記得刪除
-Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
-    Route::get('/mail', [TestController::class, 'test'])->name('test');
-    Route::get('/logistics', [TestController::class, 'testLogistics']);
-});
-
 // 物流通知路由
 Route::post('logistics/notify', [LogisticsController::class, 'notify'])->name('logistics.notify');
 Route::post('logistics/store/notify', [LogisticsController::class, 'storeNotify'])->name('logistics.store.notify');
@@ -137,3 +130,8 @@ Route::get('/search', [SearchController::class, 'index'])
     ->name('search');
 
 
+// TODO: 測試路由，記得刪除
+Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
+    Route::get('/mail', [TestController::class, 'test'])->name('test');
+    Route::get('/logistics', [TestController::class, 'testLogisticsCheck']);
+});
