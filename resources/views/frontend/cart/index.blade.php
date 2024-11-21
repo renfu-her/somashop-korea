@@ -53,7 +53,7 @@
                                             <span class="cart-tag d-block d-sm-none text-muted" disable>規格</span>
                                             <div class="product-details text-md-left text-sm-center">
                                                 <p class="mb-0">{{ $item['product_name'] }}</p>
-                                                <p class="mb-0">{{ $item['specification_name'] }}</p>
+                                                <p class="mb-0">{{ $item['spec_name'] }}</p>
                                             </div>
                                         </td>
                                         <td class="align-middle border-sm-top">
@@ -65,16 +65,16 @@
                                             <div class="input-group num-row">
                                                 <button class="btn btn-minus btn-light border btn-sm"
                                                     data-product-id="{{ $item['product_id'] }}"
-                                                    data-specification-id="{{ $item['specification_id'] }}">
+                                                    data-specification-id="{{ $item['spec_id'] }}">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                                 <input type="text" class="form-control bg-white text-center qty_input"
                                                     value="{{ $item['quantity'] }}"
                                                     data-product-id="{{ $item['product_id'] }}"
-                                                    data-specification-id="{{ $item['specification_id'] }}">
+                                                    data-specification-id="{{ $item['spec_id'] }}">
                                                 <button class="btn btn-plus btn-light border btn-sm"
                                                     data-product-id="{{ $item['product_id'] }}"
-                                                    data-specification-id="{{ $item['specification_id'] }}">
+                                                    data-specification-id="{{ $item['spec_id'] }}">
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </div>
@@ -88,7 +88,7 @@
                                             <button type="button"
                                                 class="btn bg-transparent border-0 hvr-buzz-out remove-item"
                                                 data-product-id="{{ $item['product_id'] }}"
-                                                data-specification-id="{{ $item['specification_id'] }}">
+                                                data-specification-id="{{ $item['spec_id'] }}">
                                                 <i class="far fa-trash-alt"></i>
                                             </button>
                                         </td>
@@ -173,7 +173,7 @@
                     method: 'POST',
                     data: {
                         product_id: productId,
-                        specification_id: specificationId,
+                        spec_id: specificationId,
                         quantity: quantity,
                         _token: '{{ csrf_token() }}'
                     },
@@ -192,7 +192,7 @@
                     method: 'POST',
                     data: {
                         product_id: productId,
-                        specification_id: specificationId,
+                        spec_id: specificationId,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {

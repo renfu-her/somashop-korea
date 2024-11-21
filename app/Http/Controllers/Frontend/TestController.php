@@ -15,6 +15,9 @@ class TestController extends Controller
     protected $captchaService;
     protected $mailService;
     protected $paymentController;
+    protected $shipmentMerchantID;
+    protected $shipmentHashKey;
+    protected $shipmentHashIV;
 
     public function __construct(
         MailService $mailService,
@@ -22,6 +25,11 @@ class TestController extends Controller
     ) {
         $this->mailService = $mailService;
         $this->paymentController = $paymentController;
+
+        $this->shipmentMerchantID = config('app.env') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
+        $this->shipmentHashKey = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
+        $this->shipmentHashIV = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
+    
     }
     public function test(MailService $mailService)
     {
@@ -74,5 +82,35 @@ class TestController extends Controller
                 'booking_note' => $order->booking_note
             ]
         ]);
+    }
+
+    public function testPaymentCheck()
+    {
+        $orders = Order::where('payment_status', 'paid')->get();
+        foreach ($orders as $order) {
+            if($order->shipping_status == Order::SHIPPING_STATUS_PROCESSING){
+                if(!empty($order->logistics_id)){
+                    // 檢查他的貨運狀態
+
+                }
+            }
+        }
+    }
+
+    private function generateCheckMacValue($data)
+    {
+        // 按照綠界規範產生檢查碼
+        ksort($data);
+        $checkStr = "HashKey={$this->shipmentHashKey}";
+
+        foreach ($data as $key => $value) {
+            $checkStr .= "&{$key}={$value}";
+        }
+
+        $checkStr .= "&HashIV={$this->shipmentHashIV}";
+        $checkStr = urlencode($checkStr);
+        $checkStr = strtolower($checkStr);
+
+        return strtoupper(hash('sha256', $checkStr));
     }
 }
