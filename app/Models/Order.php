@@ -62,6 +62,9 @@ class Order extends Model
         'cvs_validation_no',
         'booking_note',
         'paid_at',
+        'payment_date',
+        'trade_no',
+        'payment_fee',
     ];
 
     protected $casts = [
