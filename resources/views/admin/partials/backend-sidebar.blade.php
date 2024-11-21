@@ -45,11 +45,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.products.index') }}">商品管理</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.carts.index') }}">購物車管理</a>
-                    </li>
                 </ul>
             </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                <i class="fas fa-shopping-cart menu-icon"></i>
+                <span class="menu-title">訂單管理</span>
+            </a>
         </li>
 
         <li class="nav-item">

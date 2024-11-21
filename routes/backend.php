@@ -5,24 +5,28 @@ use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminNoteController;
 use App\Http\Controllers\Admin\AdvertController;
-use App\Http\Controllers\Admin\CartController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ProductImageController;
-use App\Http\Controllers\Admin\UploadController;
-use App\Http\Controllers\Admin\FaqController;
-use App\Http\Controllers\Admin\FaqCategoryController;
-use App\Http\Controllers\Admin\ActivityController;
-use App\Http\Controllers\Admin\MemberController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\SealKnowledgeController;
-use App\Http\Controllers\Admin\SealKnowledgeCategoryController;
-use App\Http\Controllers\Admin\ProductSpecificationController;
-use App\Http\Controllers\Admin\AdController;
-use App\Http\Controllers\Admin\EmailSettingController;
-use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\Admin\ProductSpecController;
+use App\Http\Controllers\Admin\{
+    AdminController,
+    ActivityController,
+    AdController,
+    CartController,
+    CategoryController,
+    OrderController,
+    ProductController,
+    ProductImageController,
+    ProductSpecificationController,
+    PostController,
+    EmailSettingController,
+    SettingController,
+    ProductSpecController,
+    UploadController,
+    FaqController,
+    FaqCategoryController,
+    SealKnowledgeCategoryController,
+    SealKnowledgeController,
+    MemberController,
+};
+
 
 // 管理員登入
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -110,4 +114,7 @@ Route::group([
 
     // 產品規格管理
     Route::resource('products.specs', ProductSpecController::class);
+
+    // 訂單管理
+    Route::resource('orders', OrderController::class);
 });
