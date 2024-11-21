@@ -108,7 +108,7 @@
 
                     @foreach ($actives as $active)
                         <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-4 active">
-                            <a href="act_center.php?p=69">
+                            <a href="{{ route('activity.detail', $active->id) }}">
                                 <div class="card border-0">
                                     <img class="card-img-top img-fluid"
                                         src="{{ asset('storage/activities/' . $active->id . '/' . $active->image) }}"
