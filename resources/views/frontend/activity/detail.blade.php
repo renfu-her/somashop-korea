@@ -33,7 +33,7 @@
                 {!! $activity->content !!}
             </section>
 
-            <nav class="my-5 d-md-block d-none">
+            {{-- <nav class="my-5 d-md-block d-none">
                 <ul class="pager">
 
 
@@ -45,7 +45,7 @@
                         </a>
                     </li>
                 </ul>
-            </nav>
+            </nav> --}}
 
             <nav class="my-5" aria-label="Page navigation">
                 <div class="pagination justify-content-center">
