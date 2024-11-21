@@ -49,7 +49,7 @@
 
             <nav class="my-5" aria-label="Page navigation">
                 <div class="pagination justify-content-center">
-                    <a class="btn btn-light btn-page rounded border" href="act_list.php" value="回列表">回列表</a>
+                    <a class="btn btn-light btn-page rounded border" href="{{ route('activity.index') }}" value="回列表">回列表</a>
                 </div>
             </nav>
 
