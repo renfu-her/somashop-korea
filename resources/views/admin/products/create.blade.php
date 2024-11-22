@@ -10,14 +10,14 @@
                     <div class="card-header">規格管理</div>
                     <div class="card-body">
                         <p class="text-muted mb-0">
-                            請先創建產品，保存後即可在編輯頁面中管理產品規格。
+                            請先創建商品，保存後即可在編輯頁面中管理商品規格。
                         </p>
                     </div>
                 </div>
 
                 <!-- 原有的創建表單 -->
                 <div class="card">
-                    <div class="card-header">新增產品</div>
+                    <div class="card-header">新增商品</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">

@@ -77,4 +77,20 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('admin.posts.index')->with('success', '文章刪除成功！');
     }
+
+    public function updateSort(Post $post, Request $request)
+    {
+        $request->validate([
+            'sort_order' => 'required|integer|min:0'
+        ]);
+
+        $post->update(['sort_order' => $request->sort_order]);
+        return response()->json(['success' => true]);
+    }
+
+    public function toggleActive(Post $post, Request $request)
+    {
+        $post->update(['is_active' => $request->is_active]);
+        return response()->json(['success' => true]);
+    }
 }

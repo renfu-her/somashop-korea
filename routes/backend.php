@@ -85,8 +85,11 @@ Route::group([
     Route::resource('admins', AdminController::class);
     Route::resource('admins', AdminController::class);
 
-    // 文章管理
+    // 關於我們管理
     Route::resource('posts', PostController::class);
+    Route::post('posts/{post}/sort', [PostController::class, 'updateSort'])->name('posts.sort');
+    Route::post('posts/{post}/toggle-active', [PostController::class, 'toggleActive'])->name('posts.toggle-active');
+
 
     // 印章知識文章路由
     Route::resource('seal-knowledge', SealKnowledgeController::class);

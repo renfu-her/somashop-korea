@@ -6,10 +6,10 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        編輯產品
+                        編輯商品
                         <a href="{{ route('admin.products.specs.index', $product->id) }}"
                             class="btn btn-info btn-sm float-end">
-                            管理產品規格
+                            管理商品規格
                         </a>
                     </div>
 
