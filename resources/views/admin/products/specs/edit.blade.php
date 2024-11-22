@@ -33,12 +33,28 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="price" class="form-label">價格</label>
+                                <input type="number" class="form-control @error('price') is-invalid @enderror"
+                                    id="price" name="price" value="{{ old('price', 0) }}" min="0">
+                                @error('price')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="sort_order" class="form-label">排序</label>
                                 <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
-                                    id="sort_order" name="sort_order" value="{{ old('sort_order', $spec->sort_order) }}">
+                                    id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}">
+                                <small class="text-muted">數字越小越前面</small>
                                 @error('sort_order')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                            </div>
+
+                            <div class="mb-3 d-flex align-items-center">
+                                <input type="checkbox" class="form-check-input p-1" id="is_active" name="is_active"
+                                    value="1" {{ old('is_active', 1) ? 'checked' : '' }}>
+                                <label class="form-check-label p-1" for="is_active">啟用規格</label>
                             </div>
 
                             <div class="d-grid gap-2">
@@ -52,4 +68,4 @@
             </div>
         </div>
     </div>
-@endsection 
+@endsection

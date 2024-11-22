@@ -25,7 +25,9 @@ class ProductSpecController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'value' => 'required|string|max:255',
-            'sort_order' => 'nullable|integer'
+            'sort_order' => 'nullable|integer',
+            'is_active' => 'nullable|boolean',
+            'price' => 'nullable|numeric|min:0'
         ]);
 
         $product->specs()->create($validated);
@@ -44,7 +46,9 @@ class ProductSpecController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'value' => 'required|string|max:255',
-            'sort_order' => 'nullable|integer'
+            'sort_order' => 'nullable|integer',
+            'is_active' => 'nullable|boolean',
+            'price' => 'nullable|numeric|min:0'
         ]);
 
         $spec->update($validated);

@@ -22,10 +22,12 @@
                     <thead>
                         <tr>
                             <th width="10%">ID</th>
-                            <th width="25%">規格名稱</th>
-                            <th width="35%">規格值</th>
+                            <th width="20%">規格名稱</th>
+                            <th width="25%">規格值</th>
+                            <th width="10%">價格</th>
                             <th width="10%">排序</th>
-                            <th width="20%">操作</th>
+                            <th width="10%">狀態</th>
+                            <th width="15%">操作</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,7 +36,16 @@
                                 <td>{{ $spec->id }}</td>
                                 <td>{{ $spec->name }}</td>
                                 <td>{{ $spec->value }}</td>
+                                <td>{{ number_format($spec->price) }}</td>
                                 <td>{{ $spec->sort_order }}</td>
+                                <td class="text-center">
+                                    <div class="form-check form-switch d-flex justify-content-center align-items-center">
+                                        <input class="form-check-input toggle-active" 
+                                               type="checkbox" 
+                                               data-id="{{ $spec->id }}"
+                                               {{ $spec->is_active ? 'checked' : '' }}>
+                                    </div>
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.products.specs.edit', [$product->id, $spec->id]) }}"
@@ -64,11 +75,32 @@
                 language: {
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
                 },
-                order: [[3, 'asc']], // 按排序欄位升序排序
+                order: [[4, 'asc']], // 按排序欄位升序排序
                 columnDefs: [{
                     targets: -1,
                     orderable: false
                 }]
+            });
+
+            // 處理狀態切換
+            $('.toggle-active').change(function() {
+                const id = $(this).data('id');
+                const isActive = $(this).prop('checked');
+                
+                $.ajax({
+                    url: `/admin/products/specs/${id}/toggle-active`,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        is_active: isActive
+                    },
+                    success: function(response) {
+                        toastr.success('狀態更新成功');
+                    },
+                    error: function() {
+                        toastr.error('狀態更新失敗');
+                    }
+                });
             });
         });
     </script>

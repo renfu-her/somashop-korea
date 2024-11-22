@@ -10,7 +10,14 @@ class ProductSpec extends Model
         'product_id',
         'name',
         'value',
-        'sort_order'
+        'sort_order',
+        'is_active',
+        'price'
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+        'price' => 'decimal:0'
     ];
 
     public function product()
