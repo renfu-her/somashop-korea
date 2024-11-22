@@ -75,17 +75,18 @@
                                         <td colspan="7" class="text-center">購物車是空的</td>
                                     </tr>
                                 @endforelse
+
+                                <!-- 運費列 -->
+                                <tr class="shipping-fee">
+                                    <td colspan="4"></td>
+                                    <td class="text-center align-middle">運費</td>
+                                    <td class="align-middle">
+                                        <p class="text-danger mb-0 money">NT${{ number_format($shippingFee) }}</p>
+                                    </td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
-                    </div>
-
-                    <div class="col-sm-12 dot-line">
-                        <div class="row">
-                            <div class="col-sm-3 offset-sm-9 pb-3">
-                                <h5 class="text-danger">運費</h5>
-                                <p class="mb-0">NT${{ number_format($shippingFee) }}</p>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col-sm-12 my-3">
@@ -130,7 +131,8 @@
                                 </div>
                                 <div class="col-md-9 col-sm-12 align-self-center">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1" name="sameAsMember">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck1"
+                                            name="sameAsMember">
                                         <label class="form-check-label" for="gridCheck1">同訂購人資料</label>
                                     </div>
                                 </div>
@@ -225,7 +227,7 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        name="address" placeholder="請���入詳細地址"
+                                                        name="address" placeholder="請入詳細地址"
                                                         value="{{ Auth::guard('member')->user()->address }}">
                                                 </div>
                                             </div>
@@ -395,7 +397,7 @@
                 "zipcodeSel": "{{ Auth::guard('member')->user()->invoice_zipcode }}",
             });
 
-            // 監聽"同訂購人資料"��選框的變化
+            // 監聽"同訂購人資料"選框的變化
             $('input[name="sameAsMember"]').change(function() {
                 if ($(this).is(':checked')) {
                     // 如果勾選，填入會員資料
