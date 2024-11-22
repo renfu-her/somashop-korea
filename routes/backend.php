@@ -117,7 +117,9 @@ Route::group([
     Route::resource('settings', SettingController::class);
 
     // 產品規格管理
-    Route::resource('products.specs', ProductSpecController::class);
+    Route::resource('products.specs', ProductSpecController::class)->except(['show']);
+    Route::post('products/{product}/specs/{spec}/toggle-active', [ProductSpecController::class, 'toggleActive'])
+        ->name('products.specs.toggle-active');
 
     // 訂單管理
     Route::resource('orders', OrderController::class);

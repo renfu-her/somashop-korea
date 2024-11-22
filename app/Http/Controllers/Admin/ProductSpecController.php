@@ -64,4 +64,16 @@ class ProductSpecController extends Controller
         return redirect()->route('admin.products.specs.index', $product->id)
             ->with('success', '產品規格已成功刪除');
     }
+
+    public function toggleActive(Product $product, ProductSpec $spec, Request $request)
+    {
+        $spec->update([
+            'is_active' => $request->is_active == 'true' ? 1 : 0
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '狀態更新成功'
+        ]);
+    }
 } 

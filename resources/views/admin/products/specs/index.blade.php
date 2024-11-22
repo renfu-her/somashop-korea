@@ -88,7 +88,7 @@
                 const isActive = $(this).prop('checked');
                 
                 $.ajax({
-                    url: `/admin/products/specs/${id}/toggle-active`,
+                    url: "{{ route('admin.products.specs.toggle-active', ['product' => $product->id, 'spec' => ':spec']) }}".replace(':spec', id),
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
