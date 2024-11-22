@@ -3,12 +3,6 @@
 @push('app-content')
     <article class="page-wrapper my-3">
         <div class="container">
-
-            <div class="page-banner text-center">
-
-                <img src="{{ asset('assets/images/8d32ef5aa88750ffb21f6e413403284d.jpg') }}" class="img-fluid">
-
-            </div>
             <section>
                 <div class="row">
 
@@ -17,7 +11,7 @@
                             data-aos-delay="0" data-aos-anchor-placement="top-bottom">
                             <a href="{{ route('activity.detail', $activity->id) }}">
                                 <div class="card border-0">
-                                    <img class="card-img-top img-fluid"
+                                    <img class="card-img-top img-fluid activity-card-image"
                                         src="{{ asset('storage/activities/' . $activity->id . '/' . $activity->image) }}"
                                         alt="">
                                     <div class="card-body px-0">
@@ -52,4 +46,14 @@
 
         </div>
     </article>
+@endpush
+
+@push('styles')
+    <style>
+        .activity-card-image {
+            aspect-ratio: 1/0.8;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
 @endpush

@@ -10,7 +10,11 @@ class ActivityController extends Controller
 {
     public function index()
     {
-        $activities = Activity::orderByDesc('created_at')->get();
+        $activities = Activity::where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->orderByDesc('created_at')
+            ->get();
+        
         return view('frontend.activity.index', compact('activities'));
     }
 
