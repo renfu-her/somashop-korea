@@ -44,7 +44,7 @@
                                         <th scope="col"></th>
                                         <th scope="col">商品</th>
                                         <th scope="col">規格</th>
-                                        <th scope="col">現金價</th>
+                                        <th scope="col">優惠價</th>
                                         <th scope="col">數量</th>
                                         <th scope="col">小計</th>
                                         <th scope="col"></th>
@@ -70,7 +70,7 @@
                                                 </div>
                                             </td>
                                             <td class="align-middle border-sm-top">
-                                                <span class="cart-tag d-block d-sm-none text-muted" disable>現金價</span>
+                                                <span class="cart-tag d-block d-sm-none text-muted" disable>優惠價</span>
                                                 <p class="mb-0">NT${{ number_format($item->price) }}</p>
                                             </td>
                                             <td class="quantity align-middle border-sm-top">

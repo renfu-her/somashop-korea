@@ -95,7 +95,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="cash_price" class="form-label">現金價</label>
+                                <label for="cash_price" class="form-label">優惠價</label>
                                 <input type="number" class="form-control @error('cash_price') is-invalid @enderror"
                                     id="cash_price" name="cash_price" value="{{ old('cash_price') }}">
                                 @error('cash_price')
@@ -150,9 +150,9 @@
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label for="meta_title" class="form-label">SEO 標題</label>
-                                        <input type="text" class="form-control @error('meta_title') is-invalid @enderror"
-                                            id="meta_title" name="meta_title" value="{{ old('meta_title') }}"
-                                            maxlength="60">
+                                        <input type="text"
+                                            class="form-control @error('meta_title') is-invalid @enderror" id="meta_title"
+                                            name="meta_title" value="{{ old('meta_title') }}" maxlength="60">
                                         <small class="text-muted">建議長度：60 字元以內，留空將使用商品名稱</small>
                                         @error('meta_title')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -161,9 +161,8 @@
 
                                     <div class="mb-3">
                                         <label for="meta_description" class="form-label">SEO 描述</label>
-                                        <textarea class="form-control @error('meta_description') is-invalid @enderror"
-                                            id="meta_description" name="meta_description" rows="3"
-                                            maxlength="160">{{ old('meta_description') }}</textarea>
+                                        <textarea class="form-control @error('meta_description') is-invalid @enderror" id="meta_description"
+                                            name="meta_description" rows="3" maxlength="160">{{ old('meta_description') }}</textarea>
                                         <small class="text-muted">建議長度：160 字元以內，留空將使用商品描述的前 160 個字</small>
                                         @error('meta_description')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -172,7 +171,8 @@
 
                                     <div class="mb-3">
                                         <label for="meta_keywords" class="form-label">SEO 關鍵字</label>
-                                        <input type="text" class="form-control @error('meta_keywords') is-invalid @enderror"
+                                        <input type="text"
+                                            class="form-control @error('meta_keywords') is-invalid @enderror"
                                             id="meta_keywords" name="meta_keywords" value="{{ old('meta_keywords') }}">
                                         <small class="text-muted">多個關鍵字請用逗號分隔</small>
                                         @error('meta_keywords')

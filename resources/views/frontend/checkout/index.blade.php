@@ -34,7 +34,7 @@
                                     <th scope="col"></th>
                                     <th scope="col">商品</th>
                                     <th scope="col">規格</th>
-                                    <th scope="col">現金價</th>
+                                    <th scope="col">優惠價</th>
                                     <th scope="col">數量</th>
                                     <th scope="col">小計</th>
                                     <th scope="col"></th>
@@ -157,12 +157,14 @@
                                         <div class="col-sm-6 align-self-center">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender"
-                                                    id="male" value="1" @if(Auth::guard('member')->user()->gender == 1) checked @endif>
+                                                    id="male" value="1"
+                                                    @if (Auth::guard('member')->user()->gender == 1) checked @endif>
                                                 <label class="form-check-label" for="male">男</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender"
-                                                    id="female" value="2" @if(Auth::guard('member')->user()->gender == 2) checked @endif>
+                                                    id="female" value="2"
+                                                    @if (Auth::guard('member')->user()->gender == 2) checked @endif>
                                                 <label class="form-check-label" for="female">女</label>
                                             </div>
                                         </div>
@@ -223,7 +225,8 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        name="address" placeholder="請���入詳細地址" value="{{ Auth::guard('member')->user()->address }}">
+                                                        name="address" placeholder="請���入詳細地址"
+                                                        value="{{ Auth::guard('member')->user()->address }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -337,7 +340,9 @@
                                         <div class="col-sm-6 align-self-center">
                                             <div class="input-group">
                                                 <input type="text" class="form-control align-self-center"
-                                                    id="verify" placeholder="" required name="captcha" style="text-transform: uppercase" oninput="this.value = this.value.toUpperCase()">
+                                                    id="verify" placeholder="" required name="captcha"
+                                                    style="text-transform: uppercase"
+                                                    oninput="this.value = this.value.toUpperCase()">
                                                 <div class="d-flex pl-2 align-self-center">
                                                     <img src="{{ route('captcha.generate') }}" width="140"
                                                         height="60" class="captchaImg" />

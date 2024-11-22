@@ -64,8 +64,10 @@
                                     <h5 class="text-muted">{{ $product->sub_title }}</h5>
                                 @endif
                                 <div class="product-price mt-4">
-                                    <p class="mb-2">原價：NT$ {{ number_format($product->price) }}</p>
-                                    <h3 class="text-danger">現金價：NT$ {{ number_format($product->cash_price) }}</h3>
+                                    <p class="mb-2 original-price">原價：NT$ <span
+                                            id="original-price">{{ number_format($product->price) }}</span></p>
+                                    <h3 class="text-danger">優惠價：NT$ <span
+                                            id="cash-price">{{ number_format($product->cash_price) }}</span></h3>
                                 </div>
 
                                 <form action="{{ Auth::guard('member')->check() ? route('cart.add') : route('login') }}"
@@ -79,10 +81,15 @@
                                     <div class="form-group row my-4">
                                         <label class="col-sm-2 col-form-label">規格</label>
                                         <div class="col-10 col-md-10">
-                                            <select class="form-control" name="spec_id">
+                                            <select class="form-control" name="spec_id" id="spec-select">
                                                 <option value="">請選擇</option>
                                                 @foreach ($product->specs as $spec)
-                                                    <option value="{{ $spec->id }}">{{ $spec->name }}</option>
+                                                    @if ($spec->is_active)
+                                                        <option value="{{ $spec->id }}"
+                                                            data-price="{{ $spec->price }}">
+                                                            {{ $spec->name }}
+                                                        </option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -136,6 +143,16 @@
     </article>
 @endpush
 
+@push('styles')
+    <style>
+        .product-price .original-price {
+            text-decoration: line-through;
+            color: #6c757d;
+            /* 使用較淺的顏色 */
+        }
+    </style>
+@endpush
+
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -152,6 +169,20 @@
                 $('#checkout_direct').val($(this).hasClass('checkout-btn') ? '1' : '0');
                 $(this).closest('form').submit();
             });
+
+            $('#spec-select').change(function() {
+                const selectedOption = $(this).find('option:selected');
+                if (selectedOption.val()) {
+                    const specPrice = parseInt(selectedOption.data('price'));
+                    $('#cash-price').text(numberFormat(specPrice));
+                } else {
+                    $('#cash-price').text('{{ number_format($product->cash_price) }}');
+                }
+            });
+
+            function numberFormat(number) {
+                return new Intl.NumberFormat('zh-TW').format(number);
+            }
         });
     </script>
 @endpush

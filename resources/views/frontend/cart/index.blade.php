@@ -34,7 +34,7 @@
                                     <th scope="col"></th>
                                     <th scope="col">商品</th>
                                     <th scope="col">規格</th>
-                                    <th scope="col">現金價</th>
+                                    <th scope="col">優惠價</th>
                                     <th scope="col">數量</th>
                                     <th scope="col">小計</th>
                                     <th scope="col">刪除</th>

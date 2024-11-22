@@ -90,7 +90,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="cash_price" class="form-label">現金價</label>
+                                <label for="cash_price" class="form-label">優惠價</label>
                                 <input type="number" class="form-control @error('cash_price') is-invalid @enderror"
                                     id="cash_price" name="cash_price"
                                     value="{{ old('cash_price', $product->cash_price) }}">
@@ -167,9 +167,9 @@
                                             @foreach ($specChunk as $spec)
                                                 <div class="col-md-3 mb-2">
                                                     <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input" style="margin-left: 3px;"
-                                                            id="spec_{{ $spec->id }}" name="specs[]"
-                                                            value="{{ $spec->id }}"
+                                                        <input type="checkbox" class="form-check-input"
+                                                            style="margin-left: 3px;" id="spec_{{ $spec->id }}"
+                                                            name="specs[]" value="{{ $spec->id }}"
                                                             {{ in_array($spec->id, $product->specs->pluck('id')->toArray()) ? 'checked' : '' }}
                                                             onclick="return false;">
                                                         <label class="form-check-label" for="spec_{{ $spec->id }}">

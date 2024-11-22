@@ -66,7 +66,7 @@
                                                         {{ $product->sub_title }}</h6>
                                                 @endif
                                                 <p class="card-text mb-1">原價 NT$ {{ number_format($product->price) }}</p>
-                                                <p class="card-text text-danger h5 mb-0">現金價 NT$
+                                                <p class="card-text text-danger h5 mb-0">優惠價 NT$
                                                     {{ number_format($product->cash_price) }}</p>
                                             </div>
                                         </div>

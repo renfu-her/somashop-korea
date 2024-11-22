@@ -29,7 +29,7 @@
                             <th>圖片</th>
                             <th>名稱</th>
                             <th>原價</th>
-                            <th>現金價</th>
+                            <th>優惠價</th>
                             <th>庫存</th>
                             <th>分類</th>
                             <th>是否啟用</th>
@@ -51,8 +51,8 @@
                                 <td>{{ number_format($product->cash_price) }}</td>
                                 <td>{{ $product->stock }}</td>
                                 <td>
-                                    @if($product->category)
-                                        @if($product->category->parent_id > 0)
+                                    @if ($product->category)
+                                        @if ($product->category->parent_id > 0)
                                             {{ $product->category->parent->name }} / {{ $product->category->name }}
                                         @else
                                             {{ $product->category->name }}
@@ -65,7 +65,7 @@
                                     <span class="badge bg-{{ $product->is_active ? 'success' : 'danger' }}">
                                         {{ $product->is_active ? '啟用' : '停用' }}
                                     </span>
-                                    @if($product->is_new)
+                                    @if ($product->is_new)
                                         <span class="badge bg-info">新品</span>
                                     @endif
                                 </td>
@@ -84,7 +84,7 @@
                                             </button>
                                         </form>
                                     </div>
-                                </span>
+                                    </span>
                             </tr>
                         @endforeach
                     </tbody>

@@ -203,7 +203,7 @@
                                             原價 NT$ {{ number_format($product->original_price) }}
                                         </h6>
                                     @endif
-                                    <h5 class="card-text text-danger">現金價 NT$ {{ number_format($product->price) }}</h5>
+                                    <h5 class="card-text text-danger">優惠價 NT$ {{ number_format($product->price) }}</h5>
                                 </div>
                             </div>
                         </a>
