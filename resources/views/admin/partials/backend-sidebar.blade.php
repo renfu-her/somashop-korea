@@ -18,16 +18,30 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.admins.index') }}">
-                <i class="fas fa-users menu-icon"></i>
-                <span class="menu-title">管理者管理</span>
+            <a class="nav-link" href="{{ route('admin.ads.index') }}">
+                <i class="fas fa-ad menu-icon"></i>
+                <span class="menu-title">首頁廣告維護</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.members.index') }}">
-                <i class="fas fa-users menu-icon"></i>
-                <span class="menu-title">會員管理</span>
+            <a class="nav-link" href="{{ route('admin.home-ads.index') }}">
+                <i class="fas fa-ad menu-icon"></i>
+                <span class="menu-title">小額廣告維護</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.posts.index') }}">
+                <i class="fas fa-newspaper menu-icon"></i>
+                <span class="menu-title">關於我們維護</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.activities.index') }}">
+                <i class="fas fa-calendar-alt menu-icon"></i>
+                <span class="menu-title">活動訊息維護</span>
             </a>
         </li>
 
@@ -50,9 +64,16 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.orders.index') }}">
-                <i class="fas fa-shopping-cart menu-icon"></i>
-                <span class="menu-title">訂單管理</span>
+            <a class="nav-link" href="{{ route('admin.members.index') }}">
+                <i class="fas fa-users menu-icon"></i>
+                <span class="menu-title">會員管理</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.admins.index') }}">
+                <i class="fas fa-users menu-icon"></i>
+                <span class="menu-title">管理者管理</span>
             </a>
         </li>
 
@@ -75,50 +96,12 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#seal-knowledge-management" aria-expanded="false">
-                <i class="fas fa-stamp menu-icon"></i>
-                <span class="menu-title">認識印章維護</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="seal-knowledge-management">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.seal-knowledge-category.index') }}">分類管理</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.seal-knowledge.index') }}">文章管理</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.home-ads.index') }}">
-                <i class="fas fa-ad menu-icon"></i>
-                <span class="menu-title">首頁廣告管理</span>
+            <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                <i class="fas fa-shopping-cart menu-icon"></i>
+                <span class="menu-title">訂單管理</span>
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.posts.index') }}">
-                <i class="fas fa-newspaper menu-icon"></i>
-                <span class="menu-title">文章維護</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.activities.index') }}">
-                <i class="fas fa-calendar-alt menu-icon"></i>
-                <span class="menu-title">活動維護</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.ads.index') }}">
-                <i class="fas fa-ad menu-icon"></i>
-                <span class="menu-title">廣告維護</span>
-            </a>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.email-settings.index') }}">
@@ -130,7 +113,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.settings.index') }}">
                 <i class="fas fa-cog menu-icon"></i>
-                <span class="menu-title">系統設定</span>
+                <span class="menu-title">運費設定</span>
             </a>
         </li>
 
