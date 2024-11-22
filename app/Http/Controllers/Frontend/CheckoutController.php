@@ -22,6 +22,8 @@ class CheckoutController extends Controller
 
     public function index(Request $request)
     {
+
+
         // 獲取購物車資料
         $cart = session()->get('cart', []);
         if (empty($cart)) {

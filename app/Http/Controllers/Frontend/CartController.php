@@ -40,7 +40,6 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
             'spec_id' => 'required|exists:product_specs,id',
@@ -54,12 +53,12 @@ class CartController extends Controller
         // 獲取當前購物車
         $cart = session()->get('cart', []);
 
-        // 新增商品到購物車
+        // 新增商品到購物車，使用規格價格
         $cart[] = [
             'product_id' => $validated['product_id'],
             'spec_id' => $validated['spec_id'],
             'quantity' => $validated['quantity'],
-            'price' => $product->cash_price,
+            'price' => $specification->price,  // 改用規格價格
             'product_name' => $product->name,
             'spec_name' => $specification->name,
             'primary_image' => asset('storage/products/' . $validated['product_id'] . '/' . $product->primaryImage->image_path)
