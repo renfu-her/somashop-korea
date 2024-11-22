@@ -35,7 +35,7 @@
                             <div class="mb-3">
                                 <label for="price" class="form-label">價格</label>
                                 <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                    id="price" name="price" value="{{ old('price', 0) }}" min="0">
+                                    id="price" name="price" value="{{ old('price', $spec->price) }}" min="0">
                                 @error('price')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -44,7 +44,7 @@
                             <div class="mb-3">
                                 <label for="sort_order" class="form-label">排序</label>
                                 <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
-                                    id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}">
+                                    id="sort_order" name="sort_order" value="{{ old('sort_order', $spec->sort_order) }}">
                                 <small class="text-muted">數字越小越前面</small>
                                 @error('sort_order')
                                     <div class="invalid-feedback">{{ $message }}</div>
