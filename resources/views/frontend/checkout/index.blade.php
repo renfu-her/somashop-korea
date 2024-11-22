@@ -116,8 +116,8 @@
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="payment" id="inlineRadio2"
-                                            value="WebATM">
-                                        <label class="form-check-label" for="inlineRadio2">WebATM 轉帳</label>
+                                            value="ATM">
+                                        <label class="form-check-label" for="inlineRadio2">ATM 虛擬帳號繳費</label>
                                     </div>
                                 </div>
                             </div>
@@ -131,8 +131,7 @@
                                 </div>
                                 <div class="col-md-9 col-sm-12 align-self-center">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck1"
-                                            name="sameAsMember">
+                                        <input class="form-check-input" type="checkbox" id="gridCheck1" name="sameAsMember">
                                         <label class="form-check-label" for="gridCheck1">同訂購人資料</label>
                                     </div>
                                 </div>

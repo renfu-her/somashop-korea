@@ -111,17 +111,6 @@ class PaymentController extends Controller
                 'payment_fee' => $paymentResult['PaymentTypeChargeFee']
             ]);
 
-            // 物流方式 API
-            if ($order->shipment_method != 'mail_send') {
-                $this->logisticsService->createLogisticsOrder($order, $member);
-            }
-
-            // 發票 API
-            if ($order->receipt_type == '3') {
-                $order->update([
-                    'invoice_number' => $paymentResult['InvoiceNumber']
-                ]);
-            }
 
             // 記錄付款成功日誌
             Log::info('付款成功', [
@@ -152,6 +141,11 @@ class PaymentController extends Controller
             'totalAmount' => $totalAmount,
             'member' => $member
         ]);
+    }
+
+    public function paymentATMCallback(Request $request)
+    {
+        dd($request->all());
     }
 
     // 對應綠界支付方式到系統支付方式

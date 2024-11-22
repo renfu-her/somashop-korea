@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class PaymentCheckCommand extends Command
 {
     protected $signature = 'app:payment-check-command';
-    protected $description = '結帳的出貨檢查';
+    protected $description = '結帳出貨檢查';
     protected $shipmentMerchantID;
     protected $shipmentHashKey;
     protected $shipmentHashIV;

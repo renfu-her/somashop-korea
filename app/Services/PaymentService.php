@@ -9,15 +9,19 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\LogisticsService;
 
 class PaymentService
 {
+    private $logisticsService;
     private $merchantID;
     private $hashKey;
     private $hashIV;
 
     public function __construct(LogisticsService $logisticsService)
     {
+        $this->logisticsService = $logisticsService;
+
         $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
         $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
         $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_hash_iv') : config('config.ecpay_stage_hash_iv');
@@ -31,6 +35,7 @@ class PaymentService
             return redirect()->back()->with('error', '驗證碼錯誤');
         }
 
+        $member = Member::find(Auth::guard('member')->id());
         // 獲取購物車資料
         $cart = session('cart', []);
         // 計算訂單總金額
@@ -57,7 +62,7 @@ class PaymentService
 
         $order->order_number = "OID" . $today . $newNumber;
         $order->order_id = 'OID-' . $today . $newNumber;
-        $order->member_id = Auth::guard('member')->id();
+        $order->member_id = $member->id;
         $order->total_amount = $totalAmount;
         $order->status = Order::STATUS_PENDING;
 
@@ -128,6 +133,12 @@ class PaymentService
         // 加入檢查碼
         $ecpayData['CheckMacValue'] = $this->generateCheckMacValue($ecpayData);
 
+        // 物流方式 API
+        if ($order->shipment_method != 'mail_send') {
+            $this->logisticsService->createLogisticsOrder($order, $member);
+        }
+
+
         // 清空購物車
         session()->forget(['cart']);
 
@@ -159,6 +170,8 @@ class PaymentService
                 return 'Credit';
             case 'WebATM':
                 return 'WebATM';
+            case 'ATM':
+                return 'ATM';
             default:
                 return 'ALL';
         }

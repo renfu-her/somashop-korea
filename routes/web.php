@@ -109,6 +109,7 @@ Route::group(['middleware' => 'auth:member'], function () {
 
 
 // 付款結果
+Route::get('/payment/callback', [PaymentController::class, 'paymentATMCallback'])->name('payment.atm.callback');
 Route::post('/payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
 Route::get('/payment/notify', [PaymentController::class, 'notify'])->name('payment.notify');
 
