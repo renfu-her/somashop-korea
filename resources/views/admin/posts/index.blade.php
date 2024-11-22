@@ -20,8 +20,6 @@
                         <tr>
                             <th style="width: 5%">ID</th>
                             <th>標題</th>
-                            <th>排序</th>
-                            <th>狀態</th>
                             <th>創建時間</th>
                             <th style="width: 15%">操作</th>
                         </tr>
@@ -31,21 +29,6 @@
                             <tr>
                                 <td>{{ $post->id }}</td>
                                 <td>{{ $post->title }}</td>
-                                <td>
-                                    <input type="number" 
-                                           class="form-control form-control-sm sort-order" 
-                                           data-id="{{ $post->id }}" 
-                                           value="{{ $post->sort_order }}" 
-                                           style="width: 80px">
-                                </td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input toggle-active" 
-                                               type="checkbox" 
-                                               data-id="{{ $post->id }}"
-                                               {{ $post->is_active ? 'checked' : '' }}>
-                                    </div>
-                                </td>
                                 <td>{{ $post->created_at }}</td>
                                 <td>
                                     <div class="btn-group">
@@ -80,53 +63,13 @@
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
                 },
                 responsive: true,
-                order: [[2, 'asc']],
+                order: [
+                    [0, 'desc']
+                ],
                 columnDefs: [{
-                    targets: [-1, -3],
+                    targets: -1,
                     orderable: false
                 }]
-            });
-
-            // 處理排序更新
-            $('.sort-order').change(function() {
-                const id = $(this).data('id');
-                const sortOrder = $(this).val();
-                
-                $.ajax({
-                    url: `/admin/posts/${id}/sort`,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        sort_order: sortOrder
-                    },
-                    success: function(response) {
-                        toastr.success('排序更新成功');
-                    },
-                    error: function() {
-                        toastr.error('排序更新失敗');
-                    }
-                });
-            });
-
-            // 處理狀態切換
-            $('.toggle-active').change(function() {
-                const id = $(this).data('id');
-                const isActive = $(this).prop('checked');
-                
-                $.ajax({
-                    url: `/admin/posts/${id}/toggle-active`,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        is_active: isActive
-                    },
-                    success: function(response) {
-                        toastr.success('狀態更新成功');
-                    },
-                    error: function() {
-                        toastr.error('狀態更新失敗');
-                    }
-                });
             });
         });
     </script>

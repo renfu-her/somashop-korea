@@ -28,6 +28,8 @@
                             <th>圖片</th>
                             <th>標題</th>
                             <th>副標題</th>
+                            <th>排序</th>
+                            <th>狀態</th>
                             <th>日期</th>
                             <th style="width: 15%">操作</th>
                         </tr>
@@ -44,6 +46,22 @@
                                 </td>
                                 <td>{{ $activity->title }}</td>
                                 <td>{{ $activity->subtitle }}</td>
+                                <td class="text-center">
+                                    {{ $activity->sort_order }}
+                                    {{-- <input type="number" 
+                                           class="form-control form-control-sm sort-order" 
+                                           data-id="{{ $activity->id }}" 
+                                           value="{{ $activity->sort_order }}" 
+                                           style="width: 80px"> --}}
+                                </td>
+                                <td class="text-center">
+                                    <div class="form-check form-switch d-flex justify-content-center align-items-center">
+                                        <input class="form-check-input toggle-active" 
+                                               type="checkbox" 
+                                               data-id="{{ $activity->id }}"
+                                               {{ $activity->is_active ? 'checked' : '' }}>
+                                    </div>
+                                </td>
                                 <td>{{ $activity->date }}</td>
                                 <td>
                                     <div class="btn-group">
@@ -108,12 +126,54 @@
                 },
                 responsive: true,
                 order: [
-                    [0, 'desc']
-                ], // 預設按 ID 降序排序
+                    [4, 'asc']
+                ], // 預設按排序降序排序
                 columnDefs: [{
                     targets: -1, // 最後一欄（操作欄）
                     orderable: false // 禁用排序
                 }]
+            });
+        });
+
+        // 處理排序更新
+        $('.sort-order').change(function() {
+            const id = $(this).data('id');
+            const sortOrder = $(this).val();
+            
+            $.ajax({
+                url: `/admin/activities/${id}/sort`,
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    sort_order: sortOrder
+                },
+                success: function(response) {
+                    toastr.success('排序更新成功');
+                },
+                error: function() {
+                    toastr.error('排序更新失敗');
+                }
+            });
+        });
+
+        // 處理狀態切換
+        $('.toggle-active').change(function() {
+            const id = $(this).data('id');
+            const isActive = $(this).prop('checked');
+            
+            $.ajax({
+                url: `/admin/activities/${id}/toggle-active`,
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    is_active: isActive
+                },
+                success: function(response) {
+                    toastr.success('狀態更新成功');
+                },
+                error: function() {
+                    toastr.error('狀態更新失敗');
+                }
             });
         });
     </script>

@@ -16,10 +16,18 @@ class Activity extends Model
         'subtitle',
         'content',
         'image',
-        'date'
+        'date',
+        'is_active',
+        'sort_order'
     ];
 
     protected $casts = [
-        'date' => 'date'
+        'date' => 'date',
+        'is_active' => 'boolean'
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 } 

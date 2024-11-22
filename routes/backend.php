@@ -77,6 +77,8 @@ Route::group([
 
     // 活動管理
     Route::resource('activities', ActivityController::class);
+    Route::post('activities/{activity}/sort', [ActivityController::class, 'updateSort'])->name('activities.sort');
+    Route::post('activities/{activity}/toggle-active', [ActivityController::class, 'toggleActive'])->name('activities.toggle-active');
 
     // 會員管理
     Route::resource('members', MemberController::class);
@@ -87,8 +89,6 @@ Route::group([
 
     // 關於我們管理
     Route::resource('posts', PostController::class);
-    Route::post('posts/{post}/sort', [PostController::class, 'updateSort'])->name('posts.sort');
-    Route::post('posts/{post}/toggle-active', [PostController::class, 'toggleActive'])->name('posts.toggle-active');
 
 
     // 印章知識文章路由

@@ -36,33 +36,6 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
-                                <label for="sort_order" class="form-label">排序</label>
-                                <input type="number" 
-                                       class="form-control @error('sort_order') is-invalid @enderror"
-                                       id="sort_order" 
-                                       name="sort_order" 
-                                       value="{{ old('sort_order', $post->sort_order ?? '') }}">
-                                <small class="form-text text-muted">數字越小排序越前面，留空則自動排到最後</small>
-                                @error('sort_order')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" 
-                                           type="checkbox" 
-                                           id="is_active" 
-                                           name="is_active" 
-                                           value="1"
-                                           {{ old('is_active', $post->is_active ?? true) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="is_active">啟用</label>
-                                </div>
-                            </div>
-
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">
                                     更新文章

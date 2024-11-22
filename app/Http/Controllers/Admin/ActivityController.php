@@ -35,7 +35,9 @@ class ActivityController extends Controller
             'subtitle' => 'required|max:255',
             'content' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'sort_order' => 'nullable|integer',
+            'is_active' => 'required|boolean'
         ]);
 
         // 創建活動
@@ -43,7 +45,9 @@ class ActivityController extends Controller
             'title' => $validated['title'],
             'subtitle' => $validated['subtitle'],
             'content' => $validated['content'],
-            'date' => $validated['date']
+            'date' => $validated['date'],
+            'sort_order' => $validated['sort_order'],
+            'is_active' => $validated['is_active']
         ]);
 
         // 處理圖片上傳
@@ -52,7 +56,7 @@ class ActivityController extends Controller
                 $request->file('image'),
                 "activities/{$activity->id}"
             );
-            
+
             $activity->update([
                 'image' => "{$filename}"
             ]);
@@ -75,7 +79,9 @@ class ActivityController extends Controller
             'subtitle' => 'required|max:255',
             'content' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'date' => 'required|date'
+            'date' => 'required|date',
+            'sort_order' => 'nullable|integer',
+            'is_active' => 'required|boolean'
         ]);
 
         // 更新基本資料
@@ -83,7 +89,9 @@ class ActivityController extends Controller
             'title' => $validated['title'],
             'subtitle' => $validated['subtitle'],
             'content' => $validated['content'],
-            'date' => $validated['date']
+            'date' => $validated['date'],
+            'sort_order' => $validated['sort_order'],
+            'is_active' => $validated['is_active']
         ]);
 
         // 處理圖片上傳
@@ -98,7 +106,7 @@ class ActivityController extends Controller
                 $request->file('image'),
                 "activities/{$activity->id}"
             );
-            
+
             $activity->update([
                 'image' => "{$filename}"
             ]);
@@ -124,4 +132,33 @@ class ActivityController extends Controller
             ->route('admin.activities.index')
             ->with('success', '活動已成功刪除');
     }
-} 
+
+    public function updateSort(Activity $activity, Request $request)
+    {
+        $request->validate([
+            'sort_order' => 'required|integer|min:0'
+        ]);
+
+        $activity->update([
+            'sort_order' => $request->sort_order
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '排序更新成功'
+        ]);
+    }
+
+    public function toggleActive(Activity $activity, Request $request)
+    {
+
+        $activity->update([
+            'is_active' => $request->is_active == 'true' ? 1 : 0
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '狀態更新成功'
+        ]);
+    }
+}
