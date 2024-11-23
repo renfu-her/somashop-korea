@@ -72,8 +72,6 @@
                             <div class="col-md-1 col-2 pr-0 text-md-right text-sm-left">註 :</div>
                             <div class="col-md-11 col-10 pl-0 pb-3">
                                 <ol class="pl-md-4 pl-0">
-
-                                    <li>商品將於您付款成功後 45~60 個工作天左右送達。</li>
                                     <li>以上資料僅保留六個月內</li>
                                 </ol>
                             </div>
