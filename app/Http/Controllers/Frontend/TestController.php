@@ -108,7 +108,6 @@ class TestController extends Controller
         $response = Http::asForm()
             ->post($api_url, $postData);
 
-        dd($response->body());
         if ($response->status() === 200) {
             parse_str($response->body(), $responseData);
 
