@@ -30,7 +30,7 @@ class ATMCheckCommand extends Command
 
 
         // 獲取所有未付款的 ATM 訂單
-        $orders = Order::where('payment_method', 'ATM')
+        $orders = Order::where('payment_method', 'atm')
             ->where('payment_status', 'pending')
             ->get();
 

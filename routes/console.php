@@ -8,5 +8,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::command('app:payment-check-command')->everyMinute();
+Schedule::command('app:payment-check-command')->everyTenMinutes();
 Schedule::command('app:atm-check-command')->everyTenMinutes();
