@@ -25,6 +25,7 @@ class User extends Authenticatable
         'address',
         'is_active',
         'is_admin',
+        'last_login_at',
     ];
 
     /**
@@ -49,6 +50,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_active' => 'boolean',
             'is_admin' => 'boolean',
+            'last_login_at' => 'datetime',
         ];
     }
 

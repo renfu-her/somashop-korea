@@ -24,6 +24,7 @@
                             <th>電話</th>
                             <th>狀態</th>
                             <th>註冊時間</th>
+                            <th>最後登入</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -40,6 +41,7 @@
                                     </span>
                                 </td>
                                 <td>{{ $member->created_at->format('Y-m-d H:i') }}</td>
+                                <td>{{ $member->last_login_at ? $member->last_login_at->format('Y-m-d H:i') : '尚未登入' }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.members.edit', $member) }}"

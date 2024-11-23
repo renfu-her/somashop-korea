@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
 class AdminAuthController extends Controller
 {
 
@@ -26,6 +26,11 @@ class AdminAuthController extends Controller
         $credentials['is_admin'] = true;
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
+            // 更新最後登入時間
+            User::find(Auth::user()->id)->update([
+                'last_login_at' => now()
+            ]);
+
             $request->session()->regenerate();
             return redirect()->intended('/admin/products');
         }
