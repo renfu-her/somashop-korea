@@ -134,5 +134,5 @@ Route::get('/search', [SearchController::class, 'index'])
 // TODO: 測試路由，記得刪除
 Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
     Route::get('/mail', [TestController::class, 'test'])->name('test');
-    Route::get('/logistics', [TestController::class, 'testLogisticsCheck']);
+    Route::get('/update-atm-status', [TestController::class, 'updateShippingStatus'])->name('update.atm.status');
 });

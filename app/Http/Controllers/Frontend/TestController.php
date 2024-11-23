@@ -21,6 +21,9 @@ class TestController extends Controller
     protected $shipmentMerchantID;
     protected $shipmentHashKey;
     protected $shipmentHashIV;
+    protected $merchantID;
+    protected $hashKey;
+    protected $hashIV;
 
     public function __construct(
         MailService $mailService,
@@ -28,6 +31,11 @@ class TestController extends Controller
     ) {
         $this->mailService = $mailService;
         $this->paymentController = $paymentController;
+
+        $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
+        $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
+        $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_hash_iv') : config('config.ecpay_stage_hash_iv');
+
 
         $this->shipmentMerchantID = config('app.env') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
         $this->shipmentHashKey = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
@@ -53,47 +61,73 @@ class TestController extends Controller
         );
     }
 
-
-    public function testLogisticsCheck()
+    public function updateShippingStatus(Request $request)
     {
-        $orders = Order::whereIn(
-            'shipping_status',
-            [
-                Order::SHIPPING_STATUS_PROCESSING
-            ]
-        )->get();
+
+        set_time_limit(0);
+
+        // 獲取所有未付款的 ATM 訂單
+        $orders = Order::where('payment_method', 'atm')
+            ->where('payment_status', 'pending')
+            ->get();
 
         foreach ($orders as $order) {
-            if ($order->shipping_status == Order::SHIPPING_STATUS_PROCESSING && !empty($order->logistics_id)) {
-                // 準備查詢物流訂單的參數
-                $data = [
-                    'MerchantID' => $this->shipmentMerchantID,
-                    'AllPayLogisticsID' => $order->logistics_id,
-                    'TimeStamp' => time(),
-                ];
+            sleep(1);
+            $response = $this->queryECPayOrder($order);
 
-                // 加入檢查碼
-                $data['CheckMacValue'] = $this->generateCheckMacValue($data);
+            if (!empty($response) && $response['TradeStatus'] === '1') {
+                // 更新訂單狀態為已付款
+                $order->update([
+                    'payment_status' => 'paid',
+                    'paid_at' => $response['PaymentDate'],
+                ]);
 
-                // dd($data);
-
-                // 使用 Http::post 發送請求
-                $api_url = config('app.env') === 'production'
-                    ? 'https://logistics.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V4'
-                    : 'https://logistics-stage.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V4';
-
-                $response = Http::asForm()
-                    ->post($api_url, $data);
-
-
-                // 解析回應
-                parse_str($response->body(), $result);
-
-                if (isset($result['LogisticsStatus'])) {
-                    $this->updateOrderShippingStatus($order, $result['LogisticsStatus']);
-                }
+                Log::info("ATM 訂單 {$order->order_number} 已完成付款", [
+                    'payment_date' => $response['PaymentDate']
+                ]);
             }
         }
+    }
+
+    protected function queryECPayOrder(Order $order)
+    {
+        $postData = [
+            'MerchantID' => $this->merchantID,
+            'MerchantTradeNo' => $order->order_number,
+            'TimeStamp' => time(),
+        ];
+
+        // 加入檢查碼
+        $postData['CheckMacValue'] = $this->generateCheckMacValue($postData);
+
+        $api_url = config('app.env') === 'production'
+            ? 'https://payment.ecpay.com.tw/Cashier/QueryTradeInfo/V5'
+            : 'https://payment-stage.ecpay.com.tw/Cashier/QueryTradeInfo/V5';
+
+
+        $response = Http::asForm()
+            ->post($api_url, $postData);
+
+        dd($response->body());
+        if ($response->status() === 200) {
+            parse_str($response->body(), $responseData);
+
+            if ($responseData['TradeStatus'] === '1') {
+                Log::info("ATM 訂單 {$order->order_number} 已完成付款", [
+                    'payment_date' => $responseData['PaymentDate']
+                ]);
+                $order->payment_status = 'paid';
+                $order->payment_date = $responseData['PaymentDate'];
+                $order->save();
+
+                return $responseData;
+            }
+
+            Log::error("ATM 查詢訂單 {$order->order_number} 發生錯誤", [
+                'error' => $response
+            ]);
+        }
+        return null;
     }
 
     private function generateCheckMacValue($data)
@@ -160,6 +194,5 @@ class TestController extends Controller
 
         $order->shipping_status = $logisticsStatus;
         $order->save();
-
     }
 }

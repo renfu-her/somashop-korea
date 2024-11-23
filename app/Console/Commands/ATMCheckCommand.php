@@ -34,27 +34,27 @@ class ATMCheckCommand extends Command
             ->where('payment_status', 'pending')
             ->get();
 
-        // foreach ($orders as $order) {
-        //     try {
-        //         $response = $this->queryECPayOrder($order);
+        foreach ($orders as $order) {
+            try {
+                $response = $this->queryECPayOrder($order);
 
-        //         if (!empty($response) && $response['TradeStatus'] === '1') {
-        //             // 更新訂單狀態為已付款
-        //             $order->update([
-        //                 'payment_status' => 'paid',
-        //                 'paid_at' => $response['PaymentDate'],
-        //             ]);
+                if (!empty($response) && $response['TradeStatus'] === '1') {
+                    // 更新訂單狀態為已付款
+                    $order->update([
+                        'payment_status' => 'paid',
+                        'paid_at' => $response['PaymentDate'],
+                    ]);
 
-        //             Log::info("ATM 訂單 {$order->order_number} 已完成付款", [
-        //                 'payment_date' => $response['PaymentDate']
-        //             ]);
-        //         }
-        //     } catch (\Exception $e) {
-        //         Log::error("查詢 ATM 訂單 {$order->order_number} 發生錯誤", [
-        //             'error' => $e->getMessage()
-        //         ]);
-        //     }
-        // }
+                    Log::info("ATM 訂單 {$order->order_number} 已完成付款", [
+                        'payment_date' => $response['PaymentDate']
+                    ]);
+                }
+            } catch (\Exception $e) {
+                Log::error("查詢 ATM 訂單 {$order->order_number} 發生錯誤", [
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
     }
 
     protected function queryECPayOrder(Order $order)
