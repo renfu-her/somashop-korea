@@ -81,20 +81,20 @@ class JoinController extends Controller
         ]);
 
         // 發送歡迎郵件 - 使用通用方法
-        $this->mailService->send(
-            $member->email,
-            '歡迎加入會員',
-            [
-                'title' => '歡迎加入',
-                'content' => "親愛的 {$member->name} 您好，\n\n感謝您加入我們的會員...",
-                'button' => [
-                    'text' => '購物網站，您可以開始購物了！',
-                    'url' => route('home')
-                ]
-            ],
-            'emails.content',
-            ['member' => $member]
-        );
+        // $this->mailService->send(
+        //     $member->email,
+        //     '歡迎加入會員',
+        //     [
+        //         'title' => '歡迎加入',
+        //         'content' => "親愛的 {$member->name} 您好，\n\n感謝您加入我們的會員...",
+        //         'button' => [
+        //             'text' => '購物網站，您可以開始購物了！',
+        //             'url' => route('home')
+        //         ]
+        //     ],
+        //     'emails.content',
+        //     ['member' => $member]
+        // );
 
         return $this->success('註冊成功！歡迎加入我們', 'home');
     }
