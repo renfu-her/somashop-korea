@@ -114,3 +114,11 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function updateShippingStatus(select) {
+            console.log(select.value);
+        }
+    </script>
+@endpush
