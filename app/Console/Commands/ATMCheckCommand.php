@@ -45,12 +45,12 @@ class ATMCheckCommand extends Command
                         'paid_at' => $response['PaymentDate'],
                     ]);
 
-                    Log::info("訂單 {$order->order_number} 已完成付款", [
+                    Log::info("ATM 訂單 {$order->order_number} 已完成付款", [
                         'payment_date' => $response['PaymentDate']
                     ]);
                 }
             } catch (\Exception $e) {
-                Log::error("查詢訂單 {$order->order_number} 發生錯誤", [
+                Log::error("查詢 ATM 訂單 {$order->order_number} 發生錯誤", [
                     'error' => $e->getMessage()
                 ]);
             }

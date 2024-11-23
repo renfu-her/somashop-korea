@@ -90,6 +90,13 @@
                                 寄貨地址：{{ $order->shipping_county }}{{ $order->shipping_district }}
                                 {{ $order->shipping_address }}
                             </p>
+                            <p class="mb-2">
+                                運送狀態：
+                                <select class="form-select" onchange="updateShippingStatus(this)">
+                                    <option value="processing">處理中</option>
+                                    <option value="shipped">已出貨</option>
+                                </select>
+                            </p>
                         </div>
                     @else
                         <div class="card-body">

@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command('app:payment-check-command')->everyTenMinutes();
-Schedule::command('app:atm-check-command')->everyTenMinutes();
+Schedule::command('order:check-atm-payment')->everyTenMinutes();
