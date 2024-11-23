@@ -7,8 +7,13 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-5">
+                    <div class="d-flex justify-content-center mb-3">
+                        <img src="{{ asset('frontend/img/logo_1.png') }}" alt="logo" style="height: 100px;">
+                    </div>
                     <div class="card shadow">
-                        <div class="card-header bg-primary text-white text-center py-3">
+                        <div class="card-header bg-primary text-white text-center py-3"
+                            style="background-color: #4eadd7 !important;">
+
                             <h4 class="mb-0">管理後台登入</h4>
                         </div>
                         <div class="card-body p-4">
