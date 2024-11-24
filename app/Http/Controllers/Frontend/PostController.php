@@ -18,7 +18,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        $posts = Post::get();
+        $posts = Post::orderBy('sort_order', 'asc')->get();
 
         // 使用正則表達式處理圖片標籤
         $postContent = preg_replace(

@@ -36,7 +36,7 @@ class NavigationController extends Controller
 
     private function getAboutPages()
     {
-        return Post::all();
+        return Post::orderBy('sort_order', 'asc')->get();
     }
 
     private function getProductCategories()
