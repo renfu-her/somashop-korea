@@ -9,6 +9,8 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css?v=' . time()) }}">
+
     <!-- 自定義樣式 -->
     <style>
         body {
