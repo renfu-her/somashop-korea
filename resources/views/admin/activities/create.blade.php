@@ -30,14 +30,6 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="content" class="form-label">內容</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10">{{ old('content') }}</textarea>
-                                @error('content')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
                                 <label for="image" class="form-label">圖片</label>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror"
                                     id="image" name="image">
@@ -56,6 +48,14 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="content" class="form-label">內容</label>
+                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10">{{ old('content') }}</textarea>
+                                @error('content')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="sort_order" class="form-label">排序</label>
                                 <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
                                     id="sort_order" name="sort_order"
@@ -65,7 +65,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                             <div class="mb-3 d-flex align-items-center">
                                 <input type="checkbox" class="form-check-input p-1" id="is_active" name="is_active"
                                     value="1" {{ old('is_active') ? 'checked' : '' }}>

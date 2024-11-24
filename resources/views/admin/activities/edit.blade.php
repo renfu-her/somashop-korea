@@ -33,14 +33,6 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="content" class="form-label">內容</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10">{{ old('content', $activity->content) }}</textarea>
-                                @error('content')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
                                 <label for="image" class="form-label">圖片</label>
                                 @if ($activity->image)
                                     <div class="mb-2">
@@ -60,6 +52,14 @@
                                 <input type="text" class="form-control flatpickr @error('date') is-invalid @enderror"
                                     id="date" name="date" value="{{ old('date', $activity->date) }}" required>
                                 @error('date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="content" class="form-label">內容</label>
+                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10">{{ old('content', $activity->content) }}</textarea>
+                                @error('content')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
