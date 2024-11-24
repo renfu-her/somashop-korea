@@ -203,8 +203,10 @@ class PaymentService
 
     public function sendOrderCompleteEmail(Order $order)
     {
+        $member = Member::find($order->member_id);
+
         $this->mailService->send(
-            $order->email, // 订单相关的邮箱
+            $member->email, // 订单相关的邮箱
             '訂單完成通知',
             [
                 'title' => '訂單完成通知',
