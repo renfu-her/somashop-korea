@@ -20,7 +20,7 @@
         }
 
         .logo {
-            max-height: 100px;
+            height: 100px;
             margin-bottom: 5px;
         }
 
@@ -53,10 +53,9 @@
 </head>
 
 <body>
-    <div class="content">
-        <div class="header" style="text-align: center;">
-            <img src="{{ asset('frontend/img/logo_1.png') }}" alt="Logo" class="logo">
-        </div>
+
+    <div class="header logo" style="text-align: center;">
+        <img src="{{ asset('frontend/img/logo_1.png') }}" alt="Logo" class="logo">
     </div>
 
     <div class="content">
