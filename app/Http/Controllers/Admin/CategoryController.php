@@ -11,12 +11,12 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::withCount('products')
-            ->with(['children' => function ($query) {
-                $query->withCount('products')
-                    ->orderBy('created_at', 'desc');
+        $categories = Category::where('parent_id', 0)
+            ->with(['children' => function($query) {
+                $query->orderBy('sort_order', 'asc');
             }])
-            ->where('parent_id', 0)
+            ->orderBy('sort_order', 'asc')
+            ->withCount('products')
             ->get();
 
         return view('admin.categories.index', compact('categories'));
@@ -24,16 +24,19 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $parentCategories = Category::where('parent_id', 0)->get();
+        $parentCategories = Category::where('parent_id', 0)
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
         return view('admin.categories.create', compact('parentCategories'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:categories',
-            'description' => 'nullable|string',
-            'parent_id' => 'required|integer|min:0'
+            'name' => 'required|string|max:255',
+            'parent_id' => 'required|integer|min:0',
+            'sort_order' => 'required|integer|min:0',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -41,43 +44,45 @@ class CategoryController extends Controller
         Category::create($validated);
 
         return redirect()->route('admin.categories.index')
-            ->with('success', '分類已創建');
+            ->with('success', '分類創建成功！');
     }
 
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $category = Category::findOrFail($id);
         $parentCategories = Category::where('parent_id', 0)
-            ->where('id', '!=', $id)
+            ->where('id', '!=', $category->id)
+            ->orderBy('sort_order', 'asc')
             ->get();
 
         return view('admin.categories.edit', compact('category', 'parentCategories'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        $category = Category::findOrFail($id);
-
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name,' . $id,
-            'description' => 'nullable|string',
-            'parent_id' => 'required|integer|min:0'
+            'name' => 'required|string|max:255',
+            'parent_id' => 'required|integer|min:0',
+            'sort_order' => 'required|integer|min:0',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
-        
+
         $category->update($validated);
 
         return redirect()->route('admin.categories.index')
-            ->with('success', '分類已更新');
+            ->with('success', '分類更新成功！');
     }
 
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $category = Category::findOrFail($id);
+        if ($category->children()->exists()) {
+            return redirect()->route('admin.categories.index')
+                ->with('error', '無法刪除含有子分類的分類！');
+        }
 
         $category->delete();
 
-        return redirect()->route('admin.categories.index')->with('success', '分類已刪除');
+        return redirect()->route('admin.categories.index')
+            ->with('success', '分類刪除成功！');
     }
 }

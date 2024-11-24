@@ -26,7 +26,7 @@
                         <tr>
                             <th style="width: 5%">ID</th>
                             <th>名稱</th>
-                            <th>Slug</th>
+                            <th>排序</th>
                             <th>商品數量</th>
                             <th style="width: 15%">操作</th>
                         </tr>
@@ -36,7 +36,7 @@
                             <tr>
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->name }}</td>
-                                <td>{{ $category->slug }}</td>
+                                <td>{{ $category->sort_order }}</td>
                                 <td>{{ $category->products_count }}</td>
                                 <td>
                                     <div class="btn-group">
@@ -61,7 +61,7 @@
                                     <td>
                                         <span class="ms-3">└ {{ $child->name }}</span>
                                     </td>
-                                    <td>{{ $child->slug }}</td>
+                                    <td>{{ $child->sort_order }}</td>
                                     <td>{{ $child->products_count }}</td>
                                     <td>
                                         <div class="btn-group">

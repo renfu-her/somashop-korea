@@ -45,6 +45,17 @@
                                 @enderror
                             </div>
 
+                            <div class="mb-3">
+                                <label for="sort_order" class="form-label">排序</label>
+                                <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
+                                    id="sort_order" name="sort_order" value="{{ old('sort_order', $category->sort_order) }}" required>
+                                @error('sort_order')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">
                                     更新分類

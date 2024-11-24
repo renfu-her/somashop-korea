@@ -43,8 +43,12 @@ class NavigationController extends Controller
     {
         // 獲取主分類（parent_id = 0）及其子分類
         $categories = Category::where('parent_id', 0)
+            ->orderBy('sort_order', 'asc')
             ->with(['children' => function ($query) {
-                $query->with('children'); // 獲取第三層分類
+                $query->orderBy('sort_order', 'asc')
+                    ->with(['children' => function($query) {
+                        $query->orderBy('sort_order', 'asc');
+                    }]);
             }])
             ->get();
 

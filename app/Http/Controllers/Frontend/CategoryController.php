@@ -9,9 +9,12 @@ class CategoryController extends Controller
 {
     public function getSidebarCategories()
     {
-        // 獲取所有頂層分類（parent_id = 0）及其子分類
+        // 獲取所有頂層分類（parent_id = 0）及其子分類，並按 sort_order 排序
         $categories = Category::where('parent_id', 0)
-            ->with('allChildren')
+            ->orderBy('sort_order', 'asc')
+            ->with(['children' => function($query) {
+                $query->orderBy('sort_order', 'asc');
+            }])
             ->get();
 
         return $categories;
