@@ -113,7 +113,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="images" class="form-label">新增圖片 (<span class="text-danger">寬度 800px，高度不限</span>)</label>
+                                <label for="images" class="form-label">新增圖片 (<span class="text-danger">寬度
+                                        800px，高度不限</span>)</label>
                                 <input type="file" class="form-control @error('images.*') is-invalid @enderror"
                                     id="images" name="images[]" multiple accept="image/*">
                                 <small class="text-muted">可以選擇多張圖片上傳</small>
@@ -342,16 +343,90 @@
                     toolbar: {
                         items: [
                             'heading', '|',
-                            'bold', 'italic', 'underline', 'link', '|',
+                            'fontSize', 'fontFamily', '|',
+                            'fontColor', 'fontBackgroundColor', '|',
+                            'bold', 'italic', 'underline', 'strikethrough', '|',
+                            'alignment', '|', // 添加對齊功能
                             'bulletedList', 'numberedList', '|',
-                            'imageUpload', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                            'outdent', 'indent', '|',
+                            'link', 'imageUpload', 'mediaEmbed', '|',
+                            'blockQuote', 'insertTable', '|',
                             'undo', 'redo'
+                        ]
+                    },
+                    heading: {
+                        options: [{
+                                model: 'paragraph',
+                                title: '段落',
+                                class: 'ck-heading_paragraph'
+                            },
+                            {
+                                model: 'heading1',
+                                view: 'h1',
+                                title: '標題 1',
+                                class: 'ck-heading_heading1'
+                            },
+                            {
+                                model: 'heading2',
+                                view: 'h2',
+                                title: '標題 2',
+                                class: 'ck-heading_heading2'
+                            },
+                            {
+                                model: 'heading3',
+                                view: 'h3',
+                                title: '標題 3',
+                                class: 'ck-heading_heading3'
+                            }
+                        ]
+                    },
+                    fontSize: {
+                        options: [
+                            'tiny',
+                            'small',
+                            'default',
+                            'big',
+                            'huge'
+                        ]
+                    },
+                    fontFamily: {
+                        options: [
+                            'default',
+                            '微軟正黑體',
+                            '新細明體',
+                            '標楷體',
+                            'Arial',
+                            'Times New Roman'
                         ]
                     },
                     image: {
                         toolbar: [
-                            'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
+                            'imageTextAlternative', '|',
+                            'imageStyle:alignLeft',
+                            'imageStyle:alignCenter',
+                            'imageStyle:alignRight', '|',
+                            'imageStyle:full',
+                            'imageStyle:side'
+                        ],
+                        styles: [
+                            'full',
+                            'side',
+                            'alignLeft',
+                            'alignCenter',
+                            'alignRight'
                         ]
+                    },
+                    table: {
+                        contentToolbar: [
+                            'tableColumn',
+                            'tableRow',
+                            'mergeTableCells',
+                            'tableCellProperties',
+                            'tableProperties'
+                        ]
+                    },
+                    mediaEmbed: {
+                        previewsInData: true
                     }
                 })
                 .then(newEditor => {

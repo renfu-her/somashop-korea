@@ -14,13 +14,11 @@
 
                             <div class="mb-3">
                                 <label for="category_id" class="form-label">分類</label>
-                                <select class="form-control @error('category_id') is-invalid @enderror" 
-                                        id="category_id" 
-                                        name="category_id" 
-                                        required>
+                                <select class="form-control @error('category_id') is-invalid @enderror" id="category_id"
+                                    name="category_id" required>
                                     <option value="">請選擇分類</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" 
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
                                             {{ old('category_id', $faq->category_id) == $category->id ? 'selected' : '' }}>
                                             {{ $category->title }}
                                         </option>
@@ -46,10 +44,7 @@
 
                             <div class="mb-3">
                                 <label for="content" class="form-label">內容</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" 
-                                    id="content" 
-                                    name="content"
-                                    rows="10">{{ old('content', $faq->content) }}</textarea>
+                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10">{{ old('content', $faq->content) }}</textarea>
                                 @error('content')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -120,16 +115,90 @@
                     toolbar: {
                         items: [
                             'heading', '|',
-                            'bold', 'italic', 'underline', 'link', '|',
+                            'fontSize', 'fontFamily', '|',
+                            'fontColor', 'fontBackgroundColor', '|',
+                            'bold', 'italic', 'underline', 'strikethrough', '|',
+                            'alignment', '|', // 添加對齊功能
                             'bulletedList', 'numberedList', '|',
-                            'imageUpload', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                            'outdent', 'indent', '|',
+                            'link', 'imageUpload', 'mediaEmbed', '|',
+                            'blockQuote', 'insertTable', '|',
                             'undo', 'redo'
+                        ]
+                    },
+                    heading: {
+                        options: [{
+                                model: 'paragraph',
+                                title: '段落',
+                                class: 'ck-heading_paragraph'
+                            },
+                            {
+                                model: 'heading1',
+                                view: 'h1',
+                                title: '標題 1',
+                                class: 'ck-heading_heading1'
+                            },
+                            {
+                                model: 'heading2',
+                                view: 'h2',
+                                title: '標題 2',
+                                class: 'ck-heading_heading2'
+                            },
+                            {
+                                model: 'heading3',
+                                view: 'h3',
+                                title: '標題 3',
+                                class: 'ck-heading_heading3'
+                            }
+                        ]
+                    },
+                    fontSize: {
+                        options: [
+                            'tiny',
+                            'small',
+                            'default',
+                            'big',
+                            'huge'
+                        ]
+                    },
+                    fontFamily: {
+                        options: [
+                            'default',
+                            '微軟正黑體',
+                            '新細明體',
+                            '標楷體',
+                            'Arial',
+                            'Times New Roman'
                         ]
                     },
                     image: {
                         toolbar: [
-                            'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
+                            'imageTextAlternative', '|',
+                            'imageStyle:alignLeft',
+                            'imageStyle:alignCenter',
+                            'imageStyle:alignRight', '|',
+                            'imageStyle:full',
+                            'imageStyle:side'
+                        ],
+                        styles: [
+                            'full',
+                            'side',
+                            'alignLeft',
+                            'alignCenter',
+                            'alignRight'
                         ]
+                    },
+                    table: {
+                        contentToolbar: [
+                            'tableColumn',
+                            'tableRow',
+                            'mergeTableCells',
+                            'tableCellProperties',
+                            'tableProperties'
+                        ]
+                    },
+                    mediaEmbed: {
+                        previewsInData: true
                     }
                 })
                 .then(newEditor => {
@@ -143,16 +212,16 @@
             // 表單提交前驗證
             $('form').on('submit', function(e) {
                 const content = editor.getData();
-                
+
                 if (!content.trim()) {
                     e.preventDefault();
                     alert('請填寫常見問題內容');
                     return false;
                 }
-                
+
                 // 更新隱藏的 textarea 值
                 $('#content').val(content);
             });
         });
     </script>
-@endpush 
+@endpush
