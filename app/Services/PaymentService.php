@@ -146,7 +146,7 @@ class PaymentService
 
         // 寄送訂單完成郵件
         if ($request->payment == 'ATM') {
-            $this->sendOrderCompleteEmail($order);
+            $this->sendOrderCompleteEmail($order, 'ATM');
         }
 
         // 回傳表單到前端自動提交
@@ -201,7 +201,7 @@ class PaymentService
         return strtoupper(hash('sha256', $checkStr));
     }
 
-    public function sendOrderCompleteEmail(Order $order)
+    public function sendOrderCompleteEmail(Order $order, $shipmentMethod = 'Credit')
     {
         $member = Member::find($order->member_id);
 
@@ -217,7 +217,7 @@ class PaymentService
                 ]
             ],
             'emails.order-complete',
-            ['order' => $order]
+            ['order' => $order, 'shipmentMethod' => $shipmentMethod]
         );
     }
 }

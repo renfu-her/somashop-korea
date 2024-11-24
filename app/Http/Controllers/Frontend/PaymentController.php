@@ -245,7 +245,7 @@ class PaymentController extends Controller
         }
     }
 
-    public function sendOrderCompleteEmail(Order $order)
+    public function sendOrderCompleteEmail(Order $order, $shipmentMethod = 'Credit')
     {
         $member = Member::find($order->member_id);
 
@@ -263,7 +263,7 @@ class PaymentController extends Controller
                 ]
             ],
             'emails.order-complete',
-            ['order' => $order]
+            ['order' => $order, 'shipmentMethod' => $shipmentMethod]
         );
     }
 }

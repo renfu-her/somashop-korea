@@ -103,7 +103,7 @@
             <h3>配送資訊</h3>
             <p>收件人: {{ $order->recipient_name }}</p>
             <p>聯絡電話: {{ $order->recipient_phone }}</p>
-            <p>付費方式: {{ $order->payment == 'ATM' ? 'ATM付款' : '信用卡付款' }}</p>
+            <p>付費方式: {{ $shipmentMethod == 'ATM' ? 'ATM 虛擬帳號付款' : '信用卡付款' }}</p>
             @if ($order->shipment_method == 'mail_send')
                 <p>配送地址:
                     {{ $order->recipient_county }}{{ $order->recipient_district }}{{ $order->recipient_address }}</p>
