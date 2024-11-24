@@ -55,6 +55,43 @@
 
                             <div class="mb-3">
                                 <label for="address" class="form-label">地址</label>
+                                <div class="row">
+                                    <div id="twzipcode" class="col-12">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 mb-2">
+                                                <select data-role="county"
+                                                    class="form-control @error('county') is-invalid @enderror"
+                                                    name="county">
+                                                </select>
+                                                @error('county')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="col-12 col-md-6 mb-2">
+                                                <select data-role="district"
+                                                    class="form-control @error('district') is-invalid @enderror"
+                                                    name="district">
+                                                </select>
+                                                @error('district')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <input type="hidden" data-role="zipcode" name="zipcode" />
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control @error('address') is-invalid @enderror"
+                                            id="address" name="address"
+                                            value="{{ old('address', $member->address ?? '') }}" placeholder="請輸入詳細地址">
+                                        @error('address')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address" class="form-label">地址</label>
                                 <input type="text" class="form-control @error('address') is-invalid @enderror"
                                     id="address" name="address" value="{{ old('address') }}">
                                 @error('address')
@@ -84,3 +121,16 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('frontend/js/jquery.twzipcode.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#twzipcode').twzipcode({
+                'zipcodeSel': '{{ old('zipcode', $member->zipcode ?? '') }}',
+                'countySel': '{{ old('county', $member->county ?? '') }}',
+                'districtSel': '{{ old('district', $member->district ?? '') }}'
+            });
+        });
+    </script>
+@endpush

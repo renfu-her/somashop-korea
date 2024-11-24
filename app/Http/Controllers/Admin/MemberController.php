@@ -28,6 +28,9 @@ class MemberController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['nullable', 'string', 'max:20'],
+            'county' => ['nullable', 'string', 'max:255'],
+            'district' => ['nullable', 'string', 'max:255'],
+            'zipcode' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
             'is_active' => ['boolean'],
         ]);
@@ -49,10 +52,13 @@ class MemberController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($member->id)],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'phone' => ['nullable', 'string', 'max:20'],
+            'county' => ['nullable', 'string', 'max:255'],
+            'district' => ['nullable', 'string', 'max:255'],
+            'zipcode' => ['nullable', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
+            'is_active' => ['boolean'],
         ]);
 
         if (!empty($validated['password'])) {
@@ -62,6 +68,8 @@ class MemberController extends Controller
         }
 
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
+
+        dd($validated);
 
         $member->update($validated);
 
