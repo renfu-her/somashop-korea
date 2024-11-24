@@ -41,3 +41,33 @@ select.form-control, select.typeahead, select.tt-query, select.tt-hint, .select2
 .navbar {
     background-color: #4eadd7 !important;
 }
+
+.btn-primary {
+    color: #fff;
+    background-color: #4eadd7 !important;
+    border-color: #4eadd7 !important;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #3eadd7 !important;
+    border-color: #3eadd7 !important;
+}
+
+.btn-primary:focus {
+    color: #fff;
+    box-shadow: 0 0 0 0.25rem rgba(98, 104, 232, 0.5);
+}
+
+.btn-primary:active {
+    color: #fff;
+    background-color: #3eadd7 !important;
+    border-color: #3eadd7 !important;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.btn-primary:disabled {
+    color: #fff;
+    background-color: #4eadd7 !important;
+    border-color: #4eadd7 !important;
+}
