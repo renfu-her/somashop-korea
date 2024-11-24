@@ -65,7 +65,7 @@
                                                     <h6 class="card-subtitle mb-2 text-muted text-truncate">
                                                         {{ $product->sub_title }}</h6>
                                                 @endif
-                                                <p class="card-text mb-1">原價 NT$ {{ number_format($product->price) }}</p>
+                                                <div class="original-price mb-1">原價 NT$ {{ number_format($product->price) }}</div>
                                                 <p class="card-text text-danger h5 mb-0">優惠價 NT$
                                                     {{ number_format($product->cash_price) }}</p>
                                             </div>
@@ -145,6 +145,24 @@
         .product-card .text-danger {
             color: #dc3545 !important;
             font-weight: bold;
+        }
+
+        .original-price {
+            position: relative;
+            color: #6c757d;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .original-price::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 55%;
+            width: 100%;
+            height: 1px;
+            background-color: #6c757d;
+            opacity: 0.8;
         }
     </style>
 @endpush
