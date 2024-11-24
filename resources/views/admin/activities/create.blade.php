@@ -59,7 +59,7 @@
                                 <label for="sort_order" class="form-label">排序</label>
                                 <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
                                     id="sort_order" name="sort_order"
-                                    value="{{ old('sort_order', $activity->sort_order ?? '') }}">
+                                    value="{{ old('sort_order', $activity->sort_order ?? 0) }}">
                                 <small class="form-text text-muted">數字越小排序越前面，留空則自動排到最後</small>
                                 @error('sort_order')
                                     <div class="invalid-feedback">{{ $message }}</div>
