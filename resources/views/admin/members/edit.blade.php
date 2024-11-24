@@ -78,7 +78,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <input type="hidden" data-role="zipcode" name="zipcode" />
+                                        <input type="hidden" data-role="zipcode" name="zipcode" value="{{ old('zipcode', $member->zipcode ?? '') }}" />
                                     </div>
                                     <div class="col-12">
                                         <input type="text" class="form-control @error('address') is-invalid @enderror"
@@ -89,15 +89,6 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="address" class="form-label">地址</label>
-                                <input type="text" class="form-control @error('address') is-invalid @enderror"
-                                    id="address" name="address" value="{{ old('address', $member->address) }}">
-                                @error('address')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
 
                             <div class="mb-3 d-flex align-items-center">
@@ -127,9 +118,7 @@
     <script>
         $(document).ready(function() {
             $('#twzipcode').twzipcode({
-                'zipcodeSel': '{{ old('zipcode', $member->zipcode ?? '') }}',
-                'countySel': '{{ old('county', $member->county ?? '') }}',
-                'districtSel': '{{ old('district', $member->district ?? '') }}'
+                'zipcodeSel': '{{ old('zipcode', $member->zipcode ?? '') }}'
             });
         });
     </script>

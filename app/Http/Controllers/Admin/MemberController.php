@@ -69,8 +69,6 @@ class MemberController extends Controller
 
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
 
-        dd($validated);
-
         $member->update($validated);
 
         return redirect()->route('admin.members.index')

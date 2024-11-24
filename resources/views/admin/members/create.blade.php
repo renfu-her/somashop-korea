@@ -90,15 +90,6 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="address" class="form-label">地址</label>
-                                <input type="text" class="form-control @error('address') is-invalid @enderror"
-                                    id="address" name="address" value="{{ old('address') }}">
-                                @error('address')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <div class="mb-3 d-flex align-items-center">
                                 <input type="checkbox" class="form-check-input p-1" id="is_active" name="is_active"
                                     value="1" {{ old('is_active') ? 'checked' : '' }}>
