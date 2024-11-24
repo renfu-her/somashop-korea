@@ -120,13 +120,16 @@
                             'fontSize', 'fontFamily', '|',
                             'fontColor', 'fontBackgroundColor', '|',
                             'bold', 'italic', 'underline', 'strikethrough', '|',
-                            'alignment', '|', // 添加對齊功能
+                            'alignment:left', 'alignment:center', 'alignment:right', 'alignment:justify', '|',
                             'bulletedList', 'numberedList', '|',
                             'outdent', 'indent', '|',
                             'link', 'imageUpload', 'mediaEmbed', '|',
                             'blockQuote', 'insertTable', '|',
                             'undo', 'redo'
                         ]
+                    },
+                    alignment: {
+                        options: ['left', 'center', 'right', 'justify']
                     },
                     heading: {
                         options: [{
