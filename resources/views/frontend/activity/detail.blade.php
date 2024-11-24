@@ -29,23 +29,9 @@
                 <p class="text-center mb-4" data-aos="zoom-in-up" data-aos-delay="150">{{ $activity->subtitle }}</p>
             </div>
 
-            <section class="my-5" data-aos="zoom-in" data-aos-delay="450">
+            <section class="my-5 img-max-width" data-aos="zoom-in" data-aos-delay="450">
                 {!! $activity->content !!}
             </section>
-
-            {{-- <nav class="my-5 d-md-block d-none">
-                <ul class="pager">
-
-
-                    <li class="pager-item">
-                        <a href="act_center.php?p=62" class="anime-down">
-                            <i class="fas fa-chevron-down text-danger"></i>
-                            <span class="mx-3">下一則</span>
-                            <span>免費剃胎毛儀式活動開跑囉!</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav> --}}
 
             <nav class="my-5" aria-label="Page navigation">
                 <div class="pagination justify-content-center">
@@ -56,4 +42,12 @@
 
         </div>
     </article>
+@endpush
+
+@push('styles')
+    <style>
+        .img-max-width img {
+            max-width: 100% !important;
+        }
+    </style>
 @endpush
