@@ -140,7 +140,7 @@ class PaymentService
         if ($order->shipment_method != 'mail_send') {
             $this->logisticsService->createLogisticsOrder($order, $member);
         }
-        
+
         // 清空購物車
         session()->forget(['cart']);
 
@@ -211,7 +211,7 @@ class PaymentService
                 'content' => "親愛的 {$order->recipient_name} 您好，\n\n您的訂單已完成...",
                 'button' => [
                     'text' => '查看訂單詳情',
-                    'url' => route('member.orders.show', $order->id)
+                    'url' => route('orders.list')
                 ]
             ],
             'emails.order-complete',

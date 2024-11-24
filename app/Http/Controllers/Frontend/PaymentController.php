@@ -254,7 +254,7 @@ class PaymentController extends Controller
                 'content' => "親愛的 {$order->recipient_name} 您好，\n\n您的訂單已完成...",
                 'button' => [
                     'text' => '查看訂單詳情',
-                    'url' => route('member.orders.show', $order->id)
+                    'url' => route('orders.list')
                 ]
             ],
             'emails.order-complete',
