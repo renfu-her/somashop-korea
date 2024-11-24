@@ -20,6 +20,7 @@
                         <tr>
                             <th style="width: 5%">ID</th>
                             <th>標題</th>
+                            <th>排序</th>
                             <th>創建時間</th>
                             <th style="width: 15%">操作</th>
                         </tr>
@@ -29,6 +30,9 @@
                             <tr>
                                 <td>{{ $post->id }}</td>
                                 <td>{{ $post->title }}</td>
+                                <td>
+                                    {{ $post->sort_order }}
+                                </td>
                                 <td>{{ $post->created_at }}</td>
                                 <td>
                                     <div class="btn-group">
@@ -64,7 +68,7 @@
                 },
                 responsive: true,
                 order: [
-                    [0, 'desc']
+                    [2, 'asc']
                 ],
                 columnDefs: [{
                     targets: -1,
@@ -73,4 +77,4 @@
             });
         });
     </script>
-@endpush 
+@endpush

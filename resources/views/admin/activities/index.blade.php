@@ -48,11 +48,6 @@
                                 <td>{{ $activity->subtitle }}</td>
                                 <td class="text-center">
                                     {{ $activity->sort_order }}
-                                    {{-- <input type="number" 
-                                           class="form-control form-control-sm sort-order" 
-                                           data-id="{{ $activity->id }}" 
-                                           value="{{ $activity->sort_order }}" 
-                                           style="width: 80px"> --}}
                                 </td>
                                 <td class="text-center">
                                     <div class="form-check form-switch d-flex justify-content-center align-items-center">

@@ -11,7 +11,7 @@
                         <form method="POST" action="{{ route('admin.posts.update', $post) }}">
                             @csrf
                             @method('PUT')
-                            
+
                             <div class="mb-3">
                                 <label for="title" class="form-label">標題</label>
                                 <input type="text" class="form-control @error('title') is-invalid @enderror"
@@ -25,14 +25,21 @@
 
                             <div class="mb-3">
                                 <label for="content" class="form-label">內容</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" 
-                                    id="content" 
-                                    name="content"
-                                    rows="10">{{ old('content', $post->content) }}</textarea>
+                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10">{{ old('content', $post->content) }}</textarea>
                                 @error('content')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="sort_order" class="form-label">排序</label>
+                                <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
+                                    id="sort_order" name="sort_order" value="{{ old('sort_order', $post->sort_order) }}"
+                                    min="0">
+                                @error('sort_order')
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -98,4 +105,4 @@
             });
         });
     </script>
-@endpush 
+@endpush
