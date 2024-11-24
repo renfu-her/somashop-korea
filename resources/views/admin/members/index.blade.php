@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>會員管理</h2>
+            <h2>帳號管理</h2>
             <a href="{{ route('admin.members.create') }}" class="btn btn-primary">新增會員</a>
         </div>
 
