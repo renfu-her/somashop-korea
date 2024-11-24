@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>廣告管理</h2>
+            <h2>首頁主廣告管理</h2>
             <a href="{{ route('admin.ads.create') }}" class="btn btn-primary">新增廣告</a>
         </div>
 

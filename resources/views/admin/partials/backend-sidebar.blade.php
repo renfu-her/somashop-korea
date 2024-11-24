@@ -20,14 +20,14 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.ads.index') }}">
                 <i class="fas fa-ad menu-icon"></i>
-                <span class="menu-title">首頁廣告維護</span>
+                <span class="menu-title">首頁主廣告維護</span>
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.home-ads.index') }}">
                 <i class="fas fa-ad menu-icon"></i>
-                <span class="menu-title">小額廣告維護</span>
+                <span class="menu-title">小幅廣告維護</span>
             </a>
         </li>
 
@@ -66,14 +66,14 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.members.index') }}">
                 <i class="fas fa-users menu-icon"></i>
-                <span class="menu-title">會員管理</span>
+                <span class="menu-title">帳號管理</span>
             </a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.admins.index') }}">
                 <i class="fas fa-users menu-icon"></i>
-                <span class="menu-title">管理者管理</span>
+                <span class="menu-title">管理員管理</span>
             </a>
         </li>
 

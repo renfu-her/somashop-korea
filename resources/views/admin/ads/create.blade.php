@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">新增廣告</div>
+                    <div class="card-header">新增首頁主廣告</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.ads.store') }}" enctype="multipart/form-data">

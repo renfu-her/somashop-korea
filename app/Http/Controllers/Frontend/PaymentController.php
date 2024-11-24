@@ -145,7 +145,7 @@ class PaymentController extends Controller
 
     public function paymentATMCallback(Request $request)
     {
-        dd($request->all());
+        return redirect()->route('home');
     }
 
     // 對應綠界支付方式到系統支付方式
