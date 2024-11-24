@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image" class="form-label">更新圖片</label>
+                                <label for="image" class="form-label">更新圖片 (<span class="text-danger">寬度 1920px</span>)</label>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror"
                                     id="image" name="image" accept="image/*">
                                 @error('image')

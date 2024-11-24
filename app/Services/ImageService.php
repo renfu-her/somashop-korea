@@ -19,7 +19,7 @@ class ImageService
         $filename = Str::uuid7() . '.webp';
         $fullPath = "{$path}/{$filename}";
 
-        if($path === 'ads') {
+        if($path === 'ads' || $path === 'home-ads') {
             $width = 1920;
         }
 

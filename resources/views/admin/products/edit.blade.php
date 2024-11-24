@@ -113,7 +113,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="images" class="form-label">新增圖片</label>
+                                <label for="images" class="form-label">新增圖片 (<span class="text-danger">寬度 800px，高度不限</span>)</label>
                                 <input type="file" class="form-control @error('images.*') is-invalid @enderror"
                                     id="images" name="images[]" multiple accept="image/*">
                                 <small class="text-muted">可以選擇多張圖片上傳</small>
