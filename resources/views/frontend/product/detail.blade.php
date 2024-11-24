@@ -148,7 +148,11 @@
         .product-price .original-price {
             text-decoration: line-through;
             color: #6c757d;
-            /* 使用較淺的顏色 */
+        }
+        
+        .product-description img {
+            max-width: 100%;
+            height: auto;
         }
     </style>
 @endpush
