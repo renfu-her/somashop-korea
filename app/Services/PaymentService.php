@@ -10,17 +10,20 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\LogisticsService;
+use App\Services\MailService;
 
 class PaymentService
 {
     private $logisticsService;
+    private $mailService;
     private $merchantID;
     private $hashKey;
     private $hashIV;
 
-    public function __construct(LogisticsService $logisticsService)
+    public function __construct(LogisticsService $logisticsService, MailService $mailService)   
     {
         $this->logisticsService = $logisticsService;
+        $this->mailService = $mailService;
 
         $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
         $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
@@ -137,10 +140,14 @@ class PaymentService
         if ($order->shipment_method != 'mail_send') {
             $this->logisticsService->createLogisticsOrder($order, $member);
         }
-
-
+        
         // 清空購物車
         session()->forget(['cart']);
+
+        // 寄送訂單完成郵件
+        if ($order->payment_method == Order::PAYMENT_METHOD_ATM) {
+            $this->sendOrderCompleteEmail($order);
+        }
 
         // 回傳表單到前端自動提交
         return view('frontend.payment.ecpay-form', [
@@ -192,5 +199,23 @@ class PaymentService
         $checkStr = strtolower($checkStr);
 
         return strtoupper(hash('sha256', $checkStr));
+    }
+
+    public function sendOrderCompleteEmail(Order $order)
+    {
+        $this->mailService->send(
+            $order->email, // 订单相关的邮箱
+            '訂單完成通知',
+            [
+                'title' => '訂單完成通知',
+                'content' => "親愛的 {$order->recipient_name} 您好，\n\n您的訂單已完成...",
+                'button' => [
+                    'text' => '查看訂單詳情',
+                    'url' => route('member.orders.show', $order->id)
+                ]
+            ],
+            'emails.order-complete',
+            ['order' => $order]
+        );
     }
 }

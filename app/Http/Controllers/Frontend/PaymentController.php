@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use App\Services\PaymentService;
 use App\Services\LogisticsService;
+use App\Services\MailService;
 
 class PaymentController extends Controller
 {
     private $paymentService;
     private $logisticsService;
+    private $mailService;
 
     private $merchantID;
     private $hashKey;
@@ -32,10 +34,12 @@ class PaymentController extends Controller
 
     public function __construct(
         PaymentService $paymentService,
-        LogisticsService $logisticsService
+        LogisticsService $logisticsService,
+        MailService $mailService
     ) {
         $this->paymentService = $paymentService;
         $this->logisticsService = $logisticsService;
+        $this->mailService = $mailService;
 
         $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
         $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
@@ -111,6 +115,7 @@ class PaymentController extends Controller
                 'payment_fee' => $paymentResult['PaymentTypeChargeFee']
             ]);
 
+            $this->sendOrderCompleteEmail($order);
 
             // 記錄付款成功日誌
             Log::info('付款成功', [
@@ -145,6 +150,7 @@ class PaymentController extends Controller
 
     public function paymentATMCallback(Request $request)
     {
+
         return redirect()->route('home');
     }
 
@@ -173,7 +179,7 @@ class PaymentController extends Controller
 
     private function generateCheckMacValue($data)
     {
-        // 按照綠界規範產生檢查碼
+        // 按照綠界規範產生檢查��
         ksort($data);
         $checkStr = "HashKey={$this->hashKey}";
 
@@ -236,5 +242,23 @@ class PaymentController extends Controller
             default:
                 return Order::SHIPPING_STATUS_PROCESSING;
         }
+    }
+
+    public function sendOrderCompleteEmail(Order $order)
+    {
+        $this->mailService->send(
+            $order->email, // 订单相关的邮箱
+            '訂單完成通知',
+            [
+                'title' => '訂單完成通知',
+                'content' => "親愛的 {$order->recipient_name} 您好，\n\n您的訂單已完成...",
+                'button' => [
+                    'text' => '查看訂單詳情',
+                    'url' => route('member.orders.show', $order->id)
+                ]
+            ],
+            'emails.order-complete',
+            ['order' => $order]
+        );
     }
 }
