@@ -211,7 +211,6 @@
 
 @push('scripts')
     <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
-    <script src="{{ asset('ckeditor5/zh.min.js') }}"></script>
 
     <script>
         $(document).ready(function() {
