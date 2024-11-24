@@ -36,9 +36,8 @@
                                     <div class="card-body px-0">
                                         <h5 class="card-title">{{ $product->name }}</h5>
                                         <p class="card-text">{{ $product->sub_title }}</p>
-                                        <h6 class="card-text">原價 NT$ {{ number_format($product->price) }}</h6>
-                                        <h5 class="card-text text-danger">優惠價 NT$ {{ number_format($product->cash_price) }}
-                                        </h5>
+                                        <div class="original-price mb-1">原價 NT$ {{ number_format($product->price) }}</div>
+                                        <h5 class="card-text text-danger">優惠價 NT$ {{ number_format($product->cash_price) }}</h5>
                                     </div>
                                 </div>
                             </a>
@@ -84,6 +83,24 @@
 
         .product-card:hover {
             transform: translateY(-5px);
+        }
+
+        .original-price {
+            position: relative;
+            color: #6c757d;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .original-price::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 55%;
+            width: 100%;
+            height: 1px;
+            background-color: #6c757d;
+            opacity: 0.8;
         }
     </style>
 @endpush
