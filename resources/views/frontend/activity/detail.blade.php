@@ -29,13 +29,6 @@
                 <p class="text-center mb-4" data-aos="zoom-in-up" data-aos-delay="150">{{ $activity->subtitle }}</p>
             </div>
 
-            <div class="row">
-                <div class="col-12">
-                    <img src="{{ asset('storage/activities/' . $activity->id . '/' . $activity->image) }}"
-                        class="img-fluid activity-detail-image" style="max-width: 100%;">
-                </div>
-            </div>
-
             <section class="my-5" data-aos="zoom-in" data-aos-delay="450">
                 {!! $activity->content !!}
             </section>
