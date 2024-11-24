@@ -30,7 +30,7 @@ class MailService
         // 如果沒有指定模板，使用預設模板
         $view = $template ?? 'emails.default';
 
-        try {
+        // try {
             // 發送郵件，並加入密件副本
             Mail::to($recipients)
                 ->bcc($bccEmails)
@@ -41,10 +41,10 @@ class MailService
                 ));
 
             return true;
-        } catch (\Exception $e) {
-            Log::error('郵件發送失敗：' . $e->getMessage());
-            return false;
-        }
+        // } catch (\Exception $e) {
+        //     Log::error('郵件發送失敗：' . $e->getMessage());
+        //     return false;
+        // }
     }
 
     /**

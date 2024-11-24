@@ -145,7 +145,7 @@ class PaymentService
         session()->forget(['cart']);
 
         // 寄送訂單完成郵件
-        if ($order->payment_method == Order::PAYMENT_METHOD_ATM) {
+        if ($request->payment == 'ATM') {
             $this->sendOrderCompleteEmail($order);
         }
 
