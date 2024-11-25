@@ -88,6 +88,8 @@ Route::group([
 
     // 管理員管理
     Route::resource('admins', AdminController::class);
+    Route::post('admins/{admin}/toggle-status', [AdminController::class, 'toggleStatus'])
+        ->name('admin.admins.toggle-status');
 
     // 關於我們管理
     Route::resource('posts', PostController::class);

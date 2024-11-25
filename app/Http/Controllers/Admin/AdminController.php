@@ -84,4 +84,17 @@ class AdminController extends Controller
         return redirect()->route('admin.admins.index')
             ->with('success', '管理者已刪除！');
     }
+
+    public function toggleStatus(User $admin, Request $request)
+    {
+
+        $admin->update([
+            'is_active' => $request->is_active == 'true' ? 1 : 0
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '狀態更新成功'
+        ]);
+    }
 }

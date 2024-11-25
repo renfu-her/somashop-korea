@@ -41,9 +41,15 @@
                                 <td>{{ $admin->email }}</td>
                                 <td>{{ $admin->phone }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $admin->is_active ? 'success' : 'danger' }}">
-                                        {{ $admin->is_active ? '啟用' : '停用' }}
-                                    </span>
+                                    @if ($admin->id !== auth()->id())
+                                        <div class="form-check form-switch">
+                                            <input type="checkbox" class="form-check-input status-switch" 
+                                                data-id="{{ $admin->id }}" 
+                                                {{ $admin->is_active ? 'checked' : '' }}>
+                                        </div>
+                                    @else
+                                        <span class="badge bg-success">啟用</span>
+                                    @endif
                                 </td>
                                 <td>{{ $admin->last_login_at ?? '尚未登入' }}</td>
                                 <td>
@@ -84,6 +90,42 @@
                     orderable: false
                 }]
             });
+
+            // 處理狀態切換
+            $('.status-switch').change(function() {
+                const adminId = $(this).data('id');
+                const isActive = $(this).prop('checked') ? 1 : 0;
+
+                $.ajax({
+                    url: `/admin/admins/${adminId}/toggle-status`,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        is_active: isActive
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success('管理者狀態已更新');
+                        } else {
+                            toastr.error('更新失敗');
+                        }
+                    },
+                    error: function() {
+                        toastr.error('發生錯誤，請稍後再試');
+                    }
+                });
+            });
         });
     </script>
+@endpush
+
+@push('styles')
+    <style>
+        .form-switch {
+            padding-left: 2.5em;
+        }
+        .form-check-input {
+            cursor: pointer;
+        }
+    </style>
 @endpush
