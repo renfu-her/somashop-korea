@@ -33,6 +33,10 @@ class HomeController extends Controller
                 })->orWhere(function($q) {
                     $q->whereNull('start_date')
                       ->whereNull('end_date');
+                })->orWhere(function($q) use ($now) {
+                    $q->whereNotNull('start_date')
+                      ->whereNull('end_date')
+                      ->where('start_date', '<=', $now);
                 });
             })
             ->orderByDesc('id')
