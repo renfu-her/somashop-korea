@@ -28,9 +28,9 @@
                             <th>圖片</th>
                             <th>標題</th>
                             <th>副標題</th>
-                            <th>排序</th>
-                            <th>狀態</th>
-                            <th>日期</th>
+                            <th style="width: 10%">排序</th>
+                            <th style="width: 10%">狀態</th>
+                            {{-- <th>日期</th> --}}
                             <th style="width: 15%">操作</th>
                         </tr>
                     </thead>
@@ -57,7 +57,7 @@
                                                {{ $activity->is_active ? 'checked' : '' }}>
                                     </div>
                                 </td>
-                                <td>{{ $activity->date->format('Y-m-d') }}</td>
+                                {{-- <td>{{ $activity->date->format('Y-m-d') }}</td> --}}
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.activities.edit', $activity) }}"
