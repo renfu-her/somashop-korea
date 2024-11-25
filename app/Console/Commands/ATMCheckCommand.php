@@ -35,23 +35,19 @@ class ATMCheckCommand extends Command
             ->get();
 
         foreach ($orders as $order) {
-            try {
-                $response = $this->queryECPayOrder($order);
 
-                if (!empty($response) && $response['TradeStatus'] === '1') {
-                    // 更新訂單狀態為已付款
-                    $order->update([
-                        'payment_status' => 'paid',
-                        'paid_at' => $response['PaymentDate'],
-                    ]);
+            $response = $this->queryECPayOrder($order);
 
-                    Log::info("ATM 訂單 {$order->order_number} 已完成付款", [
-                        'payment_date' => $response['PaymentDate']
-                    ]);
-                }
-            } catch (\Exception $e) {
-                Log::error("查詢 ATM 訂單 {$order->order_number} 發生錯誤", [
-                    'error' => $e->getMessage()
+            if (!empty($response) && !empty($response['TradeDate'])) {
+                // 更新訂單狀態為已付款
+                // $order->update([
+                //     'payment_status' => 'paid',
+                // ]);
+
+                Log::info("ATM 訂單 {$order->order_number} 已完成付款", [
+                    'RtnCode' => $response['RtnCode'],
+                    'RtnMsg' => $response['RtnMsg'],
+                    'TradeNo' => $response['TradeNo'],
                 ]);
             }
         }
@@ -74,22 +70,27 @@ class ATMCheckCommand extends Command
 
 
         $response = Http::asForm()
-            ->post($api_url, $postData)
-            ->json();
+            ->post($api_url, $postData);
 
-        if ($response['TradeStatus'] === '1') {
+        parse_str($response->body(), $result);
+
+        // dd($result);
+
+        if (!empty($result['TradeNo'])) {
             Log::info("ATM 訂單 {$order->order_number} 已完成付款", [
-                'payment_date' => $response['PaymentDate']
+                'RtnCode' => $result['RtnCode'],
+                'RtnMsg' => $result['RtnMsg'],
+                'TradeNo' => $result['TradeNo'],
             ]);
-            $order->payment_status = 'paid';
-            $order->payment_date = $response['PaymentDate'];
-            $order->save();
+            // $order->payment_status = 'paid';
+            // $order->payment_date = $result['PaymentDate'];
+            // $order->save();
 
-            return $response;
+            return $result;
         }
 
         Log::error("ATM 查詢訂單 {$order->order_number} 發生錯誤", [
-            'error' => $response
+            'error' => $result
         ]);
 
         return null;
@@ -109,7 +110,7 @@ class ATMCheckCommand extends Command
         $checkStr = urlencode($checkStr);
         $checkStr = strtolower($checkStr);
 
-        return strtoupper(md5($checkStr));
+        return strtoupper(hash('sha256', $checkStr));
     }
 
     protected function verifyCheckMacValue(array $response): bool

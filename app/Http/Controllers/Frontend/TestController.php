@@ -41,7 +41,8 @@ class TestController extends Controller
         $this->shipmentHashKey = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
         $this->shipmentHashIV = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
     }
-    public function test(MailService $mailService)
+    
+    public function testMail(MailService $mailService)
     {
 
         $member = Member::where('email', 'renfu.her@gmail.com')->first();
