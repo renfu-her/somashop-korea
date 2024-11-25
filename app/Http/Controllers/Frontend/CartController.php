@@ -7,18 +7,20 @@ use App\Models\Product;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\ProductSpec;
+use App\Models\Setting;
 
 use Illuminate\Http\Request;
 use App\Models\ProductSpecification;
 use Illuminate\Support\Facades\Auth;
+
 class CartController extends Controller
 {
     public function index(Request $request)
     {
-        
-        if(session()->has('cart')){
+
+        if (session()->has('cart')) {
             $cart = session()->get('cart', []);
-        }else{
+        } else {
             $cart = [];
         }
 
@@ -32,9 +34,13 @@ class CartController extends Controller
             $total += $item['price'] * $item['quantity'];
         }
 
+        // 獲取運費
+        $shippingFee = Setting::where('key', 'shipping_fee')->first()->value;
+
+
         return view(
             'frontend.cart.index',
-            compact('cart', 'total')
+            compact('cart', 'total', 'shippingFee')
         );
     }
 
@@ -93,7 +99,7 @@ class CartController extends Controller
             'spec_id' => $validated['spec_id'],
             'quantity' => $validated['quantity']
         ];
-        
+
         // 存储到购物车 session
         $cart[] = $cartItem;
         session()->put('cart', $cart);
