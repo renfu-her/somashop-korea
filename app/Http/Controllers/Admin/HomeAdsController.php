@@ -123,4 +123,16 @@ class HomeAdsController extends Controller
 
         return response()->json(['message' => '排序已更新']);
     }
+
+    public function toggleActive(HomeAd $homeAd, Request $request)
+    {
+        $homeAd->update([
+            'is_active' => $request->is_active == 'true' ? 1 : 0
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '狀態更新成功'
+        ]);
+    }
 }

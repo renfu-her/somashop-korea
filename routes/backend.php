@@ -127,4 +127,20 @@ Route::group([
     // 首頁廣告管理
     Route::resource('home-ads', HomeAdsController::class)->except(['show']);
     Route::post('home-ads/update-order', [HomeAdsController::class, 'updateOrder'])->name('home-ads.update-order');
+
+    // 廣告狀態切換
+    Route::post('ads/{ad}/toggle-active', [AdController::class, 'toggleActive'])
+        ->name('admin.ads.toggle-active');
+
+    // 首頁小廣告狀態切換
+    Route::post('home-ads/{homeAd}/toggle-active', [HomeAdsController::class, 'toggleActive'])
+        ->name('admin.home-ads.toggle-active');
+
+    // FAQ 分類狀態切換
+    Route::post('faq-categories/{category}/toggle-active', [FaqCategoryController::class, 'toggleActive'])
+        ->name('admin.faq-categories.toggle-active');
+
+    // FAQ 狀態切換
+    Route::post('faqs/{faq}/toggle-active', [FaqController::class, 'toggleActive'])
+        ->name('admin.faqs.toggle-active');
 });

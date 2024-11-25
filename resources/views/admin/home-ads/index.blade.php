@@ -46,9 +46,12 @@
                                 <td>{{ $ad->link }}</td>
                                 <td>{{ $ad->sort_order }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $ad->is_active ? 'success' : 'danger' }}">
-                                        {{ $ad->is_active ? '啟用' : '停用' }}
-                                    </span>
+                                    <div class="form-check form-switch d-flex justify-content-center align-items-center">
+                                        <input class="form-check-input toggle-active" 
+                                               type="checkbox" 
+                                               data-id="{{ $ad->id }}"
+                                               {{ $ad->is_active ? 'checked' : '' }}>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="btn-group">
@@ -100,6 +103,26 @@
                     targets: -1,
                     orderable: false
                 }]
+            });
+        });
+
+        $('.toggle-active').change(function() {
+            const id = $(this).data('id');
+            const isActive = $(this).prop('checked');
+            
+            $.ajax({
+                url: `/admin/home-ads/${id}/toggle-active`,
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    is_active: isActive
+                },
+                success: function(response) {
+                    toastr.success('狀態更新成功');
+                },
+                error: function() {
+                    toastr.error('狀態更新失敗');
+                }
             });
         });
     </script>

@@ -7,9 +7,8 @@
             <div class="d-flex align-items-center">
                 <select id="categoryFilter" class="form-select me-2" style="width: auto;">
                     <option value="">所有分類</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}" 
-                            {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
                             {{ $category->title }}
                         </option>
                     @endforeach
@@ -50,9 +49,10 @@
                                 <td>{{ $faq->title }}</td>
                                 <td>{{ $faq->sort_order }}</td>
                                 <td>
-                                    <span class="badge {{ $faq->is_active ? 'bg-success' : 'bg-danger' }}">
-                                        {{ $faq->is_active ? '啟用' : '停用' }}
-                                    </span>
+                                    <div class="form-check form-switch d-flex justify-content-center align-items-center">
+                                        <input class="form-check-input toggle-active" type="checkbox"
+                                            data-id="{{ $faq->id }}" {{ $faq->is_active ? 'checked' : '' }}>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="btn-group">
@@ -92,8 +92,29 @@
 
             $('#categoryFilter').change(function() {
                 const categoryId = $(this).val();
-                window.location.href = '{{ route("admin.faqs.index") }}' + 
+                window.location.href = '{{ route('admin.faqs.index') }}' +
                     (categoryId ? '?category_id=' + categoryId : '');
+            });
+
+            // 處理狀態切換
+            $('.toggle-active').change(function() {
+                const id = $(this).data('id');
+                const isActive = $(this).prop('checked');
+
+                $.ajax({
+                    url: `/admin/faqs/${id}/toggle-active`,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        is_active: isActive
+                    },
+                    success: function(response) {
+                        toastr.success('狀態更新成功');
+                    },
+                    error: function() {
+                        toastr.error('狀態更新失敗');
+                    }
+                });
             });
         });
     </script>

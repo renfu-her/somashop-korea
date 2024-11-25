@@ -150,4 +150,16 @@ class AdController extends Controller
         $ad = Advert::findOrFail($id);
         return view('admin.ads.show', compact('ad'));
     }
+
+    public function toggleActive(Advert $ad, Request $request)
+    {
+        $ad->update([
+            'is_active' => $request->is_active == 'true' ? 1 : 0
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '狀態更新成功'
+        ]);
+    }
 }

@@ -103,4 +103,16 @@ class FaqCategoryController extends Controller
 
         return response()->json(['message' => '狀態已更新']);
     }
+
+    public function toggleActive(FaqCategory $category, Request $request)
+    {
+        $category->update([
+            'is_active' => $request->is_active == 'true' ? 1 : 0
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '狀態更新成功'
+        ]);
+    }
 } 
