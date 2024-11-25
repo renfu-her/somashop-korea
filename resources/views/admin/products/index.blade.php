@@ -68,6 +68,9 @@
                                     @if ($product->is_new)
                                         <span class="badge bg-info">新品</span>
                                     @endif
+                                    @if ($product->is_hot)
+                                        <span class="badge bg-warning">熱銷</span>
+                                    @endif
                                 </td>
                                 <td>
                                     <div class="btn-group">

@@ -24,6 +24,7 @@ class Product extends Model
         'category_id',
         'is_active',
         'is_new',
+        'is_hot',
         'meta_title',
         'meta_description',
         'meta_keywords'
@@ -31,7 +32,8 @@ class Product extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
-        'is_new' => 'boolean'
+        'is_new' => 'boolean',
+        'is_hot' => 'boolean'
     ];
 
     // 與分類的關係

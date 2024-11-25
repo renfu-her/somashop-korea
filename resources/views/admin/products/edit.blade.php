@@ -195,6 +195,11 @@
                                         value="1" {{ old('is_new', $product->is_new) == 1 ? 'checked' : '' }}>
                                     <label class="form-check-label p-1" for="is_new">新品標籤</label>
                                 </div>
+                                <div>
+                                    <input type="checkbox" class="form-check-input p-1" id="is_hot" name="is_hot"
+                                        value="1" {{ old('is_hot', $product->is_hot) == 1 ? 'checked' : '' }}>
+                                    <label class="form-check-label p-1" for="is_hot">熱銷標籤</label>
+                                </div>
                             </div>
 
                             <div class="card mt-4">
