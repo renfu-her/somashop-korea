@@ -39,7 +39,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image" class="form-label">更新圖片 (<span class="text-danger">寬度 1920px</span>)</label>
+                                <label for="image" class="form-label">更新圖片 (<span class="text-danger">寬度
+                                        1920px</span>)</label>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror"
                                     id="image" name="image" accept="image/*">
                                 @error('image')
@@ -73,6 +74,15 @@
                                     id="end_date" name="end_date"
                                     value="{{ old('end_date', $ad->end_date?->format('Y-m-d')) }}">
                                 @error('end_date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="sort_order" class="form-label">排序（數字越小越前面）</label>
+                                <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
+                                    id="sort_order" name="sort_order" value="{{ old('sort_order', $ad->sort_order) }}">
+                                @error('sort_order')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

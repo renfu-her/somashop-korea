@@ -39,11 +39,12 @@ class HomeController extends Controller
                         ->where('start_date', '<=', $now);
                 });
             })
+            ->orderBy('sort_order', 'asc')
             ->orderByDesc('id')
             ->get();
 
         $homeAds = HomeAd::where('is_active', 1)
-            ->orderBy('sort_order')
+            ->orderBy('sort_order', 'asc')
             ->orderByDesc('id')
             ->get();
 

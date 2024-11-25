@@ -19,8 +19,10 @@
                     <thead>
                         <tr>
                             <th style="width: 5%">ID</th>
+
                             <th>圖片</th>
                             <th>標題</th>
+                            <th style="width: 8%">排序</th>
                             <th>狀態</th>
                             <th>開始日期</th>
                             <th>結束日期</th>
@@ -36,6 +38,7 @@
                                         width="200" />
                                 </td>
                                 <td>{{ $ad->title }}</td>
+                                <td>{{ $ad->sort_order }}</td>
                                 <td>
                                     <span class="badge {{ $ad->is_active ? 'bg-success' : 'bg-secondary' }}">
                                         {{ $ad->is_active ? '啟用' : '停用' }}
@@ -83,7 +86,7 @@
                 },
                 responsive: true,
                 order: [
-                    [0, 'desc']
+                    [3, 'asc']
                 ],
                 columnDefs: [{
                     targets: -1,

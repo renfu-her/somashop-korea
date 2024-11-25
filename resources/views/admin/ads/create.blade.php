@@ -65,6 +65,15 @@
                                 @enderror
                             </div>
 
+                            <div class="mb-3">
+                                <label for="sort_order" class="form-label">排序（數字越小越前面）</label>
+                                <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
+                                    id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}">
+                                @error('sort_order')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="mb-3 d-flex align-items-center">
                                 <input type="checkbox" class="form-check-input p-1" id="is_active" 
                                        name="is_active" value="1" {{ old('is_active') ? 'checked' : '' }}>

@@ -51,10 +51,10 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="sort_order" class="form-label">排序</label>
+                                <label for="sort_order" class="form-label">排序（數字越小越前面）</label>
                                 <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
-                                    id="sort_order" name="sort_order" value="{{ old('sort_order', $homeAd->sort_order) }}"
-                                    min="0">
+                                    id="sort_order" name="sort_order" value="{{ old('sort_order', $homeAd->sort_order) }}" min="0">
+                                <small class="text-muted">請輸入數字，數字越小排序越前面</small>
                                 @error('sort_order')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

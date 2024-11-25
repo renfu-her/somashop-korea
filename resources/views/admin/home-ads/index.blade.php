@@ -95,7 +95,7 @@
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
                 },
                 responsive: true,
-                order: [[0, 'desc']],
+                order: [[4, 'asc']],
                 columnDefs: [{
                     targets: -1,
                     orderable: false
