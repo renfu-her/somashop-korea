@@ -82,9 +82,11 @@ Route::group([
 
     // 會員管理
     Route::resource('members', MemberController::class);
+    // 會員狀態切換
+    Route::post('members/{member}/toggle-status', [App\Http\Controllers\Admin\MemberController::class, 'toggleStatus'])
+        ->name('admin.members.toggle-status');
 
     // 管理員管理
-    Route::resource('admins', AdminController::class);
     Route::resource('admins', AdminController::class);
 
     // 關於我們管理

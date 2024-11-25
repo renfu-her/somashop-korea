@@ -82,4 +82,21 @@ class MemberController extends Controller
         return redirect()->route('admin.members.index')
             ->with('success', '會員已刪除！');
     }
+
+    public function toggleStatus(Member $member)
+    {
+        try {
+            $member->update([
+                'is_active' => request('is_active')
+            ]);
+
+            return response()->json([
+                'success' => true
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false
+            ], 500);
+        }
+    }
 } 

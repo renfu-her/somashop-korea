@@ -20,6 +20,7 @@ class Member extends Authenticatable
         'zipcode',
         'gender',
         'birthday',
+        'is_active',
     ];
 
     protected $hidden = [
@@ -30,5 +31,6 @@ class Member extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_active' => 'boolean',
     ];
 }
