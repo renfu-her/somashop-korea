@@ -54,6 +54,9 @@
                                 <div class="main-image mb-3">
                                     <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}"
                                         class="img-fluid" alt="{{ $product->name }}">
+                                    @if ($product->is_new)
+                                        <span class="badge">新品</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -149,10 +152,27 @@
             text-decoration: line-through;
             color: #6c757d;
         }
-        
+
         .product-description img {
             max-width: 100%;
             height: auto;
+        }
+
+        .product-gallery {
+            position: relative;
+        }
+
+        .product-gallery .badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            background-color: #dc3545;
+            color: white;
+            font-size: 1rem;
+            padding: 0.7em 1.4em;
+            border-radius: 0;
+            margin: 0;
         }
     </style>
 @endpush
