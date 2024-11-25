@@ -39,3 +39,11 @@
         </div>
     </article>
 @endsection
+
+@push('styles')
+    <style>
+        .media {
+            display: block;
+        }
+    </style>
+@endpush

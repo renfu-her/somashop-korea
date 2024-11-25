@@ -13,7 +13,7 @@
                 <div class="carousel-inner">
                     @foreach ($ads as $ad)
                         <a class="carousel-item {{ $loop->first ? 'active' : '' }}"
-                            @if (!empty($ad->url)) href="{{ $ad->url }}" @endif target="_blank">
+                            @if (!empty($ad->url)) href="{{ $ad->url }}" @endif >
                             <img src="{{ asset('storage/ads/' . $ad->image) }}" class="d-block w-100" alt="">
                         </a>
                     @endforeach
@@ -152,7 +152,7 @@
                 <div class="carousel-inner">
                     @foreach ($homeAds as $ad)
                         <a class="carousel-item {{ $loop->first ? 'active' : '' }}"
-                            @if ($ad->link) href="{{ $ad->link }}" @endif target="_blank">
+                            @if ($ad->link) href="{{ $ad->link }}" @endif>
                             <img src="{{ asset('storage/home_ads/' . $ad->image) }}" class="d-block w-100"
                                 alt="{{ $ad->title }}">
                         </a>

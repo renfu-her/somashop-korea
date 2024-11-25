@@ -71,13 +71,6 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.admins.index') }}">
-                <i class="fas fa-users menu-icon"></i>
-                <span class="menu-title">管理員管理</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#faq-management" aria-expanded="false">
                 <i class="fas fa-question-circle menu-icon"></i>
                 <span class="menu-title">常見問題維護</span>
@@ -114,6 +107,13 @@
             <a class="nav-link" href="{{ route('admin.settings.index') }}">
                 <i class="fas fa-cog menu-icon"></i>
                 <span class="menu-title">運費設定</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.admins.index') }}">
+                <i class="fas fa-users menu-icon"></i>
+                <span class="menu-title">管理員管理</span>
             </a>
         </li>
 
