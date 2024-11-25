@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\{
     SealKnowledgeController,
     MemberController,
     HomeAdsController,
+    SiteSettingController,
 };
 
 
@@ -84,12 +85,12 @@ Route::group([
     Route::resource('members', MemberController::class);
     // 會員狀態切換
     Route::post('members/{member}/toggle-status', [App\Http\Controllers\Admin\MemberController::class, 'toggleStatus'])
-        ->name('admin.members.toggle-status');
+        ->name('members.toggle-status');
 
     // 管理員管理
     Route::resource('admins', AdminController::class);
     Route::post('admins/{admin}/toggle-status', [AdminController::class, 'toggleStatus'])
-        ->name('admin.admins.toggle-status');
+        ->name('admins.toggle-status');
 
     // 關於我們管理
     Route::resource('posts', PostController::class);
@@ -134,17 +135,21 @@ Route::group([
 
     // 廣告狀態切換
     Route::post('ads/{ad}/toggle-active', [AdController::class, 'toggleActive'])
-        ->name('admin.ads.toggle-active');
+        ->name('ads.toggle-active');
 
     // 首頁小廣告狀態切換
     Route::post('home-ads/{homeAd}/toggle-active', [HomeAdsController::class, 'toggleActive'])
-        ->name('admin.home-ads.toggle-active');
+        ->name('home-ads.toggle-active');
 
     // FAQ 分類狀態切換
     Route::post('faq-categories/{category}/toggle-active', [FaqCategoryController::class, 'toggleActive'])
-        ->name('admin.faq-categories.toggle-active');
+        ->name('faq-categories.toggle-active');
 
     // FAQ 狀態切換
     Route::post('faqs/{faq}/toggle-active', [FaqController::class, 'toggleActive'])
-        ->name('admin.faqs.toggle-active');
+        ->name('faqs.toggle-active');
+
+    // 網站設定
+    Route::get('site-settings', [SiteSettingController::class, 'index'])->name('site-settings.index');
+    Route::put('site-settings', [SiteSettingController::class, 'update'])->name('site-settings.update');
 });

@@ -118,6 +118,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.site-settings.index') }}">
+                <i class="fas fa-cog menu-icon"></i>
+                <span class="menu-title">系統設定</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.logout') }}"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="icon-support menu-icon"></i>
