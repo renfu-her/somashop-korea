@@ -246,7 +246,6 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('ckeditor5/ckeditor5.css') }}">
     <style>
         .product-image-card {
             position: relative;

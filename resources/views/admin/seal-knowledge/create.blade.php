@@ -106,146 +106,145 @@
             </div>
         </div>
     </div>
-
-    @push('styles')
-        <link rel="stylesheet" href="{{ asset('ckeditor5/ckeditor5.css') }}">
-        <style>
-            .ck-editor__editable {
-                height: 500px;
-            }
-        </style>
-    @endpush
-
-    @push('scripts')
-        <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
-        <script src="{{ asset('ckeditor5/zh.min.js') }}"></script>
-        <script>
-            $(document).ready(function() {
-                let editor;
-                ClassicEditor
-                    .create(document.querySelector('#editor'), {
-                        language: 'zh',
-                        ckfinder: {
-                            uploadUrl: '{{ route('admin.upload.image') }}',
-                            upload: {
-                                types: ['jpeg', 'png', 'gif', 'jpg', 'webp']
-                            }
-                        },
-                        toolbar: {
-                            items: [
-                                'heading', '|',
-                                'fontSize', 'fontFamily', '|',
-                                'fontColor', 'fontBackgroundColor', '|',
-                                'bold', 'italic', 'underline', 'strikethrough', '|',
-                                'alignment:left', 'alignment:center', 'alignment:right', 'alignment:justify',
-                                '|',
-                                'bulletedList', 'numberedList', '|',
-                                'outdent', 'indent', '|',
-                                'link', 'imageUpload', 'mediaEmbed', '|',
-                                'blockQuote', 'insertTable', '|',
-                                'undo', 'redo'
-                            ]
-                        },
-                        alignment: {
-                            options: ['left', 'center', 'right', 'justify']
-                        },
-                        heading: {
-                            options: [{
-                                    model: 'paragraph',
-                                    title: '段落',
-                                    class: 'ck-heading_paragraph'
-                                },
-                                {
-                                    model: 'heading1',
-                                    view: 'h1',
-                                    title: '標題 1',
-                                    class: 'ck-heading_heading1'
-                                },
-                                {
-                                    model: 'heading2',
-                                    view: 'h2',
-                                    title: '標題 2',
-                                    class: 'ck-heading_heading2'
-                                },
-                                {
-                                    model: 'heading3',
-                                    view: 'h3',
-                                    title: '標題 3',
-                                    class: 'ck-heading_heading3'
-                                }
-                            ]
-                        },
-                        fontSize: {
-                            options: [
-                                'tiny',
-                                'small',
-                                'default',
-                                'big',
-                                'huge'
-                            ]
-                        },
-                        fontFamily: {
-                            options: [
-                                'default',
-                                '微軟正黑體',
-                                '新細明體',
-                                '標楷體',
-                                'Arial',
-                                'Times New Roman'
-                            ]
-                        },
-                        image: {
-                            toolbar: [
-                                'imageTextAlternative', '|',
-                                'imageStyle:alignLeft',
-                                'imageStyle:alignCenter',
-                                'imageStyle:alignRight', '|',
-                                'imageStyle:full',
-                                'imageStyle:side'
-                            ],
-                            styles: [
-                                'full',
-                                'side',
-                                'alignLeft',
-                                'alignCenter',
-                                'alignRight'
-                            ]
-                        },
-                        table: {
-                            contentToolbar: [
-                                'tableColumn',
-                                'tableRow',
-                                'mergeTableCells',
-                                'tableCellProperties',
-                                'tableProperties'
-                            ]
-                        },
-                        mediaEmbed: {
-                            previewsInData: true
-                        }
-                    })
-                    .then(newEditor => {
-                        editor = newEditor;
-                    })
-                    .catch(error => {
-                        console.error('編輯器初始化失敗', error);
-                        alert('編輯器初始化失敗：' + error.message);
-                    });
-
-                // 表單提交前驗證
-                $('form').on('submit', function(e) {
-                    const content = editor.getData();
-
-                    if (!content.trim()) {
-                        e.preventDefault();
-                        alert('請填寫內容');
-                        return false;
-                    }
-
-                    // 更新隱藏的 textarea 值
-                    $('#content').val(content);
-                });
-            });
-        </script>
-    @endpush
 @endsection
+
+@push('styles')
+    <style>
+        .ck-editor__editable {
+            height: 500px;
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor5/zh.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            let editor;
+            ClassicEditor
+                .create(document.querySelector('#editor'), {
+                    language: 'zh',
+                    ckfinder: {
+                        uploadUrl: '{{ route('admin.upload.image') }}',
+                        upload: {
+                            types: ['jpeg', 'png', 'gif', 'jpg', 'webp']
+                        }
+                    },
+                    toolbar: {
+                        items: [
+                            'heading', '|',
+                            'fontSize', 'fontFamily', '|',
+                            'fontColor', 'fontBackgroundColor', '|',
+                            'bold', 'italic', 'underline', 'strikethrough', '|',
+                            'alignment:left', 'alignment:center', 'alignment:right', 'alignment:justify',
+                            '|',
+                            'bulletedList', 'numberedList', '|',
+                            'outdent', 'indent', '|',
+                            'link', 'imageUpload', 'mediaEmbed', '|',
+                            'blockQuote', 'insertTable', '|',
+                            'undo', 'redo'
+                        ]
+                    },
+                    alignment: {
+                        options: ['left', 'center', 'right', 'justify']
+                    },
+                    heading: {
+                        options: [{
+                                model: 'paragraph',
+                                title: '段落',
+                                class: 'ck-heading_paragraph'
+                            },
+                            {
+                                model: 'heading1',
+                                view: 'h1',
+                                title: '標題 1',
+                                class: 'ck-heading_heading1'
+                            },
+                            {
+                                model: 'heading2',
+                                view: 'h2',
+                                title: '標題 2',
+                                class: 'ck-heading_heading2'
+                            },
+                            {
+                                model: 'heading3',
+                                view: 'h3',
+                                title: '標題 3',
+                                class: 'ck-heading_heading3'
+                            }
+                        ]
+                    },
+                    fontSize: {
+                        options: [
+                            'tiny',
+                            'small',
+                            'default',
+                            'big',
+                            'huge'
+                        ]
+                    },
+                    fontFamily: {
+                        options: [
+                            'default',
+                            '微軟正黑體',
+                            '新細明體',
+                            '標楷體',
+                            'Arial',
+                            'Times New Roman'
+                        ]
+                    },
+                    image: {
+                        toolbar: [
+                            'imageTextAlternative', '|',
+                            'imageStyle:alignLeft',
+                            'imageStyle:alignCenter',
+                            'imageStyle:alignRight', '|',
+                            'imageStyle:full',
+                            'imageStyle:side'
+                        ],
+                        styles: [
+                            'full',
+                            'side',
+                            'alignLeft',
+                            'alignCenter',
+                            'alignRight'
+                        ]
+                    },
+                    table: {
+                        contentToolbar: [
+                            'tableColumn',
+                            'tableRow',
+                            'mergeTableCells',
+                            'tableCellProperties',
+                            'tableProperties'
+                        ]
+                    },
+                    mediaEmbed: {
+                        previewsInData: true
+                    }
+                })
+                .then(newEditor => {
+                    editor = newEditor;
+                })
+                .catch(error => {
+                    console.error('編輯器初始化失敗', error);
+                    alert('編輯器初始化失敗：' + error.message);
+                });
+
+            // 表單提交前驗證
+            $('form').on('submit', function(e) {
+                const content = editor.getData();
+
+                if (!content.trim()) {
+                    e.preventDefault();
+                    alert('請填寫內容');
+                    return false;
+                }
+
+                // 更新隱藏的 textarea 值
+                $('#content').val(content);
+            });
+        });
+    </script>
+@endpush

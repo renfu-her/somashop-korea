@@ -86,7 +86,6 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('ckeditor5/ckeditor5.css') }}">
     <style>
         /* 讓編輯器內容可以滾動 */
         .ck-editor__editable {
