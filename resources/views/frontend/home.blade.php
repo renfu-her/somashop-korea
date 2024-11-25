@@ -194,7 +194,9 @@
                                     <div class="card-top">
                                         <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}"
                                             class="card-img-top img-fluid" alt="{{ $product->name }}">
-                                        <b class="float-tag text-white bg-danger">新品</b>
+                                        @if ($product->is_new)
+                                            <b class="float-tag text-white bg-danger">新品</b>
+                                        @endif
                                     </div>
                                     <div class="card-body px-0">
                                         <h5 class="card-title">{{ $product->name }}</h5>
