@@ -60,6 +60,7 @@ class ProductController extends Controller
             'images.*' => 'nullable|image|max:2048',
             'is_active' => 'boolean',
             'is_new' => 'boolean',
+            'is_hot' => 'boolean',
             'meta_title' => 'nullable|string|max:60',
             'meta_description' => 'nullable|string|max:160',
             'meta_keywords' => 'nullable|string|max:255',
@@ -68,13 +69,13 @@ class ProductController extends Controller
         $validated['slug'] = Str::slug($validated['name']);
         $validated['is_new'] = $request->has('is_new') ? 1 : 0;
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
-        
+        $validated['is_hot'] = $request->has('is_hot') ? 1 : 0;
         $product = Product::create($validated);
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $image) {
                 $filename = $this->imageService->uploadImage(
-                    $image, 
+                    $image,
                     "products/{$product->id}"
                 );
 
@@ -102,6 +103,9 @@ class ProductController extends Controller
             'stock' => 'integer|min:0',
             'category_id' => 'exists:categories,id',
             'images.*' => 'nullable|image|max:2048',
+            'is_active' => 'boolean',
+            'is_new' => 'boolean',
+            'is_hot' => 'boolean',
             'meta_title' => 'nullable|string|max:60',
             'meta_description' => 'nullable|string|max:160',
             'meta_keywords' => 'nullable|string|max:255',
@@ -113,7 +117,7 @@ class ProductController extends Controller
 
         $validated['is_new'] = $request->has('is_new') ? 1 : 0;
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
-
+        $validated['is_hot'] = $request->has('is_hot') ? 1 : 0;
         $product->update($validated);
 
         if ($request->hasFile('images')) {
@@ -121,7 +125,7 @@ class ProductController extends Controller
 
             foreach ($request->file('images') as $image) {
                 $filename = $this->imageService->uploadImage(
-                    $image, 
+                    $image,
                     "products/{$product->id}"
                 );
 
@@ -134,7 +138,7 @@ class ProductController extends Controller
         }
 
         // $specs = $request->input('specs', []);
-        
+
         // $product->specs()->sync(
         //     collect($specs)->mapWithKeys(function ($id) {
         //         return [$id => ['is_active' => true]];

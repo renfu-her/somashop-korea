@@ -15,28 +15,28 @@ class HomeController extends Controller
     public function index()
     {
         $actives = Activity::orderByDesc('id')->get();
-        
+
         $hotProducts = Product::with('primaryImage')
             ->where('is_active', 1)
-            ->where('is_new', 1)
+            ->where('is_hot', 1)
             ->orderByDesc('id')
             ->get();
 
         $now = Carbon::now();
         $ads = Advert::where('is_active', 1)
-            ->where(function($query) use ($now) {
-                $query->where(function($q) use ($now) {
+            ->where(function ($query) use ($now) {
+                $query->where(function ($q) use ($now) {
                     $q->whereNotNull('start_date')
-                      ->whereNotNull('end_date')
-                      ->where('start_date', '<=', $now)
-                      ->where('end_date', '>=', $now);
-                })->orWhere(function($q) {
+                        ->whereNotNull('end_date')
+                        ->where('start_date', '<=', $now)
+                        ->where('end_date', '>=', $now);
+                })->orWhere(function ($q) {
                     $q->whereNull('start_date')
-                      ->whereNull('end_date');
-                })->orWhere(function($q) use ($now) {
+                        ->whereNull('end_date');
+                })->orWhere(function ($q) use ($now) {
                     $q->whereNotNull('start_date')
-                      ->whereNull('end_date')
-                      ->where('start_date', '<=', $now);
+                        ->whereNull('end_date')
+                        ->where('start_date', '<=', $now);
                 });
             })
             ->orderByDesc('id')
