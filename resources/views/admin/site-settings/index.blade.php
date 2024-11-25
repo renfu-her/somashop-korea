@@ -21,29 +21,7 @@
                             @method('PUT')
 
                             <div class="row">
-                                <div class="col-md-6">
-                                    <h6 class="mb-3">基本設定</h6>
-                                    <div class="mb-3">
-                                        <label for="site_name" class="form-label">網站名稱</label>
-                                        <input type="text" class="form-control @error('site_name') is-invalid @enderror"
-                                            id="site_name" name="site_name" value="{{ old('site_name', $settings->site_name ?? '') }}">
-                                        @error('site_name')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="site_description" class="form-label">網站描述</label>
-                                        <textarea class="form-control @error('site_description') is-invalid @enderror" id="site_description"
-                                            name="site_description" rows="3">{{ old('site_description', $settings->site_description ?? '') }}</textarea>
-                                        @error('site_description')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <h6 class="mb-3">SEO 設定</h6>
                                     <div class="mb-3">
                                         <label for="meta_title" class="form-label">SEO 標題</label>
