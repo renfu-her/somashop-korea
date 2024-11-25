@@ -68,7 +68,7 @@
 
 @push('scripts')
     <script src="{{ asset('ckeditor5/zh.min.js') }}"></script>
-    
+
     <script type="importmap">
         {
             "imports": {
@@ -123,7 +123,6 @@
                 ],
                 toolbar: {
                     items: [
-                        'heading', '|',
                         'fontSize', 'fontFamily', '|',
                         'fontColor', 'fontBackgroundColor', '|',
                         'bold', 'italic', 'underline', 'strikethrough', '|',
@@ -167,12 +166,24 @@
                 },
                 fontSize: {
                     options: [
-                        'tiny',
-                        'small',
-                        'default',
-                        'big',
-                        'huge'
-                    ]
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        14,
+                        16,
+                        18,
+                        20,
+                        22,
+                        24,
+                        26,
+                        28,
+                        36,
+                        48,
+                        72
+                    ],
+                    supportAllValues: true
                 },
                 fontFamily: {
                     options: [
@@ -221,10 +232,10 @@
                 console.error(error);
             });
     </script>
-    
+
     <script>
         $(document).ready(function() {
-            
+
             $('form').on('submit', function(e) {
                 const content = editor.getData();
                 if (!content.trim()) {

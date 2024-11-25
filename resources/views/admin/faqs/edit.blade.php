@@ -151,7 +151,6 @@
                 ],
                 toolbar: {
                     items: [
-                        'heading', '|',
                         'fontSize', 'fontFamily', '|',
                         'fontColor', 'fontBackgroundColor', '|',
                         'bold', 'italic', 'underline', 'strikethrough', '|',
@@ -202,15 +201,26 @@
                         'huge'
                     ]
                 },
-                fontFamily: {
+                fontSize: {
                     options: [
-                        'default',
-                        '微軟正黑體',
-                        '新細明體',
-                        '標楷體',
-                        'Arial',
-                        'Times New Roman'
-                    ]
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        14,
+                        16,
+                        18,
+                        20,
+                        22,
+                        24,
+                        26,
+                        28,
+                        36,
+                        48,
+                        72
+                    ],
+                    supportAllValues: true
                 },
                 image: {
                     toolbar: [
