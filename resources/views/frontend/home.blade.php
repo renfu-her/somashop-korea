@@ -13,7 +13,7 @@
                 <div class="carousel-inner">
                     @foreach ($ads as $ad)
                         <a class="carousel-item {{ $loop->first ? 'active' : '' }}"
-                            @if (!empty($ad->url)) href="{{ $ad->url }}" @endif >
+                            @if (!empty($ad->url)) href="{{ $ad->url }}" @endif>
                             <img src="{{ asset('storage/ads/' . $ad->image) }}" class="d-block w-100" alt="">
                         </a>
                     @endforeach
@@ -94,50 +94,51 @@
             </div>
         </div>
     </div> --}}
+    @if ($actives->count() > 0)
+        <div class="container mb-5 mt-5">
+            <h2 class="text-center font-weight-bold mb-0" data-aos="zoom-in-up" data-aos-delay="300"
+                data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">活動訊息</h2>
+            <h4 class="text-center text-gold mb-4" data-aos="zoom-in-up" data-aos-delay="350"
+                data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">Activity Message</h4>
 
-    <div class="container mb-5 mt-5">
-        <h2 class="text-center font-weight-bold mb-0" data-aos="zoom-in-up" data-aos-delay="300"
-            data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">活動訊息</h2>
-        <h4 class="text-center text-gold mb-4" data-aos="zoom-in-up" data-aos-delay="350"
-            data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">Activity Message</h4>
-
-        <div id="MessageCarousel" class="carousel slide" data-interval="false">
-            <div class="carousel-inner">
-                @foreach ($actives->chunk(3) as $key => $chunk)
-                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                        <div class="row">
-                            @foreach ($chunk as $active)
-                                <div class="col-md-4">
-                                    <a href="{{ route('activity.detail', $active->id) }}" class="activity-card">
-                                        <div class="card border-0">
-                                            <div class="card-img-wrapper">
-                                                <img src="{{ asset('storage/activities/' . $active->id . '/' . $active->image) }}"
-                                                    alt="{{ $active->title }}">
+            <div id="MessageCarousel" class="carousel slide" data-interval="false">
+                <div class="carousel-inner">
+                    @foreach ($actives->chunk(3) as $key => $chunk)
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <div class="row">
+                                @foreach ($chunk as $active)
+                                    <div class="col-md-4">
+                                        <a href="{{ route('activity.detail', $active->id) }}" class="activity-card">
+                                            <div class="card border-0">
+                                                <div class="card-img-wrapper">
+                                                    <img src="{{ asset('storage/activities/' . $active->id . '/' . $active->image) }}"
+                                                        alt="{{ $active->title }}">
+                                                </div>
+                                                <div class="card-body px-0">
+                                                    <p class="card-text mb-1">
+                                                        <small
+                                                            class="text-gold">{{ $active->created_at->format('Y-m-d') }}</small>
+                                                    </p>
+                                                    <h4 class="card-title">{{ $active->title }}</h4>
+                                                    <p class="card-text">{{ $active->subtitle }}</p>
+                                                </div>
                                             </div>
-                                            <div class="card-body px-0">
-                                                <p class="card-text mb-1">
-                                                    <small
-                                                        class="text-gold">{{ $active->created_at->format('Y-m-d') }}</small>
-                                                </p>
-                                                <h4 class="card-title">{{ $active->title }}</h4>
-                                                <p class="card-text">{{ $active->subtitle }}</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
+                <a class="carousel-control-prev" href="#MessageCarousel" role="button" data-slide="prev">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <a class="carousel-control-next" href="#MessageCarousel" role="button" data-slide="next">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
             </div>
-            <a class="carousel-control-prev" href="#MessageCarousel" role="button" data-slide="prev">
-                <i class="fas fa-chevron-left"></i>
-            </a>
-            <a class="carousel-control-next" href="#MessageCarousel" role="button" data-slide="next">
-                <i class="fas fa-chevron-right"></i>
-            </a>
         </div>
-    </div>
+    @endif
 
     {{-- 中間廣告區塊 --}}
     @if ($homeAds->count() > 0)
@@ -175,41 +176,43 @@
     @if ($hotProducts->count() > 0)
         <div class="container mb-5 pt-5">
             <h2 class="text-center font-weight-bold mb-0 border-frame aos-init aos-animate" data-aos="zoom-in-up"
-            data-aos-delay="300" data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
-            熱賣商品
-        </h2>
-        <h4 class="text-center text-gold mb-4 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="350"
-            data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
-            Hot items
-            <div style="border-top: 1px solid #cbc8c8; margin: 20px 0; width: 100%"></div>
-        </h4>
-        <div class="page-content">
-            <div class="row">
-                @foreach ($hotProducts as $product)
-                    <div class="col-md-4 col-6 my-md-3 my-2 px-md-3 pl-2 pr-1 aos-init aos-animate" data-aos="zoom-in"
-                        data-aos-delay="0" data-aos-anchor-placement="center-bottom">
-                        <a href="{{ route('products.show', $product->id) }}">
-                            <div class="card product-card border-0">
-                                <div class="card-top">
-                                    <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}"
-                                        class="card-img-top img-fluid" alt="{{ $product->name }}">
-                                    <b class="float-tag text-white bg-danger">新品</b>
+                data-aos-delay="300" data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
+                熱賣商品
+            </h2>
+            <h4 class="text-center text-gold mb-4 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="350"
+                data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
+                Hot items
+                <div style="border-top: 1px solid #cbc8c8; margin: 20px 0; width: 100%"></div>
+            </h4>
+            <div class="page-content">
+                <div class="row">
+                    @foreach ($hotProducts as $product)
+                        <div class="col-md-4 col-6 my-md-3 my-2 px-md-3 pl-2 pr-1 aos-init aos-animate" data-aos="zoom-in"
+                            data-aos-delay="0" data-aos-anchor-placement="center-bottom">
+                            <a href="{{ route('products.show', $product->id) }}">
+                                <div class="card product-card border-0">
+                                    <div class="card-top">
+                                        <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}"
+                                            class="card-img-top img-fluid" alt="{{ $product->name }}">
+                                        <b class="float-tag text-white bg-danger">新品</b>
+                                    </div>
+                                    <div class="card-body px-0">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <p class="card-text">{{ $product->sub_title }}</p>
+                                        @if ($product->price)
+                                            <div class="original-price mb-1">原價 NT$ {{ number_format($product->price) }}
+                                            </div>
+                                        @endif
+                                        <h5 class="card-text text-danger">優惠價 NT$
+                                            {{ number_format($product->cash_price) }}</h5>
+                                    </div>
                                 </div>
-                                <div class="card-body px-0">
-                                    <h5 class="card-title">{{ $product->name }}</h5>
-                                    <p class="card-text">{{ $product->sub_title }}</p>
-                                    @if ($product->price)
-                                        <div class="original-price mb-1">原價 NT$ {{ number_format($product->price) }}</div>
-                                    @endif
-                                    <h5 class="card-text text-danger">優惠價 NT$ {{ number_format($product->cash_price) }}</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
     @endif
 @endpush
 
@@ -301,7 +304,7 @@
             display: inline-block;
             font-size: 0.9rem;
         }
-        
+
         .original-price::after {
             content: '';
             position: absolute;
