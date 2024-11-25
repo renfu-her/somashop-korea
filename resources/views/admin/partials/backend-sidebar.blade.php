@@ -66,7 +66,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.members.index') }}">
                 <i class="fas fa-users menu-icon"></i>
-                <span class="menu-title">帳號管理</span>
+                <span class="menu-title">會員管理</span>
             </a>
         </li>
 
