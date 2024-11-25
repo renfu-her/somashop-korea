@@ -57,7 +57,7 @@
                                                {{ $activity->is_active ? 'checked' : '' }}>
                                     </div>
                                 </td>
-                                <td>{{ $activity->date }}</td>
+                                <td>{{ $activity->date->format('Y-m-d') }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('admin.activities.edit', $activity) }}"
