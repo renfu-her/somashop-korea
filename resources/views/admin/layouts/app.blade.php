@@ -31,6 +31,8 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css?t=' . time()) }}">
     
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css" />
+
     @stack('styles')
 </head>
 
