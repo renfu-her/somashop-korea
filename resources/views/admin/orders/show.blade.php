@@ -104,6 +104,9 @@
                                 緑界物流單號：{{ $order->logistics_id }}
                             </p>
                             <p class="mb-2">
+                                物流單號：{{ $order->shipment_no }}
+                            </p>
+                            <p class="mb-2">
                                 運送狀態：
                                 <span class="badge bg-info">{{ $order->shipping_status_text }}</span>
                             </p>
