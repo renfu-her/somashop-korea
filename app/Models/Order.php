@@ -65,6 +65,7 @@ class Order extends Model
         'booking_note',
         'paid_at',
         'trade_no',
+        'shipment_no',
     ];
 
     protected $casts = [
