@@ -239,13 +239,14 @@
             Image,
             Table,
             MediaEmbed,
-            ImageUpload
+            ImageUpload,
+            SimpleUploadAdapter 
         } from 'ckeditor5';
 
         ClassicEditor
             .create(document.querySelector('#description'), {
                 language: 'zh',
-                ckfinder: {
+                simpleUpload: {
                     uploadUrl: '{{ route('admin.upload.image') }}',
                     upload: {
                         types: ['jpeg', 'png', 'gif', 'jpg', 'webp']
@@ -264,7 +265,8 @@
                     Image,
                     Table,
                     MediaEmbed,
-                    ImageUpload
+                    ImageUpload,
+                    SimpleUploadAdapter
                 ],
                 toolbar: {
                     items: [
@@ -369,7 +371,7 @@
 
     <script>
         $(document).ready(function() {
-           
+
             // 表單提交前驗證
             $('form').on('submit', function(e) {
                 const description = editor.getData();
