@@ -19,12 +19,14 @@ class Advert extends Model
         'url',
         'is_active',
         'start_date',
-        'end_date'
+        'end_date',
+        'sort_order'
     ];
 
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
+        'sort_order' => 'integer'
     ];
 }

@@ -23,7 +23,7 @@ class AdController extends Controller
 
     public function index()
     {
-        $ads = Advert::all();
+        $ads = Advert::orderBy('sort_order')->get();
         return view('admin.ads.index', compact('ads'));
     }
 
@@ -47,7 +47,8 @@ class AdController extends Controller
             'url' => 'nullable|url',
             'is_active' => 'boolean',
             'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after:start_date'
+            'end_date' => 'nullable|date|after:start_date',
+            'sort_order' => 'nullable|integer'
         ]);
 
 
@@ -79,7 +80,8 @@ class AdController extends Controller
             'image' => 'nullable|image|max:4096',
             'url' => 'nullable|url',
             'start_date' => 'date',
-            'end_date' => 'nullable|date|after:start_date'
+            'end_date' => 'nullable|date|after:start_date',
+            'sort_order' => 'nullable|integer'
         ]);
 
         // try {
@@ -134,6 +136,7 @@ class AdController extends Controller
                 $query->where('end_date', '>=', now())
                     ->orWhereNull('end_date');
             })
+            ->orderBy('sort_order')
             ->get();
 
         return response()->json([

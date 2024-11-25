@@ -483,7 +483,6 @@
 
     <script>
         $(document).ready(function() {
-
             // 表單提交前驗證
             $('form').on('submit', function(e) {
                 const description = editor.getData();
