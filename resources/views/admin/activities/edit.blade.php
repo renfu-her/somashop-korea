@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image" class="form-label">圖片</label>
+                                <label for="image" class="form-label">圖片  (<span class="text-danger">寬度 800px，高度不限</span>)</label>
                                 @if ($activity->image)
                                     <div class="mb-2">
                                         <img src="{{ asset('storage/activities/' . $activity->id . '/' . $activity->image) }}"
