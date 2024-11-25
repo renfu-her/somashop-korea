@@ -69,8 +69,8 @@ class ATMCheckCommand extends Command
         $postData['CheckMacValue'] = $this->generateCheckMacValue($postData);
 
         $api_url = config('app.env') === 'production'
-            ? 'https://payment.ecpay.com.tw/Cashier/QueryTradeInfo/V5'
-            : 'https://payment-stage.ecpay.com.tw/Cashier/QueryTradeInfo/V5';
+            ? 'https://payment.ecpay.com.tw//Cashier/QueryPaymentInfo'
+            : 'https://payment-stage.ecpay.com.tw/Cashier/QueryPaymentInfo';
 
 
         $response = Http::asForm()
