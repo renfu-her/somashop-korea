@@ -172,8 +172,9 @@
         </div>
     @endif
 
-    <div class="container mb-5 pt-5">
-        <h2 class="text-center font-weight-bold mb-0 border-frame aos-init aos-animate" data-aos="zoom-in-up"
+    @if ($hotProducts->count() > 0)
+        <div class="container mb-5 pt-5">
+            <h2 class="text-center font-weight-bold mb-0 border-frame aos-init aos-animate" data-aos="zoom-in-up"
             data-aos-delay="300" data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
             熱賣商品
         </h2>
@@ -209,7 +210,7 @@
             </div>
         </div>
     </div>
-
+    @endif
 @endpush
 
 @push('styles')
