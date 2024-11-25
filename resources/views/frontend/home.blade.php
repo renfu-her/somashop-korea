@@ -3,7 +3,7 @@
 @push('app-content')
     @if ($ads->count() > 0)
         <div class="container px-0">
-            <header id="babyinCarousel" class="carousel slide">
+            <header id="babyinCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
                 <ol class="carousel-indicators">
                     @foreach ($ads as $ad)
                         <li data-target="#babyinCarousel" data-slide-to="{{ $loop->index }}"
