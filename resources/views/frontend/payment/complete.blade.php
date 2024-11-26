@@ -90,9 +90,9 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
+                                        <td>運費</td>
                                         <td class="text-danger mb-0">
-                                            運費：NT${{ number_format($shippingFee) }}
+                                            NT${{ number_format($shippingFee) }}
                                         </td>
                                     </tr>
                                 </tbody>
