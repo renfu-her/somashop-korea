@@ -117,7 +117,7 @@
             <p>付費方式: {{ $shipmentMethod == 'ATM' ? 'ATM 虛擬帳號付款' : '信用卡付款' }}</p>
             @if ($order->shipment_method == 'mail_send')
                 <p>配送地址:
-                    {{ $order->recipient_county }}{{ $order->recipient_district }}{{ $order->recipient_address }}</p>
+                    {{ $order->shipping_county }}{{ $order->shipping_district }}{{ $order->shipping_address }}</p>
             @elseif($order->shipment_method == '711_b2c')
                 <p>取貨門市: 7-11門市取貨</p>
             @elseif($order->shipment_method == 'family_b2c')
