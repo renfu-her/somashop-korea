@@ -92,9 +92,11 @@
                             </p>
                             <p class="mb-2">
                                 運送狀態：
-                                <select class="form-select" onchange="updateShippingStatus(this)">
-                                    <option value="processing">處理中</option>
-                                    <option value="shipped">已出貨</option>
+                                <select class="form-select"
+                                    id="shipping-status"
+                                onchange="updateShippingStatus(this, {{ $order->id }})">
+                                    <option value="processing" @if ($order->shipping_status === 'processing') selected @endif>處理中</option>
+                                    <option value="shipped" @if ($order->shipping_status === 'shipped') selected @endif>已出貨</option>
                                 </select>
                             </p>
                         </div>
@@ -140,8 +142,25 @@
 
 @push('scripts')
     <script>
-        function updateShippingStatus(select) {
+        $(document).ready(function() {
+            
+        });
+
+        // 更新運送狀態
+        function updateShippingStatus(select, orderId) {
             console.log(select.value);
+            console.log(orderId);
+            $.ajax({
+                url: '{{ route('admin.orders.update-shipping-status') }}',
+                method: 'POST',
+                data: {
+                    status: select.value,
+                    order_id: orderId
+                },
+                success: function(response) {
+                    console.log(response);
+                }
+            });
         }
     </script>
 @endpush

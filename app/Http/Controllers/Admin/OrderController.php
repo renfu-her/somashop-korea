@@ -158,4 +158,18 @@ class OrderController extends Controller
         $order->shipment_no = $result['ShipmentNo'] ?? '';
         $order->save();
     }
+
+    // 更新運送狀態
+    public function updateShippingStatus(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+        $order->update([
+            'shipping_status' => Order::SHIPPING_STATUS_SHIPPED
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '運送狀態更新成功'
+        ]);
+    }
 }

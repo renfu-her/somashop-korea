@@ -70,7 +70,7 @@
                                         <td class="align-middle">
                                             {{ $order->payment_status_text }} </td>
                                         <td class="align-middle">
-                                            {{ $order->status_text }} </td>
+                                            {{ $order->shipping_status_text }} </td>
                                         <td></td>
                                     </tr>
                                 @endforeach

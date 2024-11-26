@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'checkout/map/rewrite',
             'payment/*',
             'logout',
+            'admin/orders/update-shipping-status',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

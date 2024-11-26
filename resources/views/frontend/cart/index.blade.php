@@ -243,7 +243,7 @@
 
             // 結帳按鈕
             $('.cartNext').click(function() {
-                window.location.href = '{{ route('checkout.payment') }}';
+                window.location.href = '{{ route('checkout.index') }}';
             });
         });
     </script>

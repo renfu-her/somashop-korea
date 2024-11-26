@@ -8,7 +8,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\ProductSpec;
 use App\Models\Setting;
-
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\ProductSpecification;
 use Illuminate\Support\Facades\Auth;
