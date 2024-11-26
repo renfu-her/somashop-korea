@@ -52,4 +52,12 @@ class SettingController extends Controller
         return redirect()->route('admin.settings.index')
             ->with('success', '設定已更新');
     }
-} 
+
+    public function destroy($id)
+    {
+        $setting = Setting::findOrFail($id);
+        $setting->delete();
+
+        return redirect()->route('admin.settings.index')->with('success', '設定已刪除');
+    }
+}

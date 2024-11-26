@@ -48,7 +48,7 @@
                                             class="btn btn-sm btn-outline-primary">
                                             編輯
                                         </a>
-                                        @if(!in_array($setting->key, ['shipping_fee'])) {{-- 防止刪除基本設定 --}}
+                                        @if(!in_array($setting->key, ['shipping_fee', '711_shipping_fee', 'family_shipping_fee'])) {{-- 防止刪除基本設定 --}}
                                         <form action="{{ route('admin.settings.destroy', $setting->id) }}" 
                                             method="POST" onsubmit="return confirm('確定要刪除此設定嗎？');">
                                             @csrf
