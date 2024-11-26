@@ -156,7 +156,7 @@ class PaymentService
         }
 
         // 清空購物車
-        // session()->forget(['cart']);
+        session()->forget(['cart']);
 
         // 寄送訂單完成郵件
         if ($request->payment == 'ATM') {
