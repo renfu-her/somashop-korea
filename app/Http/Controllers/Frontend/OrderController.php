@@ -26,12 +26,20 @@ class OrderController extends Controller
     public function orderList()
     {
         $memberId = Auth::guard('member')->user()->id;
-        $orders = Order::with(['items.product', 'items.spec', 'member'])->where('member_id', $memberId)->get();
+        $orders = Order::with([
+            'items.product.primaryImage',
+            'items.spec',
+            'member'
+        ])->where('member_id', $memberId)->get();
 
         foreach ($orders as $order) {
             $order->items = $order->items->map(function ($item) {
                 $specName = $item->spec ? $item->spec->name : '規格已刪除';
-                return $item->product->name . '<br>規格：' . $specName;
+                return [
+                    'name' => $item->product->name,
+                    'spec' => $specName,
+                    'image_path' => $item->product->primaryImage?->getImageUrlAttribute()
+                ];
             });
         }
 

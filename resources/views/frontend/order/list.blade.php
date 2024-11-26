@@ -51,10 +51,19 @@
                                         <td class="align-middle">{{ $order->created_at->format('Y-m-d H:i') }}</td>
                                         <td class="align-middle">{{ $order->order_number }}</td>
                                         <td class="align-middle text-left">
-                                            @foreach ($order->items as $key => $item)
-                                                <span class="mb-0">{!! $item !!}</span>
-                                                <hr style="line-height: 1px; margin: 0; padding: 0;">
-                                            @endforeach
+                                            <table class="table table-borderless product-items">
+                                                @foreach ($order->items as $key => $item)
+                                                    <tr>
+                                                        <td class="mb-0">{{ $item['name'] }}<br>規格：{{ $item['spec'] }}
+                                                        </td>
+                                                        <td><img src="{{ $item['image_path'] }}" height="100"
+                                                                alt=""></td>
+                                                    </tr>
+                                                    <tr class="separator">
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
                                         </td>
                                         <td class="align-middle">NT${{ $order->total_amount }}</td>
                                         <td class="align-middle">NT${{ $order->shipping_fee }}</td>
@@ -102,4 +111,24 @@
             </nav>
         </div>
     </article>
+@endpush
+
+@push('styles')
+    <style>
+        .product-items .separator td {
+            position: relative;
+            padding: 0;
+        }
+
+        .product-items .separator td::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #e0e0e0;
+            opacity: 0.8;
+            margin: 3px 3px;
+        }
+    </style>
 @endpush
