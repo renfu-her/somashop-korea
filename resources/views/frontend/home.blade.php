@@ -31,7 +31,7 @@
             </header>
         </div>
     @endif
-    
+
     @if ($actives->count() > 0)
         <div class="container mb-5 mt-5">
             <h2 class="text-center font-weight-bold mb-0" data-aos="zoom-in-up" data-aos-delay="300"
@@ -158,11 +158,29 @@
 
 @push('styles')
     <style>
+        /* 輪播圖響應式設計 */
         #babyinCarousel .carousel-item img,
         #homeAdsCarousel .carousel-item img {
             width: 100%;
-            height: 400px;
+            height: auto;
+            max-height: 400px;
             object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+
+            #babyinCarousel .carousel-item img,
+            #homeAdsCarousel .carousel-item img {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            #babyinCarousel .carousel-item img,
+            #homeAdsCarousel .carousel-item img {
+                height: 200px;
+            }
         }
 
         /* 活動訊息卡片樣式 */
