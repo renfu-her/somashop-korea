@@ -51,8 +51,10 @@
                                         <td class="align-middle">{{ $order->created_at->format('Y-m-d H:i') }}</td>
                                         <td class="align-middle">{{ $order->order_number }}</td>
                                         <td class="align-middle text-left">
-                                            <span class="mb-0">{!! $order->items->first() !!}</span>
-                                            <p class="mb-0"></p>
+                                            @foreach ($order->items as $key => $item)
+                                                <span class="mb-0">{!! $item !!}</span>
+                                                <hr style="line-height: 1px; margin: 0; padding: 0;">
+                                            @endforeach
                                         </td>
                                         <td class="align-middle">NT${{ $order->total_amount }}</td>
                                         <td class="align-middle">NT${{ $order->shipping_fee }}</td>

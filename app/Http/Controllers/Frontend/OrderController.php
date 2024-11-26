@@ -31,7 +31,7 @@ class OrderController extends Controller
         foreach ($orders as $order) {
             $order->items = $order->items->map(function ($item) {
                 $specName = $item->spec ? $item->spec->name : '規格已刪除';
-                return $item->product->name . '<br>' . $specName;
+                return $item->product->name . '<br>規格：' . $specName;
             });
         }
 
