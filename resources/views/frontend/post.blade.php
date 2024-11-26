@@ -39,3 +39,11 @@
         </div>
     </article>
 @endsection
+
+@push('styles')
+    <style>
+        .page-content img {
+            max-width: 100%;
+        }
+    </style>
+@endpush
