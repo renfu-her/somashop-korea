@@ -24,13 +24,14 @@
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    id="email" name="email" value="{{ old('email', $member->email) }}" required
+                                    value="{{ old('email', $member->email) }}"
                                     readonly style="background-color: #e9ecef; opacity: 1;">
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            <input type="hidden" name="email" value="{{ old('email', $member->email) }}">
                             <div class="mb-3">
                                 <label for="password" class="form-label">密碼 <span class="text-danger">（如不修改請留空，規則：至少8個字元，包含大小寫英文、數字）</span></label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
