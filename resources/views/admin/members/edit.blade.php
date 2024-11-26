@@ -32,7 +32,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label">密碼（如不修改請留空）</label>
+                                <label for="password" class="form-label">密碼 <span class="text-danger">（如不修改請留空，規則：至少8個字元，包含大小寫英文、數字）</span></label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
                                     id="password" name="password">
                                 @error('password')

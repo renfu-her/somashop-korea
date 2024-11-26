@@ -43,9 +43,8 @@
                                 <td>
                                     @if ($admin->id !== auth()->id())
                                         <div class="form-check form-switch">
-                                            <input type="checkbox" class="form-check-input status-switch" 
-                                                data-id="{{ $admin->id }}" 
-                                                {{ $admin->is_active ? 'checked' : '' }}>
+                                            <input type="checkbox" class="form-check-input status-switch"
+                                                data-id="{{ $admin->id }}" {{ $admin->is_active ? 'checked' : '' }}>
                                         </div>
                                     @else
                                         <span class="badge bg-success">啟用</span>
@@ -124,6 +123,7 @@
         .form-switch {
             padding-left: 2.5em;
         }
+
         .form-check-input {
             cursor: pointer;
         }

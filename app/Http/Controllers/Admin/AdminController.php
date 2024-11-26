@@ -89,7 +89,7 @@ class AdminController extends Controller
     {
 
         $admin->update([
-            'is_active' => $request->is_active == 'true' ? 1 : 0
+            'is_active' => $request->is_active
         ]);
 
         return response()->json([

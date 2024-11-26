@@ -13,4 +13,9 @@ class SiteSetting extends Model
         'meta_description',
         'meta_keywords',
     ];
+
+    public static function getMetaData($key, $default = null)
+    {
+        return self::first()->{$key} ?? $default;
+    }
 }
