@@ -126,7 +126,8 @@ class PaymentController extends Controller
                 'payment_method' => $this->mapPaymentType($paymentResult['PaymentType']),
                 'payment_date' => $paymentResult['PaymentDate'],
                 'trade_no' => $paymentResult['TradeNo'],
-                'payment_fee' => $paymentResult['PaymentTypeChargeFee']
+                'payment_fee' => $paymentResult['PaymentTypeChargeFee'],
+                'shipping_fee' => $shippingFee
             ]);
 
             $this->sendOrderCompleteEmail($order);

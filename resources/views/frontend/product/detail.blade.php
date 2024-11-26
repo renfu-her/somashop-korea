@@ -207,6 +207,31 @@
             function numberFormat(number) {
                 return new Intl.NumberFormat('zh-TW').format(number);
             }
+
+            // 添加數量增減功能
+            $('.btn-minus').click(function() {
+                const input = $(this).siblings('input[name="quantity"]');
+                const currentValue = parseInt(input.val());
+                if (currentValue > 1) {
+                    input.val(currentValue - 1);
+                }
+            });
+
+            $('.btn-plus').click(function() {
+                const input = $(this).siblings('input[name="quantity"]');
+                const currentValue = parseInt(input.val());
+                input.val(currentValue + 1);
+            });
+
+            // 防止手動輸入非數字或負數
+            $('input[name="quantity"]').on('input', function() {
+                let value = $(this).val();
+                // 移除非數字字符
+                value = value.replace(/[^\d]/g, '');
+                // 確保至少為 1
+                value = value === '' ? 1 : Math.max(1, parseInt(value));
+                $(this).val(value);
+            });
         });
     </script>
 @endpush
