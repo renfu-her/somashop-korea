@@ -38,7 +38,8 @@
                                 <table class="table table-borderless mb-0">
                                     <tr>
                                         <td>商品小計：</td>
-                                        <td class="text-end">NT$ {{ number_format($order->items->sum('total')) }}</td>
+                                        <td class="text-end">NT$
+                                            {{ number_format($order->total_amount - $order->shipping_fee) }}</td>
                                     </tr>
                                     <tr>
                                         <td>運費：</td>
@@ -46,7 +47,8 @@
                                     </tr>
                                     <tr>
                                         <td><strong>總計：</strong></td>
-                                        <td class="text-end"><strong>NT$ {{ number_format($order->items->sum('total') + $order->shipping_fee) }}</strong></td>
+                                        <td class="text-end"><strong>NT$ {{ number_format($order->total_amount) }}</strong>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -79,7 +81,7 @@
                     <div class="card-header">
                         <h5 class="card-title mb-0">運送資訊</h5>
                     </div>
-                    @if ($order->payment_method == 'mail_send')
+                    @if (empty($order->logistics_id))
                         <div class="card-body">
                             <p class="mb-2">
                                 運送方式：貨運到家
@@ -96,8 +98,7 @@
                                 </select>
                             </p>
                         </div>
-                    @endif
-                    @if ($order->payment_method != 'mail_send')
+                    @else
                         <div class="card-body">
                             <p class="mb-2">
                                 緑界物流單號：{{ $order->logistics_id }}
