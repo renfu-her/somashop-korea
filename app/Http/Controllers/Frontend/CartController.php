@@ -37,10 +37,12 @@ class CartController extends Controller
         // 獲取運費
         $shippingFee = 0;
 
+        // 獲取購物車中最後一個商品的 product_id
+        $cartReferrer = !empty($cart) ? end($cart)['product_id'] : '';
 
         return view(
             'frontend.cart.index',
-            compact('cart', 'total', 'shippingFee')
+            compact('cart', 'total', 'shippingFee', 'cartReferrer')
         );
     }
 
@@ -141,18 +143,18 @@ class CartController extends Controller
         ]);
 
         $cart = session()->get('cart', []);
-        
+
         // 找到要删除的商品索引
-        $itemIndex = array_search(true, array_map(function($item) use ($validated) {
-            return $item['product_id'] == $validated['product_id'] && 
-                   $item['spec_id'] == $validated['spec_id'];
+        $itemIndex = array_search(true, array_map(function ($item) use ($validated) {
+            return $item['product_id'] == $validated['product_id'] &&
+                $item['spec_id'] == $validated['spec_id'];
         }, $cart));
 
         if ($itemIndex !== false) {
             // 删除该商品
             array_splice($cart, $itemIndex, 1);
             session()->put('cart', $cart);
-            
+
             return response()->json([
                 'success' => true,
                 'message' => '商品已從購物車移除'
@@ -201,5 +203,39 @@ class CartController extends Controller
         session()->put('cart', $cart);
 
         return redirect()->back()->with('success', '商品已加入購物車');
+    }
+
+    public function updateQuantity(Request $request)
+    {
+        try {
+            $cartKey = $request->input('cart_key');
+            $productId = $request->input('product_id');
+            $specId = $request->input('spec_id');
+            $quantity = $request->input('quantity');
+
+            // 獲取購物車內容
+            $cart = session()->get('cart', []);
+
+            // 更新數量
+            if (isset($cart[$cartKey])) {
+                $cart[$cartKey]['quantity'] = $quantity;
+                session()->put('cart', $cart);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => '數量更新成功'
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => '找不到該商品'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => '更新失敗'
+            ], 500);
+        }
     }
 }

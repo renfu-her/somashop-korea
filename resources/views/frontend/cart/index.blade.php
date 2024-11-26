@@ -44,7 +44,7 @@
 
                             <tbody>
                                 @forelse($cart as $key => $item)
-                                    <tr class="cart-item">
+                                    <tr class="cart-item" data-cart-key="{{ $key }}">
                                         <td scope="row"></td>
                                         <td class="thumb-img align-middle">
                                             <img class="item-img" src="{{ $item['primary_image'] }}" width="106px">
@@ -64,15 +64,17 @@
                                             <span class="cart-tag d-block d-sm-none text-muted" disable>數量</span>
                                             <div class="input-group num-row">
                                                 <button class="btn btn-minus btn-light border btn-sm"
+                                                    data-cart-key="{{ $key }}"
                                                     data-product-id="{{ $item['product_id'] }}"
                                                     data-specification-id="{{ $item['spec_id'] }}">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                                 <input type="text" class="form-control bg-white text-center qty_input"
-                                                    value="{{ $item['quantity'] }}"
+                                                    value="{{ $item['quantity'] }}" data-cart-key="{{ $key }}"
                                                     data-product-id="{{ $item['product_id'] }}"
                                                     data-specification-id="{{ $item['spec_id'] }}">
                                                 <button class="btn btn-plus btn-light border btn-sm"
+                                                    data-cart-key="{{ $key }}"
                                                     data-product-id="{{ $item['product_id'] }}"
                                                     data-specification-id="{{ $item['spec_id'] }}">
                                                     <i class="fa fa-plus"></i>
@@ -87,6 +89,7 @@
                                         <td class="align-middle border-sm-top">
                                             <button type="button"
                                                 class="btn bg-transparent border-0 hvr-buzz-out remove-item"
+                                                data-cart-key="{{ $key }}"
                                                 data-product-id="{{ $item['product_id'] }}"
                                                 data-specification-id="{{ $item['spec_id'] }}">
 
@@ -120,8 +123,9 @@
                             <div class="col-sm-3 offset-sm-9">
                                 <button class="btn btn-danger btn-purchase w-100 rounded-pill mb-3 cartNext" type="button"
                                     onclick="window.location.href='{{ route('checkout.index') }}'">我要結帳</button>
-                                <button class="btn btn-danger btn-addcart w-100 rounded-pill mb-3" type="button"
-                                    onclick="#">繼續購物</button>
+                                <button class="btn btn-danger btn-addcart w-100 rounded-pill mb-3"
+                                    type="button">繼續購物</button>
+                                <input type="hidden" id="referrer" value="{{ $cartReferrer }}">
                             </div>
                         </div>
                     </div>
@@ -133,11 +137,12 @@
     </article>
 @endpush
 
-@push('script')
+@push('scripts')
     <script>
         $(document).ready(function() {
             // 更新數量
             $('.btn-plus, .btn-minus').click(function() {
+                const cartKey = $(this).data('cart-key');
                 const productId = $(this).data('product-id');
                 const specificationId = $(this).data('specification-id');
                 let input = $(this).closest('.num-row').find('.qty_input');
@@ -149,24 +154,25 @@
                     quantity = quantity > 1 ? quantity - 1 : 1;
                 }
 
-                updateCartQuantity(productId, specificationId, quantity);
+                updateCartQuantity(cartKey, productId, specificationId, quantity);
             });
 
             // 移除商品
             $('.remove-item').on('click', function() {
+                const cartKey = $(this).data('cart-key');
                 const productId = $(this).data('product-id');
                 const specificationId = $(this).data('specification-id');
-                console.log(productId, specificationId);
-                // if (confirm('確定要移除此商品嗎？')) {
-                //     removeFromCart(productId, specificationId);
-                // }
+                if (confirm('確定要移除此商品嗎？')) {
+                    removeFromCart(cartKey, productId, specificationId);
+                }
             });
 
-            function updateCartQuantity(productId, specificationId, quantity) {
+            function updateCartQuantity(cartKey, productId, specificationId, quantity) {
                 $.ajax({
                     url: '{{ route('cart.update-quantity') }}',
                     method: 'POST',
                     data: {
+                        cart_key: cartKey,
                         product_id: productId,
                         spec_id: specificationId,
                         quantity: quantity,
@@ -181,11 +187,12 @@
                 });
             }
 
-            function removeFromCart(productId, specificationId) {
+            function removeFromCart(cartKey, productId, specificationId) {
                 $.ajax({
                     url: '{{ route('cart.remove') }}',
                     method: 'POST',
                     data: {
+                        cart_key: cartKey,
                         product_id: productId,
                         spec_id: specificationId,
                         _token: '{{ csrf_token() }}'
@@ -193,9 +200,7 @@
                     success: function(response) {
                         if (response.success) {
                             // 移除对应的 TR 元素
-                            const $item = $(
-                                `button[data-product-id="${productId}"][data-specification-id="${specificationId}"]`
-                            ).closest('tr');
+                            const $item = $(`tr[data-cart-key="${cartKey}"]`);
                             $item.fadeOut(300, function() {
                                 $(this).remove();
 
@@ -229,7 +234,11 @@
 
             // 繼續購物按鈕
             $('.btn-addcart').click(function() {
-                window.location.href = '{{ route('products.index') }}';
+                const referrer = $('#referrer').val();
+
+
+                window.location.href = '{{ route('products.show', $cartReferrer) }}';
+
             });
 
             // 結帳按鈕
