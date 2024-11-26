@@ -95,9 +95,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     # 檢查是否有暫存的更改
     staged_files=$(git diff --cached --name-only)
     if [ -z "$staged_files" ]; then
-        # 如果沒有暫存的更改，才執行 git add
-        git add .
+        echo -e "${YELLOW}沒有已暫存的更改，請先使用 git add 添加要提交的文件${NC}"
+        exit 0
     fi
+    
     git commit -m "$commit_message"
     
     # 詢問是否推送
