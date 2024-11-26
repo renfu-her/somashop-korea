@@ -43,6 +43,7 @@ Route::post('/forget', [ForgetController::class, 'forgetProcess'])->name('forget
 
 // 登出路由
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('get.logout');
 
 // 文章路由
 Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');

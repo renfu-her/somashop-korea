@@ -86,23 +86,7 @@
                 @endauth
             </ul>
         </li>
-
-        {{-- TODO: 移除認識印章 --}}
-        {{-- <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="infomationDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                認識印章 <i class="fas fa-angle-down"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="infomationDropdown">
-                @foreach ($navData['sealKnowledgeCategories'] as $item)
-                    <li class="nav-item">
-                        <a class="nav-link"
-                            href="{{ route('seal-knowledge.category', $item->id) }}">{{ $item->name }}</a>
-                    </li>
-                @endforeach
-            </ul>
-        </li>--}}
-
+        
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="faqDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">

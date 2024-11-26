@@ -92,8 +92,12 @@ echo -e "$commit_message"
 read -p "是否繼續提交? (y/n) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # 執行 git 命令
-    git add .
+    # 檢查是否有暫存的更改
+    staged_files=$(git diff --cached --name-only)
+    if [ -z "$staged_files" ]; then
+        # 如果沒有暫存的更改，才執行 git add
+        git add .
+    fi
     git commit -m "$commit_message"
     
     # 詢問是否推送

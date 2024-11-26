@@ -5,9 +5,15 @@
 
 <ul class="navbar-nav navbar-navright flex-row ml-md-auto ml-0 pr-md-3 pr-2">
     <li class="nav-item mx-md-3 mx-2">
-        <a class="nav-link btn-widget" href="login.php">
-            <i class="far fa-user"></i>
-        </a>
+        @auth
+            <a class="nav-link btn-widget" href="{{ route('get.logout') }}">
+                <i class="far fa-user"></i>
+            </a>
+        @else
+            <a class="nav-link btn-widget" href="{{ route('login') }}">
+                <i class="far fa-user"></i>
+            </a>
+        @endauth
     </li>
     <li class="nav-item">
         <a class="nav-link btn-widget" href="{{ route('cart.index') }}">
