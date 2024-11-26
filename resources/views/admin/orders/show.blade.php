@@ -113,6 +113,26 @@
                         </div>
                     @endif
                 </div>
+
+                @if ($order->invoice_title != '')
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">發票三聯單資訊</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-2">
+                                發票擡頭：{{ $order->invoice_title }}
+                            </p>
+                            <p class="mb-2">
+                                統一編號：{{ $order->invoice_number }}
+                            </p>
+                            <p class="mb-2">
+                                發票地址：{{ $order->invoice_county }}{{ $order->invoice_district }}
+                                {{ $order->invoice_address }}
+                            </p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
