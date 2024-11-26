@@ -42,7 +42,9 @@
                                 <div>
                                     <div>{{ $item->product_name }}</div>
                                     @if($item->spec)
-                                        <small class="text-muted">{{ $item->spec->name }}</small>
+                                        @if(!empty($item->spec->name))
+                                            <small class="text-muted">{{ $item->spec->name }}</small>
+                                        @endif
                                     @endif
                                     <div class="text-muted">
                                         數量: {{ $item->quantity }} × NT$ {{ number_format($item->price) }}
