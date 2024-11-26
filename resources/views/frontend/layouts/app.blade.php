@@ -80,15 +80,15 @@
         <div class="container">
             <div class="row flex-row align-items-center">
                 <div class="img-logo">
-                    <img src="{{ asset('frontend/img/logo_1.png') }}" style="max-width: 100%; max-height: 80px; object-fit: contain">
+                    <img src="{{ asset('frontend/img/logo_1.png') }}"
+                        style="max-width: 100%; max-height: 80px; object-fit: contain">
                 </div>
-                <div class="col-auto mb-3" style="margin-top: 50px">
-                    <div class="row my-md-0 my-2" style="margin-left: -30px">
+                <div class="col-auto mb-3 address">
+                    <div class="row my-md-0 my-2">
                         <div class="col-md-12 col-12">
                             <div class="row">
-                                <div class="col-auto"></div>
-                                <div class="col-auto pl-md-0">
-                                    <p class="m-0 text-dark">
+                                <div class="col-auto pl-md-0 text-dark text-dark1">
+                                    <p class="m-0">
                                         <img src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png">
                                         桃園市桃園區中正路 1247 號 15 樓之 4
                                     </p>
@@ -97,7 +97,7 @@
 
                         </div>
                     </div>
-                    <p class="m-0 text-dark">
+                    <p class="m-0 text-dark text-dark2">
                         © 2024 All Rights Reversed. Huabang Co., Ltd. All rights
                         reserved.
                     </p>
@@ -107,11 +107,14 @@
 
                     <a href="https://line.me/R/ti/p/%40696wxsca" target="_blank" class="px-md-3 px-0 hvr-bob"><img
                             src="{{ asset('frontend/img/ic_small_line.png') }}" class="img-fluid px-md-0 px-3">
+                    </a>
 
                 </div>
             </div>
         </div>
+
     </footer>
+
 
     <script>
         window.dataLayer = window.dataLayer || [];

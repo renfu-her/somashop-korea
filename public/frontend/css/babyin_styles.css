@@ -855,15 +855,6 @@ i.fas.fa-phone-volume {
     height: auto;
   }
 }
-@media (max-width: 767px) {
-  .social-link {
-    width: 100%;
-    margin: 0;
-  }
-  .floatingIcon {
-    display: none !important;
-  }
-}
 
 /************* Go Top *************/
 .back-to-top {
@@ -1467,7 +1458,46 @@ i.fas.fa-phone-volume {
 /* 單獨針對這個類的下拉選單進行偏移 */
 .dropdown-menu.sub-menu {
   margin-left: 75px;
+} /* 手機版樣式 */
+@media (max-width: 768px) {
+  .dropdown-menu.sub-menu {
+    margin-right: 75px; /* 手機版調整的距離 */
+    margin-left: -75px; /* 手機版調整的距離 */
+  }
 }
 .dropdown-menu.sub-menu {
   transform: translateX(75px);
+}
+.address {
+  margin-top: 60px;
+}
+.text-dark1 {
+  margin-left: 15px;
+}
+@media (max-width: 768px) {
+  .bg-footer {
+    text-align: center; /* 讓所有內容居中 */
+  }
+  .address {
+    margin-top: 20px;
+  }
+  .img-logo img {
+    max-width: 80px; /* 手機版縮小 logo */
+    margin-left: 190px;
+    margin-top: 30px;
+  }
+
+  .text-dark1 {
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  .text-dark2 {
+    font-size: 14px;
+  }
+
+  .social-link img {
+    margin-right: 130px;
+    width: 70px; /* 調整按鈕圖標大小 */
+    margin-bottom: 50px;
+  }
 }
