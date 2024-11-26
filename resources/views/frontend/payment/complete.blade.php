@@ -184,7 +184,7 @@
                                             </div>
                                             <div class="col-md-6 col-7">
                                                 <p class="mb-0">
-                                                    {{ $order->recipient_county . $order->recipient_district . $order->recipient_address }}
+                                                    {{ $order->shipping_county . $order->shipping_district . $order->shipping_address }}
                                                 </p>
                                             </div>
                                         </div>
