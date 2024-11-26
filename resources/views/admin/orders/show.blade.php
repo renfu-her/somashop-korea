@@ -79,7 +79,7 @@
                     <div class="card-header">
                         <h5 class="card-title mb-0">運送資訊</h5>
                     </div>
-                    @if (empty($order->logistics_id))
+                    @if ($order->payment_method == 'mail_send')
                         <div class="card-body">
                             <p class="mb-2">
                                 運送方式：貨運到家
@@ -96,7 +96,8 @@
                                 </select>
                             </p>
                         </div>
-                    @else
+                    @endif
+                    @if ($order->payment_method != 'mail_send')
                         <div class="card-body">
                             <p class="mb-2">
                                 緑界物流單號：{{ $order->logistics_id }}
