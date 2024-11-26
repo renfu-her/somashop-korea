@@ -77,11 +77,11 @@
                                 @endforelse
 
                                 <!-- 運費列 -->
-                                <tr class="shipping-fee">
+                                <tr class="shipping-fee" style="display: none;">
                                     <td colspan="4"></td>
                                     <td class="text-center align-middle">運費</td>
                                     <td class="align-middle">
-                                        <p class="text-danger mb-0 money">NT${{ number_format($shippingFee) }}</p>
+                                        <p class="text-danger mb-0 money">NT$0</p>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -158,14 +158,12 @@
                                         <div class="col-sm-6 align-self-center">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender"
-                                                    id="male" value="1"
-                                                    @if (Auth::guard('member')->user()->gender == 1) checked @endif>
+                                                    id="male" value="1" checked>
                                                 <label class="form-check-label" for="male">男</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender"
-                                                    id="female" value="2"
-                                                    @if (Auth::guard('member')->user()->gender == 2) checked @endif>
+                                                    id="female" value="2">
                                                 <label class="form-check-label" for="female">女</label>
                                             </div>
                                         </div>
@@ -190,12 +188,20 @@
                                         <div class="col-sm-6 align-self-center">
                                             <select id="shipment" class="form-control" name="shipment" required>
                                                 <option value="">請選擇</option>
-                                                @foreach($shippingSettings as $key => $shipping)
+                                                @foreach ($shippingSettings as $key => $shipping)
                                                     <option value="{{ $key }}" data-fee="{{ $shipping['fee'] }}">
                                                         {{ $shipping['name'] }}
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            <button type="button" class="btn btn-primary mt-2 map-btn"
+                                                style="display: none;">
+                                                <i class="fas fa-map-marker-alt"></i> 選擇門市
+                                            </button>
+                                            <input type="hidden" name="store_id" value="">
+                                            <input type="hidden" name="store_name" value="">
+                                            <input type="hidden" name="store_address" value="">
+                                            <input type="hidden" name="store_telephone" value="">
                                         </div>
                                     </div>
 
@@ -428,9 +434,14 @@
                 const shippingFee = parseInt(selectedOption.data('fee')) || 0;
                 const selectedValue = $(this).val();
 
-                // 更新運費顯示
-                $('.shipping-fee .money').text('NT$' + numberFormat(shippingFee));
-                
+                // 更���運費顯示
+                if (shippingFee > 0) {
+                    $('.shipping-fee').show();
+                    $('.shipping-fee .money').text('NT$' + numberFormat(shippingFee));
+                } else {
+                    $('.shipping-fee').hide();
+                }
+
                 // 更新總金額
                 const subtotal = {{ $total }};
                 const newTotal = subtotal + shippingFee;
