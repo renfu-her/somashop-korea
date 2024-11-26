@@ -65,7 +65,7 @@ class PaymentService
 
         // 生成訂單編號
         $today = date('Ymd');
-        $lastOrder = Order::where('order_number', 'like', "OID{$today}%")
+        $lastOrder = Order::where('order_number', 'like', "O{$today}%")
             ->orderBy('order_number', 'desc')
             ->first();
 
@@ -76,8 +76,8 @@ class PaymentService
             $newNumber = '0001';
         }
 
-        $order->order_number = "OID" . $today . $newNumber;
-        $order->order_id = 'OID-' . $today . $newNumber;
+        $order->order_number = "O" . $today . $newNumber;
+        $order->order_id = 'O-' . $today . $newNumber;
         $order->member_id = $member->id;
         $order->total_amount = $totalAmount;
         $order->status = Order::STATUS_PENDING;
@@ -151,14 +151,16 @@ class PaymentService
 
         // 物流方式 API
         if ($order->shipment_method != 'mail_send') {
+            Log::info('建立物流訂單');
             $this->logisticsService->createLogisticsOrder($order, $member);
         }
 
         // 清空購物車
-        session()->forget(['cart']);
+        // session()->forget(['cart']);
 
         // 寄送訂單完成郵件
         if ($request->payment == 'ATM') {
+            Log::info('寄送訂單完成郵件');
             $this->sendOrderCompleteEmail($order, 'ATM');
         }
 
@@ -217,6 +219,10 @@ class PaymentService
     public function sendOrderCompleteEmail(Order $order, $shipmentMethod = 'Credit')
     {
         $member = Member::find($order->member_id);
+        $orderItems = OrderItem::with([
+            'product',
+            'spec',
+        ])->where('order_id', $order->id)->get();
 
         $this->mailService->send(
             $member->email, // 订单相关的邮箱
@@ -230,7 +236,7 @@ class PaymentService
                 ]
             ],
             'emails.order-complete',
-            ['order' => $order, 'shipmentMethod' => $shipmentMethod]
+            ['order' => $order, 'shipmentMethod' => $shipmentMethod, 'orderItems' => $orderItems]
         );
     }
 }

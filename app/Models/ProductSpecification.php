@@ -35,13 +35,13 @@ class ProductSpecification extends Model
     // 一個規格可以有多個訂單項目
     public function orderItems(): HasMany
     {
-        return $this->hasMany(OrderItem::class, 'specification_id');
+        return $this->hasMany(OrderItem::class, 'spec_id');
     }
 
     // 一個規格可以有多個購物車項目
     public function cartItems(): HasMany
     {
-        return $this->hasMany(CartItem::class, 'specification_id');
+        return $this->hasMany(CartItem::class, 'spec_id');
     }
 
     // 範圍查詢：只查詢啟用的規格

@@ -18,6 +18,8 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
 
+    <link rel="icon" href="{{ asset('frontend/img/favicon.svg') }}" type="image/x-icon">
+
     <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- AOS animation CSS -->

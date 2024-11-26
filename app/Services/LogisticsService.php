@@ -35,7 +35,6 @@ class LogisticsService
             'GoodsName' => '商品一批',
             'SenderName' => $order->store_name,
             'SenderPhone' => $order->store_telephone,
-            'SenderCellPhone' => $order->store_telephone,
             'ReceiverName' => $order->recipient_name,
             'ReceiverPhone' => $order->recipient_phone,
             'ReceiverCellPhone' => $order->recipient_phone,
@@ -52,62 +51,66 @@ class LogisticsService
 
         $logisticsData['CheckMacValue'] = $this->generateCheckMacValue($logisticsData);
 
-        try {
-            $response = Http::asForm()->post(
-                config('app.env') === 'production'
-                    ? 'https://logistics.ecpay.com.tw/Express/Create'
-                    : 'https://logistics-stage.ecpay.com.tw/Express/Create',
-                $logisticsData
-            );
+        Log::info('建立物流訂單', [
+            'logistics_data' => $logisticsData
+        ]);
 
-            $result = [];
-            $rtnCode = 0;
-            $responseBody = $response->body();
+        // try {
+        $response = Http::asForm()->post(
+            config('app.env') === 'production'
+                ? 'https://logistics.ecpay.com.tw/Express/Create'
+                : 'https://logistics-stage.ecpay.com.tw/Express/Create',
+            $logisticsData
+        );
 
-            if (strpos($responseBody, '1|') === 0) {
-                $rtnCode = 1;
-                $data = substr($responseBody, 2);
-                parse_str($data, $parsedData);
-                $result = array_merge(['RtnCode' => 300], $parsedData);
-            } else {
-                $result = [
-                    'RtnCode' => 0,
-                    'RtnMsg' => substr($responseBody, 2)
-                ];
-            }
+        $result = [];
+        $rtnCode = 0;
+        $responseBody = $response->body();
 
-            if ($rtnCode == 1) {
-                $order->update([
-                    'shipping_status' => Order::SHIPPING_STATUS_PROCESSING,
-                    'logistics_id' => $result['AllPayLogisticsID'] ?? null,
-                    'logistics_type' => $result['LogisticsType'] ?? null,
-                    'logistics_sub_type' => $result['LogisticsSubType'] ?? null,
-                    'cvs_payment_no' => $result['CVSPaymentNo'] ?? null,
-                    'cvs_validation_no' => $result['CVSValidationNo'] ?? null,
-                    'booking_note' => $result['BookingNote'] ?? null
-                ]);
+        if (strpos($responseBody, '1|') === 0) {
+            $rtnCode = 1;
+            $data = substr($responseBody, 2);
+            parse_str($data, $parsedData);
+            $result = array_merge(['RtnCode' => 300], $parsedData);
+        } else {
+            $result = [
+                'RtnCode' => 0,
+                'RtnMsg' => substr($responseBody, 2)
+            ];
+        }
 
-                Log::info('物流訂單建立成功', [
-                    'order_number' => $order->order_number,
-                    'logistics_result' => $result
-                ]);
+        if ($rtnCode == 1) {
+            $order->update([
+                'shipping_status' => Order::SHIPPING_STATUS_PROCESSING,
+                'logistics_id' => $result['AllPayLogisticsID'] ?? null,
+                'logistics_type' => $result['LogisticsType'] ?? null,
+                'logistics_sub_type' => $result['LogisticsSubType'] ?? null,
+                'cvs_payment_no' => $result['CVSPaymentNo'] ?? null,
+                'cvs_validation_no' => $result['CVSValidationNo'] ?? null,
+                'booking_note' => $result['BookingNote'] ?? null
+            ]);
 
-                return true;
-            }
-
-            Log::error('物流訂單建立失敗', [
+            Log::info('物流訂單建立成功', [
                 'order_number' => $order->order_number,
                 'logistics_result' => $result
             ]);
-            return false;
 
-        } catch (\Exception $e) {
-            Log::error('物流訂單建立異常', [
-                'order_number' => $order->order_number,
-                'error' => $e->getMessage()
-            ]);
-            return false;
+            return true;
         }
+
+        Log::error('物流訂單建立失敗', [
+            'order_number' => $order->order_number,
+            'logistics_result' => $result
+        ]);
+        return false;
+
+        // } catch (\Exception $e) {
+        //     Log::error('物流訂單建立異常', [
+        //         'order_number' => $order->order_number,
+        //         'error' => $e->getMessage()
+        //     ]);
+        //     return false;
+        // }
     }
 
     private function getLogisticsSubType($shipment)
@@ -139,4 +142,4 @@ class LogisticsService
 
         return strtoupper(md5($checkStr));
     }
-} 
+}
