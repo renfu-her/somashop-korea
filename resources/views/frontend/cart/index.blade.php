@@ -105,7 +105,6 @@
                                     <td colspan="4"></td>
                                     <td class="text-center align-middle">運費</td>
                                     <td class="align-middle">
-                                        <p class="text-danger mb-0 money">NT${{ number_format($shippingFee) }}</p>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -119,7 +118,7 @@
                                 <h2 class="text-black mb-0">
                                     總計
                                     <span
-                                        class="pl-3 priceTotalplusFee">NT${{ number_format($total + $shippingFee) }}</span>
+                                        class="pl-3 priceTotalplusFee">NT${{ number_format($total) }}</span>
                                 </h2>
                             </div>
                         </div>

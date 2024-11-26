@@ -35,7 +35,7 @@ class CartController extends Controller
         }
 
         // 獲取運費
-        $shippingFee = Setting::where('key', 'shipping_fee')->first()->value;
+        $shippingFee = 0;
 
 
         return view(
