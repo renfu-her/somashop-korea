@@ -50,10 +50,11 @@
                             <div class="form-group row mb-3">
                                 <label for="password"
                                     class="col-sm-3 col-form-label text-md-right text-sm-left align-self-center"><span
-                                        class="text-danger">*</span>密碼</label>
+                                        class="text-danger">*</span>密碼 </label>
                                 <div class="col-sm-7 align-self-center">
                                     <input type="password" class="form-control @error('password') is-invalid @enderror"
                                         id="password" name="password" required>
+                                    <span class="text-danger">(至少 8 個字元，包含大小寫英文、數字)</span>
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -172,7 +173,8 @@
                                 <div class="col-sm-7  align-self-center">
                                     <div class="input-group">
                                         <input type="text" class="form-control align-self-center" id="verify"
-                                            placeholder="" required name="captcha" style="text-transform: uppercase" oninput="this.value = this.value.toUpperCase()">
+                                            placeholder="" required name="captcha" style="text-transform: uppercase"
+                                            oninput="this.value = this.value.toUpperCase()">
                                         <div class="d-flex pl-2 align-self-center">
                                             <img src="{{ route('captcha.generate') }}" width="120" height="60"
                                                 class="captchaImg" />
