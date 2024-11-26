@@ -89,6 +89,7 @@
                                                 class="btn bg-transparent border-0 hvr-buzz-out remove-item"
                                                 data-product-id="{{ $item['product_id'] }}"
                                                 data-specification-id="{{ $item['spec_id'] }}">
+
                                                 <i class="far fa-trash-alt"></i>
                                             </button>
                                         </td>
@@ -109,8 +110,7 @@
                             <div class="col-sm-3 offset-sm-9 col-xs-6 offset-xs-6">
                                 <h2 class="text-black mb-0">
                                     總計
-                                    <span
-                                        class="pl-3 priceTotalplusFee">NT${{ number_format($total) }}</span>
+                                    <span class="pl-3 priceTotalplusFee">NT${{ number_format($total) }}</span>
                                 </h2>
                             </div>
                         </div>
@@ -153,12 +153,13 @@
             });
 
             // 移除商品
-            $('.remove-item').click(function() {
+            $('.remove-item').on('click', function() {
                 const productId = $(this).data('product-id');
                 const specificationId = $(this).data('specification-id');
-                if (confirm('確定要移除此商品嗎？')) {
-                    removeFromCart(productId, specificationId);
-                }
+                console.log(productId, specificationId);
+                // if (confirm('確定要移除此商品嗎？')) {
+                //     removeFromCart(productId, specificationId);
+                // }
             });
 
             function updateCartQuantity(productId, specificationId, quantity) {
@@ -190,12 +191,40 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        location.reload();
+                        if (response.success) {
+                            // 移除对应的 TR 元素
+                            const $item = $(
+                                `button[data-product-id="${productId}"][data-specification-id="${specificationId}"]`
+                            ).closest('tr');
+                            $item.fadeOut(300, function() {
+                                $(this).remove();
+
+                                // 检查购物车是否为空
+                                if ($('.cart-item').length === 0) {
+                                    $('.cart-items tbody').html(
+                                        '<tr><td colspan="8" class="text-center">購物車是空的</td></tr>'
+                                    );
+                                }
+
+                                // 重新计算总金额
+                                updateTotalPrice();
+                            });
+                        }
                     },
                     error: function(xhr) {
                         alert('移除商品失敗，請稍後再試');
                     }
                 });
+            }
+
+            // 添加计算总金额的函数
+            function updateTotalPrice() {
+                let total = 0;
+                $('.cart-item').each(function() {
+                    const price = $(this).find('.money').text().replace('NT$', '').replace(',', '') * 1;
+                    total += price;
+                });
+                $('.priceTotalplusFee').text('NT$' + total.toLocaleString());
             }
 
             // 繼續購物按鈕

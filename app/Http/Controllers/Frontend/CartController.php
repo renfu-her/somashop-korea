@@ -133,16 +133,36 @@ class CartController extends Controller
         ]);
     }
 
-    public function remove(CartItem $item)
+    public function remove(Request $request)
     {
-        if ($item->cart->user_id !== Auth::guard('member')->id()) {
-            abort(403);
+        $validated = $request->validate([
+            'product_id' => 'required',
+            'spec_id' => 'required'
+        ]);
+
+        $cart = session()->get('cart', []);
+        
+        // 找到要删除的商品索引
+        $itemIndex = array_search(true, array_map(function($item) use ($validated) {
+            return $item['product_id'] == $validated['product_id'] && 
+                   $item['spec_id'] == $validated['spec_id'];
+        }, $cart));
+
+        if ($itemIndex !== false) {
+            // 删除该商品
+            array_splice($cart, $itemIndex, 1);
+            session()->put('cart', $cart);
+            
+            return response()->json([
+                'success' => true,
+                'message' => '商品已從購物車移除'
+            ]);
         }
 
-        $item->delete();
-
-        return redirect()->route('cart.index')
-            ->with('success', '商品已從購物車移除');
+        return response()->json([
+            'success' => false,
+            'message' => '商品不存在'
+        ], 404);
     }
 
     public function store(Request $request)

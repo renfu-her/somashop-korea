@@ -38,8 +38,7 @@
                                 <table class="table table-borderless mb-0">
                                     <tr>
                                         <td>商品小計：</td>
-                                        <td class="text-end">NT$
-                                            {{ number_format($order->total_amount - $order->shipping_fee) }}</td>
+                                        <td class="text-end">NT$ {{ number_format($order->items->sum('total')) }}</td>
                                     </tr>
                                     <tr>
                                         <td>運費：</td>
@@ -47,8 +46,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>總計：</strong></td>
-                                        <td class="text-end"><strong>NT$ {{ number_format($order->total_amount) }}</strong>
-                                        </td>
+                                        <td class="text-end"><strong>NT$ {{ number_format($order->items->sum('total') + $order->shipping_fee) }}</strong></td>
                                     </tr>
                                 </table>
                             </div>
