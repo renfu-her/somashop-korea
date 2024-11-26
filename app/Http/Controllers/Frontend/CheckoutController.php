@@ -22,8 +22,6 @@ class CheckoutController extends Controller
 
     public function index(Request $request)
     {
-
-
         // 獲取購物車資料
         $cart = session()->get('cart', []);
         if (empty($cart)) {
@@ -39,14 +37,40 @@ class CheckoutController extends Controller
         // 獲取會員資料
         $member = Auth::guard('member')->user();
 
-        // 獲取運費
-        $shippingFee = Setting::where('key', 'shipping_fee')->first()->value;
+        // 獲取不同的運費設定
+        $mailShippingFee = Setting::getValue('shipping_fee', 0);
+        $sevenShippingFee = Setting::getValue('711_shipping_fee', 0);
+        $familyShippingFee = Setting::getValue('family_shipping_fee', 0);
+
+        // 配送方式設定
+        $shippingSettings = [
+            'mail_send' => [
+                'name' => '郵寄',
+                'fee' => $mailShippingFee,
+            ],
+            '711_b2c' => [
+                'name' => '7-11 店到店',
+                'fee' => $sevenShippingFee,
+            ],
+            'family_b2c' => [
+                'name' => '全家 店到店',
+                'fee' => $familyShippingFee,
+            ]
+        ];
+
+        // 獲取已選擇的門市資訊
+        $selectedStore = session()->get('selected_store');
+
+        // 預設運費
+        $shippingFee = 0;
 
         return view('frontend.checkout.index', compact(
             'cart',
             'total',
             'member',
-            'shippingFee'
+            'shippingFee',
+            'shippingSettings',
+            'selectedStore'
         ));
     }
 

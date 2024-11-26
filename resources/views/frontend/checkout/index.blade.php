@@ -184,25 +184,18 @@
                                     <div class="form-group row">
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
-                                            for="shippment">
+                                            for="shipment">
                                             <span class="text-danger">*</span>寄送方式
                                         </label>
                                         <div class="col-sm-6 align-self-center">
-                                            <select id="shipment" class="form-control" name="shipment"
-                                                data-width="fit">
+                                            <select id="shipment" class="form-control" name="shipment" required>
                                                 <option value="">請選擇</option>
-                                                <option value="mail_send">郵寄</option>
-                                                <option value="711_b2c">7-11 店到店</option>
-                                                <option value="family_b2c">全家 店到店</option>
+                                                @foreach($shippingSettings as $key => $shipping)
+                                                    <option value="{{ $key }}" data-fee="{{ $shipping['fee'] }}">
+                                                        {{ $shipping['name'] }}
+                                                    </option>
+                                                @endforeach
                                             </select>
-                                            <button type="button" class="btn btn-primary mt-2 map-btn"
-                                                style="display: none;">
-                                                <i class="fas fa-map-marker-alt"></i> 選擇門市
-                                            </button>
-                                            <input type="hidden" name="store_id" value="">
-                                            <input type="hidden" name="store_name" value="">
-                                            <input type="hidden" name="store_address" value="">
-                                            <input type="hidden" name="store_telephone" value="">
                                         </div>
                                     </div>
 
@@ -431,24 +424,32 @@
 
             // 寄送方式變更處理
             $('#shipment').change(function() {
+                const selectedOption = $(this).find('option:selected');
+                const shippingFee = parseInt(selectedOption.data('fee')) || 0;
                 const selectedValue = $(this).val();
-                const addrArea = $('.addr');
-                const mapBtn = $('.map-btn');
+
+                // 更新運費顯示
+                $('.shipping-fee .money').text('NT$' + numberFormat(shippingFee));
+                
+                // 更新總金額
+                const subtotal = {{ $total }};
+                const newTotal = subtotal + shippingFee;
+                $('h2.text-black span').text('NT$' + numberFormat(newTotal));
 
                 // 根據選擇顯示不同內容
                 switch (selectedValue) {
                     case 'mail_send':
-                        addrArea.show();
-                        mapBtn.hide();
+                        $('.addr').show();
+                        $('.map-btn').hide();
                         break;
                     case '711_b2c':
                     case 'family_b2c':
-                        addrArea.hide();
-                        mapBtn.show();
+                        $('.addr').hide();
+                        $('.map-btn').show();
                         break;
                     default:
-                        addrArea.hide();
-                        mapBtn.hide();
+                        $('.addr').hide();
+                        $('.map-btn').hide();
                         break;
                 }
             });
@@ -730,6 +731,10 @@
             } else {
                 $('input[name="store_id"]').val(storeData.store_id);
             }
+        }
+
+        function numberFormat(number) {
+            return new Intl.NumberFormat('zh-TW').format(number);
         }
     </script>
 @endpush
