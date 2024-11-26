@@ -14,7 +14,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $actives = Activity::orderByDesc('id')->get();
+        $actives = Activity::orderByDesc('id')
+            ->where('is_active', 1)
+            ->get();
 
         $hotProducts = Product::with('primaryImage')
             ->where('is_active', 1)
