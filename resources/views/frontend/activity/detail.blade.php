@@ -47,7 +47,8 @@
 @push('styles')
     <style>
         .img-max-width img {
-            max-width: 100% !important;
+            width: 100% !important;
+            height: auto !important;
         }
     </style>
 @endpush
