@@ -43,7 +43,8 @@
 @push('styles')
     <style>
         .page-content img {
-            max-width: 100%;
+            width: 100% !important;
+            height: auto !important;
         }
     </style>
 @endpush
