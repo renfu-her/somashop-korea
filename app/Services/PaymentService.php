@@ -48,7 +48,20 @@ class PaymentService
 
         // 建立訂單
         $order = new Order();
-        $shippingFee = Setting::getValue('shipping_fee', 60);
+        switch ($request->shipment) {
+            case 'mail_send':
+                $shippingFee = Setting::getValue('shipping_fee');
+                break;
+            case '711_b2c':
+                $shippingFee = Setting::getValue('711_shipping_fee');
+                break;
+            case 'family_b2c':
+                $shippingFee = Setting::getValue('family_shipping_fee');
+                break;
+            default:
+                $shippingFee = 0;
+                break;
+        }
 
         // 生成訂單編號
         $today = date('Ymd');
