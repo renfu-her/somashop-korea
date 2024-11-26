@@ -32,7 +32,7 @@
                     @foreach($orders as $order)
                     <tr>
                         <td>{{ $order->order_number }}</td>
-                        <td>{{ $order->member->name }}</td>
+                        <td>{{ $order->member->name ?? '' }}</td>
                         <td>
                             @foreach($order->items as $item)
                             <div class="d-flex align-items-center mb-2">
@@ -43,7 +43,7 @@
                                     <div>{{ $item->product_name }}</div>
                                     @if($item->spec)
                                         @if(!empty($item->spec->name))
-                                            <small class="text-muted">{{ $item->spec->name }}</small>
+                                            <small class="text-muted">{{ $item->spec->name ?? '' }}</small>
                                         @endif
                                     @endif
                                     <div class="text-muted">
