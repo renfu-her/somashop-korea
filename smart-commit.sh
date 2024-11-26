@@ -19,7 +19,7 @@ commit_message=""
 file_name=""
 
 # 獲取第一個變更檔案名稱
-first_file=$(echo "$changed_files" | head -n 1 | awk '{print $2}')
+first_file=$(echo "$changed_files" | head -n 1 | awk '{print $2}' | xargs basename)
 file_count=$(echo "$changed_files" | wc -l)
 
 # 檢查是否有配置檔案更改
@@ -82,9 +82,9 @@ if [ ${#commit_message} -gt 47 ]; then
     commit_message="${commit_message:0:47}..."
 fi
 
-# 顯示變更檔案
+# 顯示變更檔案列表
 echo -e "${BLUE}變更檔案列表:${NC}"
-echo "$changed_files"
+echo "$changed_files" | awk '{print $2}' | xargs -I {} basename {}
 echo -e "\n${BLUE}提交訊息:${NC}"
 echo -e "$commit_message"
 

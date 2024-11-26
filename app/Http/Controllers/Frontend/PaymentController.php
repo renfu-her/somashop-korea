@@ -100,8 +100,21 @@ class PaymentController extends Controller
 
         // 根據訂單編號查詢訂單
         $order = Order::where('order_number', $paymentResult['MerchantTradeNo'])->first();
+        switch ($order->shipment_method) {
+            case 'mail_send':
+                $shippingFee = Setting::where('key', 'shipping_fee')->first()->value;
+                break;
+            case '711_b2c':
+                $shippingFee = Setting::where('key', '711_shipping_fee')->first()->value;
+                break;
+            case 'family_b2c':
+                $shippingFee = Setting::where('key', 'family_shipping_fee')->first()->value;
+                break;
+            default:
+                $shippingFee = 0;
+                break;
+        }
         $orderItems = OrderItem::with(['product', 'productImage'])->where('order_id', $order->id)->get();
-        $shippingFee = Setting::where('key', 'shipping_fee')->first()->value;
         $totalAmount = $order->total_amount;
         $member = Member::find($order->member_id);
 
