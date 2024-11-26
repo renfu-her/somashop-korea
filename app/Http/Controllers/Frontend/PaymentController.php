@@ -194,7 +194,7 @@ class PaymentController extends Controller
 
     private function generateCheckMacValue($data)
     {
-        // 按照綠界規範產生檢查��
+        // 按照綠界規範產生檢查碼
         ksort($data);
         $checkStr = "HashKey={$this->hashKey}";
 
@@ -262,11 +262,18 @@ class PaymentController extends Controller
     public function sendOrderCompleteEmail(Order $order, $shipmentMethod = 'Credit')
     {
         $member = Member::find($order->member_id);
-
-        // dd($member, $order);
+        
+        // 獲取訂單項目並加載關聯數據
+        $orderItems = OrderItem::with([
+            'product',
+            'spec',
+            'product.images' => function($query) {
+                $query->where('is_primary', 1);
+            }
+        ])->where('order_id', $order->id)->get();
 
         $this->mailService->send(
-            $member->email, // 订单相关的邮箱
+            $member->email,
             '訂單完成通知',
             [
                 'title' => '訂單完成通知',
@@ -277,7 +284,11 @@ class PaymentController extends Controller
                 ]
             ],
             'emails.order-complete',
-            ['order' => $order, 'shipmentMethod' => $shipmentMethod]
+            [
+                'order' => $order, 
+                'shipmentMethod' => $shipmentMethod,
+                'orderItems' => $orderItems
+            ]
         );
     }
 }
