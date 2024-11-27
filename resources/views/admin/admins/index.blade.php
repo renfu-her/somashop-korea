@@ -41,7 +41,7 @@
                                 <td>{{ $admin->email }}</td>
                                 <td>{{ $admin->phone }}</td>
                                 <td>
-                                    @if ($admin->id !== auth()->id())
+                                    @if ($admin->id !== 3)
                                         <div class="form-check form-switch">
                                             <input type="checkbox" class="form-check-input status-switch"
                                                 data-id="{{ $admin->id }}" {{ $admin->is_active ? 'checked' : '' }}>
