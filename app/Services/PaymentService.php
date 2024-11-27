@@ -65,7 +65,11 @@ class PaymentService
 
         // 生成訂單編號
         $today = date('Ymd');
-        $orderNo = 'OID' . $today;
+        if (config('config.app_run') === 'local') {
+            $orderNo = 'O' . $today;
+        } else {
+            $orderNo = 'OID' . $today;
+        }
         $lastOrder = Order::where('order_number', 'like', "{$orderNo}%")
             ->orderBy('order_number', 'desc')
             ->first();
@@ -107,6 +111,7 @@ class PaymentService
         // 發票資訊
         $order->receipt_type = $request->receipt;
         if ($request->receipt == '3') {
+            $order->invoice_type = $request->receipt;
             $order->invoice_title = $request->invoice_title;
             $order->invoice_number = $request->invoice_taxid;
             $order->invoice_county = $request->invoice_county;

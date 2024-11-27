@@ -20,4 +20,6 @@ return [
     'ecpay_stage_shipment_merchant_id' => env('ECPAY_STAGE_SHIPMENT_MERCHANT_ID', '2000132'),
     'ecpay_stage_shipment_hash_key' => env('ECPAY_STAGE_SHIPMENT_HASH_KEY', '5294y06JbISpM5x9'),
     'ecpay_stage_shipment_hash_iv' => env('ECPAY_STAGE_SHIPMENT_HASH_IV', 'v77hoKGq4kWxNNIS'),
+
+    'app_run' => env('APP_RUN', 'local'),
 ];

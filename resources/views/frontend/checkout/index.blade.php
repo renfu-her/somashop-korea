@@ -306,15 +306,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row invoiceTitleArea">
-                                        <label
-                                            class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
-                                            for="invoice_title">發票抬頭</label>
-                                        <div class="col-sm-6 align-self-center">
-                                            <input type="text" class="form-control" id="invoice_title"
-                                                placeholder="發票抬頭" name="invoice_title">
-                                        </div>
-                                    </div>
 
                                     <div class="form-group row invoiceTitleArea">
                                         <label
@@ -322,7 +313,23 @@
                                             for="invoice_taxid">發票統編</label>
                                         <div class="col-sm-6 align-self-center">
                                             <input type="text" class="form-control" id="invoice_taxid"
-                                                placeholder="發票統編" name="invoice_taxid">
+                                                placeholder="發票統編" name="invoice_taxid" maxlength="8">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row invoiceTitleArea">
+                                        <label
+                                            class="col-sm-10 offset-sm-2 col-form-label align-self-center"
+                                            for="invoice_taxid_check">請輸入 8 位數統編，如果正確，發票抬頭會自動帶入</label>
+                                        
+                                    </div>
+
+                                    <div class="form-group row invoiceTitleArea">
+                                        <label
+                                            class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
+                                            for="invoice_title">發票抬頭</label>
+                                        <div class="col-sm-6 align-self-center">
+                                            <input type="text" class="form-control" id="invoice_title"
+                                                placeholder="發票抬頭" name="invoice_title" readonly>
                                         </div>
                                     </div>
 
@@ -434,7 +441,7 @@
                 const shippingFee = parseInt(selectedOption.data('fee')) || 0;
                 const selectedValue = $(this).val();
 
-                // 更���運費顯示
+                // 更新運費顯示
                 if (shippingFee > 0) {
                     $('.shipping-fee').show();
                     $('.shipping-fee .money').text('NT$' + numberFormat(shippingFee));
@@ -620,7 +627,7 @@
                 }
             });
 
-            // 當發票類型改變時，重置發票地址區域
+            // 當發票類型改變時，���置發票地址區域
             $('input[name="receipt"]').change(function() {
                 const selectedValue = $(this).val();
                 const invoiceArea = $('.invoiceArea');
@@ -645,6 +652,32 @@
                     $('input[name="invoice_address"]').val('');
                     $('input[name="invoice_title"]').val('');
                     $('input[name="invoice_taxid"]').val('');
+                }
+            });
+
+            // 當統一編號輸入框失去焦點時進行驗證
+            $('#invoice_taxid').blur(function() {
+                const taxId = $(this).val();
+                if (taxId.length === 8) {
+                    $.ajax({
+                        url: '{{ route('checkout.validate-invoice-number') }}',
+                        method: 'POST',
+                        data: {
+                            invoice_taxid: taxId,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // 自動填入公司名稱
+                                $('#invoice_title').val(response.company_name);
+                            } else {
+                                alert('統一編號驗證失敗：' + response.message);
+                            }
+                        },
+                        error: function(xhr) {
+                            alert('驗證過程發生錯誤，請稍後再試');
+                        }
+                    });
                 }
             });
         });

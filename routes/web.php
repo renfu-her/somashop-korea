@@ -138,6 +138,9 @@ Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
     Route::get('/update-atm-status', [TestController::class, 'updateShippingStatus'])->name('update.atm.status');
 });
 
+Route::post('/checkout/validate-invoice-number', [CheckoutController::class, 'validateInvoiceNumber'])
+    ->name('checkout.validate-invoice-number');
+
 
 
 

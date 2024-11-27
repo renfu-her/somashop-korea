@@ -14,10 +14,17 @@ use App\Models\Setting;
 class CheckoutController extends Controller
 {
     protected $captchaService;
+    protected $merchantID;
+    protected $hashKey;
+    protected $hashIV;
 
     public function __construct(CaptchaService $captchaService)
     {
         $this->captchaService = $captchaService;
+        $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
+        $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
+        $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_hash_iv') : config('config.ecpay_stage_hash_iv');
+
     }
 
     public function index(Request $request)
@@ -192,6 +199,118 @@ class CheckoutController extends Controller
             'success' => true,
             'store' => $store
         ]);
+    }
+
+    public function validateInvoiceNumber(Request $request)
+    {
+
+        // dd($request->all());
+
+        try {
+            $validator = Validator::make($request->all(), [
+                'invoice_taxid' => 'required|string|size:8'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => '統一編號格式不正確'
+                ], 422);
+            }
+
+            // 準備 API 參數
+            $timestamp = time();
+            $merchantId = $this->merchantID;
+            
+            $apiUrl = config('app.env') === 'production'
+                ? 'https://einvoice.ecpay.com.tw/B2CInvoice/GetCompanyNameByTaxID'
+                : 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/GetCompanyNameByTaxID';
+
+            // 準備加密資料
+            $data = [
+                'MerchantID' => $merchantId,
+                'UnifiedBusinessNo' => $request->invoice_taxid
+            ];
+
+            // 發送請求到綠界 API
+            $response = Http::post($apiUrl, [
+                'MerchantID' => $merchantId,
+                'RqHeader' => [
+                    'Timestamp' => $timestamp
+                ],
+                'Data' => $this->encryptData($data) // 需要實作加密方法
+            ]);
+
+            $result = $response->json();
+            
+            if ($result['TransCode'] === 1) {
+                $decryptedData = $this->decryptData($result['Data']); // 需要實作解密方法
+                
+                if ($decryptedData['RtnCode'] === 1) {
+                    return response()->json([
+                        'success' => true,
+                        'company_name' => $decryptedData['CompanyName']
+                    ]);
+                }
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => '統一編號驗證失敗'
+            ], 422);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => '系統錯誤，請稍後再試'
+            ], 500);
+        }
+    }
+
+    private function encryptData($data)
+    {
+        // 將資料轉換為 JSON 字串
+        $jsonData = json_encode($data);
+        
+        // URL encode
+        $urlEncodedData = urlencode($jsonData);
+        
+        // AES 加密
+        $cipher = 'aes-128-cbc';
+        $options = OPENSSL_RAW_DATA;
+        $encrypted = openssl_encrypt(
+            $urlEncodedData,
+            $cipher,
+            $this->hashKey,
+            $options,
+            $this->hashIV
+        );
+        
+        // Base64 編碼
+        return base64_encode($encrypted);
+    }
+
+    private function decryptData($encryptedData)
+    {
+        // Base64 解碼
+        $encrypted = base64_decode($encryptedData);
+        
+        // AES 解密
+        $cipher = 'aes-128-cbc';
+        $options = OPENSSL_RAW_DATA;
+        $decrypted = openssl_decrypt(
+            $encrypted,
+            $cipher,
+            $this->hashKey,
+            $options,
+            $this->hashIV
+        );
+        
+        // URL decode
+        $urlDecodedData = urldecode($decrypted);
+        
+        // JSON 解析
+        return json_decode($urlDecodedData, true);
     }
 
 }
