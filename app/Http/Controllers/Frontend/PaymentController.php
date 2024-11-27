@@ -59,21 +59,7 @@ class PaymentController extends Controller
     // 接收綠界支付通知
     public function notify(Request $request)
     {
-        // 獲取 JSON 內容
-        $jsonContent = $request->getContent();
-
-        // 解析 JSON 數據
-        $data = json_decode($jsonContent, true);
-
-        // 如果 JSON 解析失敗,記錄錯誤並返回失敗
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            Log::error('綠界支付通知 JSON 解析失敗', [
-                'error' => json_last_error_msg(),
-                'content' => $jsonContent
-            ]);
-            return '0|FAIL';
-        }
-
+        $data = $request->all();
         Log::info('綠界支付通知', $data);
 
         // 檢查檢查碼
@@ -101,6 +87,7 @@ class PaymentController extends Controller
 
             return '1|OK';
         }
+
 
         return '0|FAIL';
     }
