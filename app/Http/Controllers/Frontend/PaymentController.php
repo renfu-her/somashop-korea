@@ -60,7 +60,6 @@ class PaymentController extends Controller
     public function notify(Request $request)
     {
         $data = $request->all();
-        Log::info('綠界支付通知', $data);
 
         // 檢查檢查碼
         $order = Order::where('order_number', $data['MerchantTradeNo'])->first();
