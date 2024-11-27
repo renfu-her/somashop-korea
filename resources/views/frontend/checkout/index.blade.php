@@ -709,7 +709,8 @@
                         }
                     });
                 } else if (taxId.length > 0) {
-                    window.showToast('統一編號必須為8碼', 'error');
+                    window.showToast('統一編號必須為8碼數字', 'error');
+                    $('#invoice_taxid').val('').focus();
                 }
             });
         });
