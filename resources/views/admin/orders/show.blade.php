@@ -131,6 +131,23 @@
                     </div>
                 </div>
 
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">發票資訊</h5>
+                        <small class="text-muted">
+                            發票開立時間：{{ $order->issued_invoice_date ?? '未開立' }}
+                        </small>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2">
+                            發票狀態：{{ $order->invoice_checked == 1 ? '已檢查開立狀態' : '未檢查開立狀態' }}
+                        </p>
+                        <p class="mb-2">
+                            發票號碼：{{ $order->issued_invoice_number ?? '未開立' }}
+                        </p>
+                    </div>
+                </div>
+
                 @if ($order->invoice_title != '')
                     <div class="card mb-4">
                         <div class="card-header">
@@ -151,7 +168,7 @@
                     </div>
                 @endif
             </div>
-            
+
         </div>
     </div>
 @endsection
