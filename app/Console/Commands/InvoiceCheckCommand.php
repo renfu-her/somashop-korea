@@ -126,6 +126,7 @@ class InvoiceCheckCommand extends Command
         if ($order->invoice_number) {
             $invoiceData['CustomerIdentifier'] = $order->invoice_number;
             $invoiceData['Print'] = 1;
+            $invoiceData['CustomerAddr'] = $order->invoice_county . $order->invoice_district . $order->invoice_address;
         } else {
             $invoiceData['Print'] = 0;
         }
