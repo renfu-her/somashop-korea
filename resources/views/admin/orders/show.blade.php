@@ -91,6 +91,13 @@
                                 運送方式：貨運到家
                             </p>
                             <p class="mb-2">
+                                收件者：{{ $order->recipient_name }}
+                            </p>
+                            <p class="mb-2">
+                                性別：{{ $order->member->gender == 1 ? '男' : '女' }}
+                            </p>
+
+                            <p class="mb-2">
                                 寄貨地址：{{ $order->shipping_county }}{{ $order->shipping_district }}
                                 {{ $order->shipping_address }}
                             </p>
