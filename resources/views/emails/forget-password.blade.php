@@ -78,7 +78,7 @@
             
             <p>歡迎直接進入德善堂線上購物：</p>
             <div style="text-align: center;">
-                <a href="{{ config('app.url') }}" class="button">前往購物網站</a>
+                <a href="{{ config('app.url') }}" class="button" >前往購物網站</a>
             </div>
         </div>
         

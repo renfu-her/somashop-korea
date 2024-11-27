@@ -117,7 +117,7 @@
 
                     <form class="w-100">
 
-                        <div class="col-md-12 mt-5">
+                        <div class="col-md-12 mt-5" style="display:none;">
                             <div class="row">
                                 <div class="col-md-3 col-sm-12 align-self-center">
                                     <h3 class="text-md-right text-sm-left text-danger">付款方式</h3>
@@ -138,7 +138,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12 mt-3">
+                        <div class="col-md-12 mt-3" style="display:none;">
                             <div class="row">
                                 <div class="col-md-3 col-sm-12 pl-md-0">
                                     <h3 class="text-md-right text-sm-left text-danger">收貨人資訊</h3>
@@ -212,6 +212,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-12 mt-3">
                             <div class="row">
                                 <div class="col-md-3 col-12 align-self-center">
