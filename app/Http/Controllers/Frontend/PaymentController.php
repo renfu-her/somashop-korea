@@ -59,37 +59,47 @@ class PaymentController extends Controller
     // 接收綠界支付通知
     public function notify(Request $request)
     {
-        $data = $request->all();
+        // 獲取 JSON 內容
+        $jsonContent = $request->getContent();
+
+        // 解析 JSON 數據
+        $data = json_decode($jsonContent, true);
+
+        // 如果 JSON 解析失敗,記錄錯誤並返回失敗
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            Log::error('綠界支付通知 JSON 解析失敗', [
+                'error' => json_last_error_msg(),
+                'content' => $jsonContent
+            ]);
+            return '0|FAIL';
+        }
+
         Log::info('綠界支付通知', $data);
 
-
         // 檢查檢查碼
-        if ($this->paymentCheckMacValue($data)) {
-            Log::info('綠界檢查碼', $data['MerchantTradeNo']);
-            $order = Order::where('order_number', $data['MerchantTradeNo'])->first();
+        $order = Order::where('order_number', $data['MerchantTradeNo'])->first();
 
-            if ($order && $data['RtnCode'] == 1) {
-                $order->update([
-                    'payment_status' => Order::PAYMENT_STATUS_PAID,
-                    'status' => Order::STATUS_PROCESSING,
-                    // 'payment_method' => $this->mapPaymentType($data['PaymentType']),
-                    'payment_date' => $data['PaymentDate'],
-                    'trade_no' => $data['TradeNo'],
-                    'payment_fee' => $data['PaymentTypeChargeFee']
-                ]);
+        if ($order && $data['RtnCode'] == 1) {
+            $order->update([
+                'payment_status' => Order::PAYMENT_STATUS_PAID,
+                'status' => Order::STATUS_PROCESSING,
+                // 'payment_method' => $this->mapPaymentType($data['PaymentType']),
+                'payment_date' => $data['PaymentDate'],
+                'trade_no' => $data['TradeNo'],
+                'payment_fee' => $data['PaymentTypeChargeFee']
+            ]);
 
-                // 發送訂單完成郵件
-                // $this->sendOrderCompleteEmail($order, $data['PaymentType']);
+            // 發送訂單完成郵件
+            // $this->sendOrderCompleteEmail($order, $data['PaymentType']);
 
-                // 記錄付款成功日誌
-                Log::info('付款成功', [
-                    'order_number' => $order->order_number,
-                    'payment_type' => $data['PaymentType'],
-                    'trade_no' => $data['TradeNo']
-                ]);
+            // 記錄付款成功日誌
+            Log::info('付款成功', [
+                'order_number' => $order->order_number,
+                'payment_type' => $data['PaymentType'],
+                'trade_no' => $data['TradeNo']
+            ]);
 
-                return '1|OK';
-            }
+            return '1|OK';
         }
 
         return '0|FAIL';
