@@ -21,5 +21,12 @@ return [
     'ecpay_stage_shipment_hash_key' => env('ECPAY_STAGE_SHIPMENT_HASH_KEY', '5294y06JbISpM5x9'),
     'ecpay_stage_shipment_hash_iv' => env('ECPAY_STAGE_SHIPMENT_HASH_IV', 'v77hoKGq4kWxNNIS'),
 
+    'ecpay_invoice_merchant_id' => env('ECPAY_INVOICE_MERCHANT_ID', '2000132'),
+    'ecpay_invoice_hash_key' => env('ECPAY_INVOICE_HASH_KEY', 'ejCk326UnaZWKisg'),
+    'ecpay_invoice_hash_iv' => env('ECPAY_INVOICE_HASH_IV', 'ZX8Ib9LM8wYk'),
+    'ecpay_invoice_stage_merchant_id' => env('ECPAY_INVOICE_STAGE_MERCHANT_ID', '2000132'),
+    'ecpay_invoice_stage_hash_key' => env('ECPAY_INVOICE_STAGE_HASH_KEY', 'ejCk326UnaZWKisg'),
+    'ecpay_invoice_stage_hash_iv' => env('ECPAY_INVOICE_STAGE_HASH_IV', 'ZX8Ib9LM8wYk'),
+
     'app_run' => env('APP_RUN', 'local'),
 ];
