@@ -126,7 +126,7 @@
                     </div>
                     <div class="card-body">
                         <p class="mb-2">
-                            {{ $order->booking_note }}
+                            {{ $order->note }}
                         </p>
                     </div>
                 </div>
