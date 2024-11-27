@@ -529,7 +529,7 @@
 
                 if (!shipmentType) {
                     e.preventDefault();
-                    alert('請選擇寄送方式');
+                    window.showToast('請選擇寄送方式', 'error');
                     return false;
                 }
 
@@ -537,7 +537,7 @@
                 if ((shipmentType === '711_b2c' || shipmentType === 'family_b2c') &&
                     !$('input[name="store_id"]').val()) {
                     e.preventDefault();
-                    alert('請選擇取貨門市');
+                    window.showToast('請選擇取貨門市', 'error');
                     return false;
                 }
 
@@ -546,7 +546,35 @@
                     if (!$('select[name="county"]').val() ||
                         !$('select[name="district"]').val()) {
                         e.preventDefault();
-                        alert('請選擇縣市及區域');
+                        window.showToast('請選擇縣市及區域', 'error');
+                        return false;
+                    }
+                }
+
+                // 檢查是否選擇三聯式發票
+                if ($('input[name="receipt"]:checked').val() === '3') {
+                    // 檢查統一編號
+                    if (!$('input[name="invoice_taxid"]').val()) {
+                        e.preventDefault();
+                        window.showToast('請填寫統一編號', 'error');
+                        $('input[name="invoice_taxid"]').focus();
+                        return false;
+                    }
+
+                    // 檢查發票抬頭
+                    if (!$('input[name="invoice_title"]').val()) {
+                        e.preventDefault();
+                        window.showToast('請填寫發票抬頭', 'error');
+                        $('input[name="invoice_title"]').focus();
+                        return false;
+                    }
+
+                    // 檢查發票寄送地址
+                    if (!$('select[name="invoice_county"]').val() || 
+                        !$('select[name="invoice_district"]').val() || 
+                        !$('input[name="invoice_address"]').val()) {
+                        e.preventDefault();
+                        window.showToast('請填寫完整的發票寄送地址', 'error');
                         return false;
                     }
                 }
@@ -627,7 +655,7 @@
                 }
             });
 
-            // 當發票類型改變時，���置發票地址區域
+            // 當發票類型改變時，重置發票地址區域
             $('input[name="receipt"]').change(function() {
                 const selectedValue = $(this).val();
                 const invoiceArea = $('.invoiceArea');
@@ -655,12 +683,12 @@
                 }
             });
 
-            // 當統一編號輸入框失去焦點時進行驗證
+            // 統一編號驗證
             $('#invoice_taxid').blur(function() {
                 const taxId = $(this).val();
                 if (taxId.length === 8) {
                     $.ajax({
-                        url: '{{ route('checkout.validate-invoice-number') }}',
+                        url: '{{ route("checkout.validate-invoice-number") }}',
                         method: 'POST',
                         data: {
                             invoice_taxid: taxId,
@@ -668,16 +696,20 @@
                         },
                         success: function(response) {
                             if (response.success) {
-                                // 自動填入公司名稱
                                 $('#invoice_title').val(response.company_name);
+                                window.showToast('統一編號驗證成功', 'success');
                             } else {
-                                alert('統一編號驗證失敗：' + response.message);
+                                window.showToast(response.message || '統一編號驗證失敗', 'error');
+                                $('#invoice_taxid').val('').focus();
                             }
                         },
                         error: function(xhr) {
-                            alert('驗證過程發生錯誤，請稍後再試');
+                            window.showToast('驗證過程發生錯誤，請稍後再試', 'error');
+                            $('#invoice_taxid').val('').focus();
                         }
                     });
+                } else if (taxId.length > 0) {
+                    window.showToast('統一編號必須為8碼', 'error');
                 }
             });
         });
