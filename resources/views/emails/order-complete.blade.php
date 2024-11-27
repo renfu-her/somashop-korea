@@ -123,6 +123,7 @@
             @elseif($order->shipment_method == 'family_b2c')
                 <p>取貨門市: 全家便利商店取貨</p>
             @endif
+            <p>備註: <br>{{ $order->note }}</p>
         </div>
 
         <div style="margin-top: 30px;">

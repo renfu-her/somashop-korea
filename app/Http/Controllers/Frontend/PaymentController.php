@@ -77,7 +77,7 @@ class PaymentController extends Controller
                 ]);
 
                 // 發送訂單完成郵件
-                $this->sendOrderCompleteEmail($order, $data['PaymentType']);
+                // $this->sendOrderCompleteEmail($order, $data['PaymentType']);
 
                 // 記錄付款成功日誌
                 Log::info('付款成功', [
