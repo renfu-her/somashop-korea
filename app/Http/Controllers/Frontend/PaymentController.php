@@ -61,6 +61,8 @@ class PaymentController extends Controller
     {
         $data = $request->all();
 
+        Log::info('綠界支付通知', $data);
+
         // 檢查檢查碼
         if ($this->paymentCheckMacValue($data)) {
             $order = Order::where('order_number', $data['MerchantTradeNo'])->first();
@@ -218,7 +220,7 @@ class PaymentController extends Controller
         return $this->generateCheckMacValue($data) === $checkMacValue;
     }
 
-    
+
     // 物流狀態通知
     public function logisticsNotify(Request $request)
     {
@@ -262,12 +264,12 @@ class PaymentController extends Controller
     public function sendOrderCompleteEmail(Order $order, $shipmentMethod = 'Credit')
     {
         $member = Member::find($order->member_id);
-        
+
         // 獲取訂單項目並加載關聯數據
         $orderItems = OrderItem::with([
             'product',
             'spec',
-            'product.images' => function($query) {
+            'product.images' => function ($query) {
                 $query->where('is_primary', 1);
             }
         ])->where('order_id', $order->id)->get();
@@ -285,7 +287,7 @@ class PaymentController extends Controller
             ],
             'emails.order-complete',
             [
-                'order' => $order, 
+                'order' => $order,
                 'shipmentMethod' => $shipmentMethod,
                 'orderItems' => $orderItems
             ]
