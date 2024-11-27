@@ -77,7 +77,7 @@ class ATMCheckCommand extends Command
         // dd($result);
 
         if (!empty($result['TradeNo'])) {
-            Log::info("ATM 訂單 {$order->order_number} 已完成付款", [
+            Log::info("ATM 訂單 {$order->order_number} 已完成取號", [
                 'RtnCode' => $result['RtnCode'],
                 'RtnMsg' => $result['RtnMsg'],
                 'TradeNo' => $result['TradeNo'],
