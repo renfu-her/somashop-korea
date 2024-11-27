@@ -61,10 +61,11 @@ class PaymentController extends Controller
     {
         $data = $request->all();
         Log::info('綠界支付通知', $data);
-        Log::info('綠界檢查碼', $data['MerchantTradeNo']);
+
 
         // 檢查檢查碼
         if ($this->paymentCheckMacValue($data)) {
+            Log::info('綠界檢查碼', $data['MerchantTradeNo']);
             $order = Order::where('order_number', $data['MerchantTradeNo'])->first();
 
             if ($order && $data['RtnCode'] == 1) {
