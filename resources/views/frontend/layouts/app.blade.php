@@ -29,7 +29,7 @@
     <link href="{{ asset('frontend/css/hover-min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{ asset('frontend/css/babyin_styles.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/babyin_styles_20241127.css') }}" rel="stylesheet">
 
     <!-- fontawesome -->
     <link href="{{ asset('frontend/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
@@ -81,7 +81,7 @@
             <div class="row flex-row align-items-center">
                 <div class="img-logo">
                     <img src="{{ asset('frontend/img/logo_1.png') }}"
-                        style="max-width: 100%; max-height: 80px; object-fit: contain">
+                        style="max-width: 100%; max-height: 80px; object-fit: contain" />
                 </div>
                 <div class="col-auto mb-3 address">
                     <div class="row my-md-0 my-2">
@@ -89,7 +89,7 @@
                             <div class="row">
                                 <div class="col-auto pl-md-0 text-dark text-dark1">
                                     <p class="m-0">
-                                        <img src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png">
+                                        <img src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png" />
                                         桃園市桃園區中正路 1247 號 15 樓之 4
                                     </p>
                                 </div>
@@ -98,23 +98,19 @@
                         </div>
                     </div>
                     <p class="m-0 text-dark text-dark2">
-                        © 2024 All Rights Reversed. Huabang Co., Ltd. All rights
+                        &copy; 2024 All Rights Reversed. Huabang Co., Ltd. All rights
                         reserved.
                     </p>
                 </div>
                 <div
                     class="col-auto social-link d-flex justify-content-between align-items-center ml-auto text-center px-md-3 px-4">
-
                     <a href="https://line.me/R/ti/p/%40696wxsca" target="_blank" class="px-md-3 px-0 hvr-bob"><img
-                            src="{{ asset('frontend/img/ic_small_line.png') }}" class="img-fluid px-md-0 px-3">
+                            src="{{ asset('frontend/img/ic_small_line.png') }}" class="img-fluid px-md-0 px-3" />
                     </a>
-
                 </div>
             </div>
         </div>
-
     </footer>
-
 
     <script>
         window.dataLayer = window.dataLayer || [];
