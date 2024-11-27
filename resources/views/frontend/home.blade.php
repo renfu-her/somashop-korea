@@ -168,18 +168,28 @@
         }
 
         @media (max-width: 768px) {
-
             #babyinCarousel .carousel-item img,
             #homeAdsCarousel .carousel-item img {
                 height: 250px;
             }
+            
+            /* 增加手機版本的容器邊距 */
+            .container {
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+            }
         }
 
         @media (max-width: 576px) {
-
             #babyinCarousel .carousel-item img,
             #homeAdsCarousel .carousel-item img {
                 height: 200px;
+            }
+            
+            /* 增加更小螢幕的容器邊距 */
+            .container {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
             }
         }
 
