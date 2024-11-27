@@ -117,14 +117,18 @@ class InvoiceCheckCommand extends Command
             'UserId' => $member->id,
             'Items' => $items,
             'CustomerName' => $order->invoice_title ?? $member->name,
-            'CustomerIdentifier' => $order->invoice_number ?? '',
             'CustomerPhone' => $member->phone,
             'CustomerEmail' => $member->email,
             'OrderId' => $order->order_number,
             'Donation' => 0,
-            'Print' => 0,
             'CarrierType' => 1,
         ];
+        if ($order->invoice_number) {
+            $invoiceData['CustomerIdentifier'] = $order->invoice_number;
+            $invoiceData['Print'] = 1;
+        } else {
+            $invoiceData['Print'] = 0;
+        }
 
         return $this->invoice->setPostData($invoiceData)->send();
     }
