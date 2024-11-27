@@ -212,7 +212,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 mt-3" style="display:none;">
+                        <div class="col-md-12 mt-3">
                             <div class="row">
                                 <div class="col-md-3 col-12 align-self-center">
                                     <h3 class="text-md-right text-sm-left text-danger">備註</h3>
