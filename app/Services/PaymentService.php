@@ -144,7 +144,7 @@ class PaymentService
             'PaymentType' => 'aio',
             'TotalAmount' => $order->total_amount + $shippingFee,
             'TradeDesc' => '商品訂單',
-            'ItemName' => $this->getItemNames($cart),
+            'ItemName' => $this->getItemNames($cart, $shippingFee),
             'ReturnURL' => route('payment.notify'),
             'OrderResultURL' => route('payment.callback'),
             'ChoosePayment' => $this->getECPayMethod($request->payment),
@@ -184,11 +184,18 @@ class PaymentService
         return $payment == 1 ? Order::PAYMENT_METHOD_CREDIT : Order::PAYMENT_METHOD_ATM;
     }
 
-    private function getItemNames($cart)
+    private function getItemNames($cart, $shippingFee = 0)
     {
-        return collect($cart)->map(function ($item) {
+        $items = collect($cart)->map(function ($item) {
             return $item['product_name'] . ' x ' . $item['quantity'];
-        })->implode('#');
+        });
+
+        // 如果有運費，加入運費項目
+        if ($shippingFee > 0) {
+            $items->push('運費 x 1');
+        }
+
+        return $items->implode('#');
     }
 
     private function getECPayMethod($payment)
