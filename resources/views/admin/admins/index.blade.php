@@ -53,7 +53,7 @@
                                 <td>{{ $admin->last_login_at ?? '尚未登入' }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        @if ($admin->id !== auth()->id())
+                                        @if ($admin->id !== 3)
                                             <a href="{{ route('admin.admins.edit', $admin) }}"
                                                 class="btn btn-sm btn-outline-primary">編輯</a>
 
