@@ -66,7 +66,6 @@ class InvoiceCheckCommand extends Command
         // 獲取昨天已付款但未開立發票的訂單
         $orders = Order::where('payment_status', 'paid')
             ->where('invoice_checked', false)
-            ->whereDate('created_at', $yesterday)
             ->get();
 
         foreach ($orders as $order) {
