@@ -112,7 +112,7 @@ Route::group(['middleware' => 'auth:member'], function () {
 // 付款結果
 Route::get('/payment/callback', [PaymentController::class, 'paymentATMCallback'])->name('payment.atm.callback');
 Route::post('/payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
-Route::get('/payment/notify', [PaymentController::class, 'notify'])->name('payment.notify');
+Route::post('/payment/notify', [PaymentController::class, 'notify'])->name('payment.notify');
 
 // 門市地圖
 Route::get('/checkout/map/711-store/{shippmentType}', [CheckoutController::class, 'openSevenMap'])->name('checkout.map.711');
