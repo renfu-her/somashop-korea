@@ -60,7 +60,6 @@ class PaymentController extends Controller
     public function notify(Request $request)
     {
         $data = $request->all();
-
         Log::info('綠界支付通知', $data);
 
         // 檢查檢查碼
@@ -68,12 +67,27 @@ class PaymentController extends Controller
             $order = Order::where('order_number', $data['MerchantTradeNo'])->first();
 
             if ($order && $data['RtnCode'] == 1) {
-                $order->payment_status = Order::PAYMENT_STATUS_PAID;
-                $order->status = Order::STATUS_PROCESSING;
-                $order->save();
-            }
+                $order->update([
+                    'payment_status' => Order::PAYMENT_STATUS_PAID,
+                    'status' => Order::STATUS_PROCESSING,
+                    // 'payment_method' => $this->mapPaymentType($data['PaymentType']),
+                    'payment_date' => $data['PaymentDate'],
+                    'trade_no' => $data['TradeNo'],
+                    'payment_fee' => $data['PaymentTypeChargeFee']
+                ]);
 
-            return '1|OK';
+                // 發送訂單完成郵件
+                $this->sendOrderCompleteEmail($order, $data['PaymentType']);
+
+                // 記錄付款成功日誌
+                Log::info('付款成功', [
+                    'order_number' => $order->order_number,
+                    'payment_type' => $data['PaymentType'],
+                    'trade_no' => $data['TradeNo']
+                ]);
+
+                return '1|OK';
+            }
         }
 
         return '0|FAIL';
