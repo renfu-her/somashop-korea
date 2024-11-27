@@ -65,7 +65,8 @@ class PaymentService
 
         // 生成訂單編號
         $today = date('Ymd');
-        $lastOrder = Order::where('order_number', 'like', "O{$today}%")
+        $orderNo = 'OID' . $today;
+        $lastOrder = Order::where('order_number', 'like', "{$orderNo}%")
             ->orderBy('order_number', 'desc')
             ->first();
 
@@ -76,8 +77,8 @@ class PaymentService
             $newNumber = '0001';
         }
 
-        $order->order_number = "O" . $today . $newNumber;
-        $order->order_id = 'O-' . $today . $newNumber;
+        $order->order_number = $orderNo . $newNumber;
+        $order->order_id = $orderNo . $newNumber;
         $order->member_id = $member->id;
         $order->total_amount = $totalAmount;
         $order->status = Order::STATUS_PENDING;
