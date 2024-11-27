@@ -116,13 +116,13 @@
                                         @if (Auth::guard('member')->check())
                                             <div class="col-6">
                                                 <button type="submit"
-                                                    class="btn btn-danger w-100 rounded-pill checkout-btn">
+                                                    class="btn btn-danger w-100 rounded-pill cart-btn">
                                                     立即訂購
                                                 </button>
                                             </div>
                                             <div class="col-6">
                                                 <button type="submit"
-                                                    class="btn btn-outline-danger w-100 rounded-pill cart-btn">加入購物車</button>
+                                                    class="btn btn-outline-danger w-100 rounded-pill checkout-btn">加入購物車</button>
                                             </div>
                                         @else
                                             <div class="col-12">
