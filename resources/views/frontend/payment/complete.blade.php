@@ -212,8 +212,20 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /.col -->
-
+                        <div class="col-md-12 mt-3" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-3 col-12 align-self-center">
+                                    <h3 class="text-md-right text-sm-left text-danger">備註</h3>
+                                </div>
+                                <div class="col-md-9 col-12 align-self-center">
+                                    <div class="row">
+                                        <div class="col-md-6 offset-md-2 col-7 align-self-center">
+                                            <p class="mb-0">{{ $order->note }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-md-12 mt-3" style="display:none;">
                             <div class="row">
