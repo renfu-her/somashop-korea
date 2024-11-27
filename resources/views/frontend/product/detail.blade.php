@@ -148,6 +148,10 @@
 
 @push('styles')
     <style>
+        .product-description {
+            margin: 15px;
+        }
+
         .product-price .original-price {
             text-decoration: line-through;
             color: #6c757d;
