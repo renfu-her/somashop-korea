@@ -72,9 +72,11 @@
         @include('frontend.layouts.partials.toast-messages')
 
         @yield('content')
+    
+        @stack('app-content')
     </div>
 
-    @stack('app-content')
+    
 
     <footer class="bg-footer d-flex align-items-center">
         <div class="container">
