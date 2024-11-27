@@ -66,6 +66,10 @@ class Order extends Model
         'paid_at',
         'trade_no',
         'shipment_no',
+        'issued_invoice_number',
+        'issued_invoice_date',
+        // 發票驗證
+        'invoice_checked',
     ];
 
     protected $casts = [

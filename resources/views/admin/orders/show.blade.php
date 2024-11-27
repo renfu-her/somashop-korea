@@ -36,10 +36,13 @@
                         <div class="row">
                             <div class="col-md-6 offset-md-6">
                                 <table class="table table-borderless mb-0">
+                                    @php
+                                        $subtotal = $order->items->sum('total');
+                                        $total = $subtotal + $order->shipping_fee;
+                                    @endphp
                                     <tr>
                                         <td>商品小計：</td>
-                                        <td class="text-end">NT$
-                                            {{ number_format($order->total_amount - $order->shipping_fee) }}</td>
+                                        <td class="text-end">NT$ {{ number_format($subtotal) }}</td>
                                     </tr>
                                     <tr>
                                         <td>運費：</td>
@@ -47,7 +50,8 @@
                                     </tr>
                                     <tr>
                                         <td><strong>總計：</strong></td>
-                                        <td class="text-end"><strong>NT$ {{ number_format($order->total_amount) }}</strong>
+                                        <td class="text-end">
+                                            <strong>NT$ {{ number_format($total) }}</strong>
                                         </td>
                                     </tr>
                                 </table>
@@ -92,10 +96,10 @@
                             </p>
                             <p class="mb-2">
                                 運送狀態：
-                                <select class="form-select"
-                                    id="shipping-status"
-                                onchange="updateShippingStatus(this, {{ $order->id }})">
-                                    <option value="processing" @if ($order->shipping_status === 'processing') selected @endif>處理中</option>
+                                <select class="form-select" id="shipping-status"
+                                    onchange="updateShippingStatus(this, {{ $order->id }})">
+                                    <option value="processing" @if ($order->shipping_status === 'processing') selected @endif>處理中
+                                    </option>
                                     <option value="shipped" @if ($order->shipping_status === 'shipped') selected @endif>已出貨</option>
                                 </select>
                             </p>
@@ -114,6 +118,17 @@
                             </p>
                         </div>
                     @endif
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">備註</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2">
+                            {{ $order->booking_note }}
+                        </p>
+                    </div>
                 </div>
 
                 @if ($order->invoice_title != '')
@@ -136,6 +151,7 @@
                     </div>
                 @endif
             </div>
+            
         </div>
     </div>
 @endsection
@@ -143,7 +159,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            
+
         });
 
         // 更新運送狀態
