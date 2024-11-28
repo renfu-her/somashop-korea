@@ -110,7 +110,7 @@
                     url: "//cdn.datatables.net/plug-ins/2.1.8/i18n/zh-HANT.json"
                 },
                 order: [
-                    [7, 'desc']
+                    [8, 'desc']
                 ], // 按建立時間降序排序
                 columnDefs: [{
                     targets: -1,
