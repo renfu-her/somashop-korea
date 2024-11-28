@@ -10,9 +10,6 @@
                     <p class="name">
                         {{ Auth::user()->name }}
                     </p>
-                    <p class="designation">
-                        {{ Auth::user()->role ?? 'Admin' }}
-                    </p>
                 </div>
             </div>
         </li>
