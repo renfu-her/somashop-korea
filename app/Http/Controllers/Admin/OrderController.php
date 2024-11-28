@@ -42,43 +42,57 @@ class OrderController extends Controller
 
         $order->load(['member', 'items.product', 'items.spec', 'items.productImage']);
 
-        if ($order->shipping_status == Order::SHIPPING_STATUS_PROCESSING) {
+        switch ($order->shipment_method) {
+            case 'family_b2b':
+                $shipmentMethodName = '全家店到店';
+                break;
 
-            if (!empty($order->logistics_id)) {
-                // try {
-                // 準備請求參數
-                $params = [
-                    'MerchantID' => $this->shipmentMerchantID,
-                    'AllPayLogisticsID' => $order->logistics_id,
-                    'TimeStamp' => time(),
-                ];
+            case '711_b2c':
+                $shipmentMethodName = '7-11 店到店';
+                break;
 
-                // 加入檢查碼
-                $params['CheckMacValue'] = $this->generateEcpayCheckMacValue($params);
+            default:
+                $shipmentMethodName = '郵寄';
+                break;
+        }
 
-                $api_url = config('app.env') === 'production'
-                    ? 'https://logistics.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V4'
-                    : 'https://logistics-stage.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V4';
+        if (!empty($order->logistics_id)) {
+            // try {
+            // 準備請求參數
+            $params = [
+                'MerchantID' => $this->shipmentMerchantID,
+                'AllPayLogisticsID' => $order->logistics_id,
+                'TimeStamp' => time(),
+            ];
 
-                // 發送請求到綠界 API
-                $response = Http::asForm()->post($api_url, $params);
+            // 加入檢查碼
+            $params['CheckMacValue'] = $this->generateEcpayCheckMacValue($params);
 
-                if ($response->status() == 200) {
-                    // 解析回應
-                    parse_str($response->body(), $result);
+            $api_url = config('app.env') === 'production'
+                ? 'https://logistics.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V4'
+                : 'https://logistics-stage.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V4';
 
-                    $this->updateOrderShippingStatus($order, $result);
-                } else {
-                    Log::error('綠界物流查詢失敗', [
-                        'order_id' => $order->id,
-                        'status' => $response->status(),
-                        'body' => $response->body()
-                    ]);
-                }
+            // 發送請求到綠界 API
+            $response = Http::asForm()->post($api_url, $params);
+
+            if ($response->status() == 200) {
+                // 解析回應
+                parse_str($response->body(), $result);
+
+                $this->updateOrderShippingStatus($order, $result);
+            } else {
+                Log::error('綠界物流查詢失敗', [
+                    'order_id' => $order->id,
+                    'status' => $response->status(),
+                    'body' => $response->body()
+                ]);
             }
         }
 
-        return view('admin.orders.show', compact('order'));
+        return view(
+            'admin.orders.show',
+            compact('order', 'shipmentMethodName')
+        );
     }
 
     /**

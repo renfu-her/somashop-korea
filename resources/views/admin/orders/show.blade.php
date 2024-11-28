@@ -73,6 +73,9 @@
                             <span class="badge bg-primary">{{ $order->status_text }}</span>
                         </p>
                         <p class="mb-2">
+                            付款方式：{{ $order->payment_method == 'credit' ? '信用卡' : 'ATM' }}
+                        </p>
+                        <p class="mb-2">
                             付款狀態：
                             <span class="badge bg-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }}">
                                 {{ $order->payment_status_text }}
@@ -88,7 +91,10 @@
                     @if (empty($order->logistics_id))
                         <div class="card-body">
                             <p class="mb-2">
-                                運送方式：貨運到家
+                                寄送方式：{{ $shipmentMethodName }}
+                            </p>
+                            <p class="mb-2">
+                                運送方式：郵寄
                             </p>
                             <p class="mb-2">
                                 收件者：{{ $order->recipient_name }}
@@ -113,6 +119,9 @@
                         </div>
                     @else
                         <div class="card-body">
+                            <p class="mb-2">
+                                寄送方式：{{ $shipmentMethodName }}
+                            </p>
                             <p class="mb-2">
                                 緑界物流單號：{{ $order->logistics_id }}
                             </p>
