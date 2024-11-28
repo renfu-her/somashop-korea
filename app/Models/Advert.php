@@ -20,7 +20,8 @@ class Advert extends Model
         'is_active',
         'start_date',
         'end_date',
-        'sort_order'
+        'sort_order',
+        'image_thumb'
     ];
 
     protected $casts = [

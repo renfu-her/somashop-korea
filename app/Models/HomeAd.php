@@ -11,7 +11,8 @@ class HomeAd extends Model
         'image',
         'link',
         'is_active',
-        'sort_order'
+        'sort_order',
+        'image_thumb'
     ];
 
     protected $casts = [
