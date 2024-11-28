@@ -76,7 +76,7 @@
                                     </option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">更新狀態</button>
+                            <button type="submit" class="btn btn-primary">更新訂單狀態</button>
                         </form>
                     </div>
                 </div>
