@@ -162,7 +162,7 @@
                         </div>
                         <div class="card-body">
                             <p class="mb-2">
-                                發票擡頭：{{ $order->invoice_title }}
+                                發票抬頭：{{ $order->invoice_title }}
                             </p>
                             <p class="mb-2">
                                 統一編號：{{ $order->invoice_number }}
