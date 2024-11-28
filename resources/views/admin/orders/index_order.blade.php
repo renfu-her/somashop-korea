@@ -23,8 +23,8 @@
                             <th>付款方式</th>
                             <th>總金額</th>
                             <th>付款狀態</th>
-                            <th>訂單狀態</th>
                             <th>運送狀態</th>
+                            <th>訂單狀態</th>                            
                             <th>建立時間</th>
                             <th>操作</th>
                         </tr>
@@ -61,13 +61,13 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge bg-primary">
-                                        {{ $order->status_text }}
+                                    <span class="badge bg-info">
+                                        {{ $order->shipping_status_text }}
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge bg-info">
-                                        {{ $order->shipping_status_text }}
+                                    <span class="badge bg-primary">
+                                        {{ $order->status_text }}
                                     </span>
                                 </td>
                                 <td>{{ $order->created_at->format('Y-m-d H:i') }}</td>
