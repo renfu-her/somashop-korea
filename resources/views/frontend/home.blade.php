@@ -178,26 +178,31 @@
         @media (max-width: 768px) {
             #babyinCarousel .carousel-item img,
             #homeAdsCarousel .carousel-item img {
-                height: 250px;
+                width: 800px;  /* 設定手機版寬度為 800px */
+                height: auto;  /* 高度自動調整保持比例 */
+                max-width: 100%;  /* 確保不會超出螢幕 */
+                object-fit: contain;  /* 確保圖片完整顯示 */
+                margin: 0 auto;  /* 圖片置中 */
             }
             
-            /* 增加手機版本的容器邊距 */
-            .container {
-                padding-left: 15px !important;
-                padding-right: 15px !important;
+            /* 調整容器樣式 */
+            #babyinCarousel,
+            #homeAdsCarousel {
+                width: 100%;
+                overflow: hidden;  /* 防止水平捲動 */
+            }
+            
+            /* 調整輪播指示器位置 */
+            .carousel-indicators {
+                bottom: 20px;
             }
         }
 
         @media (max-width: 576px) {
             #babyinCarousel .carousel-item img,
             #homeAdsCarousel .carousel-item img {
-                height: 200px;
-            }
-            
-            /* 增加更小螢幕的容器邊距 */
-            .container {
-                padding-left: 20px !important;
-                padding-right: 20px !important;
+                width: 800px;
+                height: auto;
             }
         }
 
