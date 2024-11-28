@@ -46,7 +46,7 @@ class CartController extends Controller
         );
     }
 
-    public function addToCart(Request $request)
+    public function addToCart(Request $request, $redirect = true)
     {
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
@@ -79,7 +79,14 @@ class CartController extends Controller
             return redirect()->route('checkout.index');
         }
 
-        return redirect()->route('cart.index');
+        if ($redirect) {
+            return redirect()->route('cart.index');
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => '商品已加入購物車'
+            ]);
+        }
     }
 
     public function add(Request $request)
