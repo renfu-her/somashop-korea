@@ -66,6 +66,10 @@ class LogisticsService
         $result = [];
         $rtnCode = 0;
         $responseBody = $response->body();
+        
+        Log::info('建立物流訂單回應', [
+            'response_body' => $responseBody
+        ]);
 
         if (strpos($responseBody, '1|') === 0) {
             $rtnCode = 1;

@@ -52,4 +52,9 @@ class HomeController extends Controller
 
         return view('frontend.home', compact('actives', 'hotProducts', 'ads', 'homeAds'));
     }
+
+    public function memberAgreement()
+    {
+        return view('frontend.member.agreement');
+    }
 }
