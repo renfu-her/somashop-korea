@@ -30,9 +30,19 @@ class OrderController extends Controller
 
     public function index()
     {
+        // 使用 Order 模型的 scope 方法來處理運送方式文字
         $orders = Order::with(['member', 'items.product', 'items.spec', 'items.productImage'])
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->get()
+            ->map(function ($order) {
+                $order['shipment_method_text'] = match ($order->shipment_method) {
+                    'family_b2c' => '全家店到店',
+                    '711_b2c' => '7-11 店到店',
+                    'mail_send' => '郵寄',
+                    default => ''
+                };
+                return $order;
+            });
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -176,10 +186,21 @@ class OrderController extends Controller
     // 更新運送狀態
     public function updateShippingStatus(Request $request)
     {
+
         $order = Order::findOrFail($request->order_id);
         $order->update([
-            'shipping_status' => Order::SHIPPING_STATUS_SHIPPED
+            'shipping_status' => $request->status
         ]);
+
+        if ($order->payment_status == 'paid' && $order->shipping_status == 'shipped') {
+            $order->update([
+                'status' => Order::STATUS_COMPLETED
+            ]);
+        } else {
+            $order->update([
+                'status' => Order::STATUS_PROCESSING
+            ]);
+        }
 
         return response()->json([
             'success' => true,
