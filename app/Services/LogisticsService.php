@@ -66,7 +66,7 @@ class LogisticsService
         $result = [];
         $rtnCode = 0;
         $responseBody = $response->body();
-        
+
         Log::info('建立物流訂單回應', [
             'response_body' => $responseBody
         ]);
@@ -120,12 +120,10 @@ class LogisticsService
     private function getLogisticsSubType($shipment)
     {
         switch ($shipment) {
-            case 'seven':
+            case '711_b2c':
                 return 'UNIMART';
-            case 'family':
+            case 'family_b2c':
                 return 'FAMI';
-            case 'hilife':
-                return 'HILIFE';
             default:
                 return 'UNIMART';
         }
