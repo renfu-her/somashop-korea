@@ -30,7 +30,9 @@ class OrderController extends Controller
             'items.product.primaryImage',
             'items.spec',
             'member'
-        ])->where('member_id', $memberId)->get();
+        ])->where('member_id', $memberId)
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         foreach ($orders as $order) {
             $order->items = $order->items->map(function ($item) {

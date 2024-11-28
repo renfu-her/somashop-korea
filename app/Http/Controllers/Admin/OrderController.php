@@ -41,6 +41,11 @@ class OrderController extends Controller
                     'mail_send' => '郵寄',
                     default => ''
                 };
+                $order['payment_method_text'] = match ($order->payment_method) {
+                    'credit' => '信用卡',
+                    'atm' => 'ATM 虛擬帳號',
+                    default => ''
+                };
                 return $order;
             });
 
@@ -65,6 +70,12 @@ class OrderController extends Controller
                 $shipmentMethodName = '郵寄';
                 break;
         }
+
+        $order['payment_method_text'] = match ($order->payment_method) {
+            'credit' => '信用卡',
+            'atm' => 'ATM 虛擬帳號',
+            default => ''
+        };
 
         if (!empty($order->logistics_id)) {
             // try {
