@@ -39,6 +39,16 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="image_thumb" class="form-label">縮小圖 (<span class="text-danger">寬度
+                                        800px</span>)</label>
+                                <input type="file" class="form-control @error('image_thumb') is-invalid @enderror"
+                                    id="image_thumb" name="image_thumb" accept="image/*">
+                                @error('image_thumb')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="url" class="form-label">連結網址</label>
                                 <input type="url" class="form-control @error('url') is-invalid @enderror"
                                     id="url" name="url" value="{{ old('url') }}">

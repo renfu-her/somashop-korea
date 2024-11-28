@@ -48,7 +48,8 @@ class AdController extends Controller
             'is_active' => 'boolean',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after:start_date',
-            'sort_order' => 'nullable|integer'
+            'sort_order' => 'nullable|integer',
+            'image_thumb' => 'nullable|image|max:4096'
         ]);
 
 
@@ -56,6 +57,13 @@ class AdController extends Controller
         if ($request->hasFile('image')) {
             $validated['image'] = $this->imageService->uploadImage(
                 $request->file('image'),
+                'ads'
+            );
+        }
+
+        if ($request->hasFile('image_thumb')) {
+            $validated['image_thumb'] = $this->imageService->uploadImage(
+                $request->file('image_thumb'),
                 'ads'
             );
         }
@@ -81,7 +89,8 @@ class AdController extends Controller
             'url' => 'nullable|url',
             'start_date' => 'date',
             'end_date' => 'nullable|date|after:start_date',
-            'sort_order' => 'nullable|integer'
+            'sort_order' => 'nullable|integer',
+            'image_thumb' => 'nullable|image|max:4096'
         ]);
 
         // try {
@@ -97,6 +106,18 @@ class AdController extends Controller
                         'ads'
                     );
                 }
+            }
+
+            if ($request->hasFile('image_thumb')) {
+                // 刪除舊圖片
+                if ($ad->image_thumb) {
+                    Storage::disk('public')->delete($ad->image_thumb);
+                }
+
+                $validated['image_thumb'] = $this->imageService->uploadImage(
+                    $request->file('image_thumb'),
+                    'ads'
+                );
             }
 
             // 處理 is_active

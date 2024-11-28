@@ -31,6 +31,14 @@
                             </div>
 
                             <div class="mb-3">
+                                <label class="form-label">當前縮小圖</label>
+                                <div class="card" style="width: 200px;">
+                                    <img src="{{ asset('storage/home_ads/' . $homeAd->image_thumb) }}" class="card-img-top"
+                                        alt="{{ $homeAd->title }}">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="link" class="form-label">連結網址</label>
                                 <input type="url" class="form-control @error('link') is-invalid @enderror"
                                     id="link" name="link" value="{{ old('link') }}" placeholder="https://">

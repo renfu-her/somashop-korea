@@ -39,7 +39,8 @@ class HomeAdsController extends Controller
             'image' => 'required|image|max:4096',
             'link' => 'nullable|url|max:255',
             'sort_order' => 'required|integer|min:0',
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
+            'image_thumb' => 'nullable|image|max:4096'
         ]);
 
 
@@ -51,6 +52,14 @@ class HomeAdsController extends Controller
                 'home_ads'
             );
             $validated['image'] = $filename;
+        }
+
+        if ($request->hasFile('image_thumb')) {
+            $filename = $this->imageService->uploadImage(
+                $request->file('image_thumb'),
+                'home_ads'
+            );
+            $validated['image_thumb'] = $filename;
         }
 
         HomeAd::create($validated);
@@ -71,7 +80,8 @@ class HomeAdsController extends Controller
             'image' => 'nullable|image|max:4096',
             'link' => 'nullable|url|max:255',
             'sort_order' => 'required|integer|min:0',
-            'is_active' => 'boolean'
+            'is_active' => 'boolean',
+            'image_thumb' => 'nullable|image|max:4096'
         ]);
 
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
@@ -88,6 +98,18 @@ class HomeAdsController extends Controller
                 'home_ads'
             );
             $validated['image'] = $filename;
+        }
+
+        if ($request->hasFile('image_thumb')) {
+            if ($homeAd->image_thumb) {
+                Storage::disk('public')->delete('home_ads/' . $homeAd->image_thumb);
+            }
+
+            $filename = $this->imageService->uploadImage(
+                $request->file('image_thumb'),
+                'home_ads'
+            );
+            $validated['image_thumb'] = $filename;
         }
 
         $homeAd->update($validated);
