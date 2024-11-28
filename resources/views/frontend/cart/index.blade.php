@@ -110,7 +110,7 @@
 
                     <div class="col-sm-12 my-3">
                         <div class="row">
-                            <div class="col-sm-3 offset-sm-9 col-xs-6 offset-xs-6">
+                            <div class="col-sm-12 offset-sm-9 col-xs-6 offset-xs-6">
                                 <h2 class="text-black mb-0">
                                     總計
                                     <span class="pl-3 priceTotalplusFee">NT${{ number_format($total) }}</span>
