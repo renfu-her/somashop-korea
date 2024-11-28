@@ -1,17 +1,11 @@
 # e-commerce-template
 
 ## 後台管理
+- `/admin`
+    - 帳號：admin@admin.com 
+    - 密碼：Qq123456
 
-### 登入
-
-- 後台登入頁面：`/admin/login`
-- 後台登入驗證：`/admin/post.login`
-- 後台登出：`/admin/logout`
-- 後台首頁：`/admin`
-- 後台權限驗證：`admin.auth`
-- 後台路由：`/admin/*`
-- 後台路由別名：`admin.*`
-- 後台登入頁面：`admin.login`
-- 後台登入驗證：`admin.post.login`
-- 後台登出：`admin.logout`
-
+- 一般頁面
+    - [https://e-commerce-dev..test/](https://e-commerce-dev.dev-vue.com/)
+    - ![首頁](https://raw.gitmirror.com/renfu-her/image-drive/main/develop/e-commerce-home.png)
+- 
