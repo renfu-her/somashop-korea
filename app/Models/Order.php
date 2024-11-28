@@ -180,4 +180,26 @@ class Order extends Model
             self::SHIPPING_STATUS_PROCESSING => '處理中'
         ][$this->shipping_status] ?? '未知';
     }
+
+    // 獲取狀態列表
+    public static function getStatusList()
+    {
+        return [
+            self::STATUS_PENDING => '待處理',
+            self::STATUS_PROCESSING => '處理中',
+            self::STATUS_COMPLETED => '已完成',
+            self::STATUS_CANCELLED => '已取消'
+        ];
+    }
+
+    // 獲取狀態標籤顏色
+    public static function getStatusColor($status)
+    {
+        return [
+            self::STATUS_PENDING => 'warning',
+            self::STATUS_PROCESSING => 'info',
+            self::STATUS_COMPLETED => 'success',
+            self::STATUS_CANCELLED => 'danger'
+        ][$status] ?? 'secondary';
+    }
 }

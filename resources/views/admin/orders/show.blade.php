@@ -58,6 +58,27 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <form action="{{ route('admin.orders.update-status', $order) }}" method="POST"
+                            class="d-flex justify-content-end">
+                            @method('PUT')
+                            <div class="me-2">
+                                <select name="status" class="form-select" style="width: 100px;">
+                                    <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>待處理
+                                    </option>
+                                    <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>處理中
+                                    </option>
+                                    <option value="shipping" {{ $order->status == 'shipping' ? 'selected' : '' }}>已出貨
+                                    </option>
+                                    <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>已完成
+                                    </option>
+                                    <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>已取消
+                                    </option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">更新狀態</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 

@@ -30,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'logout',
             'admin/orders/update-shipping-status',
             'admin/logout',
+            'admin/orders/*/update-status',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

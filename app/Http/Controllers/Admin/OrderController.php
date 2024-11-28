@@ -213,4 +213,23 @@ class OrderController extends Controller
             'message' => '運送狀態更新成功'
         ]);
     }
+
+    /**
+     * 更新訂單狀態
+     */
+    public function updateStatus(Request $request, Order $order)
+    {
+
+        $request->validate([
+            'status' => 'required|string|in:pending,processing,completed,cancelled,shipping'
+        ]);
+
+        $order->update([
+            'status' => $request->status
+        ]);
+
+        // 可以在這裡添加其他邏輯，比如發送通知等
+
+        return redirect()->route('admin.orders.show', $order)->with('success', '訂單狀態更新成功');
+    }
 }

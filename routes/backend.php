@@ -132,6 +132,8 @@ Route::group([
     Route::resource('orders', OrderController::class);
     Route::post('orders/update-shipping-status', [OrderController::class, 'updateShippingStatus'])
         ->name('orders.update-shipping-status');
+    Route::put('orders/{order}/update-status', [OrderController::class, 'updateStatus'])
+        ->name('orders.update-status');
 
     // 首頁廣告管理
     Route::resource('home-ads', HomeAdsController::class)->except(['show']);
