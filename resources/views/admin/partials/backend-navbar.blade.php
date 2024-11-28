@@ -1,6 +1,6 @@
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-       
+
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
@@ -14,10 +14,6 @@
                     {{ Auth::user()->name }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">個人資料</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
                     <li>
                         <a class="dropdown-item" href="{{ route('admin.logout') }}"
                             onclick="event.preventDefault();
