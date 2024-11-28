@@ -208,8 +208,6 @@
                         showToast('加入購物車失敗', 'error');
                     }
                 });
-                // $('#checkout_direct').val($(this).hasClass('checkout-btn') ? '1' : '0');
-                // $(this).closest('form').submit();
             });
 
             $('.cart-btn').click(function(e) {
