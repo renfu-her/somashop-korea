@@ -68,4 +68,27 @@ class EmailSettingController extends Controller
             ->route('admin.email-settings.index')
             ->with('success', '郵件設定已成功刪除');
     }
-} 
+
+    /**
+     * 切換郵件設定的啟用狀態
+     */
+    public function toggleActive(Request $request, EmailSetting $emailSetting)
+    {
+
+        try {
+            $emailSetting->update([
+                'is_active' => $request->is_active == 'true' ? 1: 0
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => '狀態更新成功'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => '狀態更新失敗'
+            ], 500);
+        }
+    }
+}

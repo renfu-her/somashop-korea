@@ -117,6 +117,8 @@ Route::group([
 
     // 郵件設定
     Route::resource('email-settings', EmailSettingController::class);
+    Route::post('email-settings/{emailSetting}/toggle-active', [EmailSettingController::class, 'toggleActive'])
+        ->name('email-settings.toggle-active');
 
     // 系統設定
     Route::resource('settings', SettingController::class);
