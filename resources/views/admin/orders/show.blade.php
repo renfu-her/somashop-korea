@@ -8,7 +8,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <!-- 訂單商品 -->
                 <div class="card mb-4">
                     <div class="card-header">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="card-footer text-end">
                         <div class="row">
-                            <div class="col-md-6 offset-md-6">
+                            <div class="col-md-12">
                                 <table class="table table-borderless mb-0">
                                     @php
                                         $subtotal = $order->items->sum('total');
@@ -80,13 +80,13 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <!-- 訂單狀態 -->
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="card-title mb-0">訂單狀態</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="height: 180px;">
                         <p class="mb-2">
                             訂單狀態：
                             <span class="badge bg-primary">{{ $order->status_text }}</span>
@@ -157,12 +157,15 @@
                         </div>
                     @endif
                 </div>
+            </div>
 
+            <div class="col-md-3">
+                <!-- 訂單備註 -->
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="card-title mb-0">備註</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="height: 180px;">
                         <p class="mb-2">
                             {{ $order->note }}
                         </p>
@@ -176,7 +179,7 @@
                             發票開立時間：{{ $order->issued_invoice_date ?? '未開立' }}
                         </small>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="height: 157px;">
                         <p class="mb-2">
                             發票狀態：{{ $order->invoice_checked == 1 ? '已檢查開立狀態' : '未檢查開立狀態' }}
                         </p>
