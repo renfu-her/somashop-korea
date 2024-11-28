@@ -54,7 +54,7 @@
                                     @endforeach
                                 </td>
                                 <td>{{ $order->shipment_method_text }}</td>
-                                <td>NT$ {{ number_format($order->total_amount) }}</td>
+                                <td>NT$ {{ number_format($order->total_amount + $order->shipping_fee) }}</td>
                                 <td>
                                     <span class="badge bg-{{ $order->payment_status === 'paid' ? 'success' : 'warning' }}">
                                         {{ $order->payment_status_text }}
