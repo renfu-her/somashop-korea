@@ -14,7 +14,11 @@
                     @foreach ($ads as $ad)
                         <a class="carousel-item {{ $loop->first ? 'active' : '' }}"
                             @if (!empty($ad->url)) href="{{ $ad->url }}" @endif>
-                            <img src="{{ asset('storage/ads/' . $ad->image) }}" class="d-block w-100" alt="">
+                            <picture>
+                                <source media="(max-width: 768px)" 
+                                    srcset="{{ asset('storage/ads/' . ($ad->image_thumb ?: $ad->image)) }}">
+                                <img src="{{ asset('storage/ads/' . $ad->image) }}" class="d-block w-100" alt="{{ $ad->title }}">
+                            </picture>
                         </a>
                     @endforeach
                 </div>
@@ -92,8 +96,12 @@
                     @foreach ($homeAds as $ad)
                         <a class="carousel-item {{ $loop->first ? 'active' : '' }}"
                             @if ($ad->link) href="{{ $ad->link }}" @endif>
-                            <img src="{{ asset('storage/home_ads/' . $ad->image) }}" class="d-block w-100"
-                                alt="{{ $ad->title }}">
+                            <picture>
+                                <source media="(max-width: 768px)" 
+                                    srcset="{{ asset('storage/home_ads/' . ($ad->image_thumb ?: $ad->image)) }}">
+                                <img src="{{ asset('storage/home_ads/' . $ad->image) }}" class="d-block w-100" 
+                                    alt="{{ $ad->title }}">
+                            </picture>
                         </a>
                     @endforeach
                 </div>
