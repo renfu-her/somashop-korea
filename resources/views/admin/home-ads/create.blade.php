@@ -31,11 +31,13 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">當前縮小圖</label>
-                                <div class="card" style="width: 200px;">
-                                    <img src="{{ asset('storage/home_ads/' . $homeAd->image_thumb) }}" class="card-img-top"
-                                        alt="{{ $homeAd->title }}">
-                                </div>
+                                <label for="image_thumb" class="form-label">手機顯示圖片 (<span class="text-danger">寬度
+                                        800px</span>)</label>
+                                <input type="file" class="form-control @error('image_thumb') is-invalid @enderror"
+                                    id="image_thumb" name="image_thumb" accept="image/*">
+                                @error('image_thumb')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">

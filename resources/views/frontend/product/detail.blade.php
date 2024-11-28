@@ -115,8 +115,7 @@
                                     <div class="form-group row">
                                         @if (Auth::guard('member')->check())
                                             <div class="col-6">
-                                                <button type="submit"
-                                                    class="btn btn-danger w-100 rounded-pill cart-btn">
+                                                <button type="submit" class="btn btn-danger w-100 rounded-pill cart-btn">
                                                     立即訂購
                                                 </button>
                                             </div>
@@ -193,9 +192,24 @@
                     showToast('請選擇商品規格', 'error');
                     return;
                 }
-
-                $('#checkout_direct').val($(this).hasClass('checkout-btn') ? '1' : '0');
-                $(this).closest('form').submit();
+                $.ajax({
+                    url: '{{ route('cart.add', ['redirect' => false]) }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        product_id: '{{ $product->id }}',
+                        spec_id: specId,
+                        quantity: $('input[name="quantity"]').val(),
+                    },
+                    success: function(response) {
+                        showToast('加入購物車成功', 'success');
+                    },
+                    error: function(xhr, status, error) {
+                        showToast('加入購物車失敗', 'error');
+                    }
+                });
+                // $('#checkout_direct').val($(this).hasClass('checkout-btn') ? '1' : '0');
+                // $(this).closest('form').submit();
             });
 
             $('#spec-select').change(function() {

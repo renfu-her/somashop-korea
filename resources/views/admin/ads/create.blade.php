@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image_thumb" class="form-label">縮小圖 (<span class="text-danger">寬度
+                                <label for="image_thumb" class="form-label">手機顯示圖片 (<span class="text-danger">寬度
                                         800px</span>)</label>
                                 <input type="file" class="form-control @error('image_thumb') is-invalid @enderror"
                                     id="image_thumb" name="image_thumb" accept="image/*">

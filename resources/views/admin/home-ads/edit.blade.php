@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">當前縮小圖</label>
+                                <label class="form-label">當前手機顯示圖片</label>
                                 <div class="card" style="width: 200px;">
                                     <img src="{{ asset('storage/home_ads/' . $homeAd->image_thumb) }}" class="card-img-top"
                                         alt="{{ $homeAd->title }}">
@@ -50,7 +50,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image_thumb" class="form-label">更換縮小圖 (<span class="text-danger">寬度
+                                <label for="image_thumb" class="form-label">更換手機顯示圖片 (<span class="text-danger">寬度
                                         800px</span>)</label>
                                 <input type="file" class="form-control @error('image_thumb') is-invalid @enderror"
                                     id="image_thumb" name="image_thumb" accept="image/*">

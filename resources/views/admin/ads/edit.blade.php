@@ -50,7 +50,7 @@
 
 
                             <div class="mb-3">
-                                <label class="form-label">當前縮小圖</label>
+                                <label class="form-label">當前手機顯示圖片</label>
                                 <div>
                                     <img src="{{ asset('storage/ads/' . $ad->image_thumb) }}" alt="{{ $ad->title }}"
                                         style="max-width: 200px">
@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image_thumb" class="form-label">更新縮小圖 (<span class="text-danger">寬度
+                                <label for="image_thumb" class="form-label">更新手機顯示圖片 (<span class="text-danger">寬度
                                         800px</span>)</label>
                                 <input type="file" class="form-control @error('image_thumb') is-invalid @enderror"
                                     id="image_thumb" name="image_thumb" accept="image/*">
