@@ -32,7 +32,6 @@
                         <table class="table text-center">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col"></th>
                                     <th scope="col">訂購日期</th>
                                     <th scope="col">訂單編號</th>
                                     <th scope="col">商品</th>
@@ -40,14 +39,13 @@
                                     <th scope="col">運費</th>
                                     <th scope="col">付款狀態</th>
                                     <th scope="col">出貨狀態</th>
-                                    <th scope="col"></th>
+                                    <th scope="col" style="white-space: nowrap;">訂單狀態</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 @foreach ($orders as $order)
                                     <tr style="height: 100px;">
-                                        <th scope="row"></th>
                                         <td class="align-middle">{{ $order->created_at->format('Y-m-d H:i') }}</td>
                                         <td class="align-middle">{{ $order->order_number }}</td>
                                         <td class="align-middle text-left">
@@ -71,7 +69,7 @@
                                             {{ $order->payment_status_text }} </td>
                                         <td class="align-middle">
                                             {{ $order->shipping_status_text }} </td>
-                                        <td></td>
+                                        <td class="align-middle" >{{ $order->status_text }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -68,11 +68,9 @@
                                     </option>
                                     <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>處理中
                                     </option>
-                                    <option value="shipping" {{ $order->status == 'shipping' ? 'selected' : '' }}>已出貨
+                                    <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>已結案
                                     </option>
-                                    <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>已完成
-                                    </option>
-                                    <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>已取消
+                                    <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>已作廢
                                     </option>
                                 </select>
                             </div>
@@ -134,7 +132,10 @@
                                     onchange="updateShippingStatus(this, {{ $order->id }})">
                                     <option value="processing" @if ($order->shipping_status === 'processing') selected @endif>處理中
                                     </option>
-                                    <option value="shipped" @if ($order->shipping_status === 'shipped') selected @endif>已出貨</option>
+                                    <option value="pending" @if ($order->shipping_status === 'pending') selected @endif>待出貨
+                                    </option>
+                                    <option value="shipped" @if ($order->shipping_status === 'shipped') selected @endif>已出貨
+                                    </option>
                                 </select>
                             </p>
                         </div>

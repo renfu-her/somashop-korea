@@ -153,8 +153,8 @@ class Order extends Model
         return [
             self::STATUS_PENDING => '待處理',
             self::STATUS_PROCESSING => '處理中',
-            self::STATUS_COMPLETED => '已完成',
-            self::STATUS_CANCELLED => '已取消'
+            self::STATUS_COMPLETED => '已結案',
+            self::STATUS_CANCELLED => '已作廢'
         ][$this->status] ?? '未知';
     }
 
@@ -187,8 +187,8 @@ class Order extends Model
         return [
             self::STATUS_PENDING => '待處理',
             self::STATUS_PROCESSING => '處理中',
-            self::STATUS_COMPLETED => '已完成',
-            self::STATUS_CANCELLED => '已取消'
+            self::STATUS_COMPLETED => '已結案',
+            self::STATUS_CANCELLED => '已作廢'
         ];
     }
 
