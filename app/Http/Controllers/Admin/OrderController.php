@@ -56,9 +56,9 @@ class OrderController extends Controller
     {
 
         $order->load(['member', 'items.product', 'items.spec', 'items.productImage']);
-
+        
         switch ($order->shipment_method) {
-            case 'family_b2b':
+            case 'family_b2c':
                 $shipmentMethodName = '全家店到店';
                 break;
 
