@@ -183,7 +183,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('.checkout-btn, .cart-btn').click(function(e) {
+            $('.checkout-btn').click(function(e) {
                 e.preventDefault();
 
                 // 檢查規格是否已選擇
@@ -210,6 +210,16 @@
                 });
                 // $('#checkout_direct').val($(this).hasClass('checkout-btn') ? '1' : '0');
                 // $(this).closest('form').submit();
+            });
+
+            $('.cart-btn').click(function(e) {
+                e.preventDefault();
+                const specId = $('select[name="spec_id"]').val();
+                if (!specId) {
+                    showToast('請選擇商品規格', 'error');
+                    return;
+                }
+                $(this).closest('form').submit();
             });
 
             $('#spec-select').change(function() {
