@@ -94,10 +94,10 @@
                                 寄送方式：{{ $shipmentMethodName }}
                             </p>
                             <p class="mb-2">
-                                運送方式：郵寄
+                                收件者：{{ $order->recipient_name }}
                             </p>
                             <p class="mb-2">
-                                收件者：{{ $order->recipient_name }}
+                                手機：{{ $order->recipient_phone }}
                             </p>
                             <p class="mb-2">
                                 性別：{{ $order->member->gender == 1 ? '男' : '女' }}
