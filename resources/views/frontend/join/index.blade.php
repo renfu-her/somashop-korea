@@ -197,8 +197,8 @@
                                             <input type="checkbox" name="agree" value="1"
                                                 {{ old('agree') ? 'checked' : '' }}
                                                 class="@error('agree') is-invalid @enderror" required>
-                                            我已閱讀<a href="#" class="text-danger px-1"
-                                                target="_blank">會員條款</a>並同意接受條款內容
+                                            我已閱讀<a href="{{ route('member.agreement') }}" target="_blank"
+                                                class="text-danger px-1">會員條款</a>並同意接受條款內容
                                         </label>
                                         @error('agree')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>

@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth:member'], function () {
 
     // 結帳驗證
     Route::post('/payment/process', [PaymentController::class, 'paymentProcess'])->name('payment.process');
-      // 訂單
+    // 訂單
     Route::post('/orders/{product}', [OrderController::class, 'store'])->name('products.order');
     Route::get('/orders/list/{order}', [OrderController::class, 'orderShow'])->name('orders.show');
     Route::get('/orders/list', [OrderController::class, 'orderList'])->name('orders.list');
@@ -131,6 +131,9 @@ Route::post('logistics/store/notify', [LogisticsController::class, 'storeNotify'
 Route::get('/search', [SearchController::class, 'index'])
     ->name('search');
 
+// 會員中心
+Route::get('/member/agreement', [HomeController::class, 'memberAgreement'])->name('member.agreement');
+
 
 // TODO: 測試路由，記得刪除
 Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
@@ -140,8 +143,3 @@ Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
 
 Route::post('/checkout/validate-invoice-number', [CheckoutController::class, 'validateInvoiceNumber'])
     ->name('checkout.validate-invoice-number');
-
-
-
-
-
