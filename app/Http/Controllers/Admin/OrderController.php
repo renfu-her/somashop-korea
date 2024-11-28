@@ -49,7 +49,7 @@ class OrderController extends Controller
                 return $order;
             });
 
-        return view('admin.orders.index', compact('orders'));
+        return view('admin.orders.index_order', compact('orders'));
     }
 
     public function show(Order $order)
@@ -71,11 +71,6 @@ class OrderController extends Controller
                 break;
         }
 
-        $order['payment_method_text'] = match ($order->payment_method) {
-            'credit' => '信用卡',
-            'atm' => 'ATM 虛擬帳號',
-            default => ''
-        };
 
         if (!empty($order->logistics_id)) {
             // try {
