@@ -237,7 +237,7 @@
         };
 
         // 定期檢查購物車數量（可選）
-        setInterval(window.updateCartCount, 1000); // 每30秒更新一次
+        setInterval(window.updateCartCount, 2000); // 每30秒更新一次
     </script>
 
 </body>
