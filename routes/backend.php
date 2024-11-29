@@ -158,4 +158,7 @@ Route::group([
     // 網站設定
     Route::get('site-settings', [SiteSettingController::class, 'index'])->name('site-settings.index');
     Route::put('site-settings', [SiteSettingController::class, 'update'])->name('site-settings.update');
+
+    Route::get('refresh-captcha', [AdminAuthController::class, 'refreshCaptcha'])
+        ->name('refresh.captcha');
 });

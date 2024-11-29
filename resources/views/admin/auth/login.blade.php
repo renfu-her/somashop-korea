@@ -48,11 +48,29 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                    <label class="form-check-label" for="remember">
-                                        記住我
-                                    </label>
+                                <div class="mb-3">
+                                    <label class="form-label">驗證碼</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control @error('captcha') is-invalid @enderror"
+                                            id="verify" name="captcha" required style="text-transform: uppercase"
+                                            oninput="this.value = this.value.toUpperCase()">
+                                        <div class="d-flex pl-2 align-self-center">
+                                            <img src="{{ route('captcha.generate') }}" width="120" height="60"
+                                                class="captchaImg" />
+                                        </div>
+                                        <div class="input-group-append">
+                                            <label class="refresh mn-0">
+                                                <a class="btn btn-refresh hvr-icon-spin">
+                                                    更換 <i class="fas fa-sync-alt hvr-icon px-1"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+                                        @error('captcha')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
 
                                 <div class="d-grid">
@@ -68,3 +86,58 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <style>
+        .btn-refresh {
+            color: #666;
+            padding: 0.375rem 0.75rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .btn-refresh:hover {
+            color: #333;
+        }
+
+        .hvr-icon-spin {
+            display: inline-block;
+            vertical-align: middle;
+            -webkit-transform: perspective(1px) translateZ(0);
+            transform: perspective(1px) translateZ(0);
+            position: relative;
+        }
+
+        .hvr-icon {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-transition-duration: 1s;
+            transition-duration: 1s;
+            -webkit-transition-property: transform;
+            transition-property: transform;
+            -webkit-transition-timing-function: ease-in-out;
+            transition-timing-function: ease-in-out;
+        }
+
+        .hvr-icon-spin:hover .hvr-icon,
+        .hvr-icon-spin:focus .hvr-icon,
+        .hvr-icon-spin:active .hvr-icon {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    </style>
+@endpush
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.btn-refresh').on('click', function() {
+                $('#loading').fadeIn();
+                $('.captchaImg').attr('src', '{{ route('captcha.generate') }}?' + new Date().getTime());
+                $('#loading').fadeOut();
+            });
+        });
+    </script>
+@endpush
