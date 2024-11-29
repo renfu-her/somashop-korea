@@ -72,11 +72,11 @@
         @include('frontend.layouts.partials.toast-messages')
 
         @yield('content')
-    
+
         @stack('app-content')
     </div>
 
-    
+
 
     <footer class="bg-footer d-flex align-items-center">
         <div class="container">
@@ -215,6 +215,30 @@
         }
     </style>
 
+    <script>
+        // 全域函數：更新購物車數量
+        window.updateCartCount = function() {
+            $.ajax({
+                url: '{{ route('cart.count') }}',
+                method: 'GET',
+                success: function(response) {
+                    const count = response.count;
+                    const badges = $('.badge-danger');
+
+                    badges.each(function() {
+                        if (count > 0) {
+                            $(this).text(count).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                }
+            });
+        };
+
+        // 定期檢查購物車數量（可選）
+        setInterval(window.updateCartCount, 1000); // 每30秒更新一次
+    </script>
 
 </body>
 

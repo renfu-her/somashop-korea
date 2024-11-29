@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\{
     LogisticsController,
     SearchController,
     ForgetController,
+    NavigationController,
 };
 use App\Http\Controllers\Frontend\{
     CartController,
@@ -143,3 +144,5 @@ Route::group(['prefix' => 'tester', 'as' => 'tester.'], function () {
 
 Route::post('/checkout/validate-invoice-number', [CheckoutController::class, 'validateInvoiceNumber'])
     ->name('checkout.validate-invoice-number');
+
+Route::get('/cart/count', [NavigationController::class, 'getCartCount'])->name('cart.count');

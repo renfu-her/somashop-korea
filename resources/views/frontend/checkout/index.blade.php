@@ -525,37 +525,38 @@
 
             // 表單提交前的驗證
             $('form').submit(function(e) {
+                e.preventDefault(); // 先阻止預設提交
+                
+                const form = $(this);
                 const shipmentType = $('#shipment').val();
+                const paymentMethod = $('input[name="payment"]:checked').val();
 
+                // 驗證寄送方式
                 if (!shipmentType) {
-                    e.preventDefault();
                     window.showToast('請選擇寄送方式', 'error');
                     return false;
                 }
 
-                // 如果選擇超商取貨，檢查是否已選擇門市
+                // 驗證超商取貨門市
                 if ((shipmentType === '711_b2c' || shipmentType === 'family_b2c') &&
                     !$('input[name="store_id"]').val()) {
-                    e.preventDefault();
                     window.showToast('請選擇取貨門市', 'error');
                     return false;
                 }
 
-                // 如果選擇郵寄，檢查縣市區域是否選擇
+                // 驗證郵寄地址
                 if (shipmentType === 'mail_send') {
                     if (!$('select[name="county"]').val() ||
                         !$('select[name="district"]').val()) {
-                        e.preventDefault();
                         window.showToast('請選擇縣市及區域', 'error');
                         return false;
                     }
                 }
 
-                // 檢查是否選擇三聯式發票
+                // 驗證三聯式發票
                 if ($('input[name="receipt"]:checked').val() === '3') {
                     // 檢查統一編號
                     if (!$('input[name="invoice_taxid"]').val()) {
-                        e.preventDefault();
                         window.showToast('請填寫統一編號', 'error');
                         $('input[name="invoice_taxid"]').focus();
                         return false;
@@ -563,7 +564,6 @@
 
                     // 檢查發票抬頭
                     if (!$('input[name="invoice_title"]').val()) {
-                        e.preventDefault();
                         window.showToast('請填寫發票抬頭', 'error');
                         $('input[name="invoice_title"]').focus();
                         return false;
@@ -573,11 +573,43 @@
                     if (!$('select[name="invoice_county"]').val() || 
                         !$('select[name="invoice_district"]').val() || 
                         !$('input[name="invoice_address"]').val()) {
-                        e.preventDefault();
                         window.showToast('請填寫完整的發票寄送地址', 'error');
                         return false;
                     }
                 }
+
+                // 如果是 ATM 付款，則在新視窗中提交
+                if (paymentMethod === 'ATM') {
+                    // 複製當前表單
+                    const clonedForm = form.clone();
+                    
+                    // 設置新表單屬性
+                    clonedForm.attr({
+                        'target': '_blank',
+                        'id': 'atmForm'
+                    });
+                    
+                    // 添加 ATM 標記
+                    clonedForm.append('<input type="hidden" name="is_atm" value="1">');
+                    
+                    // 提交新表單
+                    clonedForm
+                        .appendTo('body')
+                        .submit()
+                        .remove();
+                        
+                    // 清空原表單的驗證碼
+                    form.find('input[name="captcha"]').val('');
+                    // 更新驗證碼圖片
+                    $('.captchaImg').attr('src', '{{ route('captcha.generate') }}?' + new Date().getTime());
+                    
+                    window.location.href = '{{ route('orders.list') }}';
+                    
+                    return false; // 阻止原表單提交
+                }
+
+                // 如果不是 ATM 付款，則正常提交表單
+                form.off('submit').submit();
             });
 
             // 發票類型變更處理

@@ -72,4 +72,11 @@ class NavigationController extends Controller
 
         return $faqCategories;
     }
+
+    public function getCartCount()
+    {
+        $cartItems = session('cart', []);
+        $cartCount = is_array($cartItems) ? count($cartItems) : 0;
+        return response()->json(['count' => $cartCount]);
+    }
 }
