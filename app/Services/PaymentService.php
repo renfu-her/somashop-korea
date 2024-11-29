@@ -149,8 +149,11 @@ class PaymentService
             'OrderResultURL' => route('payment.callback'),
             'ChoosePayment' => $this->getECPayMethod($request->payment),
             'EncryptType' => 1,
-            'ClientBackURL' => route('payment.callback'),
         ];
+
+        if($request->payment != 'ATM'){
+            $ecpayData['ClientBackURL'] = route('payment.callback');
+        }
 
         // 加入檢查碼
         $ecpayData['CheckMacValue'] = $this->generateCheckMacValue($ecpayData);
