@@ -41,7 +41,7 @@
                                 <td>{{ $admin->email }}</td>
                                 <td>{{ $admin->phone }}</td>
                                 <td>
-                                    @if ($admin->id !== 3)
+                                    @if ($admin->email !== 'admin@admin.com')
                                         <div class="form-check form-switch">
                                             <input type="checkbox" class="form-check-input status-switch"
                                                 data-id="{{ $admin->id }}" {{ $admin->is_active ? 'checked' : '' }}>
@@ -53,10 +53,10 @@
                                 <td>{{ $admin->last_login_at ?? '尚未登入' }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        @if ($admin->id !== 3)
-                                            <a href="{{ route('admin.admins.edit', $admin) }}"
-                                                class="btn btn-sm btn-outline-primary">編輯</a>
+                                        <a href="{{ route('admin.admins.edit', $admin) }}"
+                                            class="btn btn-sm btn-outline-primary">編輯</a>
 
+                                        @if ($admin->email !== 'admin@admin.com')
                                             <form action="{{ route('admin.admins.destroy', $admin) }}" method="POST"
                                                 onsubmit="return confirm('確定要刪除此管理者嗎？');">
                                                 @csrf
