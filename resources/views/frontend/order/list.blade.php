@@ -28,7 +28,7 @@
             <section data-aos="fade-up" data-aos-delay="450">
                 <div class="order-track">
                     <span class="hint hint-touch1"><i class="fas fa-hand-point-left"></i>請向左滑</span>
-                    <div class="table-responsive-sm touch_table1">
+                    <div class="table-responsive touch_table1">
                         <table class="table text-center">
                             <thead class="thead-light">
                                 <tr>
@@ -37,9 +37,7 @@
                                     <th scope="col">商品</th>
                                     <th scope="col">買付金額</th>
                                     <th scope="col">運費</th>
-                                    <th scope="col">付款狀態</th>
-                                    <th scope="col">出貨狀態</th>
-                                    <th scope="col" style="white-space: nowrap;">訂單狀態</th>
+                                    <th scope="col">狀態</th>
                                 </tr>
                             </thead>
 
@@ -66,10 +64,9 @@
                                         <td class="align-middle">NT${{ $order->total_amount }}</td>
                                         <td class="align-middle">NT${{ $order->shipping_fee }}</td>
                                         <td class="align-middle">
-                                            {{ $order->payment_status_text }} </td>
-                                        <td class="align-middle">
-                                            {{ $order->shipping_status_text }} </td>
-                                        <td class="align-middle" >{{ $order->status_text }}</td>
+                                            付款狀態：{{ $order->payment_status_text }} <br>
+                                            出貨狀態：{{ $order->shipping_status_text }} <br>
+                                            訂單狀態：{{ $order->status_text }} </td>
                                     </tr>
                                 @endforeach
                             </tbody>
