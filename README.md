@@ -6,8 +6,11 @@
     - 密碼：Qq123456
 
 - 一般頁面
-    - [https://e-commerce-dev.dev-vue.com/](https://e-commerce-dev.dev-vue.com/)
-    - ![首頁](https://raw.gitmirror.com/renfu-her/image-drive/main/develop/e-commerce-home.png)
+  
+  [https://e-commerce-dev.dev-vue.com/](https://e-commerce-dev.dev-vue.com/)
+  
+  ![首頁](https://raw.gitmirror.com/renfu-her/image-drive/main/develop/e-commerce-home.png)
+  
 
 ## 使用方式
 - 先建立 mysql 資料庫，並修改 .env 資料庫設定
