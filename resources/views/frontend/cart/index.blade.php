@@ -31,14 +31,14 @@
                         <table class="table text-center cart-items">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">商品</th>
-                                    <th scope="col">規格</th>
-                                    <th scope="col">優惠價</th>
-                                    <th scope="col">數量</th>
-                                    <th scope="col">小計</th>
-                                    <th scope="col">刪除</th>
-                                    <th scope="col"></th>
+                                    <th scope="col" style="width: 5%"></th>
+                                    <th scope="col" style="width: 15%">商品</th>
+                                    <th scope="col" style="width: 20%">規格</th>
+                                    <th scope="col" style="width: 15%">優惠價</th>
+                                    <th scope="col" style="width: 15%">數量</th>
+                                    <th scope="col" style="width: 15%">小計</th>
+                                    <th scope="col" style="width: 10%">刪除</th>
+                                    <th scope="col" style="width: 5%"></th>
                                 </tr>
                             </thead>
 
@@ -110,7 +110,7 @@
 
                     <div class="col-sm-12 my-3">
                         <div class="row">
-                            <div class="col-sm-12 offset-sm-9 col-xs-6 offset-xs-6">
+                            <div class="col-sm-12 col-xs-6 offset-xs-6" style="text-align: right">
                                 <h2 class="text-black mb-0">
                                     總計
                                     <span class="pl-3 priceTotalplusFee">NT${{ number_format($total) }}</span>
@@ -131,10 +131,156 @@
                     </div>
                 </div>
             </section>
-
-
         </div>
     </article>
+
+@endpush
+
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            // 更新數量
+            $('.btn-plus, .btn-minus').click(function() {
+                const cartKey = $(this).data('cart-key');
+                const productId = $(this).data('product-id');
+                const specificationId = $(this).data('specification-id');
+                let input = $(this).closest('.num-row').find('.qty_input');
+                let quantity = parseInt(input.val());
+
+                if ($(this).hasClass('btn-plus')) {
+                    quantity++;
+                } else {
+                    quantity = quantity > 1 ? quantity - 1 : 1;
+                }
+
+                updateCartQuantity(cartKey, productId, specificationId, quantity);
+            });
+
+            // 移除商品
+            $('.remove-item').on('click', function() {
+                const cartKey = $(this).data('cart-key');
+                const productId = $(this).data('product-id');
+                const specificationId = $(this).data('specification-id');
+                if (confirm('確定要移除此商品嗎？')) {
+                    removeFromCart(cartKey, productId, specificationId);
+                }
+            });
+
+            function updateCartQuantity(cartKey, productId, specificationId, quantity) {
+                $.ajax({
+                    url: '{{ route('cart.update-quantity') }}',
+                    method: 'POST',
+                    data: {
+                        cart_key: cartKey,
+                        product_id: productId,
+                        spec_id: specificationId,
+                        quantity: quantity,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        alert('更新數量失敗，請稍後再試');
+                    }
+                });
+            }
+
+            function removeFromCart(cartKey, productId, specificationId) {
+                $.ajax({
+                    url: '{{ route('cart.remove') }}',
+                    method: 'POST',
+                    data: {
+                        cart_key: cartKey,
+                        product_id: productId,
+                        spec_id: specificationId,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // 移除对应的 TR 元素
+                            const $item = $(`tr[data-cart-key="${cartKey}"]`);
+                            $item.fadeOut(300, function() {
+                                $(this).remove();
+
+                                // 检查购物车是否为空
+                                if ($('.cart-item').length === 0) {
+                                    $('.cart-items tbody').html(
+                                        '<tr><td colspan="8" class="text-center">購物車是空的</td></tr>'
+                                    );
+                                }
+
+                                // 重新计算总金额
+                                updateTotalPrice();
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        alert('移除商品失敗，請稍後再試');
+                    }
+                });
+            }
+
+            // 添加计算总金额的函数
+            function updateTotalPrice() {
+                let total = 0;
+                $('.cart-item').each(function() {
+                    const price = $(this).find('.money').text().replace('NT$', '').replace(',', '') * 1;
+                    total += price;
+                });
+                $('.priceTotalplusFee').text('NT$' + total.toLocaleString());
+            }
+
+            // 繼續購物按鈕
+            $('.btn-addcart').click(function() {
+                const referrer = $('#referrer').val();
+
+
+                window.location.href = '{{ route('products.show', $cartReferrer) }}';
+
+            });
+
+            // 結帳按鈕
+            $('.cartNext').click(function() {
+                window.location.href = '{{ route('checkout.index') }}';
+            });
+        });
+    </script>
+@endpush
+
+@push('styles')
+    <style>
+        /* 添加以下 CSS 樣式 */
+        .table-responsive {
+            overflow-x: hidden;
+            /* 隱藏水平滾動條 */
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                overflow-x: auto;
+                /* 在手機版時才顯示滾動條 */
+            }
+        }
+
+        .shopping-cart {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .cart-items {
+            width: 100%;
+            table-layout: fixed;
+            /* 固定表格布局 */
+        }
+
+        /* 確保圖片不會超出容器 */
+        .thumb-img img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 @endpush
 
 @push('scripts')
@@ -247,4 +393,38 @@
             });
         });
     </script>
+@endpush
+
+@push('styles')
+    <style>
+        /* 添加以下 CSS 樣式 */
+        .table-responsive {
+            overflow-x: hidden;
+            /* 隱藏水平滾動條 */
+        }
+
+        @media (max-width: 768px) {
+            .table-responsive {
+                overflow-x: auto;
+                /* 在手機版時才顯示滾動條 */
+            }
+        }
+
+        .shopping-cart {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .cart-items {
+            width: 100%;
+            table-layout: fixed;
+            /* 固定表格布局 */
+        }
+
+        /* 確保圖片不會超出容器 */
+        .thumb-img img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 @endpush
