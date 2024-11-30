@@ -28,8 +28,8 @@
             <section data-aos="fade-up" data-aos-delay="450">
                 <div class="order-track">
                     <span class="hint hint-touch1"><i class="fas fa-hand-point-left"></i>請向左滑</span>
-                    <div class="table-responsive touch_table1">
-                        <table class="table text-center">
+                    <div class="touch_table1">
+                        <table class="table text-center table-responsive">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">訂購日期</th>
@@ -63,7 +63,7 @@
                                         </td>
                                         <td class="align-middle">NT${{ $order->total_amount }}</td>
                                         <td class="align-middle">NT${{ $order->shipping_fee }}</td>
-                                        <td class="align-middle">
+                                        <td class="align-middle" style="white-space: nowrap;">
                                             付款狀態：{{ $order->payment_status_text }} <br>
                                             出貨狀態：{{ $order->shipping_status_text }} <br>
                                             訂單狀態：{{ $order->status_text }} </td>
