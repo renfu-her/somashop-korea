@@ -9,7 +9,20 @@
     - [https://e-commerce-dev.dev-vue.com/](https://e-commerce-dev.dev-vue.com/)
     - ![首頁](https://raw.gitmirror.com/renfu-her/image-drive/main/develop/e-commerce-home.png)
 
-- 使用方式
+## 使用方式
+- 先建立 mysql 資料庫，並修改 .env 資料庫設定
+
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=e-commerce
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+- 修改 .env 資料庫設定後，安裝套件，建立資料表，新增預設資料
+
 ```bash
 composer install
 cp .env.example .env
