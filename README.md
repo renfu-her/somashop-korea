@@ -161,6 +161,7 @@
 5. 金流整合介面
 
 ## 目錄結構樹狀圖
+```
 resources/
 ├── views/
 ├── admin/ # 後台視圖
@@ -243,3 +244,4 @@ resources/
 ├── faq.blade.php # - 常見問題
 ├── privacy.blade.php # - 隱私政策
 └── terms.blade.php # - 使用條款
+```
