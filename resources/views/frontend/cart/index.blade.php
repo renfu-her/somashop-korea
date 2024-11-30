@@ -32,8 +32,8 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 5%"></th>
-                                    <th scope="col" style="width: 15%">商品</th>
-                                    <th scope="col" style="width: 20%">規格</th>
+                                    <th scope="col" style="width: 15%">圖片</th>
+                                    <th scope="col" style="width: 20%">商品名稱</th>
                                     <th scope="col" style="width: 15%">優惠價</th>
                                     <th scope="col" style="width: 15%">數量</th>
                                     <th scope="col" style="width: 15%">小計</th>
@@ -53,7 +53,7 @@
                                             <span class="cart-tag d-block d-sm-none text-muted" disable>規格</span>
                                             <div class="product-details text-md-left text-sm-center">
                                                 <p class="mb-0">{{ $item['product_name'] }}</p>
-                                                <p class="mb-0">{{ $item['spec_name'] }}</p>
+                                                <p class="mb-0">規格：{{ $item['spec_name'] }}</p>
                                             </div>
                                         </td>
                                         <td class="align-middle border-sm-top">

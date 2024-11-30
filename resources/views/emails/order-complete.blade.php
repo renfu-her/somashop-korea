@@ -70,8 +70,8 @@
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
                     <tr style="background: #f8f9fa;">
-                        <th style="padding: 8px; border: 1px solid #dee2e6;">商品</th>
                         <th style="padding: 8px; border: 1px solid #dee2e6;">圖片</th>
+                        <th style="padding: 8px; border: 1px solid #dee2e6;">商品名稱</th>
                         <th style="padding: 8px; border: 1px solid #dee2e6;">規格</th>
                         <th style="padding: 8px; border: 1px solid #dee2e6;">數量</th>
                         <th style="padding: 8px; border: 1px solid #dee2e6;">單價</th>
@@ -81,7 +81,6 @@
                 <tbody>
                     @foreach ($orderItems as $item)
                         <tr>
-                            <td style="padding: 8px; border: 1px solid #dee2e6;">{{ $item->product->name }}</td>
                             <td style="padding: 8px; border: 1px solid #dee2e6;">
                                 @if ($item->product->images->isNotEmpty())
                                     <img src="{{ asset('storage/products/' . $item->product->id . '/' . $item->product->images->first()->image_path) }}"
@@ -91,6 +90,7 @@
                                         style="width: 100px; height: auto;">
                                 @endif
                             </td>
+                            <td style="padding: 8px; border: 1px solid #dee2e6;">{{ $item->product->name }}</td>
                             <td style="padding: 8px; border: 1px solid #dee2e6;">
                                 {{ $item->spec ? $item->spec->name : '-' }}
                             </td>
