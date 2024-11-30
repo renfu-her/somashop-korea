@@ -319,7 +319,7 @@
                                     <div class="form-group row invoiceTitleArea">
                                         <label
                                             class="col-sm-10 offset-sm-2 col-form-label align-self-center"
-                                            for="invoice_taxid_check">請輸入 8 位數統編，如果正確，發票抬頭會自動帶入</label>
+                                            for="invoice_taxid_check" style="color: red;">請輸入 8 位數統編，如果正確，發票抬頭會自動帶入</label>
                                         
                                     </div>
 
