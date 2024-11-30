@@ -159,3 +159,87 @@
 3. 商品圖片預覽
 4. 地址選擇器
 5. 金流整合介面
+
+## 目錄結構樹狀圖
+resources/
+├── views/
+├── admin/ # 後台視圖
+│ ├── activities/ # 活動管理
+│ │ ├── create.blade.php # - 新增活動
+│ │ ├── edit.blade.php # - 編輯活動
+│ │ └── index.blade.php # - 活動列表
+│ │
+│ ├── admins/ # 管理員管理
+│ │ ├── create.blade.php # - 新增管理員
+│ │ ├── edit.blade.php # - 編輯管理員
+│ │ └── index.blade.php # - 管理員列表
+│ │
+│ ├── ads/ # 廣告管理
+│ │ ├── create.blade.php # - 新增廣告
+│ │ ├── edit.blade.php # - 編輯廣告
+│ │ └── index.blade.php # - 廣告列表
+│ │
+│ ├── auth/ # 認證相關
+│ │ └── login.blade.php # - 登入頁面
+│ │
+│ ├── carts/ # 購物車管理
+│ │ ├── create.blade.php # - 新增購物車項目
+│ │ ├── edit.blade.php # - 編輯購物車項目
+│ │ └── index.blade.php # - 購物車列表
+│ │
+│ ├── categories/ # 商品分類管理
+│ │ ├── create.blade.php # - 新增分類
+│ │ ├── edit.blade.php # - 編輯分類
+│ │ └── index.blade.php # - 分類列表
+│ │
+│ ├── email-settings/ # 郵件設定
+│ │ ├── create.blade.php # - 新增設定
+│ │ ├── edit.blade.php # - 編輯設定
+│ │ └── index.blade.php # - 設定列表
+│ │
+│ ├── faq-categories/ # FAQ分類管理
+│ │ ├── create.blade.php # - 新增FAQ分類
+│ │ ├── edit.blade.php # - 編輯FAQ分類
+│ │ └── index.blade.php # - FAQ分類列表
+│ │
+│ ├── faqs/ # FAQ管理
+│ │ ├── create.blade.php # - 新增FAQ
+│ │ ├── edit.blade.php # - 編輯FAQ
+│ │ └── index.blade.php # - FAQ列表
+│ │
+│ └── layouts/ # 後台布局
+│ └── app.blade.php # - 主布局文件
+│
+└── frontend/ # 前台視圖
+├── layouts/ # 前台布局
+│ └── app.blade.php # - 主布局文件
+│
+├── order/ # 訂單相關
+│ └── list.blade.php # - 訂單列表
+│
+├── user/ # 用戶中心
+│ ├── profile.blade.php # - 個人資料
+│ ├── orders.blade.php # - 訂單記錄
+│ └── addresses.blade.php # - 收貨地址
+│
+├── products/ # 商品相關
+│ ├── index.blade.php # - 商品列表
+│ ├── show.blade.php # - 商品詳情
+│ └── category.blade.php # - 分類商品
+│
+├── cart/ # 購物車相關
+│ ├── index.blade.php # - 購物車頁面
+│ └── checkout.blade.php # - 結帳頁面
+│
+├── auth/ # 會員認證
+│ ├── login.blade.php # - 登入頁面
+│ ├── register.blade.php # - 註冊頁面
+│ └── forgot-password.blade.php # - 忘記密碼
+│
+└── pages/ # 靜態頁面
+├── home.blade.php # - 首頁
+├── about.blade.php # - 關於我們
+├── contact.blade.php # - 聯絡我們
+├── faq.blade.php # - 常見問題
+├── privacy.blade.php # - 隱私政策
+└── terms.blade.php # - 使用條款
