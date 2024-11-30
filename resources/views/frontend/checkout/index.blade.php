@@ -317,10 +317,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row invoiceTitleArea">
-                                        <label
-                                            class="col-sm-10 offset-sm-2 col-form-label align-self-center"
-                                            for="invoice_taxid_check" style="color: red;">請輸入 8 位數統編，如果正確，發票抬頭會自動帶入</label>
-                                        
+                                        <label class="col-sm-10 offset-sm-2 col-form-label align-self-center"
+                                            for="invoice_taxid_check" style="color: red;">請輸入 8
+                                            位數統編，如果正確，發票抬頭會自動帶入</label>
+
                                     </div>
 
                                     <div class="form-group row invoiceTitleArea">
@@ -526,7 +526,7 @@
             // 表單提交前的驗證
             $('form').submit(function(e) {
                 e.preventDefault(); // 先阻止預設提交
-                
+
                 const form = $(this);
                 const shipmentType = $('#shipment').val();
                 const paymentMethod = $('input[name="payment"]:checked').val();
@@ -570,8 +570,8 @@
                     }
 
                     // 檢查發票寄送地址
-                    if (!$('select[name="invoice_county"]').val() || 
-                        !$('select[name="invoice_district"]').val() || 
+                    if (!$('select[name="invoice_county"]').val() ||
+                        !$('select[name="invoice_district"]').val() ||
                         !$('input[name="invoice_address"]').val()) {
                         window.showToast('請填寫完整的發票寄送地址', 'error');
                         return false;
@@ -580,32 +580,62 @@
 
                 // 如果是 ATM 付款，則在新視窗中提交
                 if (paymentMethod === 'ATM') {
-                    // 複製當前表單
-                    const clonedForm = form.clone();
-                    
-                    // 設置新表單屬性
-                    clonedForm.attr({
-                        'target': '_blank',
-                        'id': 'atmForm'
-                    });
-                    
+                    // 計算視窗位置，使其置中
+                    const width = window.innerWidth;
+                    const height = window.innerHeight;
+                    const left = (window.screen.width - width) / 2;
+                    const top = (window.screen.height - height) / 2;
+
+                    // 開啟新視窗
+                    const atmWindow = window.open(
+                        'about:blank',
+                        'atmWindow',
+                        `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
+                    );
+
+                    // 創建一個臨時表單進行 POST
+                    const tempForm = document.createElement('form');
+                    tempForm.setAttribute('method', 'post');
+                    tempForm.setAttribute('action', form.attr('action'));
+                    tempForm.setAttribute('target', 'atmWindow');
+
+                    // 複製原表單的所有資料
+                    const formData = new FormData(form[0]);
+                    for (let pair of formData.entries()) {
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'hidden');
+                        input.setAttribute('name', pair[0]);
+                        input.setAttribute('value', pair[1]);
+                        tempForm.appendChild(input);
+                    }
+
                     // 添加 ATM 標記
-                    clonedForm.append('<input type="hidden" name="is_atm" value="1">');
-                    
-                    // 提交新表單
-                    clonedForm
-                        .appendTo('body')
-                        .submit()
-                        .remove();
-                        
-                    // 清空原表單的驗證碼
-                    form.find('input[name="captcha"]').val('');
-                    // 更新驗證碼圖片
-                    $('.captchaImg').attr('src', '{{ route('captcha.generate') }}?' + new Date().getTime());
-                    
-                    window.location.href = '{{ route('orders.list') }}';
-                    
-                    return false; // 阻止原表單提交
+                    const atmInput = document.createElement('input');
+                    atmInput.setAttribute('type', 'hidden');
+                    atmInput.setAttribute('name', 'is_atm', '1');
+                    tempForm.appendChild(atmInput);
+
+                    // 添加 CSRF token
+                    const csrfInput = document.createElement('input');
+                    csrfInput.setAttribute('type', 'hidden');
+                    csrfInput.setAttribute('name', '_token');
+                    csrfInput.setAttribute('value', '{{ csrf_token() }}');
+                    tempForm.appendChild(csrfInput);
+
+                    // 添加到 body，提交後移除
+                    document.body.appendChild(tempForm);
+                    tempForm.submit();
+                    document.body.removeChild(tempForm);
+
+                    // 設置輪詢檢查視窗是否關閉
+                    const timer = setInterval(function() {
+                        if (atmWindow.closed) {
+                            clearInterval(timer);
+                            window.location.href = '{{ route('orders.list') }}';
+                        }
+                    }, 500);
+
+                    return false;
                 }
 
                 // 如果不是 ATM 付款，則正常提交表單
@@ -720,7 +750,7 @@
                 const taxId = $(this).val();
                 if (taxId.length === 8) {
                     $.ajax({
-                        url: '{{ route("checkout.validate-invoice-number") }}',
+                        url: '{{ route('checkout.validate-invoice-number') }}',
                         method: 'POST',
                         data: {
                             invoice_taxid: taxId,
