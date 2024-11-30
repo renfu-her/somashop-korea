@@ -17,21 +17,16 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => '管理員',
-        //     'email' => 'renfu.her@gmail.com',
-        //     'password' => Hash::make('Qq123456'),
-        //     'is_admin' => true,
-        // ]);
-        // User::factory()->create([
-        //     'name' => '小編',
-        //     'email' => 'zivhsiao@gmail.com',
-        //     'password' => Hash::make('Qq123456'),
-        // ]);
+        User::factory()->create([
+            'name' => '管理員',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('Qq123456'),
+            'is_admin' => true,
+        ]);
 
         Member::factory()->create([
             'name' => '小編',
-            'email' => 'renfu.her@gmail.com',
+            'email' => 'users@gmail.com',
             'password' => Hash::make('Qq123456'),
             'is_active' => true,
             'gender' => 1,

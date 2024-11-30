@@ -9,6 +9,15 @@
     - [https://e-commerce-dev.dev-vue.com/](https://e-commerce-dev.dev-vue.com/)
     - ![首頁](https://raw.gitmirror.com/renfu-her/image-drive/main/develop/e-commerce-home.png)
 
+- 使用方式
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan db:seed
+```
+
 ## .env
 ### 金流
 - ECPAY_MERCHANT_ID=
