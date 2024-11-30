@@ -34,6 +34,8 @@ php artisan migrate
 php artisan db:seed
 ```
 
+**預設是緑界測試環境，如果需要正式環境，請修改 .env 設定**
+
 ## .env
 ### 金流
 - ECPAY_MERCHANT_ID=
