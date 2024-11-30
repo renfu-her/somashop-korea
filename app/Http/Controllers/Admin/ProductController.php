@@ -52,7 +52,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'sub_title' => 'nullable|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'cash_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
@@ -64,6 +64,7 @@ class ProductController extends Controller
             'meta_title' => 'nullable|string|max:60',
             'meta_description' => 'nullable|string|max:160',
             'meta_keywords' => 'nullable|string|max:255',
+            'content' => 'required|string',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -97,7 +98,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'string|max:255',
             'sub_title' => 'nullable|string|max:255',
-            'description' => 'string',
+            'description' => 'nullable|string',
             'price' => 'numeric|min:0',
             'cash_price' => 'nullable|numeric|min:0',
             'stock' => 'integer|min:0',
@@ -109,6 +110,7 @@ class ProductController extends Controller
             'meta_title' => 'nullable|string|max:60',
             'meta_description' => 'nullable|string|max:160',
             'meta_keywords' => 'nullable|string|max:255',
+            'content' => 'nullable|string',
         ]);
 
         if (isset($validated['name'])) {
