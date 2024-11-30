@@ -136,7 +136,7 @@
 
                         </div>
                         <div class="product-description mt-4">
-                            {!! $product->description !!}
+                            {!! $product->content !!}
                         </div>
                     </div>
                 </div>
