@@ -171,7 +171,7 @@
                                                         <input type="checkbox" class="form-check-input"
                                                             style="margin-left: 3px;" id="spec_{{ $spec->id }}"
                                                             name="specs[]" value="{{ $spec->id }}"
-                                                            {{ in_array($spec->id, $product->specs->pluck('id')->toArray()) ? 'checked' : '' }}
+                                                            {{ $spec->is_active == 1 ? 'checked' : '' }}
                                                             onclick="return false;">
                                                         <label class="form-check-label" for="spec_{{ $spec->id }}">
                                                             {{ $spec->name }}
