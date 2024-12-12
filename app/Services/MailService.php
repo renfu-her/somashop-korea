@@ -31,16 +31,16 @@ class MailService
         $view = $template ?? 'emails.default';
 
         // try {
-            // 發送郵件，並加入密件副本
-            Mail::to($recipients)
-                ->bcc($bccEmails)
-                ->send(new GenericMail(
-                    $subject,
-                    $view,
-                    $mailData
-                ));
+        // 發送郵件，並加入密件副本
+        Mail::to($recipients)
+            ->bcc($bccEmails)
+            ->send(new GenericMail(
+                $subject,
+                $view,
+                $mailData
+            ));
 
-            return true;
+        return true;
         // } catch (\Exception $e) {
         //     Log::error('郵件發送失敗：' . $e->getMessage());
         //     return false;
@@ -68,6 +68,23 @@ class MailService
             $content,
             'emails.welcome',
             ['member' => $member]
+        );
+    }
+
+    /**
+     * 發送問題回饋郵件
+     */
+    public function sendFeedbackMail(string $email, string $message): bool
+    {
+        $subject = '問題回饋';
+        $content = ['content' => $message];
+
+        return $this->send(
+            $email,
+            $subject,
+            $content,
+            'emails.feedback',
+            ['content' => $message]
         );
     }
 

@@ -17,6 +17,7 @@ use App\Http\Controllers\Frontend\{
     SearchController,
     ForgetController,
     NavigationController,
+    FeedbackController,
 };
 use App\Http\Controllers\Frontend\{
     CartController,
@@ -146,3 +147,7 @@ Route::post('/checkout/validate-invoice-number', [CheckoutController::class, 'va
     ->name('checkout.validate-invoice-number');
 
 Route::get('/cart/count', [NavigationController::class, 'getCartCount'])->name('cart.count');
+
+// 問題回饋
+Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');
+Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
