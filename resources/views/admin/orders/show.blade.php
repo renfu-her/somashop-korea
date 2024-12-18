@@ -175,9 +175,6 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="card-title mb-0">發票資訊</h5>
-                        <small class="text-muted">
-                            發票開立時間：{{ $order->issued_invoice_date ?? '未開立' }}
-                        </small>
                     </div>
                     <div class="card-body" style="height: 157px;">
                         <p class="mb-2">

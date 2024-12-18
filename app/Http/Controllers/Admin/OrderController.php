@@ -238,7 +238,8 @@ class OrderController extends Controller
     {
         $order = Order::where('order_number', $request->order_number)->first();
         $order->update([
-            'issued_invoice_number' => $request->invoice_number
+            'issued_invoice_number' => $request->invoice_number,
+            'issued_invoice_date' => now()
         ]);
 
         return response()->json([
