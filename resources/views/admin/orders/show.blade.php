@@ -181,10 +181,9 @@
                     </div>
                     <div class="card-body" style="height: 157px;">
                         <p class="mb-2">
-                            發票狀態：{{ $order->invoice_checked == 1 ? '已檢查開立狀態' : '未檢查開立狀態' }}
-                        </p>
-                        <p class="mb-2">
-                            發票號碼：{{ $order->issued_invoice_number ?? '未開立' }}
+                            發票號碼
+                            <input type="text" class="form-control" value="{{ $order->issued_invoice_number ?? '' }}"
+                                id="issued-invoice-number" maxlength="8">
                         </p>
                     </div>
                 </div>
@@ -217,7 +216,20 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-
+            $('#issued-invoice-number').on('change', function() {
+                console.log($(this).val());
+                $.ajax({
+                    url: '{{ route('admin.orders.update-invoice-number') }}',
+                    method: 'POST',
+                    data: {
+                        invoice_number: $(this).val(),
+                        order_number: {{ $order->order_number }}
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    }
+                });
+            });
         });
 
         // 更新運送狀態

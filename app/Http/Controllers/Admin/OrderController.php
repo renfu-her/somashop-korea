@@ -56,7 +56,7 @@ class OrderController extends Controller
     {
 
         $order->load(['member', 'items.product', 'items.spec', 'items.productImage']);
-        
+
         switch ($order->shipment_method) {
             case 'family_b2c':
                 $shipmentMethodName = '全家店到店';
@@ -231,5 +231,19 @@ class OrderController extends Controller
         // 可以在這裡添加其他邏輯，比如發送通知等
 
         return redirect()->route('admin.orders.show', $order)->with('success', '訂單狀態更新成功');
+    }
+
+
+    public function updateInvoiceNumber(Request $request)
+    {
+        $order = Order::where('order_number', $request->order_number)->first();
+        $order->update([
+            'issued_invoice_number' => $request->invoice_number
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '發票號碼更新成功'
+        ]);
     }
 }

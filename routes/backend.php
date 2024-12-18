@@ -161,4 +161,8 @@ Route::group([
 
     Route::get('refresh-captcha', [AdminAuthController::class, 'refreshCaptcha'])
         ->name('refresh.captcha');
+
+    // 更新發票號碼
+    Route::post('orders/update-invoice-number', [OrderController::class, 'updateInvoiceNumber'])
+        ->name('orders.update-invoice-number');
 });
