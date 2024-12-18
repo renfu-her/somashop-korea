@@ -179,7 +179,7 @@
                     <div class="card-body" style="height: 157px;">
                         <p class="mb-2">
                             發票號碼
-                            <input type="text" class="form-control" value="{{ $order->issued_invoice_number ?? '' }}"
+                            <input type="text" class="form-control text-uppercase" value="{{ $order->issued_invoice_number ?? '' }}"
                                 id="issued-invoice-number" maxlength="8">
                         </p>
                     </div>
