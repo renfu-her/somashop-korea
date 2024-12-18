@@ -223,7 +223,7 @@
                     method: 'POST',
                     data: {
                         invoice_number: $(this).val(),
-                        order_number: {{ $order->order_number }}
+                        order_number: '{{ $order->order_number }}'
                     },
                     success: function(response) {
                         console.log(response);
