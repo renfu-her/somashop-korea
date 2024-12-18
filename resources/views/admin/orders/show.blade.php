@@ -216,8 +216,8 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('#issued-invoice-number').on('change', function() {
-                console.log($(this).val());
+            $('#issued-invoice-number').on('keyup', function() {
+                // console.log($(this).val());
                 $.ajax({
                     url: '{{ route('admin.orders.update-invoice-number') }}',
                     method: 'POST',
@@ -234,8 +234,8 @@
 
         // 更新運送狀態
         function updateShippingStatus(select, orderId) {
-            console.log(select.value);
-            console.log(orderId);
+            // console.log(select.value);
+            // console.log(orderId);
             $.ajax({
                 url: '{{ route('admin.orders.update-shipping-status') }}',
                 method: 'POST',
