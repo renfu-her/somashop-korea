@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Member;
+use App\Models\Setting;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,20 +18,48 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => '管理員',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('Qq123456'),
-            'is_admin' => true,
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@admin.com'],
+            [
+                'name' => '管理員',
+                'password' => Hash::make('Qq123456'),
+                'is_admin' => true,
+            ]
+        );
 
-        Member::factory()->create([
-            'name' => '小編',
-            'email' => 'users@gmail.com',
-            'password' => Hash::make('Qq123456'),
-            'is_active' => true,
-            'gender' => 1,
-            'agree' => 1
-        ]);
+        Member::firstOrCreate(
+            ['email' => 'renfu.her@gmail.com'],
+            [
+                'name' => '小編',
+                'password' => Hash::make('Qq123456'),
+                'is_active' => true,
+                'gender' => 1,
+                'agree' => 1
+            ]
+        );
+
+        Setting::firstOrCreate(
+            ['key' => 'shipping_fee'],
+            [
+                'value' => 100,
+                'description' => '宅配運費'
+            ]
+        );
+
+        Setting::firstOrCreate(
+            ['key' => '711_shipping_fee'],
+            [
+                'value' => 80,
+                'description' => '7-11 店到店運費'
+            ]
+        );
+
+        Setting::firstOrCreate(
+            ['key' => 'family_shipping_fee'],
+            [
+                'value' => 80,
+                'description' => '全家店到店運費'
+            ]
+        );
     }
 }
