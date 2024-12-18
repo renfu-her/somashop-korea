@@ -32,6 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin/logout',
             'admin/orders/*/update-status',
             'member/agreement',
+            'admin/orders/update-invoice-number',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
