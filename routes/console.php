@@ -10,4 +10,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command('app:payment-check-command')->everyTenMinutes();
 Schedule::command('order:check-atm-payment')->everyTenMinutes();
-Schedule::command('app:invoice-check-command')->everyTenMinutes();
+// Schedule::command('app:invoice-check-command')->everyTenMinutes();
