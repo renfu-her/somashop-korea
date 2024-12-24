@@ -72,14 +72,21 @@ class CheckoutController extends Controller
         $shippingFee = 0;
 
         // 獲取免運門檻
+        // 1. 永久有效的免運設定 (start_date 和 end_date 都為空)
+        // 2. 限時免運設定 (在有效期間內)
         $freeShippings = FreeShipping::where('is_active', 1)
             ->where(function($query) {
-                $query->whereNull('start_date')
-                    ->orWhere('start_date', '<=', now());
-            })
-            ->where(function($query) {
-                $query->whereNull('end_date')
-                    ->orWhere('end_date', '>=', now());
+                $query->where(function($q) {
+                    // 永久有效
+                    $q->whereNull('start_date')
+                      ->whereNull('end_date');
+                })->orWhere(function($q) {
+                    // 限時有效且在有效期間內
+                    $q->whereNotNull('start_date')
+                      ->whereNotNull('end_date')
+                      ->where('start_date', '<=', now())
+                      ->where('end_date', '>=', now());
+                });
             })
             ->orderBy('minimum_amount', 'asc')
             ->first();
