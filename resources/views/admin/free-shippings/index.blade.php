@@ -3,8 +3,8 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>免運費活動管理</h2>
-            <a href="{{ route('admin.free-shippings.create') }}" class="btn btn-primary">新增活動</a>
+            <h2>免運費設定</h2>
+            <a href="{{ route('admin.free-shippings.create') }}" class="btn btn-primary">新增門檻</a>
         </div>
 
         @if (session('success'))

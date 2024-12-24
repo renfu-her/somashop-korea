@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">編輯免運費活動</div>
+                    <div class="card-header">編輯免運設定</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.free-shippings.update', $freeShipping) }}">

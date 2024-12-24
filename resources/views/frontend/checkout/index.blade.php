@@ -442,6 +442,11 @@
                 const selectedValue = $(this).val();
                 const freeShippings = {{ $freeShippings }};
 
+
+                console.log(freeShippings);
+                console.log(shippingFee);
+                console.log(selectedValue);
+                
                 // 更新運費顯示
                 if (freeShippings > 0) {
                     $('.shipping-fee').hide();

@@ -81,8 +81,10 @@ class CheckoutController extends Controller
                 $query->whereNull('end_date')
                     ->orWhere('end_date', '>=', now());
             })
-            ->where('minimum_amount', '<=', $total)
-            ->first() ?? 0;
+            ->orderBy('minimum_amount', 'asc')
+            ->first();
+
+        $freeShippings = $freeShippings && $total >= $freeShippings->minimum_amount ? $freeShippings->minimum_amount : 0;
 
         return view('frontend.checkout.index', compact(
             'cart',
