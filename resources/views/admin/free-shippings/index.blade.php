@@ -4,7 +4,13 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>免運費設定</h2>
-            <a href="{{ route('admin.free-shippings.create') }}" class="btn btn-primary">新增門檻</a>
+            <a href="{{ route('admin.free-shippings.create') }}" class="btn btn-primary">新增免運設定</a>
+        </div>
+        <div class="mb-3 alert alert-warning">
+            <div class="text-danger">
+                開始日期和結束日期可以為空，表示永久有效。<br>
+                開始日期和結束日期不得重疊。
+            </div>
         </div>
 
         @if (session('success'))
@@ -74,7 +80,7 @@
                 },
                 responsive: true,
                 order: [
-                    [0, 'desc']
+                    [2, 'asc']
                 ],
                 columnDefs: [{
                     targets: -1,

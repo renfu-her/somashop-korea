@@ -14,7 +14,7 @@
                             <div class="mb-3">
                                 <label for="start_date" class="form-label">開始日期</label>
                                 <input type="text" class="form-control flatpickr @error('start_date') is-invalid @enderror"
-                                    id="start_date" name="start_date" value="{{ old('start_date') }}" required>
+                                    id="start_date" name="start_date" value="{{ old('start_date') }}">
                                 @error('start_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

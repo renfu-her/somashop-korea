@@ -22,7 +22,7 @@ class FreeShippingController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'start_date' => 'required|date',
+            'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after:start_date',
             'minimum_amount' => 'required|numeric|min:0',
         ]);
@@ -30,7 +30,7 @@ class FreeShippingController extends Controller
         FreeShipping::create($validated);
 
         return redirect()->route('admin.free-shippings.index')
-            ->with('success', '免運費活動已成功創建！');
+            ->with('success', '免運費設定已成功創建！');
     }
 
     public function edit(FreeShipping $freeShipping)
@@ -41,7 +41,7 @@ class FreeShippingController extends Controller
     public function update(Request $request, FreeShipping $freeShipping)
     {
         $validated = $request->validate([
-            'start_date' => 'required|date',
+            'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after:start_date',
             'minimum_amount' => 'required|numeric|min:0',
         ]);
@@ -49,6 +49,6 @@ class FreeShippingController extends Controller
         $freeShipping->update($validated);
 
         return redirect()->route('admin.free-shippings.index')
-            ->with('success', '免運費活動已成功更新！');
+            ->with('success', '免運費設定已成功更新！');
     }
 }
