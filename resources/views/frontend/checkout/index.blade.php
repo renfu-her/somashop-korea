@@ -460,13 +460,13 @@
                 // 根據選擇顯示不同內容
                 switch (selectedValue) {
                     case 'mail_send':
-                        $('.addr').show();
+                        $('.addr').show(); 
                         $('.map-btn').hide();
                         break;
                     case '711_b2c':
                     case 'family_b2c':
-                        $('.addr').hide();
-                        $('.map-btn').show();
+                        $('.addr').hide(); 
+                        $('.map-btn').show(); 
                         break;
                     default:
                         $('.addr').hide();
