@@ -108,6 +108,13 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.free-shippings.index') }}">
+                <i class="fas fa-truck menu-icon"></i>
+                <span class="menu-title">免運設定</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.admins.index') }}">
                 <i class="fas fa-users menu-icon"></i>
                 <span class="menu-title">帳號管理</span>

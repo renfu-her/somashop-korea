@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\{
     MemberController,
     HomeAdsController,
     SiteSettingController,
+    FreeShippingController,
 };
 
 
@@ -165,4 +166,9 @@ Route::group([
     // 更新發票號碼
     Route::post('orders/update-invoice-number', [OrderController::class, 'updateInvoiceNumber'])
         ->name('orders.update-invoice-number');
+
+    // 免運設定
+    Route::resource('free-shippings', FreeShippingController::class);
+    Route::post('free-shippings/{freeShipping}/toggle-active', [FreeShippingController::class, 'toggleActive'])
+        ->name('free-shippings.toggle-active');
 });
