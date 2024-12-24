@@ -440,9 +440,12 @@
                 const selectedOption = $(this).find('option:selected');
                 const shippingFee = parseInt(selectedOption.data('fee')) || 0;
                 const selectedValue = $(this).val();
+                const freeShippings = {{ $freeShippings }};
 
                 // 更新運費顯示
-                if (shippingFee > 0) {
+                if (freeShippings > 0) {
+                    $('.shipping-fee').hide();
+                } else if (shippingFee > 0) {
                     $('.shipping-fee').show();
                     $('.shipping-fee .money').text('NT$' + numberFormat(shippingFee));
                 } else {
@@ -451,7 +454,7 @@
 
                 // 更新總金額
                 const subtotal = {{ $total }};
-                const newTotal = subtotal + shippingFee;
+                const newTotal = subtotal + (freeShippings > 0 ? 0 : shippingFee);
                 $('h2.text-black span').text('NT$' + numberFormat(newTotal));
 
                 // 根據選擇顯示不同內容

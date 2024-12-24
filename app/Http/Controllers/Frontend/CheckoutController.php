@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Services\CaptchaService;
 use Illuminate\Support\Facades\Http;
 use App\Models\Setting;
-
+use App\Models\FreeShipping;
 class CheckoutController extends Controller
 {
     protected $captchaService;
@@ -71,13 +71,27 @@ class CheckoutController extends Controller
         // 預設運費
         $shippingFee = 0;
 
+        // 獲取免運門檻
+        $freeShippings = FreeShipping::where('is_active', 1)
+            ->where(function($query) {
+                $query->whereNull('start_date')
+                    ->orWhere('start_date', '<=', now());
+            })
+            ->where(function($query) {
+                $query->whereNull('end_date')
+                    ->orWhere('end_date', '>=', now());
+            })
+            ->where('minimum_amount', '<=', $total)
+            ->first() ?? 0;
+
         return view('frontend.checkout.index', compact(
             'cart',
             'total',
             'member',
             'shippingFee',
             'shippingSettings',
-            'selectedStore'
+            'selectedStore',
+            'freeShippings'
         ));
     }
 
