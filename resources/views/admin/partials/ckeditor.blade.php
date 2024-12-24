@@ -164,6 +164,18 @@
                 },
                 mediaEmbed: {
                     previewsInData: true
+                },
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Arial, Helvetica, sans-serif',
+                        '新細明體, PMingLiU, serif',
+                        '微軟正黑體, Microsoft JhengHei, sans-serif',
+                        '標楷體, DFKai-SB, serif',
+                        '細明體, MingLiU, serif',
+                        '宋體, SimSun, serif',
+                        '黑體, SimHei, sans-serif'
+                    ]
                 }
             })
             .then(editor => {
