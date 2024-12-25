@@ -201,7 +201,7 @@
                         if (response.success == true) {
                             // 移除对应的 TR 元素
                             const $item = $(`tr[data-cart-key="${cartKey}"]`);
-                            
+
                             $item.fadeOut(300, function() {
                                 $(this).remove();
 
@@ -315,72 +315,6 @@
                     removeFromCart(cartKey, productId, specificationId);
                 }
             });
-
-            function updateCartQuantity(cartKey, productId, specificationId, quantity) {
-                $.ajax({
-                    url: '{{ route('cart.update-quantity') }}',
-                    method: 'POST',
-                    data: {
-                        cart_key: cartKey,
-                        product_id: productId,
-                        spec_id: specificationId,
-                        quantity: quantity,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        location.reload();
-                    },
-                    error: function(xhr) {
-                        alert('更新數量失敗，請稍後再試');
-                    }
-                });
-            }
-
-            function removeFromCart(cartKey, productId, specificationId) {
-                $.ajax({
-                    url: '{{ route('cart.remove') }}',
-                    method: 'POST',
-                    data: {
-                        cart_key: cartKey,
-                        product_id: productId,
-                        spec_id: specificationId,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            // 移除对应的 TR 元素
-                            const $item = $(`tr[data-cart-key="${cartKey}"]`);
-                            $item.fadeOut(300, function() {
-                                $(this).remove();
-
-                                // 检查购物车是否为空
-                                if ($('.cart-item').length === 0) {
-                                    $('.cart-items tbody').html(
-                                        '<tr><td colspan="8" class="text-center">購物車是空的</td></tr>'
-                                    );
-                                }
-
-                                // 重新计算总金额
-                                updateTotalPrice();
-                            });
-                        }
-                    },
-                    error: function(xhr) {
-                        alert('移除商品失敗，請稍後再試');
-                    }
-                });
-            }
-
-            // 添加计算总金额的函数
-            function updateTotalPrice() {
-                let total = 0;
-                $('.cart-item').each(function() {
-                    const price = $(this).find('.money').text().replace('NT$', '').replace(',', '') * 1;
-                    total += price;
-                });
-                $('.priceTotalplusFee').text('NT$' + total.toLocaleString());
-            }
-
             // 繼續購物按鈕
             $('.btn-addcart').click(function() {
                 const referrer = $('#referrer').val();
@@ -395,6 +329,71 @@
                 window.location.href = '{{ route('checkout.index') }}';
             });
         });
+
+        function updateCartQuantity(cartKey, productId, specificationId, quantity) {
+            $.ajax({
+                url: '{{ route('cart.update-quantity') }}',
+                method: 'POST',
+                data: {
+                    cart_key: cartKey,
+                    product_id: productId,
+                    spec_id: specificationId,
+                    quantity: quantity,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert('更新數量失敗，請稍後再試');
+                }
+            });
+        }
+
+        function removeFromCart(cartKey, productId, specificationId) {
+            $.ajax({
+                url: '{{ route('cart.remove') }}',
+                method: 'POST',
+                data: {
+                    cart_key: cartKey,
+                    product_id: productId,
+                    spec_id: specificationId,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // 移除对应的 TR 元素
+                        const $item = $(`tr[data-cart-key="${cartKey}"]`);
+                        $item.fadeOut(300, function() {
+                            $(this).remove();
+
+                            // 检查购物车是否为空
+                            if ($('.cart-item').length === 0) {
+                                $('.cart-items tbody').html(
+                                    '<tr><td colspan="8" class="text-center">購物車是空的</td></tr>'
+                                );
+                            }
+
+                            // 重新计算总金额
+                            updateTotalPrice();
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    alert('移除商品失敗，請稍後再試');
+                }
+            });
+        }
+
+        // 添加计算总金额的函数
+        function updateTotalPrice() {
+            let total = 0;
+            $('.cart-item').each(function() {
+                const price = $(this).find('.money').text().replace('NT$', '').replace(',', '') * 1;
+                total += price;
+            });
+            $('.priceTotalplusFee').text('NT$' + total.toLocaleString());
+        }
     </script>
 @endpush
 
