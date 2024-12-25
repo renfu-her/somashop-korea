@@ -47,7 +47,9 @@ class MailService
             'view' => $view,
             'data' => $mailData,
             'result' => $mail,
-            'mail' => $mail->getMessage()
+            'mail' => $mail->getMessage(),
+            'statusCode' => $mail->getStatusCode(),
+            'body' => $mail->getBody(),
         ]);
 
         return true;
