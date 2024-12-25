@@ -77,13 +77,15 @@ class PaymentService
                         ->where('end_date', '>=', now());
                 });
             })
-            ->orderBy('minimum_amount', 'asc')
+            ->orderBy('minimum_amount', 'desc')
             ->first();
 
         // 如果訂單金額達到免運門檻，運費設為 0
         if ($freeShipping && $totalAmount >= $freeShipping->minimum_amount) {
             $shippingFee = 0;
         }
+
+        dd($freeShipping, $totalAmount, $shippingFee);
 
         // 生成訂單編號
         $today = date('Ymd');

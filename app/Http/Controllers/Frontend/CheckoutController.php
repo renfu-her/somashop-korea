@@ -88,7 +88,7 @@ class CheckoutController extends Controller
                       ->where('end_date', '>=', now());
                 });
             })
-            ->orderBy('minimum_amount', 'asc')
+            ->orderBy('minimum_amount', 'desc')
             ->first();
 
         $freeShippings = $freeShippings && $total >= $freeShippings->minimum_amount ? $freeShippings->minimum_amount : 0;
