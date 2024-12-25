@@ -85,8 +85,6 @@ class PaymentService
             $shippingFee = 0;
         }
 
-        dd($freeShipping, $totalAmount, $shippingFee);
-
         // 生成訂單編號
         $today = date('Ymd');
         if (config('config.app_run') === 'local') {
