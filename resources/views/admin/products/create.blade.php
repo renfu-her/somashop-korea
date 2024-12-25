@@ -84,24 +84,15 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="price" class="form-label">原價</label>
-                                <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                    id="price" name="price" value="{{ old('price') }}" required>
+                                <label for="price" class="form-label">售價</label>
+                                <input type="number" 
+                                       class="form-control @error('price') is-invalid @enderror"
+                                       id="price" 
+                                       name="price" 
+                                       value="{{ old('price') }}" 
+                                       required>
                                 @error('price')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="cash_price" class="form-label">優惠價</label>
-                                <input type="number" class="form-control @error('cash_price') is-invalid @enderror"
-                                    id="cash_price" name="cash_price" value="{{ old('cash_price') }}">
-                                @error('cash_price')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -117,15 +108,16 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="images" class="form-label">新增圖片 (<span class="text-danger">寬度
-                                        800px，高度不限</span>)</label>
-                                <input type="file" class="form-control @error('images.*') is-invalid @enderror"
-                                    id="images" name="images[]" multiple accept="image/*">
-                                <small class="text-muted">可以選擇多張圖片，第一張圖片將作為主圖</small>
-                                @error('images.*')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <label for="image" class="form-label">上傳圖片 (<span class="text-danger">寬度 800px，高度不限</span>)</label>
+                                <input type="file" 
+                                       class="form-control @error('image') is-invalid @enderror" 
+                                       id="image" 
+                                       name="image" 
+                                       accept="image/*"
+                                       required>
+                                <small class="text-muted">請上��商品圖片</small>
+                                @error('image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -226,27 +218,27 @@
                 $('#content').val(content);
             });
 
-            // 圖片預覽代碼保持不變
-            $('#images').on('change', function(e) {
+            // 圖片預覽
+            $('#image').on('change', function(e) {
                 const $preview = $('#imagePreview');
                 $preview.empty();
 
-                $.each(e.target.files, function(index, file) {
+                if (e.target.files && e.target.files[0]) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        $preview.append(`
-                    <div class="col-md-3 mb-2">
-                        <div class="card">
-                            <img src="${e.target.result}" class="card-img-top" alt="Preview">
-                            <div class="card-body p-2">
-                                <small class="text-muted">圖片 ${index + 1}</small>
+                        $preview.html(`
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <img src="${e.target.result}" class="card-img-top" alt="Preview">
+                                    <div class="card-body p-2">
+                                        <small class="text-muted">商品圖片預覽</small>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                `);
+                        `);
                     }
-                    reader.readAsDataURL(file);
-                });
+                    reader.readAsDataURL(e.target.files[0]);
+                }
             });
         });
     </script>

@@ -14,7 +14,7 @@ use Intervention\Image\Laravel\Facades\Image;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use App\Services\ImageService;
-
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -28,7 +28,6 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->get();
-
         return view('admin.products.index', compact('products'));
     }
 
@@ -37,19 +36,13 @@ class ProductController extends Controller
         $categories = Category::with('children')
             ->where('parent_id', 0)
             ->get();
-        return view('admin.products.create', compact('categories'));
-    }
 
-    public function edit(Product $product)
-    {
-        $categories = Category::orderBy('name')->get();
-        $specifications = ProductSpecification::orderBy('name')->get();
-        return view('admin.products.edit', compact('product', 'categories', 'specifications'));
+        return view('admin.products.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'sub_title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
@@ -57,7 +50,7 @@ class ProductController extends Controller
             'cash_price' => 'nullable|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,id',
-            'images.*' => 'nullable|image|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_active' => 'boolean',
             'is_new' => 'boolean',
             'is_hot' => 'boolean',
@@ -67,100 +60,116 @@ class ProductController extends Controller
             'content' => 'required|string',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
         $validated['slug'] = Str::slug($validated['name']);
         $validated['is_new'] = $request->has('is_new') ? 1 : 0;
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
         $validated['is_hot'] = $request->has('is_hot') ? 1 : 0;
+
+        // 創建產品
         $product = Product::create($validated);
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $index => $image) {
-                $filename = $this->imageService->uploadImage(
-                    $image,
-                    "products/{$product->id}"
-                );
+        // 處理圖片上傳
+        if ($request->hasFile('image')) {
+            $filename = $this->imageService->uploadImage(
+                $request->file('image'),
+                "products/{$product->id}"
+            );
 
-                $product->images()->create([
-                    'image_path' => $filename,
-                    'is_primary' => $index === 0,
-                    'sort_order' => $index
-                ]);
-            }
+            // 創建產品圖片記錄
+            $product->images()->create([
+                'image_path' => $filename,
+                'is_primary' => true,
+                'sort_order' => 0
+            ]);
         }
 
         return redirect()->route('admin.products.index')
             ->with('success', '商品已創建');
     }
 
+    public function edit(Product $product)
+    {
+        $categories = Category::orderBy('name')->get();
+        $specifications = ProductSpecification::orderBy('name')->get();
+        
+        return view('admin.products.edit', compact(
+            'product',
+            'categories',
+            'specifications'
+        ));
+    }
 
     public function update(Request $request, Product $product)
     {
-        $validated = $request->validate([
-            'name' => 'string|max:255',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
             'sub_title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'numeric|min:0',
+            'price' => 'required|numeric|min:0',
             'cash_price' => 'nullable|numeric|min:0',
-            'stock' => 'integer|min:0',
-            'category_id' => 'exists:categories,id',
-            'images.*' => 'nullable|image|max:2048',
+            'stock' => 'required|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_active' => 'boolean',
             'is_new' => 'boolean',
             'is_hot' => 'boolean',
             'meta_title' => 'nullable|string|max:60',
             'meta_description' => 'nullable|string|max:160',
             'meta_keywords' => 'nullable|string|max:255',
-            'content' => 'nullable|string',
+            'content' => 'required|string',
         ]);
 
-        if (isset($validated['name'])) {
-            $validated['slug'] = Str::slug($validated['name']);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $validated = $validator->validated();
+        $validated['slug'] = Str::slug($validated['name']);
         $validated['is_new'] = $request->has('is_new') ? 1 : 0;
         $validated['is_active'] = $request->has('is_active') ? 1 : 0;
         $validated['is_hot'] = $request->has('is_hot') ? 1 : 0;
+
+        // 更新產品資訊
         $product->update($validated);
 
-        if ($request->hasFile('images')) {
-            $maxOrder = $product->images()->max('sort_order') ?? -1;
-
-            foreach ($request->file('images') as $image) {
-                $filename = $this->imageService->uploadImage(
-                    $image,
-                    "products/{$product->id}"
-                );
-
-                $product->images()->create([
-                    'image_path' => $filename,
-                    'is_primary' => false,
-                    'sort_order' => ++$maxOrder
-                ]);
+        // 處理圖片上傳
+        if ($request->hasFile('image')) {
+            // 刪除舊圖片
+            if ($product->primaryImage) {
+                Storage::disk('public')->delete($product->primaryImage->full_path);
+                $product->primaryImage->delete();
             }
+
+            // 上傳新圖片
+            $filename = $this->imageService->uploadImage(
+                $request->file('image'),
+                "products/{$product->id}"
+            );
+
+            // 創建新的產品圖片記錄
+            $product->images()->create([
+                'image_path' => $filename,
+                'is_primary' => true,
+                'sort_order' => 0
+            ]);
         }
-
-        // $specs = $request->input('specs', []);
-
-        // $product->specs()->sync(
-        //     collect($specs)->mapWithKeys(function ($id) {
-        //         return [$id => ['is_active' => true]];
-        //     })
-        // );
 
         return redirect()->route('admin.products.index')
             ->with('success', '商品已更新');
     }
 
-    public function destroy($id)
+    public function deleteImage(Product $product)
     {
-        $product = Product::findOrFail($id);
-
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
+        if ($product->primaryImage) {
+            Storage::disk('public')->delete($product->primaryImage->full_path);
+            $product->primaryImage->delete();
+            return response()->json(['success' => true]);
         }
-
-        $product->delete();
-
-        return redirect()->route('admin.products.index')->with('success', '商品已刪除');
+        return response()->json(['success' => false], 404);
     }
 }

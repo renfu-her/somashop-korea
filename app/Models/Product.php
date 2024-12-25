@@ -26,7 +26,7 @@ class Product extends Model
         'is_new',
         'is_hot',
         'meta_title',
-        'meta_description'      ,
+        'meta_description',
         'meta_keywords',
         'content'
     ];
@@ -90,5 +90,10 @@ class Product extends Model
     public function specs()
     {
         return $this->hasMany(ProductSpec::class);
+    }
+
+    public function imageUploadType()
+    {
+        return $this->belongsTo(ImageUploadType::class);
     }
 }
