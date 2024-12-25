@@ -92,7 +92,7 @@
                                         <td></td>
                                         <td class="text-center">運費</td>
                                         <td class="text-danger mb-0">
-                                            NT${{ number_format($shippingFee) == 0 ? '免運費' : number_format($shippingFee) }}
+                                            {{ $shippingFee == 0 ? '免運費' : 'NT$' . number_format($shippingFee) }}
                                         </td>
                                     </tr>
                                 </tbody>
