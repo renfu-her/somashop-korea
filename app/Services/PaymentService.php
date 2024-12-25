@@ -118,8 +118,6 @@ class PaymentService
         $order->shipping_status = Order::SHIPPING_STATUS_PENDING;
         $order->shipping_fee = $shippingFee;
 
-        dd($shippingFee);
-
         // 收件人資訊
         $order->recipient_name = $request->username;
         $order->recipient_phone = $request->phone;
@@ -147,6 +145,8 @@ class PaymentService
         $order->note = $request->info;
 
         $order->save();
+
+        dd($order);
 
         // 建立訂單項目
         foreach ($cart as $item) {
