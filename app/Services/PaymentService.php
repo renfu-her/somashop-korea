@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\LogisticsService;
 use App\Services\MailService;
+use App\Models\FreeShipping;
 
 class PaymentService
 {
@@ -20,7 +21,7 @@ class PaymentService
     private $hashKey;
     private $hashIV;
 
-    public function __construct(LogisticsService $logisticsService, MailService $mailService)   
+    public function __construct(LogisticsService $logisticsService, MailService $mailService)
     {
         $this->logisticsService = $logisticsService;
         $this->mailService = $mailService;
@@ -61,6 +62,27 @@ class PaymentService
             default:
                 $shippingFee = 0;
                 break;
+        }
+
+        // 檢查是否符合免運條件
+        $freeShipping = FreeShipping::where('is_active', 1)
+            ->where(function ($query) {
+                $query->where(function ($q) {
+                    $q->whereNull('start_date')
+                        ->whereNull('end_date');
+                })->orWhere(function ($q) {
+                    $q->whereNotNull('start_date')
+                        ->whereNotNull('end_date')
+                        ->where('start_date', '<=', now())
+                        ->where('end_date', '>=', now());
+                });
+            })
+            ->orderBy('minimum_amount', 'asc')
+            ->first();
+
+        // 如果訂單金額達到免運門檻，運費設為 0
+        if ($freeShipping && $totalAmount >= $freeShipping->minimum_amount) {
+            $shippingFee = 0;
         }
 
         // 生成訂單編號
@@ -151,7 +173,7 @@ class PaymentService
             'EncryptType' => 1,
         ];
 
-        if($request->payment != 'ATM'){
+        if ($request->payment != 'ATM') {
             $ecpayData['ClientBackURL'] = route('payment.callback');
         }
 
