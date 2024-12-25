@@ -51,7 +51,6 @@ class MailService
                     'host' => config('mail.mailers.' . config('mail.default') . '.host'),
                     'port' => config('mail.mailers.' . config('mail.default') . '.port'),
                 ],
-                'message_id' => $mail->getMessage()->getId(),
                 'time' => now(),
             ]);
 
@@ -149,7 +148,7 @@ class MailService
     public function checkMailConnection(): array
     {
         try {
-            // 獲取當前郵件配置
+            // 獲取當前郵���配置
             $driver = config('mail.default');
             $config = config('mail.mailers.' . $driver);
 
