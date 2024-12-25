@@ -7,6 +7,8 @@ use App\Models\EmailSetting;
 use App\Models\Member;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\Mailer\Exception\TransportException;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 
 class MailService
 {
@@ -15,46 +17,62 @@ class MailService
      */
     public function send($to, string $subject, $content, ?string $template = null, array $data = []): bool
     {
-        // 獲取所有啟用的郵件設定
-        $bccEmails = EmailSetting::where('is_active', true)
-            ->pluck('email')
-            ->toArray();
+        try {
+            // 獲取所有啟用的郵件設定
+            $bccEmails = EmailSetting::where('is_active', true)
+                ->pluck('email')
+                ->toArray();
 
-        // 處理收件者格式
-        $recipients = is_array($to) ? $to : ['email' => $to];
+            // 處理收件者格式
+            $recipients = is_array($to) ? $to : ['email' => $to];
 
-        // 處理內容格式
-        $mailData = is_array($content) ? $content : ['content' => $content];
-        $mailData = array_merge($mailData, $data);
+            // 處理內容格式
+            $mailData = is_array($content) ? $content : ['content' => $content];
+            $mailData = array_merge($mailData, $data);
 
-        // 如果沒有指定模板，使用預設模板
-        $view = $template ?? 'emails.default';
+            // 如果沒有指定模板，使用預設模板
+            $view = $template ?? 'emails.default';
 
-        // try {
-        // 發送郵件，並加入密件副本
-        $mail = Mail::to($recipients)
-            ->bcc($bccEmails)
-            ->send(new GenericMail(
-                $subject,
-                $view,
-                $mailData
-            ))->getDebug();
+            // 發送郵件，並加入密件副本
+            $mail = Mail::to($recipients)
+                ->bcc($bccEmails)
+                ->send(new GenericMail(
+                    $subject,
+                    $view,
+                    $mailData
+                ));
 
-        Log::info('郵件發送詳細資訊', [
-            'recipients' => $recipients,
-            'bcc' => $bccEmails, 
-            'subject' => $subject,
-            'view' => $view,
-            'data' => $mailData,
-            'result' => $mail,
-            'mail' => $mail->getMessage(),
-        ]);
+            // 記錄成功信息
+            Log::info('郵件發送成功', [
+                'recipients' => $recipients,
+                'subject' => $subject,
+                'connection_status' => config('mail.default'),
+                'mailer_settings' => [
+                    'host' => config('mail.mailers.' . config('mail.default') . '.host'),
+                    'port' => config('mail.mailers.' . config('mail.default') . '.port'),
+                ],
+                'message_id' => $mail->getMessage()->getId(),
+                'time' => now(),
+            ]);
 
-        return true;
-        // } catch (\Exception $e) {
-        //     Log::error('郵件發送失敗：' . $e->getMessage());
-        //     return false;
-        // }
+            return true;
+        } catch (TransportException $e) {
+            // SMTP 連接問題
+            Log::error('郵件伺服器連接失敗', [
+                'error' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'connection' => config('mail.default'),
+            ]);
+            return false;
+        } catch (\Exception $e) {
+            // 其他錯誤
+            Log::error('郵件發送失敗', [
+                'error' => $e->getMessage(),
+                'code' => $e->getCode(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return false;
+        }
     }
 
     /**
@@ -123,5 +141,63 @@ class MailService
                 'token' => $token
             ]
         );
+    }
+
+    /**
+     * 檢查郵件伺服器連線狀態
+     */
+    public function checkMailConnection(): array
+    {
+        try {
+            // 獲取當前郵件配置
+            $driver = config('mail.default');
+            $config = config('mail.mailers.' . $driver);
+
+            // 建立 SMTP 連線
+            $transport = new EsmtpTransport(
+                $config['host'],
+                $config['port'],
+                $config['encryption'] ?? null,
+                $config['username'] ?? null,
+                $config['password'] ?? null
+            );
+
+            // 測試連線
+            $transport->start();
+
+            $status = [
+                'success' => true,
+                'message' => '郵件伺服器連線成功',
+                'details' => [
+                    'driver' => $driver,
+                    'host' => $config['host'],
+                    'port' => $config['port'],
+                    'encryption' => $config['encryption'] ?? 'none',
+                    'from_address' => config('mail.from.address'),
+                    'from_name' => config('mail.from.name'),
+                    'timestamp' => now()->toDateTimeString()
+                ]
+            ];
+
+            // 關閉連線
+            $transport->stop();
+        } catch (TransportException $e) {
+            $status = [
+                'success' => false,
+                'message' => '郵件伺服器連線失敗：' . $e->getMessage(),
+                'details' => [
+                    'driver' => $driver,
+                    'host' => $config['host'] ?? null,
+                    'port' => $config['port'] ?? null,
+                    'error_code' => $e->getCode(),
+                    'error_message' => $e->getMessage(),
+                    'timestamp' => now()->toDateTimeString()
+                ]
+            ];
+
+            Log::error('郵件伺服器連線失敗', $status);
+        }
+
+        return $status;
     }
 }
