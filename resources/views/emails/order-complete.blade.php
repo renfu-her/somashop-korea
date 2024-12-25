@@ -105,7 +105,7 @@
             </table>
 
             <div style="margin-top: 20px; text-align: right;">
-                <p>運費: NT${{ number_format($order->shipping_fee) }}</p>
+                <p>運費: NT${{ number_format($order->shipping_fee) == 0 ? '免運費' : number_format($order->shipping_fee) }}</p>
                 <p>總計: NT${{ number_format($order->total_amount + $order->shipping_fee) }}</p>
             </div>
         </div>
