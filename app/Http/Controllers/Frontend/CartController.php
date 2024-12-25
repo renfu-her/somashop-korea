@@ -157,6 +157,8 @@ class CartController extends Controller
                 $item['spec_id'] == $validated['spec_id'];
         }, $cart));
 
+        dd($itemIndex);
+
         if ($itemIndex !== false) {
             // 删除该商品
             array_splice($cart, $itemIndex, 1);
