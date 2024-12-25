@@ -50,6 +50,9 @@ class MailService
                 'mailer_settings' => [
                     'host' => config('mail.mailers.' . config('mail.default') . '.host'),
                     'port' => config('mail.mailers.' . config('mail.default') . '.port'),
+                    'encryption' => config('mail.mailers.' . config('mail.default') . '.encryption'),
+                    'username' => config('mail.mailers.' . config('mail.default') . '.username'),
+                    'password' => config('mail.mailers.' . config('mail.default') . '.password'),
                 ],
                 'time' => now(),
             ]);
