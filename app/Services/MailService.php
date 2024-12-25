@@ -48,8 +48,6 @@ class MailService
             'data' => $mailData,
             'result' => $mail,
             'mail' => $mail->getMessage(),
-            'body' => $mail->getBody(),
-            ''
         ]);
 
         return true;
