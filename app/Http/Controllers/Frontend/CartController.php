@@ -146,22 +146,15 @@ class CartController extends Controller
     {
         $validated = $request->validate([
             'product_id' => 'required',
-            'spec_id' => 'required'
+            'spec_id' => 'required', 
+            'cart_key' => 'required'
         ]);
 
         $cart = session()->get('cart', []);
 
-        // 找到要删除的商品索引
-        $itemIndex = array_search(true, array_map(function ($item) use ($validated) {
-            return $item['product_id'] == $validated['product_id'] &&
-                $item['spec_id'] == $validated['spec_id'];
-        }, $cart));
-
-        dd($itemIndex);
-
-        if ($itemIndex !== false) {
-            // 删除该商品
-            array_splice($cart, $itemIndex, 1);
+        // 直接使用 cart_key 作為索引刪除商品
+        if (isset($cart[$validated['cart_key']])) {
+            unset($cart[$validated['cart_key']]);
             session()->put('cart', $cart);
 
             return response()->json([

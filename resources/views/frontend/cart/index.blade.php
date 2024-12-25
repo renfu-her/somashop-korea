@@ -198,7 +198,7 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        if (response.success) {
+                        if (response.success == true) {
                             // 移除对应的 TR 元素
                             const $item = $(`tr[data-cart-key="${cartKey}"]`);
                             $item.fadeOut(300, function() {
@@ -214,6 +214,8 @@
                                 // 重新计算总金额
                                 updateTotalPrice();
                             });
+                        } else {
+                            alert('移除商品失敗，請稍後再試');
                         }
                     },
                     error: function(xhr) {
