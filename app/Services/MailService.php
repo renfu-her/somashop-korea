@@ -42,6 +42,25 @@ class MailService
                     $mailData
                 ));
 
+            // 添加詳細的調試信息
+            Log::debug('郵件發送詳細信息', [
+                'mail_object' => $mail,
+                'recipients' => $recipients,
+                'bcc' => $bccEmails,
+                'subject' => $subject,
+                'template' => $view,
+                'data' => $mailData,
+                'mailer_config' => [
+                    'driver' => config('mail.default'),
+                    'host' => config('mail.mailers.' . config('mail.default') . '.host'),
+                    'port' => config('mail.mailers.' . config('mail.default') . '.port'),
+                    'encryption' => config('mail.mailers.' . config('mail.default') . '.encryption'),
+                    'from_address' => config('mail.from.address'),
+                    'from_name' => config('mail.from.name'),
+                ],
+                'timestamp' => now()->toDateTimeString()
+            ]);
+
             // 記錄成功信息
             Log::info('郵件發送成功', [
                 'recipients' => $recipients,
@@ -59,11 +78,13 @@ class MailService
 
             return true;
         } catch (TransportException $e) {
-            // SMTP 連接問題
-            Log::error('郵件伺服器連接失敗', [
-                'error' => $e->getMessage(),
+            Log::debug('郵件發送異常詳細信息', [
+                'exception_type' => get_class($e),
+                'message' => $e->getMessage(),
                 'code' => $e->getCode(),
-                'connection' => config('mail.default'),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
             ]);
             return false;
         } catch (\Exception $e) {
