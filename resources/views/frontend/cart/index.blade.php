@@ -201,6 +201,7 @@
                         if (response.success == true) {
                             // 移除对应的 TR 元素
                             const $item = $(`tr[data-cart-key="${cartKey}"]`);
+                            
                             $item.fadeOut(300, function() {
                                 $(this).remove();
 
