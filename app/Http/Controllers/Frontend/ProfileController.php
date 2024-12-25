@@ -36,6 +36,8 @@ class ProfileController extends Controller
         $member->county = $request->county;
         $member->district = $request->district;
         $member->address = $request->address;
+        $member->zipcode = $request->zipcode;
+        $member->phone = $request->phone;
         $member->save();
         
         return redirect()->route('profile.index')->with('success', '資料更新成功');
