@@ -38,7 +38,7 @@ class MailService
                 $subject,
                 $view,
                 $mailData
-            ));
+            ))->getDebug();
 
         Log::info('郵件發送詳細資訊', [
             'recipients' => $recipients,
