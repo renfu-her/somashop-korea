@@ -143,10 +143,7 @@ class PaymentService
 
         // 備註
         $order->note = $request->info;
-
         $order->save();
-
-        dd($order);
 
         // 建立訂單項目
         foreach ($cart as $item) {

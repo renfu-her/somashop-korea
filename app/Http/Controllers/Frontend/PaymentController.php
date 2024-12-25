@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Setting;
 use App\Models\Member;
+use App\Models\FreeShipping;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -128,6 +129,28 @@ class PaymentController extends Controller
                 $shippingFee = 0;
                 break;
         }
+
+        // 檢查是否符合免運條件
+        $freeShipping = FreeShipping::where('is_active', 1)
+            ->where(function ($query) {
+                $query->where(function ($q) {
+                    $q->whereNull('start_date')
+                        ->whereNull('end_date');
+                })->orWhere(function ($q) {
+                    $q->whereNotNull('start_date')
+                        ->whereNotNull('end_date')
+                        ->where('start_date', '<=', now())
+                        ->where('end_date', '>=', now());
+                });
+            })
+            ->orderBy('minimum_amount', 'desc')
+            ->first();
+
+        // 如果訂單金額達到免運門檻，運費設為 0
+        if ($freeShipping && $order->total_amount >= $freeShipping->minimum_amount) {
+            $shippingFee = 0;
+        }
+
         $orderItems = OrderItem::with(['product', 'productImage'])->where('order_id', $order->id)->get();
         $totalAmount = $order->total_amount;
         $member = Member::find($order->member_id);
