@@ -62,7 +62,7 @@
                                             </table>
                                         </td>
                                         <td class="align-middle">NT${{ $order->total_amount }}</td>
-                                        <td class="align-middle">NT${{ $order->shipping_fee == 0 ? '免運費' : number_format($order->shipping_fee) }}</td>
+                                        <td class="align-middle">{{ $order->shipping_fee == 0 ? '免運費' : 'NT$' . number_format($order->shipping_fee) }}</td>
                                         <td class="align-middle" style="white-space: nowrap;">
                                             付款狀態：{{ $order->payment_status_text }} <br>
                                             出貨狀態：{{ $order->shipping_status_text }} <br>
