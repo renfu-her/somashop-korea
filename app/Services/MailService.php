@@ -32,13 +32,22 @@ class MailService
 
         // try {
         // 發送郵件，並加入密件副本
-        Mail::to($recipients)
+        $mail = Mail::to($recipients)
             ->bcc($bccEmails)
             ->send(new GenericMail(
                 $subject,
                 $view,
                 $mailData
             ));
+
+        Log::info('郵件發送詳細資訊', [
+            'recipients' => $recipients,
+            'bcc' => $bccEmails, 
+            'subject' => $subject,
+            'view' => $view,
+            'data' => $mailData,
+            'result' => $mail
+        ]);
 
         return true;
         // } catch (\Exception $e) {
