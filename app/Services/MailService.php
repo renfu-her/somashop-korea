@@ -46,7 +46,8 @@ class MailService
             'subject' => $subject,
             'view' => $view,
             'data' => $mailData,
-            'result' => $mail
+            'result' => $mail,
+            'mail' => $mail->getMessage()
         ]);
 
         return true;
