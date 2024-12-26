@@ -96,4 +96,14 @@ class Product extends Model
     {
         return $this->belongsTo(ImageUploadType::class);
     }
+
+    public function getSpecPriceAttribute()
+    {
+        $spec = $this->specs()
+            ->where('is_active', true)
+            ->orderBy('price', 'asc')
+            ->first();
+
+        return $spec ? $spec->price : $this->price;
+    }
 }
