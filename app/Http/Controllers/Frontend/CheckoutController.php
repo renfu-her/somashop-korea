@@ -155,6 +155,8 @@ class CheckoutController extends Controller
             $mapApi = config('config.ecpay_stage_map_api');
         }
 
+        dd($mapApi);
+
         $parameters  = [
             'MerchantID' => config('config.ecpay_merchant_id'),
             'LogisticsType' => 'CVS',
