@@ -110,6 +110,7 @@ class PaymentService
         $order->status = Order::STATUS_PENDING;
 
         // 付款相關
+        dd($request->payment);
         $order->payment_method = $this->getPaymentMethod($request->payment);
         $order->payment_status = Order::PAYMENT_STATUS_PENDING;
 
