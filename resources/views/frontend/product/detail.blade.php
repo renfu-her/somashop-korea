@@ -70,7 +70,7 @@
                                     <p class="mb-2 original-price">原價：NT$ <span
                                             id="original-price">{{ number_format($product->price) }}</span></p>
                                     <h3 class="text-danger">優惠價：NT$ <span
-                                            id="cash-price">{{ number_format($product->cash_price) }}</span></h3>
+                                            id="cash-price">{{ number_format($product->spec_price) }}</span></h3>
                                 </div>
 
                                 <form action="{{ Auth::guard('member')->check() ? route('cart.add') : route('login') }}"
