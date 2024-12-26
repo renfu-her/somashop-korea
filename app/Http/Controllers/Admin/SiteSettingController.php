@@ -17,6 +17,7 @@ class SiteSettingController extends Controller
 
     public function update(Request $request)
     {
+        // 驗證資料
         $request->validate([
             'site_name' => 'required|string|max:255',
             'site_description' => 'nullable|string',
