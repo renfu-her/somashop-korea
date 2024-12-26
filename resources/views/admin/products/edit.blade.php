@@ -90,18 +90,6 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="cash_price" class="form-label">優惠價</label>
-                                <input type="number" class="form-control @error('cash_price') is-invalid @enderror"
-                                    id="cash_price" name="cash_price"
-                                    value="{{ old('cash_price', $product->cash_price) }}">
-                                @error('cash_price')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
                                 <label for="stock" class="form-label">庫存</label>
                                 <input type="number" class="form-control @error('stock') is-invalid @enderror"
                                     id="stock" name="stock" value="{{ old('stock', $product->stock) }}" required>
