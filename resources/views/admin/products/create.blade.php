@@ -74,8 +74,8 @@
 
                             <div class="mb-3">
                                 <label for="content" class="form-label">描述</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content"
-                                    cols="30" rows="10">{{ old('content') }}</textarea>
+                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" cols="30"
+                                    rows="10">{{ old('content') }}</textarea>
                                 @error('content')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -85,14 +85,23 @@
 
                             <div class="mb-3">
                                 <label for="price" class="form-label">售價</label>
-                                <input type="number" 
-                                       class="form-control @error('price') is-invalid @enderror"
-                                       id="price" 
-                                       name="price" 
-                                       value="{{ old('price') }}" 
-                                       required>
+                                <input type="number" class="form-control @error('price') is-invalid @enderror"
+                                    id="price" name="price" value="{{ old('price') }}" required>
                                 @error('price')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="cash_price" class="form-label">優惠價</label>
+                                <input type="number" class="form-control @error('cash_price') is-invalid @enderror"
+                                    id="cash_price" name="cash_price" value="{{ old('cash_price') }}">
+                                @error('cash_price')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
@@ -108,13 +117,10 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="image" class="form-label">上傳圖片 (<span class="text-danger">寬度 800px，高度不限</span>)</label>
-                                <input type="file" 
-                                       class="form-control @error('image') is-invalid @enderror" 
-                                       id="image" 
-                                       name="image" 
-                                       accept="image/*"
-                                       required>
+                                <label for="image" class="form-label">上傳圖片 (<span class="text-danger">寬度
+                                        800px，高度不限</span>)</label>
+                                <input type="file" class="form-control @error('image') is-invalid @enderror"
+                                    id="image" name="image" accept="image/*" required>
                                 <small class="text-muted">請上��商品圖片</small>
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
