@@ -121,11 +121,11 @@ class LogisticsService
     {
         switch ($shipment) {
             case '711_b2c':
-                return 'UNIMART';
+                return 'UNIMARTC2C';
             case 'family_b2c':
-                return 'FAMI';
+                return 'FAMIC2C';
             default:
-                return 'UNIMART';
+                return 'UNIMARTC2C';
         }
     }
 

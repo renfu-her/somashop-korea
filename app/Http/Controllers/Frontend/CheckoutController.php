@@ -147,7 +147,7 @@ class CheckoutController extends Controller
     public function openSevenMap(Request $request, $shippmentType)
     {
 
-        $logisticsSubType = 'UNIMART';
+        $logisticsSubType = 'UNIMARTC2C';
 
         if (config('config.app_run') == 'production') {
             $mapApi = config('config.ecpay_map_api');
@@ -170,7 +170,7 @@ class CheckoutController extends Controller
     // 開啟全家門市地圖
     public function openFamilyMap(Request $request, $shippmentType)
     {
-        $logisticsSubType = 'FAMI';
+        $logisticsSubType = 'FAMIC2C';
 
         if (env('APP_ENV') == 'production') {
             $mapApi = config('config.ecpay_map_api');
