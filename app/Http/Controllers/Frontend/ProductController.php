@@ -17,12 +17,12 @@ class ProductController extends Controller
         // 獲取所有頂層分類及其子分類
         $categories = Category::where('parent_id', 0)
             ->with(['children' => function ($query) {
-                $query->orderBy('name');
+                $query->orderBy('sort_order');
                 $query->with(['children' => function ($q) {
-                    $q->orderBy('name');
+                    $q->orderBy('sort_order');
                 }]);
             }])
-            ->orderBy('name')
+            ->orderBy('sort_order')
             ->get();
 
         // 獲取當前分類的產品，並確保加載主圖

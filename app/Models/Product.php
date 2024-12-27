@@ -89,7 +89,7 @@ class Product extends Model
 
     public function specs()
     {
-        return $this->hasMany(ProductSpec::class);
+        return $this->hasMany(ProductSpec::class)->orderBy('sort_order');
     }
 
     public function imageUploadType()
