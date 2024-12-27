@@ -52,6 +52,12 @@ class FreeShippingController extends Controller
             ->with('success', '免運費設定已成功更新！');
     }
 
+    public function destroy(FreeShipping $freeShipping)
+    {
+        $freeShipping->delete();
+        return redirect()->route('admin.free-shippings.index')->with('success', '免運費設定已成功刪除！');
+    }
+
     public function toggleActive(FreeShipping $freeShipping)
     {
         $freeShipping->update(['is_active' => !$freeShipping->is_active]);
