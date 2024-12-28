@@ -120,6 +120,18 @@
                                 <div id="imagePreview" class="row g-2"></div>
                             </div>
 
+
+                            <div class="mb-3">
+                                <label for="sort_order" class="form-label">排序</label>
+                                <input type="number" class="form-control @error('sort_order') is-invalid @enderror"
+                                    id="sort_order" name="sort_order" value="{{ old('sort_order') }}" required>
+                                @error('sort_order')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             <div class="mb-3 d-flex align-items-center gap-4">
                                 <div>
                                     <input type="checkbox" class="form-check-input p-1" id="is_active" name="is_active"
