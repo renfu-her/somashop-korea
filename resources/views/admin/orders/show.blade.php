@@ -112,6 +112,19 @@
                             <p class="mb-2">
                                 寄送方式：{{ $shipmentMethodName }}
                             </p>
+
+                            @if (!empty($order->store_id))
+                                <p class="mb-2">
+                                    店家名稱：{{ $order->store_name }}
+                                </p>
+                                <p class="mb-2">
+                                    店家電話：{{ $order->store_telephone }}
+                                </p>
+                                <p class="mb-2">
+                                    店家地址：{{ $order->store_address }}
+                                </p>
+                            @endif
+
                             <p class="mb-2">
                                 收件者：{{ $order->recipient_name }}
                             </p>
