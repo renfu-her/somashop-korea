@@ -30,7 +30,7 @@ class ProductController extends Controller
             ->with('primaryImage')
             ->orderBy('sort_order', 'asc')
             ->orderBy('id', 'desc')
-            ->paginate(9);
+            ->get();
 
 
         return view('frontend.product.index', compact(
