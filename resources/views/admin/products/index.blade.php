@@ -120,7 +120,7 @@
                 },
                 responsive: true,
                 order: [
-                    [0, 'desc']
+                    [7, 'asc']
                 ], // 預設按 ID 降序排序
                 columnDefs: [{
                     targets: -1, // 最後一欄（操作欄）
