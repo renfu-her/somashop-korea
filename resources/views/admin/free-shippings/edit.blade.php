@@ -36,7 +36,7 @@
                                 <label for="minimum_amount" class="form-label">最低消費金額</label>
                                 <input type="number" step="0.01"
                                     class="form-control @error('minimum_amount') is-invalid @enderror" id="minimum_amount"
-                                    name="minimum_amount" value="{{ old('minimum_amount', $freeShipping->minimum_amount) }}"
+                                    name="minimum_amount" value="{{ old('minimum_amount', number_format($freeShipping->minimum_amount)) }}"
                                     required>
                                 <small class="text-muted">請輸入達到免運費的最低消費金額</small>
                                 @error('minimum_amount')
