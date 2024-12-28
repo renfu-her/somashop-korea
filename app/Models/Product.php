@@ -28,7 +28,8 @@ class Product extends Model
         'meta_title',
         'meta_description',
         'meta_keywords',
-        'content'
+        'content',
+        'sort_order'
     ];
 
     protected $casts = [
