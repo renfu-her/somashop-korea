@@ -42,7 +42,7 @@
                             <tr>
                                 <td>{{ $freeShipping->start_date }}</td>
                                 <td>{{ $freeShipping->end_date }}</td>
-                                <td>${{ number_format($freeShipping->minimum_amount, 2) }}</td>
+                                <td>${{ number_format($freeShipping->minimum_amount) }}</td>
                                 <td>
                                     <div class="form-check form-switch d-flex justify-content-center align-items-center">
                                         <input class="form-check-input toggle-active" type="checkbox"
