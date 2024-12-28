@@ -113,7 +113,7 @@
                                 寄送方式：{{ $shipmentMethodName }}
                             </p>
 
-                            @if (!empty($order->store_id))
+                            @if ($shipmentMethodName != '郵寄')
                                 <p class="mb-2">
                                     店家名稱：{{ $order->store_name }}
                                 </p>
