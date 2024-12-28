@@ -138,9 +138,9 @@
                                                 <p class="text-danger">{{ $freeShippings->start_date->format('Y/m/d') }} ~
                                                     {{ $freeShippings->end_date->format('Y/m/d') }}
                                                     期間 <br>
-                                                    購買商品滿 {{ number_format($freeShippings->minimum_amount) }} 免運費</p>
+                                                    購買商品滿 ${{ number_format($freeShippings->minimum_amount) }} 免運費</p>
                                             @else
-                                                <p class="text-danger">購買商品滿 {{ number_format($freeShippings->minimum_amount) }} 免運費</p>
+                                                <p class="text-danger">購買商品滿 ${{ number_format($freeShippings->minimum_amount) }} 免運費</p>
                                             @endif
                                         </div>
                                     @endif
