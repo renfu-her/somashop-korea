@@ -29,6 +29,7 @@ class ProductController extends Controller
         $products = Product::where('category_id', $id)
             ->with('primaryImage')
             ->orderBy('sort_order', 'asc')
+            ->orderBy('id', 'desc')
             ->paginate(9);
 
 
