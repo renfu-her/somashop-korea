@@ -24,7 +24,7 @@
                             <th width="10%">ID</th>
                             <th width="20%">規格名稱</th>
                             <th width="25%">規格值</th>
-                            <th width="10%">價格</th>
+                            <th width="10%">優惠價</th>
                             <th width="10%">排序</th>
                             <th width="10%">狀態</th>
                             <th width="15%">操作</th>
