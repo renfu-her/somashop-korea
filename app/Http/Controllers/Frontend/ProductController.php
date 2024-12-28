@@ -31,6 +31,7 @@ class ProductController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(9);
 
+
         return view('frontend.product.index', compact(
             'currentCategory',
             'categories',

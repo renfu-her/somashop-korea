@@ -172,7 +172,7 @@ class CheckoutController extends Controller
     {
         $logisticsSubType = 'FAMIC2C';
 
-        if (env('APP_ENV') == 'production') {
+        if (config('config.app_run') == 'production') {
             $mapApi = config('config.ecpay_map_api');
         } else {
             $mapApi = config('config.ecpay_stage_map_api');
