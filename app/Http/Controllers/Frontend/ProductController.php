@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
-
+use App\Models\FreeShipping;
 class ProductController extends Controller
 {
     public function index($id)
@@ -32,11 +32,29 @@ class ProductController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(9);
 
+            $freeShippings = FreeShipping::where('is_active', 1)
+            ->where(function($query) {
+                $query->where(function($q) {
+                    // 永久有效
+                    $q->whereNull('start_date')
+                      ->whereNull('end_date');
+                })->orWhere(function($q) {
+                    // 限時有效且在有效期間內
+                    $q->whereNotNull('start_date')
+                      ->whereNotNull('end_date')
+                      ->where('start_date', '<=', now())
+                      ->where('end_date', '>=', now());
+                });
+            })
+            ->orderBy('minimum_amount', 'desc')
+            ->first();
+
 
         return view('frontend.product.index', compact(
             'currentCategory',
             'categories',
-            'products'
+            'products',
+            'freeShippings'
         ));
     }
 
