@@ -32,6 +32,7 @@
                             <th>優惠價</th>
                             <th>庫存</th>
                             <th>分類</th>
+                            <th>排序</th>
                             <th>是否啟用</th>
                             <th style="width: 15%">操作</th>
                         </tr>
@@ -61,7 +62,7 @@
                                         未分類
                                     @endif
                                 </td>
-                                <td>
+                                <td>{{ $product->sort_order }}</td>
                                     <span class="badge bg-{{ $product->is_active ? 'success' : 'danger' }}">
                                         {{ $product->is_active ? '啟用' : '停用' }}
                                     </span>
