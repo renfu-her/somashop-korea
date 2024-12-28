@@ -24,7 +24,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="value" class="form-label">優惠價</label>
+                                <label for="value" class="form-label">規格值</label>
                                 <input type="text" class="form-control @error('value') is-invalid @enderror"
                                     id="value" name="value" value="{{ old('value', $spec->value) }}" required>
                                 @error('value')
@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="price" class="form-label">價格</label>
+                                <label for="price" class="form-label">優惠價</label>
                                 <input type="number" class="form-control @error('price') is-invalid @enderror"
                                     id="price" name="price" value="{{ old('price', $spec->price) }}" min="0">
                                 @error('price')
