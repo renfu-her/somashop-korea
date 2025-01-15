@@ -152,7 +152,7 @@
                                             </div>
                                         @endif
                                         <h5 class="card-text text-danger">優惠價 NT$
-                                            {{ number_format($product->cash_price) }}</h5>
+                                            {{ number_format($product->spec_price) }}</h5>
                                     </div>
                                 </div>
                             </a>
