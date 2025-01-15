@@ -120,7 +120,6 @@
                 },
                 responsive: true,
                 order: [
-                    [7, 'asc'],
                     [0, 'desc']
                 ], // 預設按 ID 降序排序
                 columnDefs: [{
