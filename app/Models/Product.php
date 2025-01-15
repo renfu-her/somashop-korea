@@ -105,6 +105,6 @@ class Product extends Model
             ->orderBy('price', 'asc')
             ->first();
 
-        return $spec ? $spec->price : $this->price;
+        return $spec ? $spec->price : 0;
     }
 }

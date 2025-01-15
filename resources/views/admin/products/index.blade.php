@@ -49,7 +49,7 @@
                                 </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ number_format($product->price) }}</td>
-                                <td>{{ number_format($product->cash_price) }}</td>
+                                <td>{{ number_format($product->spec_price) }}</td>
                                 <td>{{ $product->stock }}</td>
                                 <td>
                                     @if ($product->category)
