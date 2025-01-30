@@ -70,7 +70,7 @@
 
                             <div class="mb-3">
                                 <label for="content" class="form-label">描述</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" required>{{ old('content', $product->content) }}</textarea>
+                                <textarea class="form-control ckeditor @error('content') is-invalid @enderror" id="content" name="content" required>{{ old('content', $product->content) }}</textarea>
                                 @error('content')
                                     <div class="invalid-feedback">
                                         {{ $message }}

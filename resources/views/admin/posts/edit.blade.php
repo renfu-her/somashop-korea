@@ -25,7 +25,7 @@
 
                             <div class="mb-3">
                                 <label for="content" class="form-label">內容</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="10">{{ old('content', $post->content) }}</textarea>
+                                <textarea class="form-control ckeditor @error('content') is-invalid @enderror" id="content" name="content" rows="10">{{ old('content', $post->content) }}</textarea>
                                 @error('content')
                                     <div class="invalid-feedback">
                                         {{ $message }}

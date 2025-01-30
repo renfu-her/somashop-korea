@@ -39,7 +39,7 @@
 
                             <div class="mb-3">
                                 <label for="content" class="form-label required">內容</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content"
+                                <textarea class="form-control ckeditor @error('content') is-invalid @enderror" id="content" name="content"
                                     style="display: none;">{{ old('content') }}</textarea>
                                 <div id="editor" class="@error('content') is-invalid @enderror"></div>
                                 @error('content')
