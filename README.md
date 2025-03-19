@@ -1,17 +1,10 @@
-# e-commerce-template
+# ezhive develop
 
 ## 後台管理
 - `/admin`
     - 帳號：admin@admin.com 
     - 密碼：Qq123456
-
-- 一般頁面
-  
-  [https://e-commerce-dev.dev-vue.com/](https://e-commerce-dev.dev-vue.com/)
-  
-  ![首頁](https://raw.gitmirror.com/renfu-her/image-drive/main/develop/e-commerce-home.png)
-  
-
+ 
 ## 使用方式
 - 先建立 mysql 資料庫，並修改 .env 資料庫設定
 
@@ -19,7 +12,7 @@
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=e-commerce
+DB_DATABASE=ezhive-dev
 DB_USERNAME=root
 DB_PASSWORD=
 ```
