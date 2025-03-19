@@ -164,5 +164,26 @@
             background-color: #6c757d;
             opacity: 0.8;
         }
+
+        /* 分頁自定義樣式 */
+        .page-item.active .page-link {
+            background-color: #89AB8E !important;
+            border-color: #89AB8E !important;
+            color: white !important;
+        }
+
+        .page-link {
+            color: #89AB8E !important;
+        }
+
+        .page-link:hover {
+            background-color: #f0f5f1 !important;
+            border-color: #89AB8E !important;
+        }
+
+        .page-item.disabled .page-link {
+            color: #6c757d !important;
+            border-color: #dee2e6 !important;
+        }
     </style>
 @endpush
