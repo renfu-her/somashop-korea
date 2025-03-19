@@ -174,6 +174,7 @@
 
         .page-link {
             color: #89AB8E !important;
+            background-color: white !important;
         }
 
         .page-link:hover {
@@ -182,7 +183,8 @@
         }
 
         .page-item.disabled .page-link {
-            color: #6c757d !important;
+            color: #89AB8E !important;
+            background-color: white !important;
             border-color: #dee2e6 !important;
         }
     </style>
