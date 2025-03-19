@@ -26,19 +26,7 @@
             </ul>
         </div>
 
-        <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
-            <div>
-                <p class="small text-muted">
-                    {!! __('顯示第') !!}
-                    <span class="fw-semibold">{{ $paginator->firstItem() }}</span>
-                    {!! __('到第') !!}
-                    <span class="fw-semibold">{{ $paginator->lastItem() }}</span>
-                    {!! __('筆，共') !!}
-                    <span class="fw-semibold">{{ $paginator->total() }}</span>
-                    {!! __('筆結果') !!}
-                </p>
-            </div>
-
+        <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-center">
             <div>
                 <ul class="pagination">
                     {{-- Previous Page Link --}}
