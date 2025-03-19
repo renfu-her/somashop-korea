@@ -28,6 +28,7 @@ class ProductController extends Controller
 
         // 獲取當前分類的產品，並確保加載主圖
         $products = Product::where('category_id', $id)
+            ->where('is_active', 1)
             ->with('primaryImage')
             ->orderBy('sort_order', 'asc')
             ->orderBy('id', 'desc')
@@ -43,7 +44,8 @@ class ProductController extends Controller
     public function show($id)
     {
         // 獲取產品詳細信息，包括分類、主圖、所有圖片和規格
-        $product = Product::with(['category.parent', 'primaryImage', 'images', 'specs'])
+        $product = Product::where('is_active', 1)
+            ->with(['category.parent', 'primaryImage', 'images', 'specs'])
             ->findOrFail($id);
 
         // 獲取所有頂層分類及其子分類（用於側邊欄）
