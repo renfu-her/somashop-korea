@@ -110,7 +110,7 @@
                                         800px，高度不限</span>)</label>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror"
                                     id="image" name="image" accept="image/*" required>
-                                <small class="text-muted">請上��商品圖片</small>
+                                <small class="text-muted">請上傳商品圖片</small>
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
