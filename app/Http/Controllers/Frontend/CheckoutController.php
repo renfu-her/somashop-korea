@@ -147,7 +147,7 @@ class CheckoutController extends Controller
     public function openSevenMap(Request $request, $shippmentType)
     {
 
-        $logisticsSubType = 'UNIMARTC2C';
+        $logisticsSubType = 'UNIMART';
 
         if (config('config.app_run') == 'production') {
             $mapApi = config('config.ecpay_map_api');
@@ -167,7 +167,7 @@ class CheckoutController extends Controller
         ];
 
 
-        dd(http_build_query($parameters));
+        dd(http_build_query($parameters), $shippmentType);
 
         return redirect($mapApi . '?' . http_build_query($parameters));
     }
