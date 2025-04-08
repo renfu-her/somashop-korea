@@ -18,6 +18,7 @@
     }
     input.input-search {
         background-color: #f6ab00 !important;
+        border: 1px solid #f6ab00 !important;
     }
     .bg-search {
         background-color: #f6ab00 !important;
