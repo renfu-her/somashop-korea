@@ -114,6 +114,9 @@
     border-radius: 5px;
 }
 
+.faq .collapse.show .card-body {
+    border: 1px solid #f6ab00;
+}
 
 @media (max-width: 767px) {
     .collapse ul.main-menu li.product-item ul li a {
