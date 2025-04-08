@@ -146,7 +146,6 @@ class CheckoutController extends Controller
     // 開啟 7-11 門市地圖
     public function openSevenMap(Request $request, $shippmentType)
     {
-
         $logisticsSubType = 'UNIMART';
         
         if (config('config.app_run') == 'production') {
@@ -157,13 +156,16 @@ class CheckoutController extends Controller
             $merchantId = config('config.ecpay_stage_shipment_merchant_id');
         }
 
+        // 檢查是否為貨到付款
+        $isCollection = $request->payment === 'COD' ? 'Y' : 'N';
+
         // 7-11 門市地圖
         $parameters  = [
             'MerchantID' => $merchantId,
             'LogisticsType' => 'CVS',
             'LogisticsSubType' => $logisticsSubType,
             'ServerReplyURL' => url('checkout/map/rewrite'),
-            'IsCollection' => 'N'
+            'IsCollection' => $isCollection
         ];
 
         return redirect($mapApi . '?' . http_build_query($parameters));
@@ -182,12 +184,15 @@ class CheckoutController extends Controller
             $merchantId = config('config.ecpay_stage_shipment_merchant_id');
         }
 
+        // 檢查是否為貨到付款
+        $isCollection = $request->payment === 'COD' ? 'Y' : 'N';
+
         $parameters  = [
             'MerchantID' => $merchantId,
             'LogisticsType' => 'CVS',
             'LogisticsSubType' => $logisticsSubType,
             'ServerReplyURL' => url('checkout/map/rewrite'),
-            'IsCollection' => 'N'
+            'IsCollection' => $isCollection
         ];
 
         return redirect($mapApi . '?' . http_build_query($parameters));

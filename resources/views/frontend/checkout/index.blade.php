@@ -119,6 +119,11 @@
                                             value="ATM">
                                         <label class="form-check-label" for="inlineRadio2">ATM 虛擬帳號繳費</label>
                                     </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="payment" id="inlineRadio3"
+                                            value="COD">
+                                        <label class="form-check-label" for="inlineRadio3">貨到付款 (超商取貨付款)</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -788,8 +793,11 @@
             const left = (window.screen.width - width) / 2;
             const top = (window.screen.height - height) / 2;
 
+            // 獲取當前選擇的付款方式
+            const payment = $('input[name="payment"]:checked').val();
+
             const mapWindow = window.open(
-                `{{ url('checkout/map/711-store/') }}/${shipment}`,
+                `{{ url('checkout/map/711-store/') }}/${shipment}?payment=${payment}`,
                 'mapWindow',
                 `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
             );
@@ -811,8 +819,11 @@
             const left = (window.screen.width - width) / 2;
             const top = (window.screen.height - height) / 2;
 
+            // 獲取當前選擇的付款方式
+            const payment = $('input[name="payment"]:checked').val();
+
             const mapWindow = window.open(
-                `{{ url('checkout/map/family-store/') }}/${shipment}`,
+                `{{ url('checkout/map/family-store/') }}/${shipment}?payment=${payment}`,
                 'mapWindow',
                 `width=${width},height=${height},left=${left},top=${top},scrollbars=yes`
             );
