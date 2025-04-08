@@ -151,15 +151,17 @@ class CheckoutController extends Controller
 
         if (config('config.app_run') == 'production') {
             $mapApi = config('config.ecpay_map_api');
+            $merchantId = config('config.ecpay_merchant_id');
         } else {
             $mapApi = config('config.ecpay_stage_map_api');
+            $merchantId = config('config.ecpay_stage_merchant_id');
         }
 
-        dd(config('config.app_run'), $mapApi);
+        dd(config('config.app_run'), $mapApi, $merchantId);
 
         // 7-11 門市地圖
         $parameters  = [
-            'MerchantID' => config('config.ecpay_merchant_id'),
+            'MerchantID' => $merchantId,
             'LogisticsType' => 'CVS',
             'LogisticsSubType' => $logisticsSubType,
             'ServerReplyURL' => url('checkout/map/rewrite'),
