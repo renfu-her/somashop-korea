@@ -166,6 +166,8 @@ class CheckoutController extends Controller
             'IsCollection' => 'N'
         ];
 
+        dd($parameters);
+
         return redirect($mapApi . '?' . http_build_query($parameters));
     }
 
