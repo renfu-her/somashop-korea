@@ -95,6 +95,7 @@ class Order extends Model
     const PAYMENT_METHOD_CREDIT = 'credit';
     const PAYMENT_METHOD_ATM = 'atm';
     const PAYMENT_METHOD_TRANSFER = 'transfer';
+    const PAYMENT_METHOD_COD = 'COD';
 
     // 運送狀態
     const SHIPPING_STATUS_PENDING = 'pending';

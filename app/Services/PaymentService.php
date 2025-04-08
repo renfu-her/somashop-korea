@@ -220,7 +220,17 @@ class PaymentService
 
     private function getPaymentMethod($payment)
     {
-        return $payment == 'Credit' ? Order::PAYMENT_METHOD_CREDIT : Order::PAYMENT_METHOD_ATM;
+        if ($payment == 'COD') {
+            return Order::PAYMENT_METHOD_COD;
+        }
+        if ($payment == 'ATM') {
+            return Order::PAYMENT_METHOD_ATM;
+        }
+        if ($payment == 'Credit') {
+            return Order::PAYMENT_METHOD_CREDIT;
+        }
+
+        //return Order::PAYMENT_METHOD_CREDIT;
     }
 
     private function getItemNames($cart, $shippingFee = 0)
