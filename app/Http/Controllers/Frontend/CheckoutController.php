@@ -176,12 +176,14 @@ class CheckoutController extends Controller
 
         if (config('config.app_run') == 'production') {
             $mapApi = config('config.ecpay_map_api');
+            $merchantId = config('config.ecpay_merchant_id');
         } else {
             $mapApi = config('config.ecpay_stage_map_api');
+            $merchantId = config('config.ecpay_stage_shipment_merchant_id');
         }
 
         $parameters  = [
-            'MerchantID' => config('config.ecpay_merchant_id'),
+            'MerchantID' => $merchantId,
             'LogisticsType' => 'CVS',
             'LogisticsSubType' => $logisticsSubType,
             'ServerReplyURL' => url('checkout/map/rewrite'),
