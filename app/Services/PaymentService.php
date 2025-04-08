@@ -157,6 +157,8 @@ class PaymentService
             ]);
         }
 
+        
+
         // 準備綠界支付需要的資料
         $ecpayData = [
             'MerchantID' => $this->merchantID,
@@ -184,6 +186,17 @@ class PaymentService
             Log::info('建立物流訂單');
             $this->logisticsService->createLogisticsOrder($order, $member);
         }
+
+        if ($request->payment == 'COD') {
+            Log::info('建立貨到付款物流訂單');
+            $this->logisticsService->createLogisticsOrder($order, $member, 'COD');
+            dd($order, $member, $ecpayData);
+            return view('frontend.payment.cod-form', [
+                'order' => $order,
+                'ecpayData' => $ecpayData
+            ]);
+
+        }    
 
         // 清空購物車
         session()->forget(['cart']);

@@ -20,7 +20,7 @@ class LogisticsService
         $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
     }
 
-    public function createLogisticsOrder(Order $order, Member $member)
+    public function createLogisticsOrder(Order $order, Member $member, $paymentType = null)
     {
         // 准备物流 API 需要的资料
         $logisticsData = [
@@ -31,7 +31,7 @@ class LogisticsService
             'LogisticsSubType' => $this->getLogisticsSubType($order->shipment_method),
             'GoodsAmount' => $order->total_amount,
             'CollectionAmount' => 0,
-            'IsCollection' => 'N',
+            'IsCollection' => $paymentType == 'COD' ? 'Y' : 'N',
             'GoodsName' => '商品一批',
             'SenderName' => $order->store_name,
             'SenderPhone' => $order->store_telephone,
