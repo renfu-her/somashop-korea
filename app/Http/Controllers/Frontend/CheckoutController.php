@@ -167,6 +167,8 @@ class CheckoutController extends Controller
         ];
 
 
+        dd(http_build_query($parameters));
+
         return redirect($mapApi . '?' . http_build_query($parameters));
     }
 
