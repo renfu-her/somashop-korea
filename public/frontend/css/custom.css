@@ -84,7 +84,8 @@
     border: 0;
 }
 
-.navbar-expand-lg ul.navbar-nav.main-menu li ul li a:hover, .navbar-expand-lg ul.navbar-nav.main-menu li ul li a.active {
+.navbar-expand-lg ul.navbar-nav.main-menu li ul li a:hover, 
+.navbar-expand-lg ul.navbar-nav.main-menu li ul li a.active {
     border: 1px solid #f6ab00;
     color: #595757;
 }
