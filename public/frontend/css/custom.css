@@ -45,6 +45,13 @@
     border-bottom: 1px solid #f6ab00;
 }
 
+.sidebar .nav a.nav-link:hover,
+.sidebar .nav .nav-link.active {
+  border: 1px solid #f6ab00;
+  border-radius: 5px;
+}
+
+
 @keyframes slideIn {
     from {
         transform: translateX(100%);
