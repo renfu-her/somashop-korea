@@ -154,10 +154,8 @@ class CheckoutController extends Controller
             $merchantId = config('config.ecpay_merchant_id');
         } else {
             $mapApi = config('config.ecpay_stage_map_api');
-            $merchantId = config('config.ecpay_stage_merchant_id');
+            $merchantId = config('config.ecpay_stage_shipment_merchant_id');
         }
-
-        dd($mapApi, $merchantId, config('config.app_run'));
 
         // 7-11 門市地圖
         $parameters  = [
