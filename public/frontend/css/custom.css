@@ -101,6 +101,10 @@
     border: 1px solid #f6ab00;
 }
 
+.accordion .btn-link[aria-expanded="true"] {
+    border: 1px solid #f6ab00;
+}
+
 @media (max-width: 767px) {
     .collapse ul.main-menu li.product-item ul li a {
         border-bottom: 1px solid #f6ab00;
