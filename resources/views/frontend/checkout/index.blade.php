@@ -783,6 +783,43 @@
                     $('#invoice_taxid').val('').focus();
                 }
             });
+
+            // 監聽付款方式變更
+            $('input[name="payment"]').change(function() {
+                const paymentMethod = $(this).val();
+                const shipmentSelect = $('#shipment');
+                
+                // 重置寄送方式選項
+                shipmentSelect.find('option').remove();
+                shipmentSelect.append('<option value="">請選擇</option>');
+                
+                if (paymentMethod === 'COD') {
+                    // 貨到付款只顯示超商取貨選項
+                    shipmentSelect.append(`
+                        <option value="711_b2c" data-fee="{{ $shippingSettings['711_b2c']['fee'] }}">
+                            {{ $shippingSettings['711_b2c']['name'] }}
+                        </option>
+                        <option value="family_b2c" data-fee="{{ $shippingSettings['family_b2c']['fee'] }}">
+                            {{ $shippingSettings['family_b2c']['name'] }}
+                        </option>
+                    `);
+                } else {
+                    // 其他付款方式顯示所有選項
+                    @foreach ($shippingSettings as $key => $shipping)
+                        shipmentSelect.append(`
+                            <option value="{{ $key }}" data-fee="{{ $shipping['fee'] }}">
+                                {{ $shipping['name'] }}
+                            </option>
+                        `);
+                    @endforeach
+                }
+                
+                // 觸發寄送方式變更事件以更新顯示
+                shipmentSelect.trigger('change');
+            });
+
+            // 初始觸發付款方式變更事件
+            $('input[name="payment"]:checked').trigger('change');
         });
 
         // 開 7-11 地圖
