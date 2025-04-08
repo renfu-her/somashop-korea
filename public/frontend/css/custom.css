@@ -90,6 +90,11 @@
     color: #595757;
 }
 
+.accordion .collapse ul li {
+    color: #f6ab00;
+    padding: 0.5rem 0;
+}
+
 
 @media (max-width: 767px) {
     .collapse ul.main-menu li.product-item ul li a {
