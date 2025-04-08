@@ -187,10 +187,12 @@ class PaymentService
             $this->logisticsService->createLogisticsOrder($order, $member);
         }
 
+
+
         if ($request->payment == 'COD') {
             Log::info('建立貨到付款物流訂單');
             $this->logisticsService->createLogisticsOrder($order, $member, 'COD');
-            dd($order, $member, $ecpayData);
+            dd($order, $member, $ecpayData, $request->all());
             return view('frontend.payment.cod-form', [
                 'order' => $order,
                 'ecpayData' => $ecpayData
