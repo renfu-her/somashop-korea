@@ -167,23 +167,23 @@
 
         /* 分頁自定義樣式 */
         .page-item.active .page-link {
-            background-color: #89AB8E !important;
-            border-color: #89AB8E !important;
+            background-color: #f6ab00 !important;
+            border-color: #f6ab00 !important;
             color: white !important;
         }
 
         .page-link {
-            color: #89AB8E !important;
+            color: #f6ab00 !important;
             background-color: white !important;
         }
 
         .page-link:hover {
             background-color: #f0f5f1 !important;
-            border-color: #89AB8E !important;
+            border-color: #f6ab00 !important;
         }
 
         .page-item.disabled .page-link {
-            color: #89AB8E !important;
+            color: #f6ab00 !important;
             background-color: white !important;
             border-color: #dee2e6 !important;
         }
