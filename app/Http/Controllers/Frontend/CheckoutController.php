@@ -147,12 +147,8 @@ class CheckoutController extends Controller
     public function openSevenMap(Request $request, $shippmentType)
     {
 
-        if($shippmentType == '711_b2c') {
-            $logisticsSubType = 'UNIMART';
-        } else {
-            $logisticsSubType = 'FAMI';
-        }
-
+        $logisticsSubType = 'UNIMART';
+        
         if (config('config.app_run') == 'production') {
             $mapApi = config('config.ecpay_map_api');
             $merchantId = config('config.ecpay_merchant_id');
@@ -170,16 +166,13 @@ class CheckoutController extends Controller
             'IsCollection' => 'N'
         ];
 
-
-        // dd(http_build_query($parameters), $shippmentType);
-
         return redirect($mapApi . '?' . http_build_query($parameters));
     }
 
     // 開啟全家門市地圖
     public function openFamilyMap(Request $request, $shippmentType)
     {
-        $logisticsSubType = 'FAMIC2C';
+        $logisticsSubType = 'FAMI';
 
         if (config('config.app_run') == 'production') {
             $mapApi = config('config.ecpay_map_api');
