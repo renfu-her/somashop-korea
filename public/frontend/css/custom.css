@@ -124,7 +124,7 @@
     border: 1px solid #f6ab00;
 }
 
-.faq.accordion .btn-link[aria-expanded="true"] {
+.faq .accordion .btn-link[aria-expanded="true"] {
     border: 1px solid #f6ab00;
     border-bottom: 0;
 }
