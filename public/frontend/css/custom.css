@@ -35,6 +35,11 @@
     background-color: #f6ab00 !important;
 }
 
+.navbar-default .navbar-nav .show .dropdown-menu > li > a {
+    border: 1px solid transparent;
+    border-bottom: 1px solid #f6ab00;
+}
+
 @keyframes slideIn {
     from {
         transform: translateX(100%);
