@@ -82,7 +82,7 @@
         <div class="container">
             <div class="row flex-row align-items-center">
                 <div class="img-logo">
-                    <img src="{{ asset('frontend/img/logo_1.png') }}"
+                    <img src="{{ asset('frontend/img/logo_footer.png') }}"
                         style="max-width: 100%; max-height: 80px; object-fit: contain" />
                 </div>
                 <div class="col-auto mb-3 address">
