@@ -67,7 +67,7 @@
         <div class="content">
             <p>{{ $name }}，您好：</p>
             
-            <p>您剛在德善堂購物車申請了一組新的密碼。</p>
+            <p>您剛在EzHive 易群佶選購物車申請了一組新的密碼。</p>
             
             <p>您的新密碼為：</p>
             <div class="password">
@@ -76,7 +76,7 @@
             
             <p class="warning">登入後請務必至會員中心修改密碼！</p>
             
-            <p>歡迎直接進入德善堂線上購物：</p>
+            <p>歡迎直接進入EzHive 易群佶選線上購物：</p>
             <div style="text-align: center;">
                 <a href="{{ config('app.url') }}" class="button" style="color: #fff !important; background-color: #007bff !important;">前往購物網站</a>
             </div>
@@ -84,7 +84,7 @@
         
         <div class="footer">
             <p>======本信件由系統自動發送，請勿直接回覆本信件，謝謝!======</p>
-            <p>© 2024 德善堂購物車. All rights reserved.</p>
+            <p>© 2024 EzHive 易群佶選購物車. All rights reserved.</p>
         </div>
     </div>
 </body>

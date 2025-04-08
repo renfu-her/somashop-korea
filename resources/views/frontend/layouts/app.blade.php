@@ -7,13 +7,13 @@
     <meta name="format-detection" content="telephone=no">
 
     {{-- SEO Meta Tags --}}
-    <title>@yield('meta_title', \App\Models\SiteSetting::getMetaData('site_name', '德善堂'))</title>
-    <meta name="keywords" content="@yield('meta_keywords', \App\Models\SiteSetting::getMetaData('meta_keywords', '德善堂'))">
-    <meta name="description" content="@yield('meta_description', \App\Models\SiteSetting::getMetaData('site_description', '德善堂'))">
+    <title>@yield('meta_title', \App\Models\SiteSetting::getMetaData('site_name', 'EzHive 易群佶選'))</title>
+    <meta name="keywords" content="@yield('meta_keywords', \App\Models\SiteSetting::getMetaData('meta_keywords', 'EzHive 易群佶選'))">
+    <meta name="description" content="@yield('meta_description', \App\Models\SiteSetting::getMetaData('site_description', 'EzHive 易群佶選'))">
 
     {{-- Open Graph Tags --}}
-    <meta property="og:title" content="@yield('meta_title', \App\Models\SiteSetting::getMetaData('site_name', '德善堂'))">
-    <meta property="og:description" content="@yield('meta_description', \App\Models\SiteSetting::getMetaData('site_description', '德善堂'))">
+    <meta property="og:title" content="@yield('meta_title', \App\Models\SiteSetting::getMetaData('site_name', 'EzHive 易群佶選'))">
+    <meta property="og:description" content="@yield('meta_description', \App\Models\SiteSetting::getMetaData('site_description', 'EzHive 易群佶選'))">
     <meta property="og:image" content="@yield('og_image', asset('frontend/img/brand_logo_bg-red.png'))">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">

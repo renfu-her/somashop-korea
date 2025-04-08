@@ -44,7 +44,7 @@ class ForgetController extends Controller
 
         Mail::send('emails.forget-password', $emailData, function($message) use ($member) {
             $message->to($member->email)
-                   ->subject('德善堂購物車 - 密碼重置通知');
+                   ->subject('EzHive 易群佶選購物車 - 密碼重置通知');
         });
 
         return redirect()->route('login')->with('success', '新密碼已發送至您的郵箱');
