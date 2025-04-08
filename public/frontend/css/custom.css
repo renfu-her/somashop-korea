@@ -116,6 +116,7 @@
 
 .faq .collapse.show .card-body {
     border: 1px solid #f6ab00;
+    border-top: 0;
 }
 
 @media (max-width: 767px) {
