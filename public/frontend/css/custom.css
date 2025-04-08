@@ -84,6 +84,12 @@
     border: 0;
 }
 
+.navbar-expand-lg ul.navbar-nav.main-menu li ul li a:hover, .navbar-expand-lg ul.navbar-nav.main-menu li ul li a.active {
+    border: 1px solid #f6ab00;
+    color: #595757;
+}
+
+
 @media (max-width: 767px) {
     .collapse ul.main-menu li.product-item ul li a {
         border-bottom: 1px solid #f6ab00;
