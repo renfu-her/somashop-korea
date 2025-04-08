@@ -124,9 +124,8 @@
     border: 1px solid #f6ab00;
 }
 
-.faq .accordion .btn-link[aria-expanded="true"] {
+.faq .card-header button {
     border: 1px solid #f6ab00;
-    border-bottom: 0;
 }
 
 @media (max-width: 767px) {
