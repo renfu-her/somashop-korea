@@ -95,7 +95,9 @@
     padding: 0.5rem 0;
 }
 
-.accordion .btn-link[aria-expanded="true"] {
+
+.accordion .btn-link:hover {
+    text-decoration: none;
     border: 1px solid #f6ab00;
 }
 
