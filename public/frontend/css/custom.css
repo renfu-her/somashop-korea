@@ -40,13 +40,6 @@
     border-bottom: 1px solid #f6ab00;
 }
 
-/* 
-.sidebar .nav a.nav-link:hover,
-.sidebar .nav .nav-link.active {
-  border: 1px solid #f6ab00;
-  border-radius: 5px;
-} */
-
 .collapse > ul.main-menu > li:hover > a,
 .navbar-light .collapse > ul.main-menu > li > a.active {
     border-bottom: 3px solid #f6ab00;
