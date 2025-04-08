@@ -16,4 +16,7 @@
     .form-inline .input-group {
         width: 180px !important;
     }
+    .bg-search {
+        background-color: #f6ab00 !important;
+    }
 </style>

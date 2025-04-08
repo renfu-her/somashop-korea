@@ -92,7 +92,7 @@
                                 <div class="col-auto pl-md-0 text-dark text-dark1">
                                     <p class="m-0">
                                         <img src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png" />
-                                        桃園市桃園區中正路 1247 號 15 樓之 4
+                                        是台南市南區永成路二段 460 之5號
                                     </p>
                                 </div>
                             </div>
@@ -100,8 +100,7 @@
                         </div>
                     </div>
                     <p class="m-0 text-dark text-dark2">
-                        &copy; 2024 All Rights Reversed. Huabang Co., Ltd. All rights
-                        reserved.
+                        &copy; 2025 All Rights Reversed. Ezhive Co., Ltd. All rights reserved.
                     </p>
                 </div>
                 <div

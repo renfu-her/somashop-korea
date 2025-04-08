@@ -31,6 +31,10 @@
     color: white;
 }
 
+.btn-widget {
+    background-color: #f6ab00 !important;
+}
+
 @keyframes slideIn {
     from {
         transform: translateX(100%);
