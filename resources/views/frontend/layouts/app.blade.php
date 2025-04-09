@@ -92,7 +92,7 @@
                                 <div class="col-auto pl-md-0 text-dark text-dark1">
                                     <p class="m-0">
                                         <img src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png" />
-                                        是台南市南區永成路二段 460 之5號
+                                        台南市南區永成路二段460之5號
                                     </p>
                                 </div>
                             </div>
