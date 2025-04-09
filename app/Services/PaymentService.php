@@ -190,12 +190,13 @@ class PaymentService
         if ($request->payment == 'COD') {
             Log::info('建立貨到付款物流訂單');
             $this->logisticsService->createLogisticsOrder($order, $member, 'COD');
-            // dd($order, $member, $ecpayData, $request->all());
-            return view('frontend.payment.cod-form', [
+            $orderItem = OrderItem::where('order_id', $order->id)->get();
+            session()->forget(['cart']);
+            return view('frontend.payment.cod-complete', [
                 'order' => $order,
+                'orderItems' => $orderItem,
                 'ecpayData' => $ecpayData
             ]);
-
         }    
 
         // 清空購物車
