@@ -150,6 +150,10 @@ class CheckLogisticsStatus extends Command
                 $order->shipping_status = Order::SHIPPING_STATUS_EXPIRED;
                 break;
 
+            case '300':
+                $order->shipping_status = Order::SHIPPING_STATUS_PROCESSING;
+                break;
+
             default:
                 // 記錄未處理的狀態碼
                 Log::info('未處理的物流狀態碼：' . $logisticsStatus, [
