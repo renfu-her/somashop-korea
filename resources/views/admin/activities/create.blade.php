@@ -107,7 +107,8 @@
             $('#date').datepicker({
                 language: 'zh-TW',
                 autoclose: true,
-                todayHighlight: true
+                todayHighlight: true,
+                format: 'yyyy-mm-dd'
             });
         });
     </script>
