@@ -167,6 +167,20 @@ class ProductController extends Controller
             ->with('success', '商品已更新');
     }
 
+    public function destroy(Product $product)
+    {
+        // 刪除產品相關的圖片
+        foreach ($product->images as $image) {
+            Storage::disk('public')->delete("products/{$product->id}/{$image->image_path}");
+        }
+
+        // 刪除產品
+        $product->delete();
+
+        return redirect()->route('admin.products.index')
+            ->with('success', '商品已刪除');
+    }
+
     public function deleteImage(Product $product)
     {
         if ($product->primaryImage) {
