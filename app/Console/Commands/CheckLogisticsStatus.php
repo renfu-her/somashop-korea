@@ -56,7 +56,7 @@ class CheckLogisticsStatus extends Command
                 
                 // 檢查是否有錯誤訊息
                 if (isset($result['RtnCode']) && $result['RtnCode'] !== '1') {
-                    $this->error("查詢失敗：{$result['RtnMsg']}");
+                    // $this->error("查詢失敗：{$result['RtnMsg']}");
                     $this->info("完整回應：" . print_r($result, true));
                     continue;
                 }
