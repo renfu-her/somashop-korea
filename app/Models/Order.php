@@ -108,6 +108,7 @@ class Order extends Model
     const SHIPPING_STATUS_REJECTED = 'rejected';    // 拒收
     const SHIPPING_STATUS_STORE_CLOSED = 'store_closed'; // 門市關閉
     const SHIPPING_STATUS_FAILED = 'failed';
+    const SHIPPING_STATUS_EXPIRED = 'expired'; // 消費者七天未取件
 
     // 運送方式
     const SHIPPING_METHOD_MAIL = 'mail_send';
