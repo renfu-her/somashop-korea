@@ -15,9 +15,9 @@ class LogisticsService
 
     public function __construct()
     {
-        $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
-        $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
-        $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
+        $this->merchantID = config('config.app_run') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
+        $this->hashKey = config('config.app_run') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
+        $this->hashIV = config('config.app_run') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
     }
 
     public function createLogisticsOrder(Order $order, Member $member, $paymentType = null)
@@ -57,7 +57,7 @@ class LogisticsService
 
         // try {
         $response = Http::asForm()->post(
-            config('app.env') === 'production'
+            config('config.app_run') === 'production'
                 ? 'https://logistics.ecpay.com.tw/Express/Create'
                 : 'https://logistics-stage.ecpay.com.tw/Express/Create',
             $logisticsData
