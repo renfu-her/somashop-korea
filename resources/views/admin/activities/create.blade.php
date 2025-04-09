@@ -41,7 +41,7 @@
 
                             <div class="mb-3">
                                 <label for="date" class="form-label">日期</label>
-                                <input type="text" class="form-control flatpickr @error('date') is-invalid @enderror"
+                                <input type="text" class="form-control @error('date') is-invalid @enderror"
                                     id="date" name="date" value="{{ old('date') }}" required>
                                 @error('date')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -102,6 +102,12 @@
                     return false;
                 }
                 $('#content').val(content);
+            });
+
+            $('#date').datepicker({
+                language: 'zh-TW',
+                autoclose: true,
+                todayHighlight: true
             });
         });
     </script>

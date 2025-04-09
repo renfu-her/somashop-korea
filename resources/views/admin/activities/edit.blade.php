@@ -111,6 +111,12 @@
                 }
                 $('#content').val(content);
             });
+
+            $('#date').datepicker({
+                language: 'zh-TW',
+                autoclose: true,
+                todayHighlight: true
+            });
         });
     </script>
 @endpush
