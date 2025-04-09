@@ -11,6 +11,17 @@ class CheckLogisticsStatus extends Command
 {
     protected $signature = 'logistics:check {order_id?}';
     protected $description = '查詢綠界物流訂單狀態';
+    protected $shipmentMerchantID;
+    protected $shipmentHashKey;
+    protected $shipmentHashIV;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->shipmentMerchantID = config('config.app_run') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
+        $this->shipmentHashKey = config('config.app_run') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
+        $this->shipmentHashIV = config('config.app_run') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
+    }
 
     public function handle()
     {
@@ -20,13 +31,10 @@ class CheckLogisticsStatus extends Command
         foreach ($orders as $order) {
             $this->info("正在查詢訂單 {$order->order_number} 的物流狀態...");
 
-            $merchantId = config('config.app_run') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
-            $timeStamp = time();
-
             $params = [
-                'MerchantID' => $merchantId,
+                'MerchantID' => $this->shipmentMerchantID,
                 'MerchantTradeNo' => $order->order_number,
-                'TimeStamp' => $timeStamp,
+                'TimeStamp' => time(),
             ];
 
             $params['CheckMacValue'] = $this->generateCheckMacValue($params);
@@ -104,36 +112,20 @@ class CheckLogisticsStatus extends Command
         return $result;
     }
 
-    private function generateCheckMacValue($params)
+    private function generateCheckMacValue($data)
     {
-        $hashKey = config('config.app_run') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
-        $hashIV = config('config.app_run') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
+        // 按照綠界規範產生檢查碼
+        ksort($data);
+        $checkStr = "HashKey={$this->shipmentHashKey}";
 
-        // 1. 參數依照字母順序排序
-        ksort($params);
-
-        // 2. 組合參數字串
-        $queryString = '';
-        foreach ($params as $key => $value) {
-            if ($key !== 'CheckMacValue') {
-                $queryString .= $key . '=' . $value . '&';
-            }
+        foreach ($data as $key => $value) {
+            $checkStr .= "&{$key}={$value}";
         }
-        $queryString = rtrim($queryString, '&');
 
-        // 3. 加入 HashKey 和 HashIV
-        $queryString = "HashKey={$hashKey}&{$queryString}&HashIV={$hashIV}";
+        $checkStr .= "&HashIV={$this->shipmentHashIV}";
+        $checkStr = urlencode($checkStr);
+        $checkStr = strtolower($checkStr);
 
-        // 4. URL encode
-        $queryString = urlencode($queryString);
-
-        // 5. 轉小寫
-        $queryString = strtolower($queryString);
-
-        // 6. 產生 SHA256 雜湊值
-        $checkMacValue = hash('sha256', $queryString);
-
-        // 7. 轉大寫
-        return strtoupper($checkMacValue);
+        return strtoupper(md5($checkStr));
     }
 } 
