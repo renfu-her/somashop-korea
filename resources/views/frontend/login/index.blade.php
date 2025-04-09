@@ -81,7 +81,7 @@
                                                 class="btn btn-default btn-lg btn-block text-white bg-search rounded p-t14 hvr-bounce-in">加入會員</a>
                                         </div>
                                         <div class="col-md-6 col-6 py-3">
-                                            <a href="forget.php"
+                                            <a href="{{ route('forget') }}"
                                                 class="btn btn-default btn-lg btn-block text-white bg-search rounded p-t14 hvr-bounce-in">忘記密碼</a>
                                         </div>
                                     </div>
