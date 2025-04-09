@@ -108,7 +108,7 @@
                 language: 'zh-TW',
                 autoclose: true,
                 todayHighlight: true,
-                format: 'yyyy-mm-dd'
+                format: 'yyyy-mm-dd HH:mm:ss'
             });
         });
     </script>
