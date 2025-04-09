@@ -57,17 +57,6 @@ class CheckLogisticsStatus extends Command
                 // 檢查是否有錯誤訊息
                 if (isset($result['RtnCode']) && $result['RtnCode'] !== '1') {
                     $this->error("查詢失敗：{$result['RtnMsg']}");
-                    continue;
-                }
-
-                // 檢查必要欄位是否存在
-                $requiredFields = ['LogisticsStatus', 'LogisticsType', 'CollectionAmount', 'HandlingCharge', 'ShipmentNo', 'TradeDate'];
-                $missingFields = array_filter($requiredFields, function($field) use ($result) {
-                    return !isset($result[$field]);
-                });
-
-                if (!empty($missingFields)) {
-                    $this->error("回應缺少必要欄位：" . implode(', ', $missingFields));
                     $this->info("完整回應：" . print_r($result, true));
                     continue;
                 }
