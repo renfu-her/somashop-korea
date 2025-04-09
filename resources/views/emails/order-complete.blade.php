@@ -114,7 +114,21 @@
             <h3>配送資訊</h3>
             <p>收件人: {{ $order->recipient_name }}</p>
             <p>聯絡電話: {{ $order->recipient_phone }}</p>
-            <p>付費方式: {{ $shipmentMethod == 'ATM' ? 'ATM 虛擬帳號付款' : '信用卡付款' }}</p>
+            <p>付費方式: 
+                @switch($shipmentMethod)
+                    @case('Credit')
+                        信用卡付款
+                        @break
+                    @case('ATM')
+                        ATM 虛擬帳號付款
+                        @break
+                    @case('COD')
+                        貨到付款
+                        @break
+                    @default
+                        {{ $shipmentMethod }}
+                @endswitch
+            </p>
             @if ($order->shipment_method == 'mail_send')
                 <p>配送地址:
                     {{ $order->shipping_county }}{{ $order->shipping_district }}{{ $order->shipping_address }}</p>
