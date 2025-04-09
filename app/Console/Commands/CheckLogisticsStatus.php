@@ -115,7 +115,9 @@ class CheckLogisticsStatus extends Command
         // 2. 組合參數字串
         $queryString = '';
         foreach ($params as $key => $value) {
-            $queryString .= $key . '=' . $value . '&';
+            if ($key !== 'CheckMacValue') {
+                $queryString .= $key . '=' . $value . '&';
+            }
         }
         $queryString = rtrim($queryString, '&');
 
