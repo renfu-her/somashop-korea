@@ -193,6 +193,8 @@ class PaymentService
             
             $orderItem = OrderItem::with(['product', 'productImage'])
                 ->where('order_id', $order->id)->get();
+
+            $this->sendOrderCompleteEmail($order, 'COD');
             
             session()->forget(['cart']);
             return view('frontend.payment.cod-complete', [
