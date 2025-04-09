@@ -24,7 +24,7 @@
         <div class="container">
             <div class="page-title">
                 <h2 class="text-black text-center font-weight-bold mb-0" data-aos="zoom-in-up">{{ $activity->title }}<small
-                        class="d-inline-block p-t14 text-gold mb-md-3 mb-3 px-2">{{ $activity->date->format('Y-m-d') }}</small>
+                        class="d-inline-block p-t14 text-gold mb-md-3 mb-3 px-2">{{ $activity->date }}</small>
                 </h2>
                 <p class="text-center mb-4" data-aos="zoom-in-up" data-aos-delay="150">{{ $activity->subtitle }}</p>
             </div>
