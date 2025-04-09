@@ -45,9 +45,9 @@ class InvoiceCheckCommand extends Command
         $this->checkout = $checkout;
         $this->invoice = $invoice;
 
-        $this->merchantId = config('app.env') === 'production' ? config('config.ecpay_invoice_merchant_id') : config('config.ecpay_invoice_stage_merchant_id');
-        $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_invoice_hash_key') : config('config.ecpay_invoice_stage_hash_key');
-        $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_invoice_hash_iv') : config('config.ecpay_invoice_stage_hash_iv');
+        $this->merchantId = config('config.app_run') === 'production' ? config('config.ecpay_invoice_merchant_id') : config('config.ecpay_invoice_stage_merchant_id');
+        $this->hashKey = config('config.app_run') === 'production' ? config('config.ecpay_invoice_hash_key') : config('config.ecpay_invoice_stage_hash_key');
+        $this->hashIV = config('config.app_run') === 'production' ? config('config.ecpay_invoice_hash_iv') : config('config.ecpay_invoice_stage_hash_iv');
 
         $this->apiUrl = config('app.env') === 'production'
             ? 'https://einvoice.ecpay.com.tw/B2CInvoice/Issue'
