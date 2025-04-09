@@ -37,7 +37,32 @@ class CheckLogisticsStatus extends Command
 
             try {
                 $response = Http::asForm()->post($apiUrl, $params);
+                
+                // 檢查回應是否為空
+                if (empty($response->body())) {
+                    $this->error("回應為空");
+                    continue;
+                }
+
                 $result = $this->parseResponse($response->body());
+                
+                // 檢查是否有錯誤訊息
+                if (isset($result['RtnCode']) && $result['RtnCode'] !== '1') {
+                    $this->error("查詢失敗：{$result['RtnMsg']}");
+                    continue;
+                }
+
+                // 檢查必要欄位是否存在
+                $requiredFields = ['LogisticsStatus', 'LogisticsType', 'CollectionAmount', 'HandlingCharge', 'ShipmentNo', 'TradeDate'];
+                $missingFields = array_filter($requiredFields, function($field) use ($result) {
+                    return !isset($result[$field]);
+                });
+
+                if (!empty($missingFields)) {
+                    $this->error("回應缺少必要欄位：" . implode(', ', $missingFields));
+                    $this->info("完整回應：" . print_r($result, true));
+                    continue;
+                }
 
                 $this->info("訂單狀態：{$result['LogisticsStatus']}");
                 $this->info("物流方式：{$result['LogisticsType']}");
@@ -57,7 +82,8 @@ class CheckLogisticsStatus extends Command
                 $this->error("查詢失敗：" . $e->getMessage());
                 Log::error("物流查詢失敗", [
                     'order_number' => $order->order_number,
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
+                    'response' => $response->body() ?? '無回應內容'
                 ]);
             }
         }
@@ -67,6 +93,14 @@ class CheckLogisticsStatus extends Command
     {
         $result = [];
         parse_str($response, $result);
+        
+        // 如果解析結果為空，記錄原始回應
+        if (empty($result)) {
+            Log::error("回應解析失敗", [
+                'original_response' => $response
+            ]);
+        }
+        
         return $result;
     }
 
