@@ -33,7 +33,7 @@ class CheckLogisticsStatus extends Command
 
             $params = [
                 'MerchantID' => $this->shipmentMerchantID,
-                'MerchantTradeNo ' => $order->order_number,
+                'MerchantTradeNo' => $order->order_number,
                 'TimeStamp' => time(),
             ];
 
