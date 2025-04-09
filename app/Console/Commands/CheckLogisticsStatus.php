@@ -21,17 +21,17 @@ class CheckLogisticsStatus extends Command
             $this->info("正在查詢訂單 {$order->order_number} 的物流狀態...");
 
             $params = [
-                'MerchantID' => config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id'),
+                'MerchantID' => config('config.app_run') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id'),
                 'MerchantTradeNo' => $order->order_number,
                 'TimeStamp' => time(),
                 'CheckMacValue' => $this->generateCheckMacValue([
-                    'MerchantID' => config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id'),
+                    'MerchantID' => config('config.app_run') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id'),
                     'MerchantTradeNo' => $order->order_number,
                     'TimeStamp' => time(),
                 ])
             ];
 
-            $apiUrl = config('app.env') === 'production'
+            $apiUrl = config('config.app_run') === 'production'
                 ? 'https://logistics.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V5'
                 : 'https://logistics-stage.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V5';
 
