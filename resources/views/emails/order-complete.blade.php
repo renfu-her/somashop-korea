@@ -55,7 +55,7 @@
 <body>
 
     <div class="header logo" style="text-align: center;">
-        <img src="{{ asset('frontend/img/logo_1.png') }}" alt="Logo" class="logo">
+        <img src="{{ asset('frontend/img/logo.png') }}" alt="Logo" class="logo">
     </div>
 
     <div class="content">
