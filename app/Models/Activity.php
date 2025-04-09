@@ -22,7 +22,6 @@ class Activity extends Model
     ];
 
     protected $casts = [
-        'date' => 'date',
         'is_active' => 'boolean'
     ];
 
