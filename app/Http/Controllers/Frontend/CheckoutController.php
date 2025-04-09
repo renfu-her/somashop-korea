@@ -21,9 +21,9 @@ class CheckoutController extends Controller
     public function __construct(CaptchaService $captchaService)
     {
         $this->captchaService = $captchaService;
-        $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
-        $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
-        $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_hash_iv') : config('config.ecpay_stage_hash_iv');
+        $this->merchantID = config('config.app_run') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
+        $this->hashKey = config('config.app_run') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
+        $this->hashIV = config('config.app_run') === 'production' ? config('config.ecpay_hash_iv') : config('config.ecpay_stage_hash_iv');
 
     }
 
@@ -255,7 +255,7 @@ class CheckoutController extends Controller
             $timestamp = time();
             $merchantId = $this->merchantID;
             
-            $apiUrl = config('app.env') === 'production'
+            $apiUrl = config('config.app_run') === 'production'
                 ? 'https://einvoice.ecpay.com.tw/B2CInvoice/GetCompanyNameByTaxID'
                 : 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/GetCompanyNameByTaxID';
 

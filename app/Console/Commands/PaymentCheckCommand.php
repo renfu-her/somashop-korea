@@ -50,7 +50,7 @@ class PaymentCheckCommand extends Command
                 $data['CheckMacValue'] = $this->generateCheckMacValue($data);
 
                 // 使用 Http::post 發送請求
-                $api_url = config('app.env') === 'production'
+                $api_url = config('config.app_run') === 'production'
                     ? 'https://logistics.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V4'
                     : 'https://logistics-stage.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V4';
 

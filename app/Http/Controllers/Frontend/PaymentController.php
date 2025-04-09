@@ -42,13 +42,13 @@ class PaymentController extends Controller
         $this->logisticsService = $logisticsService;
         $this->mailService = $mailService;
 
-        $this->merchantID = config('app.env') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
-        $this->hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
-        $this->hashIV = config('app.env') === 'production' ? config('config.ecpay_hash_iv') : config('config.ecpay_stage_hash_iv');
+        $this->merchantID = config('config.app_run') === 'production' ? config('config.ecpay_merchant_id') : config('config.ecpay_stage_merchant_id');
+        $this->hashKey = config('config.app_run') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
+        $this->hashIV = config('config.app_run') === 'production' ? config('config.ecpay_hash_iv') : config('config.ecpay_stage_hash_iv');
 
-        $this->shipmentMerchantID = config('app.env') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
-        $this->shipmentHashKey = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
-        $this->shipmentHashIV = config('app.env') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
+        $this->shipmentMerchantID = config('config.app_run') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
+        $this->shipmentHashKey = config('config.app_run') === 'production' ? config('config.ecpay_shipment_hash_key') : config('config.ecpay_stage_shipment_hash_key');
+        $this->shipmentHashIV = config('config.app_run') === 'production' ? config('config.ecpay_shipment_hash_iv') : config('config.ecpay_stage_shipment_hash_iv');
     }
 
     public function paymentProcess(Request $request)

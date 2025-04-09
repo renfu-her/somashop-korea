@@ -64,7 +64,7 @@ class ATMCheckCommand extends Command
         // 加入檢查碼
         $postData['CheckMacValue'] = $this->generateCheckMacValue($postData);
 
-        $api_url = config('app.env') === 'production'
+        $api_url = config('config.app_run') === 'production'
             ? 'https://payment.ecpay.com.tw//Cashier/QueryPaymentInfo'
             : 'https://payment-stage.ecpay.com.tw/Cashier/QueryPaymentInfo';
 

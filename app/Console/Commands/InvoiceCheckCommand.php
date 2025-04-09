@@ -49,7 +49,7 @@ class InvoiceCheckCommand extends Command
         $this->hashKey = config('config.app_run') === 'production' ? config('config.ecpay_invoice_hash_key') : config('config.ecpay_invoice_stage_hash_key');
         $this->hashIV = config('config.app_run') === 'production' ? config('config.ecpay_invoice_hash_iv') : config('config.ecpay_invoice_stage_hash_iv');
 
-        $this->apiUrl = config('app.env') === 'production'
+        $this->apiUrl = config('config.app_run') === 'production'
             ? 'https://einvoice.ecpay.com.tw/B2CInvoice/Issue'
             : 'https://einvoice-stage.ecpay.com.tw/B2CInvoice/Issue';
     }
