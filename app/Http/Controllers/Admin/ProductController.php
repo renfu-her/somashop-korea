@@ -27,7 +27,9 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::with('category')->get();
+        $products = Product::with('category')
+            ->orderByDesc('created_at')
+            ->get();
 
 
         return view('admin.products.index', compact('products'));
@@ -99,7 +101,7 @@ class ProductController extends Controller
     {
         $categories = Category::orderBy('name')->get();
         $specifications = ProductSpecification::orderBy('name')->get();
-        
+
         return view('admin.products.edit', compact(
             'product',
             'categories',
