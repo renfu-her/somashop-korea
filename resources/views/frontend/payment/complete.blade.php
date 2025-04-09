@@ -131,6 +131,8 @@
                                                 網路ATM
                                             @elseif ($order->payment_method == 'transfer')
                                                 網路銀行轉帳
+                                            @elseif ($order->payment_method == 'cod')
+                                                貨到付款
                                             @endif
                                         </p>
                                     </div>

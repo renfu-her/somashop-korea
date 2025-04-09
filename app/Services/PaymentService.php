@@ -197,7 +197,9 @@ class PaymentService
                 'orderItems' => $orderItem,
                 'ecpayData' => $ecpayData,
                 'shippingFee' => $shippingFee,
-                'totalAmount' => $totalAmount
+                'totalAmount' => $totalAmount,
+                'member' => $member
+                
             ]);
         }    
 
