@@ -109,6 +109,8 @@ class CheckLogisticsStatus extends Command
         $hashKey = config('app.env') === 'production' ? config('config.ecpay_hash_key') : config('config.ecpay_stage_hash_key');
         $hashIV = config('app.env') === 'production' ? config('config.ecpay_hash_iv') : config('config.ecpay_stage_hash_iv');
 
+        dd($hashKey, $hashIV);
+
         // 1. 參數依照字母順序排序
         ksort($params);
 
