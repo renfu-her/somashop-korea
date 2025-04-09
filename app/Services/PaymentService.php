@@ -199,7 +199,6 @@ class PaymentService
                 'shippingFee' => $shippingFee,
                 'totalAmount' => $totalAmount,
                 'member' => $member
-                
             ]);
         }    
 
