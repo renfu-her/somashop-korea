@@ -182,7 +182,7 @@ class PaymentService
         $ecpayData['CheckMacValue'] = $this->generateCheckMacValue($ecpayData);
 
         // 物流方式 API
-        if ($order->shipment_method != 'mail_send') {
+        if ($order->shipment_method != 'mail_send' && $request->payment != 'COD') {
             Log::info('建立物流訂單');
             $this->logisticsService->createLogisticsOrder($order, $member);
         }
