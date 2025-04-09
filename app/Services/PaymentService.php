@@ -88,9 +88,9 @@ class PaymentService
         // 生成訂單編號
         $today = date('Ymd');
         if (config('config.app_run') === 'local') {
-            $orderNo = 'O' . $today;
+            $orderNo = 'EZHIVE' . $today;
         } else {
-            $orderNo = 'OID' . $today;
+            $orderNo = 'EZHIVEOrder' . $today;
         }
         $lastOrder = Order::where('order_number', 'like', "{$orderNo}%")
             ->orderBy('order_number', 'desc')
