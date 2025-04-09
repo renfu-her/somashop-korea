@@ -64,10 +64,9 @@ class CheckLogisticsStatus extends Command
                 $this->info("訂單狀態：{$result['LogisticsStatus']}");
                 $this->info("物流方式：{$result['LogisticsType']}");
                 $this->info("代收金額：{$result['CollectionAmount']}");
-                $this->info("物流費用：{$result['HandlingCharge']}");
-                $this->info("配送編號：{$result['ShipmentNo']}");
-                $this->info("訂單成立時間：{$result['TradeDate']}");
                 $this->info("----------------------------------------");
+
+                $this->updateOrderShippingStatus($order, $result['LogisticsStatus']);
 
                 // 記錄到日誌
                 Log::info("物流查詢結果", [
@@ -116,5 +115,53 @@ class CheckLogisticsStatus extends Command
         $checkStr = strtolower($checkStr);
 
         return strtoupper(md5($checkStr));
+    }
+
+    private function updateOrderShippingStatus($order, $logisticsStatus)
+    {
+        // 參考綠界物流狀態代碼：https://developers.ecpay.com.tw/?p=7418
+        switch ($logisticsStatus) {
+            case '300':  // 訂單建立
+                $order->shipping_status = Order::SHIPPING_STATUS_PROCESSING;
+                break;
+
+            case '2063': // 退貨完成
+                $order->shipping_status = Order::SHIPPING_STATUS_RETURNED;
+                break;
+
+            case '3001': // 貨物已到達門市
+            case '3002': // 貨物已到達門市（退貨）
+                $order->shipping_status = Order::SHIPPING_STATUS_ARRIVED_STORE;
+                break;
+
+            case '2030': // 貨物已送達
+            case '3003': // 貨物已取貨
+                $order->shipping_status = Order::SHIPPING_STATUS_DELIVERED;
+                break;
+
+            case '2067': // 門市關轉
+            case '2068': // 門市倒閉
+                $order->shipping_status = Order::SHIPPING_STATUS_STORE_CLOSED;
+                // 可以在這裡添加通知管理員的邏輯
+                break;
+
+            case '2065': // 退貨中
+                $order->shipping_status = Order::SHIPPING_STATUS_RETURNING;
+                break;
+
+            case '2066': // 拒收
+                $order->shipping_status = Order::SHIPPING_STATUS_REJECTED;
+                break;
+
+            default:
+                // 記錄未處理的狀態碼
+                Log::info('未處理的物流狀態碼：' . $logisticsStatus, [
+                    'order_id' => $order->id,
+                    'logistics_id' => $order->logistics_id
+                ]);
+                return;
+        }
+
+        $order->save();
     }
 } 
