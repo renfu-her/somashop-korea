@@ -37,7 +37,7 @@
                                         <h5 class="card-title">{{ $product->name }}</h5>
                                         <p class="card-text">{{ $product->sub_title }}</p>
                                         <div class="original-price mb-1">原價 NT$ {{ number_format($product->price) }}</div>
-                                        <h5 class="card-text text-danger">優惠價 NT$ {{ number_format($product->cash_price) }}</h5>
+                                        <h5 class="card-text text-danger">優惠價 NT$ {{ number_format($product->spec_price) }}</h5>
                                     </div>
                                 </div>
                             </a>
