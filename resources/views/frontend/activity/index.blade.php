@@ -16,7 +16,7 @@
                                         alt="">
                                     <div class="card-body px-0">
                                         <p class="card-text mb-1"><small
-                                                class="text-gold">{{ $activity->date->format('Y-m-d') }}</small></p>
+                                                class="text-gold">{{ $activity->date }}</small></p>
                                         <h5 class="card-title text-dark">{{ $activity->title }}</h5>
                                         <p class="card-text">{{ $activity->subtitle }}</p>
                                     </div>
