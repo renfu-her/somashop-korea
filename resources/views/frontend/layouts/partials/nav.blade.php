@@ -3,7 +3,7 @@
         {{-- Logo --}}
         <span class="fake-row mx-auto"></span>
         <a class="navbar-brand mx-auto" href="{{ route('home') }}">
-            <img src="{{ asset('frontend/img/logo.png') }}" style="max-width: 100%; max-height: 40px; object-fit: contain;">
+            <img src="{{ asset('frontend/img/logo.png') }}" style="max-width: 100%; max-height: 50px; object-fit: contain;">
         </a>
 
         {{-- 漢堡選單按鈕 --}}
