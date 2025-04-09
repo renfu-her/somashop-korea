@@ -20,16 +20,16 @@ class CheckLogisticsStatus extends Command
         foreach ($orders as $order) {
             $this->info("正在查詢訂單 {$order->order_number} 的物流狀態...");
 
+            $merchantId = config('config.app_run') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id');
+            $timeStamp = time();
+
             $params = [
-                'MerchantID' => config('config.app_run') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id'),
+                'MerchantID' => $merchantId,
                 'MerchantTradeNo' => $order->order_number,
-                'TimeStamp' => time(),
-                'CheckMacValue' => $this->generateCheckMacValue([
-                    'MerchantID' => config('config.app_run') === 'production' ? config('config.ecpay_shipment_merchant_id') : config('config.ecpay_stage_shipment_merchant_id'),
-                    'MerchantTradeNo' => $order->order_number,
-                    'TimeStamp' => time(),
-                ])
+                'TimeStamp' => $timeStamp,
             ];
+
+            $params['CheckMacValue'] = $this->generateCheckMacValue($params);
 
             $apiUrl = config('config.app_run') === 'production'
                 ? 'https://logistics.ecpay.com.tw/Helper/QueryLogisticsTradeInfo/V5'
@@ -113,7 +113,11 @@ class CheckLogisticsStatus extends Command
         ksort($params);
 
         // 2. 組合參數字串
-        $queryString = http_build_query($params);
+        $queryString = '';
+        foreach ($params as $key => $value) {
+            $queryString .= $key . '=' . $value . '&';
+        }
+        $queryString = rtrim($queryString, '&');
 
         // 3. 加入 HashKey 和 HashIV
         $queryString = "HashKey={$hashKey}&{$queryString}&HashIV={$hashIV}";
