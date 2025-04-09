@@ -195,7 +195,8 @@ class PaymentService
             return view('frontend.payment.cod-complete', [
                 'order' => $order,
                 'orderItems' => $orderItem,
-                'ecpayData' => $ecpayData
+                'ecpayData' => $ecpayData,
+                'shippingFee' => $shippingFee,
             ]);
         }    
 
