@@ -6,6 +6,8 @@ use App\Mail\GenericMail;
 use App\Models\EmailSetting;
 use App\Models\EmailQueue;
 use App\Models\Member;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Mailer\Exception\TransportException;
@@ -29,6 +31,12 @@ class MailService
 
             // 處理內容格式
             $mailData = is_array($content) ? $content : ['content' => $content];
+            
+            // 確保 data 中的 order 是陣列格式
+            if (isset($data['order']) && is_object($data['order'])) {
+                $data['order'] = $data['order']->toArray();
+            }
+            
             $mailData = array_merge($mailData, $data);
 
             // 如果沒有指定模板，使用預設模板
@@ -73,30 +81,21 @@ class MailService
             ->limit($limit)
             ->get();
 
-        // dd($emails);
-
         foreach ($emails as $email) {
-            // try {
+            try {
                 $email->update([
                     'status' => 'processing',
                     'attempts' => $email->attempts + 1
                 ]);
 
                 // 發送郵件
-                Mail::to($email->to)
+                $mail = Mail::to($email->to)
                     ->bcc($email->bcc ?? [])
                     ->send(new GenericMail(
                         $email->subject,
                         $email->template,
                         $email->data
                     ));
-
-                if (Mail::failures()) {
-                    $email->update([
-                        'status' => 'failed',
-                        'error_message' => $mail->failures
-                    ]);
-                }
 
                 $email->update([
                     'status' => 'completed',
@@ -108,17 +107,17 @@ class MailService
                     'to' => $email->to,
                     'subject' => $email->subject
                 ]);
-            // } catch (\Exception $e) {
-            //     $email->update([
-            //         'status' => 'failed',
-            //         'error_message' => $e->getMessage()
-            //     ]);
+            } catch (\Exception $e) {
+                $email->update([
+                    'status' => 'failed',
+                    'error_message' => $e->getMessage()
+                ]);
 
-            //     Log::error('郵件發送失敗', [
-            //         'email_id' => $email->id,
-            //         'error' => $e->getMessage()
-            //     ]);
-            // }
+                Log::error('郵件發送失敗', [
+                    'email_id' => $email->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
         }
     }
 
@@ -246,5 +245,38 @@ class MailService
         }
 
         return $status;
+    }
+
+    public function sendOrderCompleteEmail(Order $order, $shipmentMethod = 'Credit')
+    {
+        $member = Member::find($order->member_id);
+
+        // 獲取訂單項目並加載關聯數據
+        $orderItems = OrderItem::with([
+            'product',
+            'spec',
+            'product.images' => function ($query) {
+                $query->where('is_primary', 1);
+            }
+        ])->where('order_id', $order->id)->get();
+
+        $this->send(
+            $member->email,
+            '訂單完成通知',
+            [
+                'title' => '訂單完成通知',
+                'content' => "親愛的 {$order->recipient_name} 您好，\n\n您的訂單已完成...",
+                'button' => [
+                    'text' => '查看訂單詳情',
+                    'url' => route('orders.list')
+                ]
+            ],
+            'emails.order-complete',
+            [
+                'order' => $order,
+                'shipmentMethod' => $shipmentMethod,
+                'orderItems' => $orderItems
+            ]
+        );
     }
 }

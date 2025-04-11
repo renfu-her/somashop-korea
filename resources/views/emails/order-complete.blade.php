@@ -61,11 +61,11 @@
     <div class="content">
         <h2>訂單完成通知</h2>
 
-        <p>親愛的 {{ $order->recipient_name }} 您好,</p>
+        <p>親愛的 {{ $order['recipient_name'] }} 您好,</p>
         <p>感謝您的訂購,以下是您的訂單明細：</p>
 
         <div class="order-details">
-            <h3>訂單編號: {{ $order->order_number }}</h3>
+            <h3>訂單編號: {{ $order['order_number'] }}</h3>
 
             <table style="width: 100%; border-collapse: collapse;">
                 <thead>
@@ -82,38 +82,38 @@
                     @foreach ($orderItems as $item)
                         <tr>
                             <td style="padding: 8px; border: 1px solid #dee2e6;">
-                                @if ($item->product->images->isNotEmpty())
-                                    <img src="{{ asset('storage/products/' . $item->product->id . '/' . $item->product->images->first()->image_path) }}"
+                                @if ($item['product']['images']->isNotEmpty())
+                                    <img src="{{ asset('storage/products/' . $item['product']['id'] . '/' . $item['product']['images']->first()['image_path']) }}"
                                         alt="Product Image" style="width: 100px; height: auto;">
                                 @else
                                     <img src="{{ asset('frontend/img/no-image.png') }}" alt="No Image"
                                         style="width: 100px; height: auto;">
                                 @endif
                             </td>
-                            <td style="padding: 8px; border: 1px solid #dee2e6;">{{ $item->product->name }}</td>
+                            <td style="padding: 8px; border: 1px solid #dee2e6;">{{ $item['product']['name'] }}</td>
                             <td style="padding: 8px; border: 1px solid #dee2e6;">
-                                {{ $item->spec ? $item->spec->name : '-' }}
+                                {{ $item['spec'] ? $item['spec']['name'] : '-' }}
                             </td>
-                            <td style="padding: 8px; border: 1px solid #dee2e6;">{{ $item->quantity }}</td>
-                            <td style="padding: 8px; border: 1px solid #dee2e6;">NT${{ number_format($item->price) }}
+                            <td style="padding: 8px; border: 1px solid #dee2e6;">{{ $item['quantity'] }}</td>
+                            <td style="padding: 8px; border: 1px solid #dee2e6;">NT${{ number_format($item['price']) }}
                             </td>
                             <td style="padding: 8px; border: 1px solid #dee2e6;">
-                                NT${{ number_format($item->price * $item->quantity) }}</td>
+                                NT${{ number_format($item['price'] * $item['quantity']) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
 
             <div style="margin-top: 20px; text-align: right;">
-                <p>運費: {{ $order->shipping_fee == 0 ? '免運費' : 'NT$' . number_format($order->shipping_fee) }}</p>
-                <p>總計: NT${{ number_format($order->total_amount + $order->shipping_fee) }}</p>
+                <p>運費: {{ $order['shipping_fee'] == 0 ? '免運費' : 'NT$' . number_format($order['shipping_fee']) }}</p>
+                <p>總計: NT${{ number_format($order['total_amount'] + $order['shipping_fee']) }}</p>
             </div>
         </div>
 
         <div class="shipping-info" style="margin-top: 30px;">
             <h3>配送資訊</h3>
-            <p>收件人: {{ $order->recipient_name }}</p>
-            <p>聯絡電話: {{ $order->recipient_phone }}</p>
+            <p>收件人: {{ $order['recipient_name'] }}</p>
+            <p>聯絡電話: {{ $order['recipient_phone'] }}</p>
             <p>付費方式: 
                 @switch($shipmentMethod)
                     @case('Credit')
@@ -129,15 +129,15 @@
                         {{ $shipmentMethod }}
                 @endswitch
             </p>
-            @if ($order->shipment_method == 'mail_send')
+            @if ($order['shipment_method'] == 'mail_send')
                 <p>配送地址:
-                    {{ $order->shipping_county }}{{ $order->shipping_district }}{{ $order->shipping_address }}</p>
-            @elseif($order->shipment_method == '711_b2c')
+                    {{ $order['shipping_county'] }}{{ $order['shipping_district'] }}{{ $order['shipping_address'] }}</p>
+            @elseif($order['shipment_method'] == '711_b2c')
                 <p>取貨門市: 7-11門市取貨</p>
-            @elseif($order->shipment_method == 'family_b2c')
+            @elseif($order['shipment_method'] == 'family_b2c')
                 <p>取貨門市: 全家便利商店取貨</p>
             @endif
-            <p>備註: <br>{{ $order->note }}</p>
+            <p>備註: <br>{{ $order['note'] }}</p>
         </div>
 
         <div style="margin-top: 30px;">
