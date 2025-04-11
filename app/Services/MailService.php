@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Mail\GenericMail;
 use App\Models\EmailSetting;
+use App\Models\EmailQueue;
 use App\Models\Member;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -33,68 +34,82 @@ class MailService
             // 如果沒有指定模板，使用預設模板
             $view = $template ?? 'emails.default';
 
-            // 發送郵件，並加入密件副本
-            $mail = Mail::to($recipients)
-                ->bcc($bccEmails)
-                ->send(new GenericMail(
-                    $subject,
-                    $view,
-                    $mailData
-                ));
-
-            // 添加詳細的調試信息
-            Log::debug('郵件發送詳細信息', [
-                'mail_object' => $mail,
-                'recipients' => $recipients,
-                'bcc' => $bccEmails,
+            // 將郵件加入佇列
+            EmailQueue::create([
+                'to' => is_array($to) ? json_encode($to) : $to,
                 'subject' => $subject,
+                'content' => is_array($content) ? json_encode($content) : $content,
                 'template' => $view,
                 'data' => $mailData,
-                'mailer_config' => [
-                    'driver' => config('mail.default'),
-                    'host' => config('mail.mailers.' . config('mail.default') . '.host'),
-                    'port' => config('mail.mailers.' . config('mail.default') . '.port'),
-                    'encryption' => config('mail.mailers.' . config('mail.default') . '.encryption'),
-                    'from_address' => config('mail.from.address'),
-                    'from_name' => config('mail.from.name'),
-                ],
-                'timestamp' => now()->toDateTimeString()
+                'bcc' => $bccEmails,
+                'status' => 'pending'
             ]);
 
-            // 記錄成功信息
-            Log::info('郵件發送成功', [
-                'recipients' => $recipients,
+            Log::info('郵件已加入佇列', [
+                'to' => $to,
                 'subject' => $subject,
-                'connection_status' => config('mail.default'),
-                'mailer_settings' => [
-                    'host' => config('mail.mailers.' . config('mail.default') . '.host'),
-                    'port' => config('mail.mailers.' . config('mail.default') . '.port'),
-                    'encryption' => config('mail.mailers.' . config('mail.default') . '.encryption'),
-                    'username' => config('mail.mailers.' . config('mail.default') . '.username'),
-                    'password' => config('mail.mailers.' . config('mail.default') . '.password'),
-                ],
-                'time' => now(),
+                'template' => $view
             ]);
 
             return true;
-        } catch (TransportException $e) {
-            Log::debug('郵件發送異常詳細信息', [
-                'exception_type' => get_class($e),
-                'message' => $e->getMessage(),
-                'code' => $e->getCode(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            return false;
         } catch (\Exception $e) {
-            // 其他錯誤
-            Log::error('郵件發送失敗', [
+            Log::error('郵件加入佇列失敗', [
                 'error' => $e->getMessage(),
                 'code' => $e->getCode(),
                 'trace' => $e->getTraceAsString()
             ]);
             return false;
+        }
+    }
+
+    /**
+     * 處理佇列中的郵件
+     */
+    public function processQueue(int $limit = 10): void
+    {
+        $emails = EmailQueue::where('status', 'pending')
+            ->where('attempts', '<', 3)
+            ->orderBy('created_at', 'asc')
+            ->limit($limit)
+            ->get();
+
+        foreach ($emails as $email) {
+            try {
+                $email->update([
+                    'status' => 'processing',
+                    'attempts' => $email->attempts + 1
+                ]);
+
+                // 發送郵件
+                Mail::to($email->to)
+                    ->bcc($email->bcc ?? [])
+                    ->send(new GenericMail(
+                        $email->subject,
+                        $email->template,
+                        $email->data
+                    ));
+
+                $email->update([
+                    'status' => 'completed',
+                    'processed_at' => now()
+                ]);
+
+                Log::info('郵件發送成功', [
+                    'email_id' => $email->id,
+                    'to' => $email->to,
+                    'subject' => $email->subject
+                ]);
+            } catch (\Exception $e) {
+                $email->update([
+                    'status' => 'failed',
+                    'error_message' => $e->getMessage()
+                ]);
+
+                Log::error('郵件發送失敗', [
+                    'email_id' => $email->id,
+                    'error' => $e->getMessage()
+                ]);
+            }
         }
     }
 
