@@ -8,7 +8,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-5">
                     <div class="d-flex justify-content-center mb-3">
-                        <img src="{{ asset('frontend/img/logo.png') }}" alt="logo" style="height: 100px;">
+                        <img src="{{ asset('frontend/img/logo.png') }}" alt="logo" style="height: 60px;">
                     </div>
                     <div class="card shadow">
                         <div class="card-header bg-primary text-white text-center py-3"
