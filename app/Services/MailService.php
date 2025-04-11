@@ -260,6 +260,16 @@ class MailService
             }
         ])->where('order_id', $order->id)->get();
 
+        // 將 orderItems 轉換為陣列格式
+        $orderItemsArray = $orderItems->map(function ($item) {
+            $itemArray = $item->toArray();
+            // 確保 product 和 images 存在
+            if (isset($itemArray['product'])) {
+                $itemArray['product']['images'] = $item->product->images->toArray();
+            }
+            return $itemArray;
+        })->toArray();
+
         $this->send(
             $member->email,
             '訂單完成通知',
@@ -273,9 +283,9 @@ class MailService
             ],
             'emails.order-complete',
             [
-                'order' => $order,
+                'order' => $order->toArray(),
                 'shipmentMethod' => $shipmentMethod,
-                'orderItems' => $orderItems
+                'orderItems' => $orderItemsArray
             ]
         );
     }
