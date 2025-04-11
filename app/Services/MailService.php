@@ -99,6 +99,7 @@ class MailService
 
                 $email->update([
                     'status' => 'completed',
+                    'error_message' => '',
                     'processed_at' => now()
                 ]);
 
