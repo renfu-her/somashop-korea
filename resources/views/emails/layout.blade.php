@@ -7,7 +7,8 @@
             font-family: "Microsoft JhengHei", Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
         }
         .container {
             max-width: 600px;
@@ -20,20 +21,15 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
         }
         .content {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             margin-bottom: 20px;
-        }
-        .password {
-            background-color: #f5f5f5;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 3px;
-            font-family: monospace;
-            font-size: 16px;
         }
         .footer {
             text-align: center;
@@ -46,8 +42,8 @@
         .button {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #4CAF50;
+            color: #fff !important;
             text-decoration: none;
             border-radius: 5px;
             margin: 20px 0;
@@ -61,30 +57,16 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>密碼重置通知</h2>
+            <img src="{{ asset('images/logo.png') }}" alt="EzHive Logo" style="max-width: 200px;">
         </div>
         
         <div class="content">
-            <p>{{ $member['name'] }}，您好：</p>
-            
-            <p>您剛在EzHive 易群佶選購物車申請了一組新的密碼。</p>
-            
-            <p>您的新密碼為：</p>
-            <div class="password">
-                {{ $password }}
-            </div>
-            
-            <p class="warning">登入後請務必至會員中心修改密碼！</p>
-            
-            <p>歡迎直接進入EzHive 易群佶選線上購物：</p>
-            <div style="text-align: center;">
-                <a href="{{ config('app.url') }}" class="button" style="color: #fff !important; background-color: #007bff !important;">前往購物網站</a>
-            </div>
+            @yield('content')
         </div>
         
         <div class="footer">
             <p>======本信件由系統自動發送，請勿直接回覆本信件，謝謝!======</p>
-            <p>© 2024 EzHive 易群佶選購物車. All rights reserved.</p>
+            <p>© {{ date('Y') }} EzHive 易群佶選購物車. All rights reserved.</p>
         </div>
     </div>
 </body>
