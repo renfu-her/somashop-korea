@@ -82,7 +82,7 @@ class MailService
             ->get();
 
         foreach ($emails as $email) {
-            try {
+            // try {
                 $email->update([
                     'status' => 'processing',
                     'attempts' => $email->attempts + 1
@@ -97,6 +97,10 @@ class MailService
                         $email->data
                     ));
 
+                if (Mail::failures()) {
+                    dd($mail->failures);
+                }
+
                 $email->update([
                     'status' => 'completed',
                     'processed_at' => now()
@@ -107,17 +111,17 @@ class MailService
                     'to' => $email->to,
                     'subject' => $email->subject
                 ]);
-            } catch (\Exception $e) {
-                $email->update([
-                    'status' => 'failed',
-                    'error_message' => $e->getMessage()
-                ]);
+            // } catch (\Exception $e) {
+            //     $email->update([
+            //         'status' => 'failed',
+            //         'error_message' => $e->getMessage()
+            //     ]);
 
-                Log::error('郵件發送失敗', [
-                    'email_id' => $email->id,
-                    'error' => $e->getMessage()
-                ]);
-            }
+            //     Log::error('郵件發送失敗', [
+            //         'email_id' => $email->id,
+            //         'error' => $e->getMessage()
+            //     ]);
+            // }
         }
     }
 
