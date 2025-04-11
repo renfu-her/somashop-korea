@@ -148,7 +148,7 @@
 
     <div class="footer">
         <p>© {{ date('Y') }} EzHive 易群佶選. All rights reserved.</p>
-        <p>桃園市桃園區中正路 1247 號 15 樓之 4</p>
+        <p>台南市南區永成路二段460之5號</p>
     </div>
 </body>
 
