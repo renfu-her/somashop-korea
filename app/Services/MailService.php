@@ -73,7 +73,7 @@ class MailService
             ->limit($limit)
             ->get();
 
-        // dd($emails);
+        dd($emails);
 
         foreach ($emails as $email) {
             // try {
