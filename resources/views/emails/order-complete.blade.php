@@ -82,8 +82,8 @@
                     @foreach ($orderItems as $item)
                         <tr>
                             <td style="padding: 8px; border: 1px solid #dee2e6;">
-                                @if ($item['product']['images']->isNotEmpty())
-                                    <img src="{{ asset('storage/products/' . $item['product']['id'] . '/' . $item['product']['images']->first()['image_path']) }}"
+                                @if (isset($item['product']['images']) && count($item['product']['images']) > 0)
+                                    <img src="{{ asset('storage/products/' . $item['product']['id'] . '/' . $item['product']['images'][0]['image_path']) }}"
                                         alt="Product Image" style="width: 100px; height: auto;">
                                 @else
                                     <img src="{{ asset('frontend/img/no-image.png') }}" alt="No Image"
