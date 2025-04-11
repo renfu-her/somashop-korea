@@ -91,6 +91,13 @@ class MailService
                         $email->data
                     ));
 
+                if (Mail::failures()) {
+                    $email->update([
+                        'status' => 'failed',
+                        'error_message' => $mail->failures
+                    ]);
+                }
+
                 $email->update([
                     'status' => 'completed',
                     'processed_at' => now()
