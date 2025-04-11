@@ -5,12 +5,19 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Member;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Services\MailService;
 
 class ForgetController extends Controller
 {
+    protected $mailService;
+
+    public function __construct(MailService $mailService)
+    {
+        $this->mailService = $mailService;
+    }
+
     public function forget()
     {
         return view('frontend.login.forget');
@@ -36,16 +43,24 @@ class ForgetController extends Controller
         $member->password = Hash::make($newPassword);
         $member->save();
 
-        // 发送邮件
-        $emailData = [
-            'name' => $member->name,
-            'password' => $newPassword
-        ];
-
-        Mail::send('emails.forget-password', $emailData, function($message) use ($member) {
-            $message->to($member->email)
-                   ->subject('EzHive 易群佶選購物車 - 密碼重置通知');
-        });
+        // 使用 MailService 發送郵件
+        $this->mailService->send(
+            $member->email,
+            'EzHive 易群佶選購物車 - 密碼重置通知',
+            [
+                'title' => '密碼重置通知',
+                'content' => "親愛的 {$member->name} 您好，\n\n您的新密碼是：{$newPassword}\n\n請盡快登入並修改密碼。",
+                'button' => [
+                    'text' => '前往登入',
+                    'url' => route('login')
+                ]
+            ],
+            'emails.forget-password',
+            [
+                'member' => $member->toArray(),
+                'password' => $newPassword
+            ]
+        );
 
         return redirect()->route('login')->with('success', '新密碼已發送至您的郵箱');
     }
