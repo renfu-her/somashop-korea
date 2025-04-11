@@ -142,7 +142,7 @@ class MailService
             $subject,
             $content,
             'emails.welcome',
-            ['member' => $member]
+            ['member' => $member->toArray()]
         );
     }
 
@@ -184,8 +184,54 @@ class MailService
             $content,
             'emails.reset-password',
             [
-                'member' => $member,
+                'member' => $member->toArray(),
                 'token' => $token
+            ]
+        );
+    }
+
+    /**
+     * 發送訂單完成郵件
+     */
+    public function sendOrderCompleteEmail(Order $order, $shipmentMethod = 'Credit')
+    {
+        $member = Member::find($order->member_id);
+
+        // 獲取訂單項目並加載關聯數據
+        $orderItems = OrderItem::with([
+            'product',
+            'spec',
+            'product.images' => function ($query) {
+                $query->where('is_primary', 1);
+            }
+        ])->where('order_id', $order->id)->get();
+
+        // 將 orderItems 轉換為陣列格式
+        $orderItemsArray = $orderItems->map(function ($item) {
+            $itemArray = $item->toArray();
+            // 確保 product 和 images 存在
+            if (isset($itemArray['product'])) {
+                $itemArray['product']['images'] = $item->product->images->toArray();
+            }
+            return $itemArray;
+        })->toArray();
+
+        return $this->send(
+            $member->email,
+            '訂單完成通知',
+            [
+                'title' => '訂單完成通知',
+                'content' => "親愛的 {$order->recipient_name} 您好，\n\n您的訂單已完成...",
+                'button' => [
+                    'text' => '查看訂單詳情',
+                    'url' => route('orders.list')
+                ]
+            ],
+            'emails.order-complete',
+            [
+                'order' => $order->toArray(),
+                'shipmentMethod' => $shipmentMethod,
+                'orderItems' => $orderItemsArray
             ]
         );
     }
@@ -246,48 +292,5 @@ class MailService
         }
 
         return $status;
-    }
-
-    public function sendOrderCompleteEmail(Order $order, $shipmentMethod = 'Credit')
-    {
-        $member = Member::find($order->member_id);
-
-        // 獲取訂單項目並加載關聯數據
-        $orderItems = OrderItem::with([
-            'product',
-            'spec',
-            'product.images' => function ($query) {
-                $query->where('is_primary', 1);
-            }
-        ])->where('order_id', $order->id)->get();
-
-        // 將 orderItems 轉換為陣列格式
-        $orderItemsArray = $orderItems->map(function ($item) {
-            $itemArray = $item->toArray();
-            // 確保 product 和 images 存在
-            if (isset($itemArray['product'])) {
-                $itemArray['product']['images'] = $item->product->images->toArray();
-            }
-            return $itemArray;
-        })->toArray();
-
-        $this->send(
-            $member->email,
-            '訂單完成通知',
-            [
-                'title' => '訂單完成通知',
-                'content' => "親愛的 {$order->recipient_name} 您好，\n\n您的訂單已完成...",
-                'button' => [
-                    'text' => '查看訂單詳情',
-                    'url' => route('orders.list')
-                ]
-            ],
-            'emails.order-complete',
-            [
-                'order' => $order->toArray(),
-                'shipmentMethod' => $shipmentMethod,
-                'orderItems' => $orderItemsArray
-            ]
-        );
     }
 }
