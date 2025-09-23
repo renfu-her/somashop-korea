@@ -35,12 +35,12 @@
             </a>
         </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.activities.index') }}">
                 <i class="fas fa-calendar-alt menu-icon"></i>
                 <span class="menu-title">活動訊息維護</span>
             </a>
-        </li>
+        </li> --}}
 
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#product-management" aria-expanded="false">
@@ -67,7 +67,7 @@
             </a>
         </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#faq-management" aria-expanded="false">
                 <i class="fas fa-question-circle menu-icon"></i>
                 <span class="menu-title">常見問題維護</span>
@@ -83,7 +83,7 @@
                     </li>
                 </ul>
             </div>
-        </li>
+        </li> --}}
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.orders.index') }}">
