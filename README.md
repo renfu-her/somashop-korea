@@ -1,115 +1,126 @@
-# SOMA SHOP 購物車
+# SOMA SHOP E-commerce Platform
 
-## 專案介紹
-SOMA SHOP 購物車是一個基於 Laravel 的電商平台範例專案，提供前台用戶瀏覽商品、加入購物車、結帳購買、訂單管理；後台管理商品、分類、活動、廣告、FAQ、郵件設定等功能，並整合綠界 ECPay 金流、電子發票與物流服務。
+## Project Overview
+SOMA SHOP is a Laravel-based e-commerce platform that provides frontend features for users to browse products, add to cart, checkout, and manage orders; backend management for products, categories, activities, advertisements, FAQ, email settings, and more. It integrates with ECPay payment gateway, electronic invoicing, and logistics services.
 
-## 核心功能
-- 會員註冊、登入與忘記密碼
-- 商品分類與搜尋、商品詳情
-- 購物車管理與結帳流程
-- 訂單維護、物流狀態查詢
-- 郵件佇列（EmailQueue）與批次處理
-- 後台管理系統：
-  - 商品、商品分類、活動、廣告、FAQ 分類與內容
-  - 管理員帳號管理
-  - 郵件設定管理
-  - 購物車資料維護
-  - CKEditor 編輯器整合
-  - DataTables 數據列表
+## Core Features
+- Member registration, login, and password recovery
+- Product categories and search, product details
+- Shopping cart management and checkout process
+- Order maintenance and logistics status tracking
+- Email queue (EmailQueue) and batch processing
+- Backend management system:
+  - Products, product categories, activities, advertisements, FAQ categories and content
+  - Administrator account management
+  - Email settings management
+  - Shopping cart data maintenance
+  - CKEditor integration
+  - DataTables for data listing
 
-## 環境需求
+## System Requirements
 - PHP >= 8.x
 - Composer
 - MySQL
 - Laravel ^9.0
-- （可選）Node.js、npm 或 yarn 用於前端資產編譯
+- (Optional) Node.js, npm or yarn for frontend asset compilation
 
-## 快速上手
-1. 取得原始碼並進入專案根目錄：
+## Quick Start
+1. Clone the repository and navigate to project root:
    ```bash
-   git clone <repo_url> ezhive
-   cd ezhive
+   git clone <repo_url> somashop
+   cd somashop
    ```
-2. 安裝 PHP 套件：
+2. Install PHP dependencies:
    ```bash
    composer install
    ```
-3. 複製環境設定檔並產生應用金鑰：
+3. Copy environment configuration and generate application key:
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
-4. 編輯 `.env`，設定資料庫與金流參數：
+4. Edit `.env` file to configure database and payment gateway parameters:
    ```dotenv
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
    DB_PORT=3306
-   DB_DATABASE=ezhive
+   DB_DATABASE=somashop
    DB_USERNAME=root
    DB_PASSWORD=
 
-   # 綠界金流 ECPAY
+   # ECPay Payment Gateway
    ECPAY_MERCHANT_ID=
    ECPAY_HASH_KEY=
    ECPAY_HASH_IV=
 
-   # 電子發票
+   # Electronic Invoice
    ECPAY_INVOICE_MERCHANT_ID=
    ECPAY_INVOICE_HASH_KEY=
    ECPAY_INVOICE_HASH_IV=
 
-   # 物流
+   # Logistics
    ECPAY_SHIPMENT_API=
    ECPAY_SHIPMENT_MERCHANT_ID=
    ECPAY_SHIPMENT_HASH_KEY=
    ECPAY_SHIPMENT_HASH_IV=
    ```
-5. 建立資料表並匯入預設種子：
+5. Run database migrations and seed default data:
    ```bash
    php artisan migrate
    php artisan db:seed
    ```
-6. （可選）安裝並編譯前端資產：
+6. (Optional) Install and compile frontend assets:
    ```bash
    npm install
    npm run dev
    ```
 
-## 目錄結構
+## Directory Structure
 ```
 app/
-├── Http/Controllers/Frontend    # 前台控制器
-├── Http/Controllers/Admin       # 後台控制器
-├── Models                       # Eloquent 模型
+├── Http/Controllers/Frontend    # Frontend controllers
+├── Http/Controllers/Admin       # Backend controllers
+├── Models                       # Eloquent models
 │   ├── Member.php
 │   ├── Order.php
 │   └── EmailQueue.php
-└── Services                     # 自訂服務
-    └── MailService.php          # 郵件佇列與發送邏輯
+└── Services                     # Custom services
+    └── MailService.php          # Email queue and sending logic
 resources/views/
-├── frontend/layouts/app.blade.php    # 前台主布局
-├── frontend/                   # 前台頁面
-├── emails/                     # 郵件樣板
+├── frontend/layouts/app.blade.php    # Frontend main layout
+├── frontend/                   # Frontend pages
+├── emails/                     # Email templates
 │   ├── layout.blade.php
 │   ├── forget-password.blade.php
 │   └── order-complete.blade.php
-└── admin/                      # 後台頁面
+└── admin/                      # Backend pages
 ```
 
-## 常用 Artisan 指令
-- `php artisan serve`：啟動本地開發伺服器
-- `php artisan migrate`：執行資料庫遷移
-- `php artisan db:seed`：匯入種子資料
-- `php artisan logistics:check`：檢查物流狀態
-- `php artisan email:process`：處理郵件佇列
+## Common Artisan Commands
+- `php artisan serve`: Start local development server
+- `php artisan migrate`: Run database migrations
+- `php artisan db:seed`: Import seed data
+- `php artisan logistics:check`: Check logistics status
+- `php artisan email:process`: Process email queue
 
-## 後台預設帳號
-- 帳號：admin@admin.com
-- 密碼：Qq123456
+## Default Admin Account
+- Email: admin@admin.com
+- Password: Qq123456
 
-## 注意事項
-- `.env` 預設為綠界測試環境參數，如要切換正式環境請更新相應值。
-- 前後台視圖皆整合響應式設計與多語系支援。
+## Important Notes
+- `.env` file contains ECPay test environment parameters by default. Update the values to switch to production environment.
+- Both frontend and backend views integrate responsive design and multi-language support.
 
-## 貢獻
-歡迎提交 Issue 與 Pull Request，一起完善 EzHive 易群佑選購物車！
+## Internationalization
+This project supports multiple languages including:
+- Traditional Chinese (Default)
+- Korean (Complete translation available)
+
+### Shipping Terms Translation
+For Korean language support, the following shipping terms are translated:
+- **宅配運費** → **택배 배송비** (Home Delivery Shipping Fee)
+- **7-11 店到店運費** → **7-11 픽업 배송비** (7-11 Pickup Shipping Fee)
+- **全家店到店運費** → **패밀리마트 픽업 배송비** (FamilyMart Pickup Shipping Fee)
+
+## Contributing
+We welcome contributions! Please feel free to submit Issues and Pull Requests to help improve the SOMA SHOP e-commerce platform!

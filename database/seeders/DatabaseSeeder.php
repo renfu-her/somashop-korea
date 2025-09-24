@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-
+        
         User::firstOrCreate(
             ['email' => 'admin@admin.com'],
             [
@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
             ['key' => 'shipping_fee'],
             [
                 'value' => 100,
-                'description' => '宅配運費'
+                'description' => 'Home Delivery Shipping Fee'
             ]
         );
 
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
             ['key' => '711_shipping_fee'],
             [
                 'value' => 80,
-                'description' => '7-11 店到店運費'
+                'description' => '7-11 Pickup Shipping Fee'
             ]
         );
 
@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
             ['key' => 'family_shipping_fee'],
             [
                 'value' => 80,
-                'description' => '全家店到店運費'
+                'description' => 'FamilyMart pickup shipping fee'
             ]
         );
     }
