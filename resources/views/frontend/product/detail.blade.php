@@ -55,7 +55,7 @@
                                     <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}"
                                         class="img-fluid" alt="{{ $product->name }}">
                                     @if ($product->is_new)
-                                        <span class="badge">新品</span>
+                                        <span class="badge">신상품</span>
                                     @endif
                                 </div>
                             </div>
@@ -67,9 +67,9 @@
                                     <h5 class="text-muted">{{ $product->sub_title }}</h5>
                                 @endif
                                 <div class="product-price mt-4">
-                                    <p class="mb-2 original-price">原價：NT$ <span
+                                    <p class="mb-2 original-price">정가：NT$ <span
                                             id="original-price">{{ number_format($product->price) }}</span></p>
-                                    <h3 class="text-danger">優惠價：NT$ <span
+                                    <h3 class="text-danger">할인가：NT$ <span
                                             id="cash-price">{{ number_format($product->spec_price) }}</span></h3>
                                 </div>
 
@@ -82,10 +82,10 @@
                                     <input type="hidden" name="checkout_direct" id="checkout_direct" value="0">
 
                                     <div class="form-group row my-4">
-                                        <label class="col-sm-2 col-form-label">規格</label>
+                                        <label class="col-sm-2 col-form-label">규격</label>
                                         <div class="col-10 col-md-10">
                                             <select class="form-control" name="spec_id" id="spec-select">
-                                                <option value="">請選擇</option>
+                                                <option value="">선택해주세요</option>
                                                 @foreach ($product->specs as $spec)
                                                     @if ($spec->is_active)
                                                         <option value="{{ $spec->id }}"
@@ -99,7 +99,7 @@
                                     </div>
 
                                     <div class="form-group row my-4">
-                                        <label class="col-sm-2 col-form-label">數量</label>
+                                        <label class="col-sm-2 col-form-label">수량</label>
                                         <div class="col-sm-4">
                                             <div class="input-group">
                                                 <button type="button"
@@ -116,17 +116,17 @@
                                         @if (Auth::guard('member')->check())
                                             <div class="col-6">
                                                 <button type="submit" class="btn btn-danger w-100 rounded-pill cart-btn">
-                                                    立即訂購
+                                                    즉시 주문
                                                 </button>
                                             </div>
                                             <div class="col-6">
                                                 <button type="submit"
-                                                    class="btn btn-outline-danger w-100 rounded-pill checkout-btn">加入購物車</button>
+                                                    class="btn btn-outline-danger w-100 rounded-pill checkout-btn">장바구니 담기</button>
                                             </div>
                                         @else
                                             <div class="col-12">
                                                 <a href="{{ route('login') }}" class="btn btn-danger w-100 rounded-pill">
-                                                    登入後購買
+                                                    로그인 후 구매
                                                 </a>
                                             </div>
                                         @endif
@@ -137,10 +137,10 @@
                                             @if ($freeShippings->start_date && $freeShippings->end_date)
                                                 <p class="text-danger">{{ $freeShippings->start_date->format('Y/m/d') }} ~
                                                     {{ $freeShippings->end_date->format('Y/m/d') }}
-                                                    期間 <br>
-                                                    購買商品滿 ${{ number_format($freeShippings->minimum_amount) }} 免運費</p>
+                                                    기간 <br>
+                                                    상품 구매 ${{ number_format($freeShippings->minimum_amount) }} 이상 무료배송</p>
                                             @else
-                                                <p class="text-danger">購買商品滿 ${{ number_format($freeShippings->minimum_amount) }} 免運費</p>
+                                                <p class="text-danger">상품 구매 ${{ number_format($freeShippings->minimum_amount) }} 이상 무료배송</p>
                                             @endif
                                         </div>
                                     @endif
@@ -199,10 +199,10 @@
             $('.checkout-btn').click(function(e) {
                 e.preventDefault();
 
-                // 檢查規格是否已選擇
+                // 규격 선택 여부 확인
                 const specId = $('select[name="spec_id"]').val();
                 if (!specId) {
-                    showToast('請選擇商品規格', 'error');
+                    showToast('상품 규격을 선택해주세요', 'error');
                     return;
                 }
                 $.ajax({
@@ -215,10 +215,10 @@
                         quantity: $('input[name="quantity"]').val(),
                     },
                     success: function(response) {
-                        showToast('加入購物車成功', 'success');
+                        showToast('장바구니에 추가되었습니다', 'success');
                     },
                     error: function(xhr, status, error) {
-                        showToast('加入購物車失敗', 'error');
+                        showToast('장바구니 추가 실패', 'error');
                     }
                 });
             });
@@ -227,7 +227,7 @@
                 e.preventDefault();
                 const specId = $('select[name="spec_id"]').val();
                 if (!specId) {
-                    showToast('請選擇商品規格', 'error');
+                    showToast('상품 규격을 선택해주세요', 'error');
                     return;
                 }
                 $(this).closest('form').submit();
@@ -247,7 +247,7 @@
                 return new Intl.NumberFormat('zh-TW').format(number);
             }
 
-            // 添加數量增減功能
+            // 수량 증감 기능 추가
             $('.btn-minus').click(function() {
                 const input = $(this).siblings('input[name="quantity"]');
                 const currentValue = parseInt(input.val());
@@ -262,12 +262,12 @@
                 input.val(currentValue + 1);
             });
 
-            // 防止手動輸入非數字或負數
+            // 수동 입력 시 숫자가 아닌 값이나 음수 방지
             $('input[name="quantity"]').on('input', function() {
                 let value = $(this).val();
-                // 移除非數字字符
+                // 숫자가 아닌 문자 제거
                 value = value.replace(/[^\d]/g, '');
-                // 確保至少為 1
+                // 최소 1 이상 보장
                 value = value === '' ? 1 : Math.max(1, parseInt(value));
                 $(this).val(value);
             });

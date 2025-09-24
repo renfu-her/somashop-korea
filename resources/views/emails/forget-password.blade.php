@@ -61,30 +61,30 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>密碼重置通知</h2>
+            <h2>비밀번호 재설정 안내</h2>
         </div>
         
         <div class="content">
-            <p>{{ $member['name'] }}，您好：</p>
+            <p>{{ $member['name'] }}님, 안녕하세요：</p>
             
-            <p>您剛在EzHive 易群佶選購物車申請了一組新的密碼。</p>
+            <p>SOMA SHOP에서 새로운 비밀번호를 요청하셨습니다.</p>
             
-            <p>您的新密碼為：</p>
+            <p>새로운 비밀번호는 다음과 같습니다：</p>
             <div class="password">
                 {{ $password }}
             </div>
             
-            <p class="warning">登入後請務必至會員中心修改密碼！</p>
+            <p class="warning">로그인 후 반드시 회원센터에서 비밀번호를 변경해주세요！</p>
             
-            <p>歡迎直接進入EzHive 易群佶選線上購物：</p>
+            <p>EzHive 온라인 쇼핑몰에 직접 접속하세요：</p>
             <div style="text-align: center;">
-                <a href="{{ config('app.url') }}" class="button" style="color: #fff !important; background-color: #007bff !important;">前往購物網站</a>
+                <a href="{{ config('app.url') }}" class="button" style="color: #fff !important; background-color: #007bff !important;">쇼핑몰 바로가기</a>
             </div>
         </div>
         
         <div class="footer">
-            <p>======本信件由系統自動發送，請勿直接回覆本信件，謝謝!======</p>
-            <p>© 2024 EzHive 易群佶選購物車. All rights reserved.</p>
+            <p>======이 메일은 시스템에서 자동으로 발송된 것으로, 직접 회신하지 마시기 바랍니다. 감사합니다!======</p>
+            <p>© 2024 SOMA SHOP. All rights reserved.</p>
         </div>
     </div>
 </body>

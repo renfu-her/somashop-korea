@@ -25,33 +25,33 @@ class ForgetController extends Controller
 
     public function forgetProcess(Request $request)
     {
-        // 验证验证码
+        // 인증번호 확인
         if ($request->captcha != session('captcha_code')) {
-            return redirect()->back()->with('error', '驗證碼錯誤');
+            return redirect()->back()->with('error', '인증번호가 잘못되었습니다');
         }
 
-        // 查找用户
+        // 사용자 찾기
         $member = Member::where('email', $request->email)->first();
         if (!$member) {
-            return redirect()->back()->with('error', '找不到此電子郵件地址');
+            return redirect()->back()->with('error', '해당 이메일 주소를 찾을 수 없습니다');
         }
 
-        // 生成新密码
+        // 새 비밀번호 생성
         $newPassword = Str::random(8);
         
-        // 更新用户密码
+        // 사용자 비밀번호 업데이트
         $member->password = Hash::make($newPassword);
         $member->save();
 
-        // 使用 MailService 發送郵件
+        // MailService를 사용하여 이메일 발송
         $this->mailService->send(
             $member->email,
-            'EzHive 易群佶選購物車 - 密碼重置通知',
+            'SOMA SHOP - 비밀번호 재설정 안내',
             [
-                'title' => '密碼重置通知',
-                'content' => "親愛的 {$member->name} 您好，\n\n您的新密碼是：{$newPassword}\n\n請盡快登入並修改密碼。",
+                'title' => '비밀번호 재설정 안내',
+                'content' => "안녕하세요 {$member->name}님,\n\n새로운 비밀번호는 다음과 같습니다：{$newPassword}\n\n빠른 시일 내에 로그인하여 비밀번호를 변경해주세요.",
                 'button' => [
-                    'text' => '前往登入',
+                    'text' => '로그인하기',
                     'url' => route('login')
                 ]
             ],
@@ -62,6 +62,6 @@ class ForgetController extends Controller
             ]
         );
 
-        return redirect()->route('login')->with('success', '新密碼已發送至您的郵箱');
+        return redirect()->route('login')->with('success', '새로운 비밀번호가 이메일로 발송되었습니다');
     }
 }
