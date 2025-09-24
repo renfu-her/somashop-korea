@@ -7,7 +7,7 @@
     <meta name="format-detection" content="telephone=no">
 
     {{-- SEO Meta Tags --}}
-    <title>@yield('meta_title', \App\Models\SiteSetting::getMetaData('site_name', 'EzHive 易群佶選'))</title>
+    <title>@yield('meta_title', \App\Models\SiteSetting::getMetaData('site_name', 'SOMA SHOP'))</title>
     <meta name="keywords" content="@yield('meta_keywords', \App\Models\SiteSetting::getMetaData('meta_keywords', 'EzHive 易群佶選'))">
     <meta name="description" content="@yield('meta_description', \App\Models\SiteSetting::getMetaData('site_description', 'EzHive 易群佶選'))">
 
