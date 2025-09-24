@@ -82,8 +82,8 @@
         <div class="container">
             <div class="row flex-row align-items-center">
                 <div class="img-logo">
-                    <img src="{{ asset('frontend/img/logo_footer.png') }}"
-                        style="max-width: 100%; max-height: 80px; object-fit: contain" />
+                    <img src="{{ asset('frontend/img/logo.png') }}"
+                        style="max-width: 100%; max-height: 50px; object-fit: contain" />
                 </div>
                 <div class="col-auto mb-3 address">
                     <div class="row my-md-0 my-2">
@@ -91,17 +91,21 @@
                             <div class="row">
                                 <div class="col-auto pl-md-0 text-dark text-dark1">
                                     <p class="m-0">
-                                        <img src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png" />
-                                        台南市南區永成路二段460之5號
+                                        {{-- <img src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png" /> --}}
+                                        상호명 : (주)소마슬립 <br>
+                                        대표이사 : 김지훈 <br>
+                                        개인정보책임자 : 박서연 <br>
+                                        통신판매업신고번호 : 제 2024-서울마포-01234 호 <br>
+                                        본사 : 서울특별시 마포구 양화로 120, 5층 (동교동, 소마타워)
                                     </p>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    <p class="m-0 text-dark text-dark2">
+                    {{-- <p class="m-0 text-dark text-dark2">
                         &copy; 2025 All Rights Reversed. Ezhive Co., Ltd. All rights reserved.
-                    </p>
+                    </p> --}}
                 </div>
                 <div
                     class="col-auto social-link d-flex justify-content-between align-items-center ml-auto text-center px-md-3 px-4">

@@ -12,7 +12,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
                             <li class="breadcrumb-item">
-                                <a href="{{ route('home') }}">首頁</a>
+                                <a href="{{ route('home') }}">홈</a>
                             </li>
                             @if ($currentCategory->parent)
                                 <li class="breadcrumb-item">

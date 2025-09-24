@@ -7,8 +7,8 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">首頁</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('seal-knowledge.index') }}">認識印章</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">홈</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('seal-knowledge.index') }}">인장 이해</a></li>
                             <li class="breadcrumb-item active">{{ $knowledge->title }}</li>
                         </ol>
                     </nav>

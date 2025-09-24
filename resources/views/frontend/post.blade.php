@@ -7,7 +7,7 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">首頁</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">홈</a></li>
                             <li class="breadcrumb-item active" aria-current="page">{{ $postTitle }}</li>
                         </ol>
                     </nav>

@@ -7,8 +7,8 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="./">首頁</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">購物車</li>
+                            <li class="breadcrumb-item"><a href="./">홈</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">장바구니</li>
                         </ol>
                     </nav>
                 </div>
@@ -21,7 +21,7 @@
     <article class="page-wrapper my-3">
         <div class="container">
             <div class="page-title">
-                <h2 class="text-black text-center font-weight-bold mb-0" data-aos="zoom-in-up">購物車</h2>
+                <h2 class="text-black text-center font-weight-bold mb-0" data-aos="zoom-in-up">장바구니</h2>
                 <h4 class="text-center text-gold mb-4" data-aos="zoom-in-up" data-aos-delay="150">Shopping Cart</h4>
             </div>
 
@@ -32,12 +32,12 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col" style="width: 5%"></th>
-                                    <th scope="col" style="width: 15%">圖片</th>
-                                    <th scope="col" style="width: 20%">商品名稱</th>
-                                    <th scope="col" style="width: 15%">優惠價</th>
-                                    <th scope="col" style="width: 15%">數量</th>
-                                    <th scope="col" style="width: 15%">小計</th>
-                                    <th scope="col" style="width: 10%">刪除</th>
+                                    <th scope="col" style="width: 15%">이미지</th>
+                                    <th scope="col" style="width: 20%">상품명</th>
+                                    <th scope="col" style="width: 15%">할인가</th>
+                                    <th scope="col" style="width: 15%">수량</th>
+                                    <th scope="col" style="width: 15%">소계</th>
+                                    <th scope="col" style="width: 10%">삭제</th>
                                     <th scope="col" style="width: 5%"></th>
                                 </tr>
                             </thead>
@@ -50,18 +50,18 @@
                                             <img class="item-img" src="{{ $item['primary_image'] }}" width="106px">
                                         </td>
                                         <td class="align-middle border-sm-top">
-                                            <span class="cart-tag d-block d-sm-none text-muted" disable>規格</span>
+                                            <span class="cart-tag d-block d-sm-none text-muted" disable>규격</span>
                                             <div class="product-details text-md-left text-sm-center">
                                                 <p class="mb-0">{{ $item['product_name'] }}</p>
-                                                <p class="mb-0">規格：{{ $item['spec_name'] }}</p>
+                                                <p class="mb-0">규격：{{ $item['spec_name'] }}</p>
                                             </div>
                                         </td>
                                         <td class="align-middle border-sm-top">
-                                            <span class="cart-tag d-block d-sm-none text-muted" disable>單價</span>
+                                            <span class="cart-tag d-block d-sm-none text-muted" disable>단가</span>
                                             <p class="mb-0">NT${{ number_format($item['price']) }}</p>
                                         </td>
                                         <td class="quantity align-middle border-sm-top">
-                                            <span class="cart-tag d-block d-sm-none text-muted" disable>數量</span>
+                                            <span class="cart-tag d-block d-sm-none text-muted" disable>수량</span>
                                             <div class="input-group num-row">
                                                 <button class="btn btn-minus btn-light border btn-sm"
                                                     data-cart-key="{{ $key }}"
@@ -82,7 +82,7 @@
                                             </div>
                                         </td>
                                         <td class="total align-middle border-sm-top">
-                                            <span class="cart-tag d-block d-sm-none text-muted" disable>小計</span>
+                                            <span class="cart-tag d-block d-sm-none text-muted" disable>소계</span>
                                             <p class="text-danger mb-0 money">
                                                 NT${{ number_format($item['price'] * $item['quantity']) }}</p>
                                         </td>
@@ -100,7 +100,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="text-center">購物車是空的</td>
+                                        <td colspan="8" class="text-center">장바구니가 비어있습니다</td>
                                     </tr>
                                 @endforelse
 
@@ -112,7 +112,7 @@
                         <div class="row">
                             <div class="col-sm-12 col-xs-6 offset-xs-6" style="text-align: right">
                                 <h2 class="text-black mb-0">
-                                    總計
+                                    총계
                                     <span class="pl-3 priceTotalplusFee">NT${{ number_format($total) }}</span>
                                 </h2>
                             </div>
@@ -122,9 +122,9 @@
                         <div class="row my-3">
                             <div class="col-sm-3 offset-sm-9">
                                 <button class="btn btn-danger btn-purchase w-100 rounded-pill mb-3 cartNext" type="button"
-                                    onclick="window.location.href='{{ route('checkout.index') }}'">我要結帳</button>
+                                    onclick="window.location.href='{{ route('checkout.index') }}'">결제하기</button>
                                 <button class="btn btn-danger btn-addcart w-100 rounded-pill mb-3"
-                                    type="button">繼續購物</button>
+                                    type="button">쇼핑 계속하기</button>
                                 <input type="hidden" id="referrer" value="{{ $cartReferrer }}">
                             </div>
                         </div>
@@ -195,7 +195,7 @@
                 const cartKey = $(this).data('cart-key');
                 const productId = $(this).data('product-id');
                 const specificationId = $(this).data('specification-id');
-                if (confirm('確定要移除此商品嗎？')) {
+                if (confirm('이 상품을 제거하시겠습니까?')) {
                     removeFromCart(cartKey, productId, specificationId);
                 }
             });
@@ -229,7 +229,7 @@
                     location.reload();
                 },
                 error: function(xhr) {
-                    alert('更新數量失敗，請稍後再試');
+                    alert('수량 업데이트 실패, 잠시 후 다시 시도해주세요');
                 }
             });
         }
@@ -254,7 +254,7 @@
                             // 检查购物车是否为空
                             if ($('.cart-item').length === 0) {
                                 $('.cart-items tbody').html(
-                                    '<tr><td colspan="8" class="text-center">購物車是空的</td></tr>'
+                                    '<tr><td colspan="8" class="text-center">장바구니가 비어있습니다</td></tr>'
                                 );
                             }
 
@@ -264,7 +264,7 @@
                     }
                 },
                 error: function(xhr) {
-                    alert('移除商品失敗，請稍後再試');
+                    alert('상품 제거 실패, 잠시 후 다시 시도해주세요');
                 }
             });
         }

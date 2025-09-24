@@ -7,9 +7,9 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">首頁</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">홈</a></li>
                             <li class="breadcrumb-item active" aria-current="page"><a
-                                    href="{{ route('activity.index') }}">活動訊息</a></li>
+                                    href="{{ route('activity.index') }}">활동 소식</a></li>
                             <li class="breadcrumb-item active" aria-current="page">{{ $activity->title }}</li>
                         </ol>
                     </nav>
@@ -36,7 +36,7 @@
             <nav class="my-5" aria-label="Page navigation">
                 <div class="pagination justify-content-center">
                     <a class="btn btn-light btn-page rounded border" href="{{ route('activity.index') }}"
-                        value="回列表">回列表</a>
+                        value="목록으로">목록으로</a>
                 </div>
             </nav>
 

@@ -7,8 +7,8 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">首頁</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">常見問答</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">홈</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">자주 묻는 질문</li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 @foreach($categories as $category)
                                     @if($categoryId == $category->id)
@@ -44,7 +44,7 @@
                     <div class="page-content">
                         <div class="page-title">
                             <h2 class="text-black text-center font-weight-bold mb-0" data-aos="zoom-in-up"
-                                data-aos-delay="150">常見問題</h2>
+                                data-aos-delay="150">자주 묻는 질문</h2>
                             <h4 class="text-center text-gold mb-4" data-aos="zoom-in-up" data-aos-delay="300">Q & A</h4>
                         </div>
 

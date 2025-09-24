@@ -15,7 +15,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: 22
         script: |
-          cd /home/dev-vue-ezhive/htdocs/ezhive.dev-vue.com
+          cd /home/ai-tracks-somashop/htdocs/somashop.ai-tracks.com
           git pull
           composer install
           php artisan migrate --force

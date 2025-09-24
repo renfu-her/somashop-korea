@@ -6,7 +6,7 @@
             <img src="{{ asset('frontend/img/logo.png') }}" style="max-width: 100%; max-height: 50px; object-fit: contain;">
         </a>
 
-        {{-- 漢堡選單按鈕 --}}
+        {{-- 햄버거 메뉴 버튼 --}}
         <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive">
             <span></span>
             <span></span>
@@ -14,13 +14,13 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            {{-- 主選單 --}}
+            {{-- 메인 메뉴 --}}
             @include('frontend.layouts.partials.main-menu')
 
-            {{-- 搜尋欄 --}}
+            {{-- 검색창 --}}
             @include('frontend.layouts.partials.search')
 
-            {{-- 購物車和登入區 --}}
+            {{-- 장바구니 및 로그인 영역 --}}
             @include('frontend.layouts.partials.cart-login')
         </div>
     </div>

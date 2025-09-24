@@ -7,8 +7,8 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">首頁</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">搜尋</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">홈</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">검색</li>
                             @if (request('search'))
                                 <li class="breadcrumb-item active" aria-current="page">{{ request('search') }}</li>
                             @endif
@@ -36,16 +36,16 @@
                                     <div class="card-body px-0">
                                         <h5 class="card-title">{{ $product->name }}</h5>
                                         <p class="card-text">{{ $product->sub_title }}</p>
-                                        <div class="original-price mb-1">原價 NT$ {{ number_format($product->price) }}</div>
-                                        <h5 class="card-text text-danger">優惠價 NT$ {{ number_format($product->spec_price) }}</h5>
+                                        <div class="original-price mb-1">정가 NT$ {{ number_format($product->price) }}</div>
+                                        <h5 class="card-text text-danger">할인가 NT$ {{ number_format($product->spec_price) }}</h5>
                                     </div>
                                 </div>
                             </a>
                         </div>
                     @empty
                         <div class="col-12 text-center py-5">
-                            <h4>未找到相關商品</h4>
-                            <p class="text-muted">請嘗試其他關鍵字</p>
+                            <h4>관련 상품을 찾을 수 없습니다</h4>
+                            <p class="text-muted">다른 키워드를 시도해보세요</p>
                         </div>
                     @endforelse
                 </div>

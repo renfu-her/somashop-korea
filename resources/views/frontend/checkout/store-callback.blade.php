@@ -3,7 +3,7 @@
 <head>
     <script>
         window.onload = function() {
-            // 將資料傳送給父視窗
+            // 부모 창에 데이터 전송
             window.opener.postMessage({
                 type: 'STORE_SELECTED',
                 data: {
@@ -14,12 +14,12 @@
                 }
             }, '*');
             
-            // 關閉當前視窗
+            // 현재 창 닫기
             window.close();
         };
     </script>
 </head>
 <body>
-    處理中...
+    처리 중...
 </body>
 </html> 

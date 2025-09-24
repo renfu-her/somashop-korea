@@ -7,8 +7,8 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="./">首頁</a></li>
-                            <li class="breadcrumb-item">認識印章</li>
+                            <li class="breadcrumb-item"><a href="./">홈</a></li>
+                            <li class="breadcrumb-item">인장 이해</li>
                             <li class="breadcrumb-item active" aria-current="page">{{ $currentCategory->name }}</li>
                         </ol>
                     </nav>

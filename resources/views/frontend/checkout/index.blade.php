@@ -7,8 +7,8 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="./">首頁</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">購物車</li>
+                            <li class="breadcrumb-item"><a href="./">홈</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">장바구니</li>
                         </ol>
                     </nav>
                 </div>
@@ -21,7 +21,7 @@
     <article class="page-wrapper my-3">
         <div class="container">
             <div class="page-title">
-                <h2 class="text-black text-center font-weight-bold mb-0" data-aos="zoom-in-up">我要結帳</h2>
+                <h2 class="text-black text-center font-weight-bold mb-0" data-aos="zoom-in-up">결제하기</h2>
                 <h4 class="text-center text-gold mb-4" data-aos="zoom-in-up" data-aos-delay="150">Checkout</h4>
             </div>
 
@@ -32,11 +32,11 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col"></th>
-                                    <th scope="col">圖片</th>
-                                    <th scope="col">商品名稱</th>
-                                    <th scope="col">優惠價</th>
-                                    <th scope="col">數量</th>
-                                    <th scope="col">小計</th>
+                                    <th scope="col">이미지</th>
+                                    <th scope="col">상품명</th>
+                                    <th scope="col">할인가</th>
+                                    <th scope="col">수량</th>
+                                    <th scope="col">소계</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -72,14 +72,14 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="text-center">購物車是空的</td>
+                                        <td colspan="7" class="text-center">장바구니가 비어있습니다</td>
                                     </tr>
                                 @endforelse
 
                                 <!-- 運費列 -->
                                 <tr class="shipping-fee" style="display: none;">
                                     <td colspan="4"></td>
-                                    <td class="text-center align-middle">運費</td>
+                                    <td class="text-center align-middle">배송비</td>
                                     <td class="align-middle">
                                         <p class="text-danger mb-0 money">NT$0</p>
                                     </td>
@@ -93,7 +93,7 @@
                         <div class="row">
                             <div class="col-md-4 offset-md-8 col-sm-6 offset-sm-6">
                                 <h2 class="text-black mb-0">
-                                    總計
+                                    총계
                                     <span class="pl-3">NT${{ number_format($total + $shippingFee) }}</span>
                                 </h2>
                             </div>
@@ -106,23 +106,23 @@
                             <div class="form-group row m-3">
                                 <legend
                                     class="col-form-label col-sm-3 text-md-right text-sm-left text-danger align-self-center">
-                                    <h3 class="mb-0">付款方式</h3>
+                                    <h3 class="mb-0">결제 방법</h3>
                                 </legend>
                                 <div class="col-sm-9 align-self-center">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="payment" id="inlineRadio1"
                                             value="Credit" checked>
-                                        <label class="form-check-label" for="inlineRadio1">線上刷卡</label>
+                                        <label class="form-check-label" for="inlineRadio1">온라인 카드 결제</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="payment" id="inlineRadio2"
                                             value="ATM">
-                                        <label class="form-check-label" for="inlineRadio2">ATM 虛擬帳號繳費</label>
+                                        <label class="form-check-label" for="inlineRadio2">ATM 가상계좌 결제</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="payment" id="inlineRadio3"
                                             value="COD">
-                                        <label class="form-check-label" for="inlineRadio3">貨到付款 (超商取貨付款)</label>
+                                        <label class="form-check-label" for="inlineRadio3">착불 결제 (편의점 픽업 결제)</label>
                                     </div>
                                 </div>
                             </div>
@@ -132,12 +132,12 @@
 
                             <div class="form-group row m-3">
                                 <div class="col-md-3 col-sm-12 align-self-center">
-                                    <h3 class="text-md-right text-sm-left text-danger mb-0">收貨人資訊</h3>
+                                    <h3 class="text-md-right text-sm-left text-danger mb-0">수령인 정보</h3>
                                 </div>
                                 <div class="col-md-9 col-sm-12 align-self-center">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="gridCheck1" name="sameAsMember">
-                                        <label class="form-check-label" for="gridCheck1">同訂購人資料</label>
+                                        <label class="form-check-label" for="gridCheck1">주문자 정보와 동일</label>
                                     </div>
                                 </div>
                             </div>
@@ -148,28 +148,28 @@
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
                                             for="name">
-                                            <span class="text-danger">*</span>收貨姓名
+                                            <span class="text-danger">*</span>수령인 성명
                                         </label>
                                         <div class="col-sm-6 align-self-center">
                                             <input ref="test" type="text" class="form-control" id="name"
-                                                placeholder="請填真實姓名" required name="username">
+                                                placeholder="실제 성명을 입력해주세요" required name="username">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"><span
-                                                class="text-danger">*</span>性別</label>
+                                                class="text-danger">*</span>성별</label>
                                         <div class="col-sm-6 align-self-center">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender"
                                                     id="male" value="1" checked>
-                                                <label class="form-check-label" for="male">男</label>
+                                                <label class="form-check-label" for="male">남성</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="gender"
                                                     id="female" value="2">
-                                                <label class="form-check-label" for="female">女</label>
+                                                <label class="form-check-label" for="female">여성</label>
                                             </div>
                                         </div>
                                     </div>
@@ -177,7 +177,7 @@
                                     <div class="form-group row">
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
-                                            for="phone"><span class="text-danger">*</span>聯絡電話</label>
+                                            for="phone"><span class="text-danger">*</span>연락처</label>
                                         <div class="col-sm-6 align-self-center">
                                             <input type="text" class="form-control" id="phone" placeholder=""
                                                 required name="phone" ref="">
@@ -188,11 +188,11 @@
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
                                             for="shipment">
-                                            <span class="text-danger">*</span>寄送方式
+                                            <span class="text-danger">*</span>배송 방법
                                         </label>
                                         <div class="col-sm-6 align-self-center">
                                             <select id="shipment" class="form-control" name="shipment" required>
-                                                <option value="">請選擇</option>
+                                                <option value="">선택해주세요</option>
                                                 @foreach ($shippingSettings as $key => $shipping)
                                                     <option value="{{ $key }}" data-fee="{{ $shipping['fee'] }}">
                                                         {{ $shipping['name'] }}
@@ -201,7 +201,7 @@
                                             </select>
                                             <button type="button" class="btn btn-primary mt-2 map-btn"
                                                 style="display: none;">
-                                                <i class="fas fa-map-marker-alt"></i> 選擇門市
+                                                <i class="fas fa-map-marker-alt"></i> 매장 선택
                                             </button>
                                             <input type="hidden" name="store_id" value="">
                                             <input type="hidden" name="store_name" value="">
@@ -212,7 +212,7 @@
 
                                     <div class="form-group row addr" style="display:none;">
                                         <label class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left"><span
-                                                class="text-danger">*</span>寄送地址</label>
+                                                class="text-danger">*</span>배송 주소</label>
                                         <div class="col-sm-6">
                                             <div class="row">
                                                 <div id="twzipcode" class="col-12">
@@ -230,7 +230,7 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        name="address" placeholder="請入詳細地址"
+                                                        name="address" placeholder="상세 주소를 입력해주세요"
                                                         value="{{ Auth::guard('member')->user()->address }}">
                                                 </div>
                                             </div>
@@ -239,7 +239,7 @@
 
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left"
-                                            for="note">訂購備註</label>
+                                            for="note">주문 메모</label>
                                         <div class="col-sm-6">
                                             <textarea class="form-control" rows="5" id="note" name="info"></textarea>
                                         </div>
@@ -255,18 +255,18 @@
                             <div class="form-group row m-3">
                                 <legend
                                     class="col-form-label col-sm-3 text-md-right text-sm-left text-danger align-self-center">
-                                    <h3 class="mb-0">開立發票</h3>
+                                    <h3 class="mb-0">세금계산서 발행</h3>
                                 </legend>
                                 <div class="col-sm-9 align-self-center">
                                     <div class="form-check form-check-inline mx-1">
                                         <input class="form-check-input" type="radio" name="receipt" id="receipt2"
                                             checked value="2">
-                                        <label class="form-check-label" for="receipt2">二聯式</label>
+                                        <label class="form-check-label" for="receipt2">2부</label>
                                     </div>
                                     <div class="form-check form-check-inline mr-0">
                                         <input class="form-check-input" type="radio" name="receipt" id="receipt3"
                                             value="3">
-                                        <label class="form-check-label" for="receipt3">三聯式</label>
+                                        <label class="form-check-label" for="receipt3">3부</label>
                                     </div>
                                 </div>
                             </div>
@@ -276,12 +276,12 @@
                                     <div class="form-group row">
                                         <label
                                             class="col-sm-2 col-form-label text-md-right text-sm-left align-self-center pr-0"
-                                            for="note">發票寄送地址</label>
+                                            for="note">세금계산서 배송 주소</label>
                                         <div class="col-sm-6 align-self-center">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="idCheck1"
                                                     name="invoiceSameAsMember">
-                                                <label class="form-check-label" for="idCheck1">同訂購人資料</label>
+                                                <label class="form-check-label" for="idCheck1">주문자 정보와 동일</label>
                                             </div>
                                         </div>
                                     </div>
@@ -305,7 +305,7 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <input type="text" class="form-control" id="address"
-                                                        name="invoice_address" placeholder="請輸入詳細地址" value="">
+                                                        name="invoice_address" placeholder="상세 주소를 입력해주세요" value="">
                                                 </div>
                                             </div>
                                         </div>
@@ -315,26 +315,25 @@
                                     <div class="form-group row invoiceTitleArea">
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
-                                            for="invoice_taxid">發票統編</label>
+                                            for="invoice_taxid">세금계산서 사업자등록번호</label>
                                         <div class="col-sm-6 align-self-center">
                                             <input type="text" class="form-control" id="invoice_taxid"
-                                                placeholder="發票統編" name="invoice_taxid" maxlength="8">
+                                                placeholder="사업자등록번호" name="invoice_taxid" maxlength="8">
                                         </div>
                                     </div>
                                     <div class="form-group row invoiceTitleArea">
                                         <label class="col-sm-10 offset-sm-2 col-form-label align-self-center"
-                                            for="invoice_taxid_check" style="color: red;">請輸入 8
-                                            位數統編，如果正確，發票抬頭會自動帶入</label>
+                                            for="invoice_taxid_check" style="color: red;">8자리 사업자등록번호를 입력해주세요. 올바르면 세금계산서 상호가 자동으로 입력됩니다</label>
 
                                     </div>
 
                                     <div class="form-group row invoiceTitleArea">
                                         <label
                                             class="col-sm-2 col-form-label pr-0 text-md-right text-sm-left align-self-center"
-                                            for="invoice_title">發票抬頭</label>
+                                            for="invoice_title">세금계산서 상호</label>
                                         <div class="col-sm-6 align-self-center">
                                             <input type="text" class="form-control" id="invoice_title"
-                                                placeholder="發票抬頭" name="invoice_title" readonly>
+                                                placeholder="세금계산서 상호" name="invoice_title" readonly>
                                         </div>
                                     </div>
 
@@ -347,7 +346,7 @@
                                 <div class="col-md-9 offset-md-3 col-sm-12">
                                     <div class="form-group row mb-3">
                                         <label class="col-sm-2 col-form-label text-md-right px-0 align-self-center">
-                                            <span class="text-danger">*</span>輸入右方驗證碼
+                                            <span class="text-danger">*</span>우측 인증번호 입력
                                         </label>
                                         <div class="col-sm-6 align-self-center">
                                             <div class="input-group">
@@ -361,8 +360,8 @@
                                                 </div>
                                                 <div class="input-group-append">
                                                     <label class="refresh mn-0">
-                                                        <a class="btn btn-refresh hvr-icon-spin"
-                                                            style="cursor: pointer;">更換 <i
+                                                        <a                                                 class="btn btn-refresh hvr-icon-spin"
+                                                            style="cursor: pointer;">변경 <i
                                                                 class="fas fa-sync-alt hvr-icon px-1"></i>
                                                         </a>
                                                     </label>
@@ -374,7 +373,7 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6 offset-sm-2">
                                             <button type="submit"
-                                                class="btn btn-danger btn-purchase w-100 rounded-pill mb-3 px-5 py-3 shoppingFinish">訂購完成</button>
+                                                class="btn btn-danger btn-purchase w-100 rounded-pill mb-3 px-5 py-3 shoppingFinish">주문 완료</button>
                                         </div>
                                     </div>
                                 </div>

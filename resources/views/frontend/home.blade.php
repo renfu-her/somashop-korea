@@ -39,7 +39,7 @@
     @if ($actives->count() > 0)
         <div class="container mb-5 mt-5">
             <h2 class="text-center font-weight-bold mb-0" data-aos="zoom-in-up" data-aos-delay="300"
-                data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">活動訊息</h2>
+                data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">활동 소식</h2>
             <h4 class="text-center text-gold mb-4" data-aos="zoom-in-up" data-aos-delay="350"
                 data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">Activity Message</h4>
 
@@ -123,7 +123,7 @@
         <div class="container mb-5 pt-5">
             <h2 class="text-center font-weight-bold mb-0 border-frame aos-init aos-animate" data-aos="zoom-in-up"
                 data-aos-delay="300" data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
-                熱賣商品
+                인기 상품
             </h2>
             <h4 class="text-center text-gold mb-4 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="350"
                 data-aos-anchor-placement="top-bottom" data-aos-offset="0" data-aos-once="true">
@@ -141,17 +141,17 @@
                                         <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}"
                                             class="card-img-top img-fluid" alt="{{ $product->name }}">
                                         @if ($product->is_new)
-                                            <b class="float-tag text-white bg-danger">新品</b>
+                                            <b class="float-tag text-white bg-danger">신상품</b>
                                         @endif
                                     </div>
                                     <div class="card-body px-0">
                                         <h5 class="card-title">{{ $product->name }}</h5>
                                         <p class="card-text">{{ $product->sub_title }}</p>
                                         @if ($product->price)
-                                            <div class="original-price mb-1">原價 NT$ {{ number_format($product->price) }}
+                                            <div class="original-price mb-1">정가 NT$ {{ number_format($product->price) }}
                                             </div>
                                         @endif
-                                        <h5 class="card-text text-danger">優惠價 NT$
+                                        <h5 class="card-text text-danger">할인가 NT$
                                             {{ number_format($product->spec_price) }}</h5>
                                     </div>
                                 </div>

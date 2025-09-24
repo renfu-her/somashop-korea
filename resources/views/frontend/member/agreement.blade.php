@@ -7,8 +7,8 @@
                 <div class="col-12 px-md-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent justify-content-md-end">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">首頁</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">會員條款</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">홈</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">회원약관</li>
                         </ol>
                     </nav>
                 </div>
@@ -20,7 +20,7 @@
         <div class="container">
             <div class="page-title">
                 <h2 class="text-black text-center font-weight-bold mb-0 aos-init aos-animate" data-aos="zoom-in-up"
-                    data-aos-delay="450">會員條款</h2>
+                    data-aos-delay="450">회원약관</h2>
                 <h4 class="text-center text-gold mb-4 aos-init aos-animate" data-aos="zoom-in-up" data-aos-delay="600">
                     Membership Terms</h4>
                 <hr class="page_line aos-init aos-animate" data-aos="flip-right" data-aos-delay="0"
