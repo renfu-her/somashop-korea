@@ -109,8 +109,8 @@
                 </div>
                 <div
                     class="col-auto social-link d-flex justify-content-between align-items-center ml-auto text-center px-md-3 px-4">
-                    <a href="https://line.me/R/ti/p/@924osxbs" target="_blank" class="px-md-3 px-0 hvr-bob"><img
-                            src="{{ asset('frontend/img/KakaoTalk_logo.png') }}" class="img-fluid px-md-0 px-3" />
+                    <a href="https://line.me/R/ti/p/@924osxbs" target="_blank" class="px-md-3 px-0 hvr-bob">
+                        <img src="{{ asset('frontend/img/KakaoTalk_logo.png') }}" class="img-fluid px-md-0 px-3" style="width: 30px; height: 30px;" />
                     </a>
                 </div>
             </div>
