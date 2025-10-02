@@ -2,7 +2,7 @@
 @php
     $navData = $navigation->getNavigationData();
 @endphp
-
+{{-- 
 <ul class="navbar-nav navbar-navright flex-row ml-md-auto ml-0 pr-md-3 pr-2">
     <li class="nav-item mx-md-3 mx-2">
         @if (Auth::check())
@@ -25,4 +25,4 @@
             @endif
         </a>
     </li>
-</ul>
+</ul> --}}
