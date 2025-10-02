@@ -29,7 +29,7 @@
     <link href="{{ asset('frontend/css/hover-min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{ asset('frontend/css/babyin_styles_20241127.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/babyin_styles_20241127.css?v=' . time()) }}" rel="stylesheet">
 
     <!-- fontawesome -->
     <link href="{{ asset('frontend/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
