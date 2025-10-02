@@ -111,7 +111,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+{{-- 
                                     <div class="form-group row">
                                         @if (Auth::guard('member')->check())
                                             <div class="col-6">
@@ -130,7 +130,7 @@
                                                 </a>
                                             </div>
                                         @endif
-                                    </div>
+                                    </div> --}}
 
                                     @if ($freeShippings)
                                         <div class="col-12 text-danger">
