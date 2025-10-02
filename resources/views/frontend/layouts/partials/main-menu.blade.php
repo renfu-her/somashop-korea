@@ -50,7 +50,7 @@
             </ul>
         </li>
 
-        <li class="nav-item dropdown no-arrow">
+        {{-- <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="memberDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 회원 전용 <i class="fas fa-angle-down"></i>
@@ -85,7 +85,7 @@
                     </li>
                 @endauth
             </ul>
-        </li>
+        </li> --}}
 
         {{-- <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="faqDropdown" role="button" data-toggle="dropdown"
