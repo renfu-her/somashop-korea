@@ -20,9 +20,9 @@
             </ul>
         </li>
 
-        {{-- <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('activity.index') }}">활동 소식</a>
-        </li> --}}
+        </li>
 
         <li class="nav-item product-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -65,7 +65,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
+                            onclick="event.preventDefault();
                                    document.getElementById('logout-form').submit();">
                             로그아웃
                         </a>
@@ -86,7 +86,7 @@
                 @endauth
             </ul>
         </li>
-        
+
         {{-- <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="faqDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -101,7 +101,7 @@
 
             </ul>
         </li> --}}
-{{-- 
+        {{-- 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('feedback.index') }}">問題回饋</a>
         </li> --}}
