@@ -257,7 +257,7 @@ h5 {
 /************* Product list menu *************/
 .collapse > ul.main-menu > li.product-item > ul {
   display: none;
-  left: -795px !important;
+  left: -1595px !important;
   min-width: 1200px;
   width: 100%;
   padding: 50px 60px;
