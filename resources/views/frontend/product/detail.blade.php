@@ -111,6 +111,10 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div>
+                                        <img src="{{ asset('frontend/img/talk.png') }}" alt="talk" class="img-fluid">
+                                    </div>
 {{-- 
                                     <div class="form-group row">
                                         @if (Auth::guard('member')->check())
