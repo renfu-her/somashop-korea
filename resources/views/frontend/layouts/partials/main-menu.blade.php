@@ -4,7 +4,7 @@
 @endphp
 
 <div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul class="navbar-nav main-menu mr-auto">
+    <ul class="navbar-nav main-menu ml-auto">
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="aboutUsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
