@@ -175,6 +175,7 @@ h5 {
   min-height: 20px;
   width: 100%;
   justify-content: flex-end;
+  gap: 30px;
 }
 
 .dropdown-menu {
