@@ -75,9 +75,16 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        // 檢查是否有子分類
         if ($category->children()->exists()) {
             return redirect()->route('admin.categories.index')
                 ->with('error', '無法刪除含有子分類的分類！');
+        }
+
+        // 檢查是否有關聯的商品
+        if ($category->products()->exists()) {
+            return redirect()->route('admin.categories.index')
+                ->with('error', '無法刪除此分類，因為還有相關聯的商品！');
         }
 
         $category->delete();
