@@ -13,7 +13,7 @@ class CategoryController extends Controller
     {
         $categories = Category::where('parent_id', 0)
             ->with(['children' => function($query) {
-                $query->orderBy('sort_order', 'asc');
+                $query->orderBy('sort_order', 'asc')->withCount('products');
             }])
             ->orderBy('sort_order', 'asc')
             ->withCount('products')
