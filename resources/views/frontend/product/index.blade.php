@@ -92,7 +92,7 @@
         .product-card .card-img-wrapper {
             position: relative;
             padding-top: 100%;
-            /* 1:1 寬高比 */
+            /* 1:1 aspect ratio */
             overflow: hidden;
         }
 
@@ -165,7 +165,7 @@
             opacity: 0.8;
         }
 
-        /* 分頁自定義樣式 */
+        /* Custom pagination styles */
         .page-item.active .page-link {
             background-color: #f6ab00 !important;
             border-color: #f6ab00 !important;

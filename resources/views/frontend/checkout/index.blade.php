@@ -49,22 +49,22 @@
                                             <img class="item-img" src="{{ $item['primary_image'] }}" width="106px">
                                         </td>
                                         <td class="align-middle border-sm-top">
-                                            <span class="cart-tag d-block d-sm-none text-muted" disable>規格</span>
+                                            <span class="cart-tag d-block d-sm-none text-muted" disable>규격</span>
                                             <div class="product-details text-md-left text-sm-center">
                                                 <p class="mb-0">{{ $item['product_name'] }}</p>
-                                                <p class="mb-0">規格：{{ $item['spec_name'] }}</p>
+                                                <p class="mb-0">규격：{{ $item['spec_name'] }}</p>
                                             </div>
                                         </td>
                                         <td class="align-middle border-sm-top">
-                                            <span class="cart-tag d-block d-sm-none text-muted" disable>單價</span>
+                                            <span class="cart-tag d-block d-sm-none text-muted" disable>단가</span>
                                             <p class="mb-0">NT${{ number_format($item['price']) }}</p>
                                         </td>
                                         <td class="quantity align-middle border-sm-top">
-                                            <span class="cart-tag d-block d-sm-none text-muted" disable>數量</span>
+                                            <span class="cart-tag d-block d-sm-none text-muted" disable>수량</span>
                                             <p class="mb-0">{{ $item['quantity'] }}</p>
                                         </td>
                                         <td class="total align-middle border-sm-top">
-                                            <span class="cart-tag d-block d-sm-none text-muted" disable>小計</span>
+                                            <span class="cart-tag d-block d-sm-none text-muted" disable>소계</span>
                                             <p class="text-danger mb-0 money">
                                                 NT${{ number_format($item['price'] * $item['quantity']) }}</p>
                                         </td>
@@ -76,7 +76,7 @@
                                     </tr>
                                 @endforelse
 
-                                <!-- 運費列 -->
+                                <!-- Shipping fee row -->
                                 <tr class="shipping-fee" style="display: none;">
                                     <td colspan="4"></td>
                                     <td class="text-center align-middle">배송비</td>
@@ -406,7 +406,7 @@
                 "zipcodeSel": "{{ Auth::guard('member')->user()->invoice_zipcode }}",
             });
 
-            // 監聽"同訂購人資料"選框的變化
+            // Listen for changes to "Same as orderer info" checkbox
             $('input[name="sameAsMember"]').change(function() {
                 if ($(this).is(':checked')) {
                     // 如果勾選，填入會員資料
@@ -439,14 +439,14 @@
                 }
             });
 
-            // 寄送方式變更處理
+            // Handle shipping method changes
             $('#shipment').change(function() {
                 const selectedOption = $(this).find('option:selected');
                 const shippingFee = parseInt(selectedOption.data('fee')) || 0;
                 const selectedValue = $(this).val();
                 const freeShippings = {{ $freeShippings }};
 
-                // 更新運費顯示
+                // Update shipping fee display
                 if (freeShippings > 0) {
                     $('.shipping-fee').hide();
                 } else if (shippingFee > 0) {

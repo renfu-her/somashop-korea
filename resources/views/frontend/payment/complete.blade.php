@@ -238,7 +238,7 @@
                                 <div class="col-md-9 col-12 align-self-center">
                                     <div class="row">
                                         <div class="col-md-6 offset-md-2 col-7 align-self-center">
-                                            <p class="mb-0">ATM轉帳</p>
+                                            <p class="mb-0">ATM Transfer</p>
                                         </div>
                                     </div>
                                 </div>

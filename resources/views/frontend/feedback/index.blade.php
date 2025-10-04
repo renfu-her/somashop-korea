@@ -58,26 +58,26 @@
             const content = editor.getData();
             const captcha = $('#verify').val();
 
-            // 檢查 email 是否為空
+            // Check if email is empty
             if (!email) {
                 window.showToast('이메일을 입력해주세요');
                 return;
             }
 
-            // 驗證 email 格式
+            // Email format validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 window.showToast('유효한 이메일 형식을 입력해주세요');
                 return;
             }
 
-            // 檢查內容是否為空
+            // Check if content is empty
             if (!content.trim()) {
                 window.showToast('메시지 내용을 입력해주세요');
                 return;
             }
 
-            // 檢查驗證碼
+            // Captcha verification
             if (captcha.length < 5) {
                 window.showToast('인증번호 길이가 잘못되었습니다');
                 return;

@@ -178,7 +178,7 @@
                         url: '{{ route('captcha.generate') }}',
                         error: function(xhr) {
                             $('#loading').fadeOut();
-                            alert('網路錯誤');
+                            alert('네트워크 오류');
                         },
                         success: function(data, status, xhr) {
                             $('#loading').fadeOut();
@@ -219,7 +219,7 @@
     </style>
 
     <script>
-        // 全域函數：更新購物車數量
+        // Global function: Update cart count
         window.updateCartCount = function() {
             $.ajax({
                 url: '{{ route('cart.count') }}',
@@ -239,8 +239,8 @@
             });
         };
 
-        // 定期檢查購物車數量（可選）
-        setInterval(window.updateCartCount, 2000); // 每30秒更新一次
+        // Periodically check cart count (optional)
+        setInterval(window.updateCartCount, 2000); // Update every 30 seconds
     </script>
 
 </body>

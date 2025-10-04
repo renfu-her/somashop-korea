@@ -230,7 +230,7 @@
     <script src="{{ asset('frontend/js/jquery.twzipcode.min.js') }}"></script>
     <script>
         function checkform() {
-            // 密碼驗證
+            // Password validation
             const password = $('#password').val();
             const passwordConfirm = $('#password_confirmation').val();
 
@@ -244,14 +244,14 @@
                 return false;
             }
 
-            // 手機號碼驗證
+            // Phone number validation
             const phone = $('#phone').val();
             if (!/^09\d{8}$/.test(phone)) {
                 alert('유효한 휴대폰 번호를 입력해주세요');
                 return false;
             }
 
-            // 地址驗證
+            // Address validation
             const county = $('select[name="county"]').val();
             const district = $('select[name="district"]').val();
             const address = $('#address').val();
@@ -261,14 +261,14 @@
                 return false;
             }
 
-            // 驗證碼驗證
+            // Captcha validation
             const captcha = $('#verify').val();
             if (!captcha || captcha.length !== 5) {
                 alert('5자리 인증번호를 입력해주세요');
                 return false;
             }
 
-            // 是否同意會員條款
+            // Membership agreement consent
             if (!$('input[name="agree"]:checked').length) {
                 errorMessage += '회원약관에 동의해주세요\n';
                 $('input[name="agree"]').addClass('is-invalid');
@@ -278,7 +278,7 @@
             return true;
         }
 
-        // 即時密碼驗證
+        // Real-time password validation
         $('#password_confirmation').on('input', function() {
             const password = $('#password').val();
             const confirmPassword = $(this).val();
@@ -290,7 +290,7 @@
             }
         });
 
-        // 即時手機號碼驗證
+        // Real-time phone number validation
         $('#phone').on('input', function() {
             const phone = $(this).val();
             if (!/^09\d{8}$/.test(phone)) {

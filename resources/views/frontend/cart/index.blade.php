@@ -173,7 +173,7 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            // 更新數量
+            // Update quantity
             $('.btn-plus, .btn-minus').click(function() {
                 const cartKey = $(this).data('cart-key');
                 const productId = $(this).data('product-id');
@@ -190,7 +190,7 @@
                 updateCartQuantity(cartKey, productId, specificationId, quantity);
             });
 
-            // 移除商品
+            // Remove product
             $('.remove-item').on('click', function() {
                 const cartKey = $(this).data('cart-key');
                 const productId = $(this).data('product-id');
@@ -199,7 +199,7 @@
                     removeFromCart(cartKey, productId, specificationId);
                 }
             });
-            // 繼續購物按鈕
+            // Continue shopping button
             $('.btn-addcart').click(function() {
                 const referrer = $('#referrer').val();
 
@@ -208,7 +208,7 @@
 
             });
 
-            // 結帳按鈕
+            // Checkout button
             $('.cartNext').click(function() {
                 window.location.href = '{{ route('checkout.index') }}';
             });
@@ -246,19 +246,19 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        // 移除对应的 TR 元素
+                        // Remove corresponding TR element
                         const $item = $(`tr[data-cart-key="${cartKey}"]`);
                         $item.fadeOut(300, function() {
                             $(this).remove();
 
-                            // 检查购物车是否为空
+                            // Check if cart is empty
                             if ($('.cart-item').length === 0) {
                                 $('.cart-items tbody').html(
                                     '<tr><td colspan="8" class="text-center">장바구니가 비어있습니다</td></tr>'
                                 );
                             }
 
-                            // 重新计算总金额
+                            // Recalculate total amount
                             updateTotalPrice();
                         });
                     }
@@ -269,7 +269,7 @@
             });
         }
 
-        // 添加计算总金额的函数
+        // Add function to calculate total amount
         function updateTotalPrice() {
             let total = 0;
             $('.cart-item').each(function() {

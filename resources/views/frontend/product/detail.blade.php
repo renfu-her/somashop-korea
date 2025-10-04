@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('meta_title', trim($product->meta_title) ? trim($product->meta_title) : $product->name . ' - EzHive 易群佶選')
+@section('meta_title', trim($product->meta_title) ? trim($product->meta_title) : $product->name . ' - EzHive')
 @section('meta_description', trim($product->meta_description))
 @section('meta_keywords', trim($product->meta_keywords))
 

@@ -82,7 +82,7 @@
         </div>
     @endif
 
-    {{-- 中間廣告區塊 --}}
+    {{-- Middle advertisement block --}}
     @if ($homeAds->count() > 0)
         <div class="container px-0">
             <header id="homeAdsCarousel" class="carousel slide">
@@ -166,7 +166,7 @@
 
 @push('styles')
     <style>
-        /* 輪播圖響應式設計 */
+        /* Carousel responsive design */
         #babyinCarousel .carousel-item img,
         #homeAdsCarousel .carousel-item img {
             width: 100%;
@@ -178,21 +178,21 @@
         @media (max-width: 768px) {
             #babyinCarousel .carousel-item img,
             #homeAdsCarousel .carousel-item img {
-                width: 800px;  /* 設定手機版寬度為 800px */
-                height: auto;  /* 高度自動調整保持比例 */
-                max-width: 100%;  /* 確保不會超出螢幕 */
-                object-fit: contain;  /* 確保圖片完整顯示 */
-                margin: 0 auto;  /* 圖片置中 */
+                width: 800px;  /* Set mobile width to 800px */
+                height: auto;  /* Auto adjust height to maintain ratio */
+                max-width: 100%;  /* Ensure it does not exceed screen */
+                object-fit: contain;  /* Ensure image is fully displayed */
+                margin: 0 auto;  /* Center image */
             }
             
-            /* 調整容器樣式 */
+            /* Adjust container styles */
             #babyinCarousel,
             #homeAdsCarousel {
                 width: 100%;
-                overflow: hidden;  /* 防止水平捲動 */
+                overflow: hidden;  /* Prevent horizontal scrolling */
             }
             
-            /* 調整輪播指示器位置 */
+            /* Adjust carousel indicator position */
             .carousel-indicators {
                 bottom: 20px;
             }
@@ -206,7 +206,7 @@
             }
         }
 
-        /* 活動訊息卡片樣式 */
+        /* Activity message card styles */
         .activity-card {
             display: block;
             text-decoration: none;
@@ -222,7 +222,7 @@
             position: relative;
             width: 100%;
             padding-top: 75%;
-            /* 4:3 比例 */
+            /* 4:3 ratio */
             overflow: hidden;
         }
 
@@ -235,7 +235,7 @@
             object-fit: cover;
         }
 
-        /* 輪播控制樣式 */
+        /* Carousel control styles */
         #MessageCarousel .carousel-control-prev,
         #MessageCarousel .carousel-control-next {
             width: 40px;
@@ -274,7 +274,7 @@
             font-size: 20px;
         }
 
-        /* 輪播動畫 */
+        /* Carousel animation */
         #MessageCarousel .carousel-item {
             transition: transform .6s ease-in-out;
         }
