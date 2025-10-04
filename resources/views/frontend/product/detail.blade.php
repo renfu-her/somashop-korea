@@ -80,7 +80,7 @@
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <input type="hidden" name="checkout_direct" id="checkout_direct" value="0">
-
+{{-- 
                                     <div class="form-group row my-4">
                                         <label class="col-sm-2 col-form-label">규격</label>
                                         <div class="col-10 col-md-10">
@@ -110,7 +110,7 @@
                                                     class="btn btn-plus btn-light border btn-sm">+</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div>
                                         <img src="{{ asset('frontend/img/talk.png') }}" alt="talk" class="img-fluid">
