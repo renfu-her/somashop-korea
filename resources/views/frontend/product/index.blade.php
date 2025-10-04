@@ -56,7 +56,7 @@
                                                 <img src="{{ asset('storage/products/' . $product->id . '/' . $product->primaryImage->image_path) }}"
                                                     class="card-img-top" alt="{{ $product->name }}">
                                                 @if ($product->is_new)
-                                                    <span class="badge">新品</span>
+                                                    <span class="badge">신상품</span>
                                                 @endif
                                             </div>
                                             <div class="card-body px-0">
@@ -65,9 +65,9 @@
                                                     <h6 class="card-subtitle mb-2 text-muted text-truncate">
                                                         {{ $product->sub_title }}</h6>
                                                 @endif
-                                                <div class="original-price mb-1">原價 NT$ {{ number_format($product->price) }}</div>
-                                                <p class="card-text text-danger h5 mb-0">優惠價 NT$
-                                                    {{ number_format($product->spec_price) }}</p>
+                                                <div class="original-price mb-1">원가 NT$ {{ number_format($product->price, 3) }}</div>
+                                                <p class="card-text text-danger h5 mb-0">할인가 NT$
+                                                    {{ number_format($product->spec_price, 3) }}</p>
                                             </div>
                                         </div>
                                     </a>

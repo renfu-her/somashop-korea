@@ -148,11 +148,11 @@
                                         <h5 class="card-title">{{ $product->name }}</h5>
                                         <p class="card-text">{{ $product->sub_title }}</p>
                                         @if ($product->price)
-                                            <div class="original-price mb-1">정가 NT$ {{ number_format($product->price) }}
+                                            <div class="original-price mb-1">정가 NT$ {{ number_format($product->price, 3) }}
                                             </div>
                                         @endif
                                         <h5 class="card-text text-danger">할인가 NT$
-                                            {{ number_format($product->spec_price) }}</h5>
+                                            {{ number_format($product->spec_price, 3) }}</h5>
                                     </div>
                                 </div>
                             </a>

@@ -68,9 +68,9 @@
                                 @endif
                                 <div class="product-price mt-4">
                                     <p class="mb-2 original-price">정가：NT$ <span
-                                            id="original-price">{{ number_format($product->price) }}</span></p>
+                                            id="original-price">{{ number_format($product->price, 3) }}</span></p>
                                     <h3 class="text-danger">할인가：NT$ <span
-                                            id="cash-price">{{ number_format($product->spec_price) }}</span></h3>
+                                            id="cash-price">{{ number_format($product->spec_price, 3) }}</span></h3>
                                 </div>
 
                                 <form action="{{ Auth::guard('member')->check() ? route('cart.add') : route('login') }}"
@@ -243,7 +243,7 @@
                     const specPrice = parseInt(selectedOption.data('price'));
                     $('#cash-price').text(numberFormat(specPrice));
                 } else {
-                    $('#cash-price').text('{{ number_format($product->cash_price) }}');
+                    $('#cash-price').text('{{ number_format($product->cash_price, 3) }}');
                 }
             });
 
