@@ -67,9 +67,9 @@
                                     <h5 class="text-muted">{{ $product->sub_title }}</h5>
                                 @endif
                                 <div class="product-price mt-4">
-                                    <p class="mb-2 original-price">정가：$ <span
+                                    <p class="mb-2 original-price">정가：<span
                                             id="original-price">{{ number_format($product->price, 3) }}</span> 원</p>
-                                    <h3 class="text-danger">할인가：$ <span
+                                    <h3 class="text-danger">할인가：<span
                                             id="cash-price">{{ number_format($product->spec_price, 3) }}</span> 원</h3>
                                 </div>
 
@@ -142,9 +142,9 @@
                                                 <p class="text-danger">{{ $freeShippings->start_date->format('Y/m/d') }} ~
                                                     {{ $freeShippings->end_date->format('Y/m/d') }}
                                                     기간 <br>
-                                                    상품 구매 ${{ number_format($freeShippings->minimum_amount) }} 이상 무료배송</p>
+                                                    상품 구매 {{ number_format($freeShippings->minimum_amount) }} 원 이상 무료배송</p>
                                             @else
-                                                <p class="text-danger">상품 구매 ${{ number_format($freeShippings->minimum_amount) }} 이상 무료배송</p>
+                                                <p class="text-danger">상품 구매 {{ number_format($freeShippings->minimum_amount) }} 원 이상 무료배송</p>
                                             @endif
                                         </div>
                                     @endif
