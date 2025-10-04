@@ -68,9 +68,9 @@
                                 @endif
                                 <div class="product-price mt-4">
                                     <p class="mb-2 original-price">정가：$ <span
-                                            id="original-price">{{ number_format($product->price, 3) }}</span></p>
+                                            id="original-price">{{ number_format($product->price, 3) }}</span> 원</p>
                                     <h3 class="text-danger">할인가：$ <span
-                                            id="cash-price">{{ number_format($product->spec_price, 3) }}</span></h3>
+                                            id="cash-price">{{ number_format($product->spec_price, 3) }}</span> 원</h3>
                                 </div>
 
                                 <form action="{{ Auth::guard('member')->check() ? route('cart.add') : route('login') }}"
@@ -241,9 +241,9 @@
                 const selectedOption = $(this).find('option:selected');
                 if (selectedOption.val()) {
                     const specPrice = parseInt(selectedOption.data('price'));
-                    $('#cash-price').text(numberFormat(specPrice));
+                    $('#cash-price').text(numberFormat(specPrice) + ' 원');
                 } else {
-                    $('#cash-price').text('{{ number_format($product->cash_price, 3) }}');
+                    $('#cash-price').text('{{ number_format($product->cash_price, 3) }} 원');
                 }
             });
 

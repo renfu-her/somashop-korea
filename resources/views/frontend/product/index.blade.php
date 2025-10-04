@@ -65,9 +65,9 @@
                                                     <h6 class="card-subtitle mb-2 text-muted text-truncate">
                                                         {{ $product->sub_title }}</h6>
                                                 @endif
-                                                <div class="original-price mb-1">원가 NT$ {{ number_format($product->price, 3) }}</div>
-                                                <p class="card-text text-danger h5 mb-0">할인가 NT$
-                                                    {{ number_format($product->spec_price, 3) }}</p>
+                                                <div class="original-price mb-1">원가 $ {{ number_format($product->price, 3) }} 원</div>
+                                                <p class="card-text text-danger h5 mb-0">할인가 $
+                                                    {{ number_format($product->spec_price, 3) }} 원</p>
                                             </div>
                                         </div>
                                     </a>
