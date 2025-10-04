@@ -33,6 +33,9 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
         integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- 引入 flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css?t=' . time()) }}">
 
@@ -98,6 +101,8 @@
         integrity="sha512-JBbOVs1ZLxMgoJ+CLhRotpVngRlsCxS6XsB9hddlH9T0w2NQD9bKWwKAWiVaMj/i5x5XNCbHNB7DO70xs5ol/w=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <!-- 引入 flatpickr 主要檔案 -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- 引入繁體中文語言包 -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh-tw.js"></script>
     <!-- endinject -->
