@@ -67,9 +67,9 @@
                                     <h5 class="text-muted">{{ $product->sub_title }}</h5>
                                 @endif
                                 <div class="product-price mt-4">
-                                    <p class="mb-2 original-price">정가：NT$ <span
+                                    <p class="mb-2 original-price">정가：$ <span
                                             id="original-price">{{ number_format($product->price, 3) }}</span></p>
-                                    <h3 class="text-danger">할인가：NT$ <span
+                                    <h3 class="text-danger">할인가：$ <span
                                             id="cash-price">{{ number_format($product->spec_price, 3) }}</span></h3>
                                 </div>
 
