@@ -147,7 +147,7 @@
     </div>
 
     <div class="footer">
-        <p>© {{ date('Y') }} EzHive 易群佶選. All rights reserved.</p>
+        <p>© {{ date('Y') }} 편안잠. All rights reserved.</p>
         <p>台南市南區永成路二段460之5號</p>
     </div>
 </body>

@@ -316,7 +316,7 @@ This document contains all the Chinese to Korean translations that have been com
 - 您剛在 SOMA SHOP 購物車申請了一組新的密碼。 → SOMA SHOP에서 새로운 비밀번호를 요청하셨습니다. (You have requested a new password from SOMA SHOP.)
 - 您的新密碼為： → 새로운 비밀번호는 다음과 같습니다： (Your new password is as follows:)
 - 登入後請務必至會員中心修改密碼！ → 로그인 후 반드시 회원센터에서 비밀번호를 변경해주세요！ (Please be sure to change your password in the member center after logging in!)
-- 歡迎直接進入EzHive 易群佶選線上購物： → EzHive 온라인 쇼핑몰에 직접 접속하세요： (Welcome to access EzHive online shopping directly:)
+- 歡迎直接進入편안잠線上購物： → EzHive 온라인 쇼핑몰에 직접 접속하세요： (Welcome to access EzHive online shopping directly:)
 - 前往購物網站 → 쇼핑몰 바로가기 (Go to Shopping Site)
 - 本信件由系統自動發送，請勿直接回覆本信件，謝謝! → 이 메일은 시스템에서 자동으로 발송된 것으로, 직접 회신하지 마시기 바랍니다. 감사합니다! (This email was automatically sent by the system, please do not reply directly to this email. Thank you!)
 - SOMA SHOP 購物車 → SOMA SHOP (Removed redundant "shopping cart" text)

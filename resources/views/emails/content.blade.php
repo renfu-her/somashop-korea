@@ -64,7 +64,7 @@
     </div>
 
     <div class="footer">
-        <p>© {{ date('Y') }} EzHive 易群佶選. All rights reserved.</p>
+        <p>© {{ date('Y') }} 편안잠. All rights reserved.</p>
         <p>桃園市桃園區中正路 1247 號 15 樓之 4</p>
     </div>
 </body>

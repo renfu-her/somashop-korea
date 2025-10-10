@@ -66,7 +66,7 @@
         
         <div class="footer">
             <p>======本信件由系統自動發送，請勿直接回覆本信件，謝謝!======</p>
-            <p>© {{ date('Y') }} EzHive 易群佶選購物車. All rights reserved.</p>
+            <p>© {{ date('Y') }} 편안잠購物車. All rights reserved.</p>
         </div>
     </div>
 </body>
