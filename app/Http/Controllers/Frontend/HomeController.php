@@ -14,8 +14,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $actives = Activity::orderByDesc('id')
-            ->where('is_active', 1)
+        $actives = Activity::where('is_active', 1)
             ->orderBy('sort_order', 'asc')
             ->get();
 
