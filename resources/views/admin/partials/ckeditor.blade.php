@@ -31,6 +31,7 @@
             Heading,
             List,
             Link,
+            LinkImage,
             Image,
             Table,
             MediaEmbed,
@@ -57,6 +58,7 @@
                     Heading,
                     List,
                     Link,
+                    LinkImage,
                     Image,
                     Table,
                     MediaEmbed,
@@ -138,6 +140,7 @@
                 },
                 image: {
                     toolbar: [
+                        'linkImage', '|',
                         'imageTextAlternative', '|',
                         'imageStyle:alignLeft',
                         'imageStyle:alignCenter',
