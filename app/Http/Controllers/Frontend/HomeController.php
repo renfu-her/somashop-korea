@@ -16,6 +16,7 @@ class HomeController extends Controller
     {
         $actives = Activity::orderByDesc('id')
             ->where('is_active', 1)
+            ->orderBy('sort_order', 'asc')
             ->get();
 
         $hotProducts = Product::with('primaryImage')
