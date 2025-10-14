@@ -21,7 +21,7 @@ class HomeController extends Controller
         $hotProducts = Product::with('primaryImage')
             ->where('is_active', 1)
             ->where('is_hot', 1)
-            ->orderByDesc('id')
+            ->orderBy('sort_order', 'asc')
             ->get();
 
         $now = Carbon::now();
