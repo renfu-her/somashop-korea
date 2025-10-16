@@ -134,6 +134,38 @@
     }
 }
 
+.bg-footer .img-logo {
+    display: flex;
+    justify-content: center;
+}
+
+.bg-footer .social-link img {
+    width: 96px !important;
+    height: 96px !important;
+    object-fit: contain;
+}
+
+@media (max-width: 767.98px) {
+    .bg-footer .row.flex-row {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .bg-footer .img-logo {
+        margin-bottom: 1rem;
+    }
+
+    .bg-footer .address {
+        margin: 0 auto;
+    }
+
+    .bg-footer .social-link {
+        margin-left: 0 !important;
+        justify-content: center;
+    }
+}
+
 @keyframes slideIn {
     from {
         transform: translateX(100%);
