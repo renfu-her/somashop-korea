@@ -150,6 +150,7 @@
         flex-direction: column;
         text-align: center;
         gap: 1.5rem;
+        align-items: center;
     }
 
     .bg-footer .img-logo {
@@ -158,11 +159,17 @@
 
     .bg-footer .address {
         margin: 0 auto;
+        width: 100%;
     }
 
     .bg-footer .social-link {
         margin-left: 0 !important;
         justify-content: center;
+        width: 100%;
+    }
+
+    .bg-footer .row.flex-row > * {
+        width: 100%;
     }
 }
 
