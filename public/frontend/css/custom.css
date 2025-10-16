@@ -138,6 +138,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
+}
+
+.bg-footer .img-logo img {
+    display: block;
+    margin: 0 auto;
 }
 
 .bg-footer .social-link img {
