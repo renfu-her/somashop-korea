@@ -154,15 +154,24 @@
 }
 
 @media (max-width: 767.98px) {
+    .bg-footer {
+        padding-top: 0.75rem;
+    }
+
     .bg-footer .row.flex-row {
         flex-direction: column;
         text-align: center;
-        gap: 1.5rem;
+        gap: 1rem;
         align-items: center;
     }
 
     .bg-footer .img-logo {
+        margin-top: 0 !important;
         margin-bottom: 1rem;
+    }
+
+    .bg-footer .img-logo img {
+        margin-top: 0 !important;
     }
 
     .bg-footer .address {
