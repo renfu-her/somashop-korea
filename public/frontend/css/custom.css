@@ -137,6 +137,7 @@
 .bg-footer .img-logo {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .bg-footer .social-link img {
@@ -159,17 +160,22 @@
 
     .bg-footer .address {
         margin: 0 auto;
-        width: 100%;
+    }
+
+    .bg-footer .address p {
+        text-align: center;
     }
 
     .bg-footer .social-link {
         margin-left: 0 !important;
         justify-content: center;
-        width: 100%;
     }
 
     .bg-footer .row.flex-row > * {
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
