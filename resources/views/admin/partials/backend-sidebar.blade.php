@@ -60,12 +60,12 @@
             </div>
         </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.members.index') }}">
                 <i class="fas fa-users menu-icon"></i>
                 <span class="menu-title">會員管理</span>
             </a>
-        </li>
+        </li> --}}
 
         {{-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#faq-management" aria-expanded="false">
@@ -85,34 +85,34 @@
             </div>
         </li> --}}
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.orders.index') }}">
                 <i class="fas fa-shopping-cart menu-icon"></i>
                 <span class="menu-title">訂單管理</span>
             </a>
-        </li>
+        </li> --}}
 
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.email-settings.index') }}">
                 <i class="fas fa-envelope menu-icon"></i>
                 <span class="menu-title">郵件設定</span>
             </a>
-        </li>
+        </li> --}}
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.settings.index') }}">
                 <i class="fas fa-cog menu-icon"></i>
                 <span class="menu-title">運費設定</span>
             </a>
-        </li>
+        </li> --}}
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.free-shippings.index') }}">
                 <i class="fas fa-truck menu-icon"></i>
                 <span class="menu-title">免運設定</span>
             </a>
-        </li>
+        </li> --}}
 
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin.admins.index') }}">
