@@ -144,6 +144,7 @@
     width: 96px !important;
     height: 96px !important;
     object-fit: contain;
+    margin: 0 auto;
 }
 
 @media (max-width: 767.98px) {
@@ -168,7 +169,7 @@
 
     .bg-footer .social-link {
         margin-left: 0 !important;
-        justify-content: center;
+        justify-content: center !important;
     }
 
     .bg-footer .row.flex-row > * {
@@ -176,6 +177,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
     }
 }
 
