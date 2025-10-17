@@ -113,7 +113,7 @@
                                     </div> --}}
 
                                     <div>
-                                        <img src="{{ asset('frontend/img/talk.png') }}" alt="talk" class="img-fluid">
+                                        <img src="{{ asset('frontend/img/talk_button.png') }}" alt="talk" class="img-fluid">
                                     </div>
 {{-- 
                                     <div class="form-group row">
