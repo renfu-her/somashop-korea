@@ -12,4 +12,5 @@ Schedule::command('app:payment-check-command')->everyTenMinutes();
 Schedule::command('order:check-atm-payment')->everyTenMinutes();
 Schedule::command('logistics:check')->everyTenMinutes();
 Schedule::command('email:process')->everyMinute();
+Schedule::command('sitemap:generate')->daily();
 // Schedule::command('app:invoice-check-command')->everyTenMinutes();
