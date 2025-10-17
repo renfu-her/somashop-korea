@@ -109,9 +109,9 @@
                 </div>
                 <div
                     class="col-auto social-link d-flex justify-content-between align-items-center ml-auto text-center px-md-3 px-4">
-                    <a href="https://line.me/R/ti/p/@924osxbs" target="_blank" class="px-md-3 px-0 hvr-bob">
-                        <img src="{{ asset('frontend/img/talk_logo2.png') }}" class="img-fluid px-md-0 px-3" style="width: 100px; height: 100px;" />
-                    </a>
+                    <div class="px-md-3 px-0 hvr-bob">
+                        <img src="{{ asset('frontend/img/talk_icon2.png') }}" class="img-fluid px-md-0 px-3" style="width: 100px; height: 100px;" />
+                    </div>
                 </div>
             </div>
         </div>
