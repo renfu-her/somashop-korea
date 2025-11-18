@@ -110,7 +110,7 @@
                 <div
                     class="col-auto social-link d-flex justify-content-between align-items-center ml-auto text-center px-md-3 px-4">
                     <div class="px-md-3 px-0 hvr-bob d-flex align-items-center justify-content-center">
-                        <img src="{{ asset('frontend/img/IG_icon.png') }}" class="img-fluid" style="width: 100px; height: 100px; margin-right: 48px;" />
+                        <img src="{{ asset('frontend/img/IG_icon.png') }}" class="img-fluid" style="width: 100px; height: 100px; margin-right: 10px;" />
                         <img src="{{ asset('frontend/img/talk_icon2.png') }}" class="img-fluid" style="width: 100px; height: 100px;" />
                     </div>
                 </div>
