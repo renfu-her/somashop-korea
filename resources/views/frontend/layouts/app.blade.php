@@ -93,7 +93,7 @@
                                 <div class="col-auto pl-md-0 text-dark text-dark1">
                                     <p class="m-0">
                                         {{-- <img src="https://img.icons8.com/pastel-glyph/18/000000/place-marker.png" /> --}}
-                                        상호명 : (주)소마슬립 <br>
+                                        상호명 : 소마 유한회사 <br>
                                         대표이사 : 김지훈 <br>
                                         개인정보책임자 : 박서연 <br>
                                         통신판매업신고번호 : 제 2024-서울마포-01234 호 <br>
