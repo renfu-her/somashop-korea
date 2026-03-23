@@ -11,10 +11,11 @@
     <meta name="keywords" content="@yield('meta_keywords', \App\Models\SiteSetting::getMetaData('meta_keywords', '편안잠'))">
     <meta name="description" content="@yield('meta_description', \App\Models\SiteSetting::getMetaData('site_description', '편안잠'))">
 
-    {{-- Open Graph Tags --}}
+    {{-- Open Graph Tags (LINE, Facebook, etc.) --}}
     <meta property="og:title" content="@yield('meta_title', \App\Models\SiteSetting::getMetaData('site_name', '편안잠'))">
     <meta property="og:description" content="@yield('meta_description', \App\Models\SiteSetting::getMetaData('site_description', '편안잠'))">
-    <meta property="og:image" content="@yield('og_image', asset('frontend/img/brand_logo_bg-red.png'))">
+    <meta property="og:image" content="@yield('og_image', url('storage/uploads/019a86a3-6588-7078-8919-87d1194b7e0d.webp'))">
+    <meta property="og:image:secure_url" content="@yield('og_image', url('storage/uploads/019a86a3-6588-7078-8919-87d1194b7e0d.webp'))">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
 
@@ -96,7 +97,7 @@
                                         대표이사 : 김지훈 <br>
                                         개인정보책임자 : 박서연 <br>
                                         통신판매업신고번호 : 제 2024-서울마포-01234 호 <br>
-                                        본사 : 서울특별시 마포구 양화로 120, 5층 (동교동, 소마타워)
+                                        본사 : 서울특별시 마포구 양화로 120, 5층
                                     </p>
                                 </div>
                             </div>
