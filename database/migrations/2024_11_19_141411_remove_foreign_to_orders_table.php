@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-               // 移除外鍵約束
-            $table->dropForeign('orders_user_id_foreign');
-            
-            // 移除索引
-            $table->dropIndex('orders_user_id_foreign');
-            
-             // 重新定義 member_id 欄位，但不設置外鍵約束
-             $table->unsignedBigInteger('member_id')->change();
-            
+            $driver = Schema::getConnection()->getDriverName();
+
+            if ($driver === 'sqlite') {
+                $table->dropForeign(['member_id']);
+            } else {
+                $table->dropForeign('orders_user_id_foreign');
+                $table->dropIndex('orders_user_id_foreign');
+            }
+
+            $table->unsignedBigInteger('member_id')->change();
         });
     }
 
@@ -30,11 +31,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            // 恢復外鍵約束
             $table->foreign('member_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 };
